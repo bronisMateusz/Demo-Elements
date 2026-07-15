@@ -31269,11 +31269,49 @@ function PageFeedbackToolbarCSS({ demoAnnotations, demoDelay = 1e3, enableDemoMo
 //#region assets/agentation-entry.jsx
 var WEBHOOK_PATH = "/api/agentation-feedback";
 var BUILD_FOR_TEAM = true;
+var SETTINGS_KEY = "feedback-toolbar-settings";
 function resolveWebhookUrl() {
 	const configured = WEBHOOK_PATH.trim();
 	if (/^https?:\/\//i.test(configured)) return configured;
 	const path = configured.startsWith("/") ? configured : `/${configured}`;
 	return `${window.location.origin}${path}`;
+}
+function seedAgentationSettings(webhookUrl) {
+	try {
+		const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? "{}");
+		localStorage.setItem(SETTINGS_KEY, JSON.stringify({
+			...saved,
+			webhookUrl,
+			webhooksEnabled: false
+		}));
+	} catch {
+		localStorage.setItem(SETTINGS_KEY, JSON.stringify({
+			webhookUrl,
+			webhooksEnabled: false
+		}));
+	}
+}
+function showToast(message, tone = "success") {
+	document.getElementById("elements-agentation-toast")?.remove();
+	const toast = document.createElement("div");
+	toast.id = "elements-agentation-toast";
+	toast.setAttribute("role", "status");
+	toast.textContent = message;
+	toast.style.cssText = [
+		"position:fixed",
+		"bottom:88px",
+		"right:24px",
+		"z-index:2147483646",
+		"max-width:min(360px,calc(100vw - 48px))",
+		"padding:12px 16px",
+		"border-radius:10px",
+		"font:500 14px/1.4 system-ui,sans-serif",
+		"color:#fff",
+		"background:" + (tone === "success" ? "#166534" : "#991b1b"),
+		"box-shadow:0 8px 24px rgba(0,0,0,.18)"
+	].join(";");
+	document.body.appendChild(toast);
+	window.setTimeout(() => toast.remove(), 5e3);
 }
 function isGitHubPagesHost(hostname) {
 	return hostname === "github.io" || hostname.endsWith(".github.io");
@@ -31306,9 +31344,12 @@ async function submitFeedbackToGithub(output) {
 }
 function notifyIssueCreated(issueUrl, issueNumber) {
 	console.info(`[Agentation] Utworzono issue #${issueNumber}: ${issueUrl}`);
+	showToast(`Wysłano do GitHub: issue #${issueNumber}`, "success");
 }
 function notifyIssueFailed(error) {
+	const message = error instanceof Error ? error.message : "Nieznany błąd";
 	console.error("[Agentation] Nie udało się utworzyć issue:", error);
+	showToast(`Błąd wysyłki: ${message}`, "error");
 }
 function mountAgentation() {
 	if (!shouldEnable()) return;
@@ -31317,6 +31358,7 @@ function mountAgentation() {
 	if (!globalThis.process.env.NODE_ENV) globalThis.process.env.NODE_ENV = "development";
 	const params = new URLSearchParams(location.search);
 	const webhookUrl = resolveWebhookUrl();
+	seedAgentationSettings(webhookUrl);
 	const endpoint = (typeof window.AGENTATION_ENDPOINT === "string" ? window.AGENTATION_ENDPOINT.trim().replace(/\/$/, "") : "") || "";
 	const mountEl = document.createElement("div");
 	mountEl.id = "agentation-root";
