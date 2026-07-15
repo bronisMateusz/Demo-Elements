@@ -1,6 +1,8 @@
 import { Helmet } from "react-helmet-async";
+import { buildPdpSubnavItems, pdpSectionScrollMarginClassName } from "../constants/pdpSubnav";
 import { PageShell } from "../components/layout/PageShell";
 import { AskFab } from "../components/product/AskFab";
+import { ProductSubnav } from "../components/product/ProductSubnav";
 import { Section } from "../components/structural/Section";
 import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
 import { ProductDownloads } from "../components/product/ProductDownloads";
@@ -24,6 +26,7 @@ function RevealSection({ children }: { children: React.ReactNode }) {
 
 export function ProductDetailPage() {
   const product = montebianco80;
+  const subnavItems = buildPdpSubnavItems();
 
   return (
     <>
@@ -38,8 +41,10 @@ export function ProductDetailPage() {
       <PageShell>
         <ProductHero product={product} />
 
+        <ProductSubnav items={subnavItems} />
+
         <RevealSection>
-          <Section>
+          <Section id="pdp-opis" className={pdpSectionScrollMarginClassName}>
             <ProductEditorial
               breadcrumbs={product.breadcrumbs.map((item, index, arr) => ({
                 ...item,
@@ -54,13 +59,13 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section tone="warm">
+          <Section id="pdp-specyfikacja" tone="warm" className={pdpSectionScrollMarginClassName}>
             <ProductSpecifications specs={product.specifications} />
           </Section>
         </RevealSection>
 
         <RevealSection>
-          <Section>
+          <Section id="pdp-pliki" className={pdpSectionScrollMarginClassName}>
             <ProductDownloads downloads={product.downloads} />
           </Section>
         </RevealSection>
@@ -72,7 +77,7 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section>
+          <Section id="pdp-aranzacja" className={pdpSectionScrollMarginClassName}>
             <ProductInspiration arrangements={product.inspirations} />
           </Section>
         </RevealSection>
@@ -84,7 +89,7 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section>
+          <Section id="pdp-podobne" className={pdpSectionScrollMarginClassName}>
             <ProductRecommendations products={product.similarProducts} />
           </Section>
         </RevealSection>
