@@ -2,8 +2,15 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Agentation } from 'agentation';
 
-const WEBHOOK_URL = __AGENTATION_WEBHOOK_URL__;
+const WEBHOOK_PATH = __AGENTATION_WEBHOOK_URL__ || '/api/agentation-feedback';
 const BUILD_FOR_TEAM = __AGENTATION_ENABLED__;
+
+function resolveWebhookUrl() {
+  const configured = WEBHOOK_PATH.trim();
+  if (/^https?:\/\//i.test(configured)) return configured;
+  const path = configured.startsWith('/') ? configured : `/${configured}`;
+  return `${window.location.origin}${path}`;
+}
 
 function isGitHubPagesHost(hostname) {
   return hostname === 'github.io' || hostname.endsWith('.github.io');
@@ -37,6 +44,35 @@ function shouldEnable() {
   );
 }
 
+async function submitFeedbackToGithub(output) {
+  const webhookUrl = resolveWebhookUrl();
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event: 'submit',
+      timestamp: Date.now(),
+      url: window.location.href,
+      output,
+    }),
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || `HTTP ${response.status}`);
+  }
+
+  return payload;
+}
+
+function notifyIssueCreated(issueUrl, issueNumber) {
+  console.info(`[Agentation] Utworzono issue #${issueNumber}: ${issueUrl}`);
+}
+
+function notifyIssueFailed(error) {
+  console.error('[Agentation] Nie udało się utworzyć issue:', error);
+}
+
 function mountAgentation() {
   if (!shouldEnable()) return;
 
@@ -47,6 +83,7 @@ function mountAgentation() {
   }
 
   const params = new URLSearchParams(location.search);
+  const webhookUrl = resolveWebhookUrl();
 
   const configuredEndpoint =
     typeof window.AGENTATION_ENDPOINT === 'string'
@@ -61,13 +98,27 @@ function mountAgentation() {
   document.body.appendChild(mountEl);
 
   const props = {
-    webhookUrl: WEBHOOK_URL,
+    webhookUrl,
     onSessionCreated(sessionId) {
       console.info('[Agentation] sesja:', sessionId);
     },
+    onCopy(output) {
+      submitFeedbackToGithub(output)
+        .then((result) => {
+          if (result.issueUrl) {
+            notifyIssueCreated(result.issueUrl, result.issueNumber);
+          }
+        })
+        .catch(notifyIssueFailed);
+    },
     onSubmit(output) {
-      const match = output.match(/^## Page Feedback:\s*(.+)$/m);
-      console.info('[Agentation] wysłano review:', match?.[1]?.trim() ?? 'strona');
+      submitFeedbackToGithub(output)
+        .then((result) => {
+          if (result.issueUrl) {
+            notifyIssueCreated(result.issueUrl, result.issueNumber);
+          }
+        })
+        .catch(notifyIssueFailed);
     },
   };
 

@@ -70,7 +70,7 @@ flowchart LR
 ```
 
 1. Reviewer otwiera URL preview (main).
-2. Zostawia pinezki w Agentation → **Send**.
+2. Zostawia pinezki w Agentation → **Copy** (auto-issue w tle; opcjonalnie **Send** po wyłączeniu Auto-Send w ustawieniach).
 3. Issue z etykietą `ui-review` pojawia się w repo.
 4. Dev w Cursorze czyta issue (GitHub MCP) i wdraża poprawki.
 5. Po akceptacji klienta: merge `main` → `release` → production deploy bez Agentation.
