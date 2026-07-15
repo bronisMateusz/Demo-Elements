@@ -16094,7 +16094,7 @@ var EXCLUDE_ATTRS = [
 	"data-annotation-marker"
 ];
 var NOT_SELECTORS = EXCLUDE_ATTRS.flatMap((a) => [`:not([${a}])`, `:not([${a}] *)`]).join("");
-var STYLE_ID = "feedback-freeze-styles";
+var STYLE_ID$1 = "feedback-freeze-styles";
 var STATE_KEY = "__agentation_freeze";
 function getState() {
 	if (typeof window === "undefined") return {
@@ -16159,10 +16159,10 @@ function freeze() {
 	_s.frozen = true;
 	_s.frozenTimeoutQueue = [];
 	_s.frozenRAFQueue = [];
-	let style = document.getElementById(STYLE_ID);
+	let style = document.getElementById(STYLE_ID$1);
 	if (!style) {
 		style = document.createElement("style");
-		style.id = STYLE_ID;
+		style.id = STYLE_ID$1;
 	}
 	style.textContent = `
     *${NOT_SELECTORS},
@@ -16223,7 +16223,7 @@ function unfreeze() {
 		console.warn("[agentation] Error resuming animation:", e);
 	}
 	_s.pausedAnimations = [];
-	document.getElementById(STYLE_ID)?.remove();
+	document.getElementById(STYLE_ID$1)?.remove();
 	document.querySelectorAll("video").forEach((video) => {
 		if (video.dataset.wasPaused === "false") {
 			video.play().catch(() => {});
@@ -31270,6 +31270,47 @@ function PageFeedbackToolbarCSS({ demoAnnotations, demoDelay = 1e3, enableDemoMo
 var WEBHOOK_PATH = "/api/agentation-feedback";
 var BUILD_FOR_TEAM = true;
 var SETTINGS_KEY = "feedback-toolbar-settings";
+var POSITION_LAYOUT_KEY = "elements-agentation-position-v2";
+var STYLE_ID = "elements-agentation-overrides";
+function injectAgentationStyles(minimalToolbar) {
+	if (document.getElementById(STYLE_ID)) return;
+	const style = document.createElement("style");
+	style.id = STYLE_ID;
+	style.textContent = `
+    .elements-agentation-toolbar {
+      left: 1rem !important;
+      right: auto !important;
+      bottom: 1rem !important;
+      width: auto !important;
+      max-width: calc(100vw - 2rem);
+    }
+
+    .elements-agentation-toolbar [class*="sendButtonWrapper"] {
+      display: flex !important;
+    }
+
+    ${minimalToolbar ? `
+    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(1),
+    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(2),
+    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(3),
+    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(4),
+    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(7) {
+      display: none !important;
+    }
+    ` : ""}
+  `;
+	document.head.appendChild(style);
+}
+function seedToolbarPosition() {
+	if (localStorage.getItem(POSITION_LAYOUT_KEY)) return;
+	const x = 16;
+	const y = Math.max(16, Math.round(window.innerHeight - 60));
+	localStorage.setItem("feedback-toolbar-position", JSON.stringify({
+		x,
+		y
+	}));
+	localStorage.setItem(POSITION_LAYOUT_KEY, "2");
+}
 function resolveWebhookUrl() {
 	const configured = WEBHOOK_PATH.trim();
 	if (/^https?:\/\//i.test(configured)) return configured;
@@ -31300,7 +31341,8 @@ function showToast(message, tone = "success") {
 	toast.style.cssText = [
 		"position:fixed",
 		"bottom:88px",
-		"right:24px",
+		"left:24px",
+		"right:auto",
 		"z-index:2147483646",
 		"max-width:min(360px,calc(100vw - 48px))",
 		"padding:12px 16px",
@@ -31358,13 +31400,17 @@ function mountAgentation() {
 	if (!globalThis.process.env.NODE_ENV) globalThis.process.env.NODE_ENV = "development";
 	const params = new URLSearchParams(location.search);
 	const webhookUrl = resolveWebhookUrl();
+	const minimalToolbar = !params.has("agentation-full");
 	seedAgentationSettings(webhookUrl);
+	seedToolbarPosition();
+	injectAgentationStyles(minimalToolbar);
 	const endpoint = (typeof window.AGENTATION_ENDPOINT === "string" ? window.AGENTATION_ENDPOINT.trim().replace(/\/$/, "") : "") || "";
 	const mountEl = document.createElement("div");
 	mountEl.id = "agentation-root";
 	mountEl.setAttribute("data-agentation-root", "");
 	document.body.appendChild(mountEl);
 	const props = {
+		className: "elements-agentation-toolbar",
 		webhookUrl,
 		onSessionCreated(sessionId) {
 			console.info("[Agentation] sesja:", sessionId);
