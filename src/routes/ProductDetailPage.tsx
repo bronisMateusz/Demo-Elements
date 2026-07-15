@@ -91,9 +91,7 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section tone="warm">
-            <ProductVisualizationCTA {...product.visualizationCta} />
-          </Section>
+          <ProductVisualizationCTA {...product.visualizationCta} />
         </RevealSection>
 
         <RevealSection>

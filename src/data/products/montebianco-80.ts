@@ -434,6 +434,11 @@ export const montebianco80: Product = {
       "Chcesz zobaczyć możliwości Twojej nowej łazienki? Przygotujemy dla Ciebie jej wizualizację.",
     href: "#wizualizacja",
     label: "Poznaj szczegóły",
+    note: "Bezpłatna wizualizacja · Bez zobowiązań",
+    secondary: {
+      href: "#salony",
+      label: "Znajdź salon",
+    },
   },
   similarProducts: [
     related("d-neo", "Duravit", "Szafka podumywalkowa D-Neo 78 cm, len brąz", {

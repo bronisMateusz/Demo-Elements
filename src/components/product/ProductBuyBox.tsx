@@ -68,11 +68,11 @@ export function ProductBuyBox({ product }: ProductBuyBoxProps) {
         }}
       />
 
-      <ProductPairWith title={product.seriesTitle} products={product.seriesProducts} />
-
       {product.salonCard ? (
         <ProductSalonCard className="mt-10" {...product.salonCard} />
       ) : null}
+
+      <ProductPairWith title={product.seriesTitle} products={product.seriesProducts} />
     </div>
   );
 }

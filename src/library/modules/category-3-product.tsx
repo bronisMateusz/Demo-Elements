@@ -98,12 +98,12 @@ export const productSalonCardModule: LibraryModule = {
   id: "3.5",
   slug: "product-salon-card",
   title: "ProductSalonCard",
-  description: "Ciemna karta CTA salonu pod buy boxem — „Obejrzyj na żywo”.",
+  description: "Ciemna karta salonu w buy boxie — sygnet, serif, złote akcenty i link strzałka.",
   variants: [
     {
       id: "default",
       label: "Domyślna",
-      description: "Eyebrow, opis i pełno szeroki przycisk Gold.",
+      description: "Redakcyjny blok neutral-900 z eyebrow i linkiem gold.",
       render: () => (
         <Container className="max-w-md py-8">
           <ProductSalonCard

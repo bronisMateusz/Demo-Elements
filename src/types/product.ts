@@ -149,6 +149,11 @@ export type Product = {
     title: string;
     href: string;
     label: string;
+    note?: string;
+    secondary?: {
+      href: string;
+      label: string;
+    };
   };
   similarProducts: RelatedProduct[];
   recentlyViewedProducts?: RelatedProduct[];

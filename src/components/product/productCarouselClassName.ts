@@ -22,7 +22,7 @@ export function productCarouselSwiperClassName(layout: ProductCarouselLayoutToke
   return cn(
     "w-full touch-pan-y overflow-hidden [touch-action:pan-y_pinch-zoom]",
     layout === "inline" || layout === "inline-bleed"
-      ? "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(168px,44%,208px)] [&_.swiper-slide]:shrink-0"
+      ? "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(192px,48%,240px)] [&_.swiper-slide]:shrink-0"
       : layout === "bleed"
         ? "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(260px,calc((100%-48px)/4.15),424px)] [&_.swiper-slide]:shrink-0"
         : "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(260px,72vw,424px)] [&_.swiper-slide]:shrink-0",
@@ -31,7 +31,7 @@ export function productCarouselSwiperClassName(layout: ProductCarouselLayoutToke
 
 export function productCarouselSlideClassName(layout: ProductCarouselLayoutToken) {
   if (layout === "inline" || layout === "inline-bleed") {
-    return "!h-auto !w-[clamp(168px,44%,208px)] shrink-0";
+    return "!h-auto !w-[clamp(192px,48%,240px)] shrink-0";
   }
 
   if (layout === "bleed") {

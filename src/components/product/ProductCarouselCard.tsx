@@ -93,7 +93,7 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
           className={cn(
             btnAnimatedBaseClassName,
             btnAnimatedPrimaryClassName,
-            "absolute inset-x-4 bottom-4 z-[3] inline-flex h-11 items-center justify-center gap-2 border-0 px-4 font-body text-sm font-medium uppercase leading-none tracking-wide opacity-0 shadow-1 transition-opacity duration-base ease-luxury pointer-events-none",
+            "absolute inset-x-4 bottom-4 z-[3] inline-flex h-11 items-center justify-center gap-2 border-0 px-4 font-body text-sm font-medium leading-none opacity-0 shadow-1 transition-opacity duration-base ease-luxury pointer-events-none",
             "group-hover/card:pointer-events-auto group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:opacity-100",
             cartAdded && "pointer-events-auto opacity-100",
             "[&_i]:text-inherit",
@@ -109,7 +109,7 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
           ) : (
             <>
               <i className="ph ph-shopping-bag" aria-hidden="true" />
-              Dodaj do koszyka
+              Do koszyka
             </>
           )}
         </button>
