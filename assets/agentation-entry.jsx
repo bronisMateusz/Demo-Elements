@@ -2,11 +2,16 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Agentation } from 'agentation';
 
+const WEBHOOK_URL = __AGENTATION_WEBHOOK_URL__;
+const BUILD_FOR_TEAM = __AGENTATION_ENABLED__;
+
 function isGitHubPagesHost(hostname) {
   return hostname === 'github.io' || hostname.endsWith('.github.io');
 }
 
 function shouldEnable() {
+  if (!BUILD_FOR_TEAM) return false;
+
   const params = new URLSearchParams(location.search);
   const hostname = location.hostname;
   const isLocal =
@@ -26,7 +31,9 @@ function shouldEnable() {
   return (
     isLocal ||
     isGitHubPagesHost(hostname) ||
-    forcedEnabled
+    hostname.endsWith('.vercel.app') ||
+    forcedEnabled ||
+    BUILD_FOR_TEAM
   );
 }
 
@@ -40,17 +47,12 @@ function mountAgentation() {
   }
 
   const params = new URLSearchParams(location.search);
-  const hostname = location.hostname;
-  const isLocal =
-    hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
 
   const configuredEndpoint =
     typeof window.AGENTATION_ENDPOINT === 'string'
       ? window.AGENTATION_ENDPOINT.trim().replace(/\/$/, '')
       : '';
 
-  // Sync tylko gdy jawnie ustawiony AGENTATION_ENDPOINT (np. hostowany serwer).
-  // Domyślnie: localStorage + GitHub Issues, bez agentation-mcp.
   const endpoint = configuredEndpoint || '';
 
   const mountEl = document.createElement('div');
@@ -59,8 +61,13 @@ function mountAgentation() {
   document.body.appendChild(mountEl);
 
   const props = {
+    webhookUrl: WEBHOOK_URL,
     onSessionCreated(sessionId) {
       console.info('[Agentation] sesja:', sessionId);
+    },
+    onSubmit(output) {
+      const match = output.match(/^## Page Feedback:\s*(.+)$/m);
+      console.info('[Agentation] wysłano review:', match?.[1]?.trim() ?? 'strona');
     },
   };
 

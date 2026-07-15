@@ -31267,6 +31267,8 @@ function PageFeedbackToolbarCSS({ demoAnnotations, demoDelay = 1e3, enableDemoMo
 }
 //#endregion
 //#region assets/agentation-entry.jsx
+var WEBHOOK_URL = "/api/agentation-feedback";
+var BUILD_FOR_TEAM = true;
 function isGitHubPagesHost(hostname) {
 	return hostname === "github.io" || hostname.endsWith(".github.io");
 }
@@ -31278,7 +31280,7 @@ function shouldEnable() {
 	const forcedEnabled = params.get("agentation") === "1" || params.has("review") || window.AGENTATION_ENABLED === true;
 	if (params.get("agentation") === "0" || params.has("noagentation") || window.AGENTATION_DISABLED === true || localStorage.getItem("agentation:disabled") === "1") return false;
 	if (isViteDev && !forcedEnabled) return false;
-	return isLocal || isGitHubPagesHost(hostname) || forcedEnabled;
+	return isLocal || isGitHubPagesHost(hostname) || hostname.endsWith(".vercel.app") || forcedEnabled || BUILD_FOR_TEAM;
 }
 function mountAgentation() {
 	if (!shouldEnable()) return;
@@ -31286,15 +31288,21 @@ function mountAgentation() {
 	if (!globalThis.process.env) globalThis.process.env = {};
 	if (!globalThis.process.env.NODE_ENV) globalThis.process.env.NODE_ENV = "development";
 	const params = new URLSearchParams(location.search);
-	location.hostname;
 	const endpoint = (typeof window.AGENTATION_ENDPOINT === "string" ? window.AGENTATION_ENDPOINT.trim().replace(/\/$/, "") : "") || "";
 	const mountEl = document.createElement("div");
 	mountEl.id = "agentation-root";
 	mountEl.setAttribute("data-agentation-root", "");
 	document.body.appendChild(mountEl);
-	const props = { onSessionCreated(sessionId) {
-		console.info("[Agentation] sesja:", sessionId);
-	} };
+	const props = {
+		webhookUrl: WEBHOOK_URL,
+		onSessionCreated(sessionId) {
+			console.info("[Agentation] sesja:", sessionId);
+		},
+		onSubmit(output) {
+			const match = output.match(/^## Page Feedback:\s*(.+)$/m);
+			console.info("[Agentation] wysłano review:", match?.[1]?.trim() ?? "strona");
+		}
+	};
 	if (endpoint) props.endpoint = endpoint;
 	const sessionFromQuery = params.get("session");
 	const sessionId = (typeof window.AGENTATION_SESSION_ID === "string" ? window.AGENTATION_SESSION_ID.trim() : "") || sessionFromQuery;

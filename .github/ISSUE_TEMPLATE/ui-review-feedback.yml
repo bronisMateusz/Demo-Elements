@@ -8,7 +8,8 @@ body:
     attributes:
       value: |
         Wklej **cały** tekst z przycisku **Copy** w toolbarze Agentation (bez skracania).
-        Podgląd: https://bronisMateusz.github.io/Demo-Elements/
+        Na środowisku zespołu issue tworzy się automatycznie po **Send** — ten szablon to fallback.
+        Podgląd zespołu: https://demo-elements-team.vercel.app/
 
   - type: input
     id: reviewer
@@ -22,8 +23,8 @@ body:
     id: preview_url
     attributes:
       label: URL podglądu
-      placeholder: https://bronisMateusz.github.io/Demo-Elements/
-      value: https://bronisMateusz.github.io/Demo-Elements/
+      placeholder: https://demo-elements-team.vercel.app/
+      value: https://demo-elements-team.vercel.app/
     validations:
       required: false
 
@@ -44,7 +45,7 @@ body:
       label: Feedback z Agentation
       description: Wklej output z Copy — nagłówki Page Feedback, Location, Feedback itd.
       placeholder: |
-        ## Page Feedback: /Demo-Elements/
+        ## Page Feedback: /
         **Viewport:** 1440×900
 
         ### 1. …

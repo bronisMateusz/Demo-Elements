@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Podgląd na GitHub Pages
-    url: https://bronisMateusz.github.io/Demo-Elements/
-    about: Otwórz wdrożoną wersję demo (Elements PDP + biblioteka komponentów).
-  - name: Biblioteka komponentów
-    url: https://bronisMateusz.github.io/Demo-Elements/biblioteka/naglowek-i-stopka
+  - name: Podgląd zespołu (Vercel Preview)
+    url: https://demo-elements-team.vercel.app
+    about: Najnowsza wersja z Agentation — review i auto-issue po Send.
+  - name: Podgląd klienta (Vercel Production)
+    url: https://demo-elements-client.vercel.app
+    about: Stabilna wersja akceptacyjna (branch release).
+  - name: Biblioteka komponentów (zespół)
+    url: https://demo-elements-team.vercel.app/biblioteka/naglowek-i-stopka
     about: Przegląd komponentów shell, orientacji i produktu.

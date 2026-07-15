@@ -7,12 +7,33 @@ type PageShellProps = PropsWithChildren<{
   breadcrumbs?: React.ReactNode;
 }>;
 
+function shouldLoadAgentation(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  const forceEnabled = params.get("agentation") === "1" || params.has("review");
+  const forceDisabled =
+    params.get("agentation") === "0" ||
+    params.has("noagentation") ||
+    window.AGENTATION_DISABLED === true;
+
+  if (forceDisabled) return false;
+
+  const deployTarget = import.meta.env.VITE_DEPLOY_TARGET;
+
+  if (deployTarget === "client") {
+    return forceEnabled;
+  }
+
+  if (deployTarget === "team" || import.meta.env.VITE_AGENTATION_ENABLED === "true") {
+    return true;
+  }
+
+  return !import.meta.env.DEV || forceEnabled;
+}
+
 export function PageShell({ children, breadcrumbs }: PageShellProps) {
   useEffect(() => {
     const key = "agentation";
-    const params = new URLSearchParams(window.location.search);
-    const forceEnabled = params.get("agentation") === "1" || params.has("review");
-    const shouldLoad = !import.meta.env.DEV || forceEnabled;
+    const shouldLoad = shouldLoadAgentation();
     const existingScript = document.querySelector<HTMLScriptElement>(
       `script[data-runtime-module="${key}"]`,
     );

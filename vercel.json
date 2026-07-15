@@ -1,6 +1,5 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ]
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/((?!api/|_vercel/).*)", "destination": "/index.html" }]
 }

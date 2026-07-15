@@ -10,7 +10,7 @@ labels:
 
 - **Osoba:**
 - **Data:**
-- **URL podglądu:** <https://bronisMateusz.github.io/Demo-Elements/>
+- **URL podglądu:** <https://demo-elements-team.vercel.app/>
 - **Priorytet:** <!-- Bloker / Ważne / Drobna uwaga -->
 
 ## Feedback z Agentation

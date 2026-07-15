@@ -4,8 +4,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ command }) => {
   const configuredBase = process.env.VITE_BASE_PATH;
-  const defaultBase = process.env.VERCEL ? "/" : "/Demo-Elements/";
-  const base = command === "serve" ? "/" : (configuredBase ?? defaultBase);
+  const base = command === "serve" ? "/" : (configuredBase ?? "/");
 
   return {
     plugins: [react(), tailwindcss()],

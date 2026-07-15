@@ -10,7 +10,9 @@
     "postbuild": "npm run build:runtime-assets",
     "build:runtime-assets": "node scripts/copy-runtime-assets.mjs",
     "build:agentation": "vite build --config vite.agentation.config.mjs",
-    "build:vercel": "npm run build && npm run build:agentation && npm run build:runtime-assets",
+    "build:vercel": "node scripts/build-vercel.mjs",
+    "build:team": "VITE_DEPLOY_TARGET=team VITE_AGENTATION_ENABLED=true node scripts/build-vercel.mjs",
+    "build:client": "VITE_DEPLOY_TARGET=client VITE_AGENTATION_ENABLED=false node scripts/build-vercel.mjs",
     "preview": "vite preview",
     "lint": "eslint src vite.config.ts eslint.config.js",
     "format": "prettier --check ."

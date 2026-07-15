@@ -6,7 +6,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 
-const filesToCopy = [["assets/agentation-bundle.js", "dist/assets/agentation-bundle.js"]];
+const agentationEnabled = process.env.VITE_AGENTATION_ENABLED === "true";
+
+const filesToCopy = agentationEnabled
+  ? [["assets/agentation-bundle.js", "dist/assets/agentation-bundle.js"]]
+  : [];
 
 async function copyRuntimeAssets() {
   for (const [from, to] of filesToCopy) {
