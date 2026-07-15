@@ -31267,8 +31267,14 @@ function PageFeedbackToolbarCSS({ demoAnnotations, demoDelay = 1e3, enableDemoMo
 }
 //#endregion
 //#region assets/agentation-entry.jsx
-var WEBHOOK_URL = "/api/agentation-feedback";
+var WEBHOOK_PATH = "/api/agentation-feedback";
 var BUILD_FOR_TEAM = true;
+function resolveWebhookUrl() {
+	const configured = WEBHOOK_PATH.trim();
+	if (/^https?:\/\//i.test(configured)) return configured;
+	const path = configured.startsWith("/") ? configured : `/${configured}`;
+	return `${window.location.origin}${path}`;
+}
 function isGitHubPagesHost(hostname) {
 	return hostname === "github.io" || hostname.endsWith(".github.io");
 }
@@ -31282,25 +31288,54 @@ function shouldEnable() {
 	if (isViteDev && !forcedEnabled) return false;
 	return isLocal || isGitHubPagesHost(hostname) || hostname.endsWith(".vercel.app") || forcedEnabled || BUILD_FOR_TEAM;
 }
+async function submitFeedbackToGithub(output) {
+	const webhookUrl = resolveWebhookUrl();
+	const response = await fetch(webhookUrl, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			event: "submit",
+			timestamp: Date.now(),
+			url: window.location.href,
+			output
+		})
+	});
+	const payload = await response.json().catch(() => ({}));
+	if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+	return payload;
+}
+function notifyIssueCreated(issueUrl, issueNumber) {
+	console.info(`[Agentation] Utworzono issue #${issueNumber}: ${issueUrl}`);
+}
+function notifyIssueFailed(error) {
+	console.error("[Agentation] Nie udało się utworzyć issue:", error);
+}
 function mountAgentation() {
 	if (!shouldEnable()) return;
 	globalThis.process = globalThis.process || { env: {} };
 	if (!globalThis.process.env) globalThis.process.env = {};
 	if (!globalThis.process.env.NODE_ENV) globalThis.process.env.NODE_ENV = "development";
 	const params = new URLSearchParams(location.search);
+	const webhookUrl = resolveWebhookUrl();
 	const endpoint = (typeof window.AGENTATION_ENDPOINT === "string" ? window.AGENTATION_ENDPOINT.trim().replace(/\/$/, "") : "") || "";
 	const mountEl = document.createElement("div");
 	mountEl.id = "agentation-root";
 	mountEl.setAttribute("data-agentation-root", "");
 	document.body.appendChild(mountEl);
 	const props = {
-		webhookUrl: WEBHOOK_URL,
+		webhookUrl,
 		onSessionCreated(sessionId) {
 			console.info("[Agentation] sesja:", sessionId);
 		},
+		onCopy(output) {
+			submitFeedbackToGithub(output).then((result) => {
+				if (result.issueUrl) notifyIssueCreated(result.issueUrl, result.issueNumber);
+			}).catch(notifyIssueFailed);
+		},
 		onSubmit(output) {
-			const match = output.match(/^## Page Feedback:\s*(.+)$/m);
-			console.info("[Agentation] wysłano review:", match?.[1]?.trim() ?? "strona");
+			submitFeedbackToGithub(output).then((result) => {
+				if (result.issueUrl) notifyIssueCreated(result.issueUrl, result.issueNumber);
+			}).catch(notifyIssueFailed);
 		}
 	};
 	if (endpoint) props.endpoint = endpoint;
