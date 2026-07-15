@@ -177,6 +177,43 @@ function related(
   };
 }
 
+const montebiancoRecentlyViewed: RelatedProduct[] = [
+  related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała", {
+    subtitle: "Lakier mat",
+    price: "890 zł",
+    badge: { label: "Elements Icon", variant: "brand" },
+    image: { src: montebiancoFrontImage.src, alt: "Umywalka ORiSTO 80 cm" },
+    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+    colorCount: 2,
+    sizeCount: 1,
+  }),
+  related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie", {
+    subtitle: "Wykończenie ręczne",
+    price: "1 290 zł",
+    badge: { label: "Bestseller", variant: "gold" },
+    image: { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco" },
+    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+    colorCount: 2,
+    sizeCount: 1,
+  }),
+  related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat", {
+    subtitle: "System modułowy",
+    price: "1 690 zł",
+    image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna Montebianco" },
+    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+    colorCount: 3,
+    sizeCount: 1,
+  }),
+  related("mellow", "Elita", "Szafka Mellow 80 cm fume mat, dwie szuflady", {
+    subtitle: "Front MDF wilgocioodporny",
+    price: "1 790 zł",
+    image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka Mellow 80 cm" },
+    swatch: { src: montebiancoFrontImage.src, alt: "Fume mat" },
+    colorCount: 2,
+    sizeCount: 1,
+  }),
+];
+
 export const montebianco80: Product = {
   id: "montebianco-80",
   slug: "montebianco-80",
@@ -303,16 +340,31 @@ export const montebianco80: Product = {
         title: "Front z MDF wilgocioodpornej",
         description:
           "Płyta odporna na parę i wilgoć — front nie pęcznieje i zachowuje geometrię przez lata.",
+        image: {
+          src: assetUrl("products/montebianco/02-detail.jpg"),
+          alt: "Detal frontu szafki Montebianco — MDF wilgocioodporna",
+          focalPoint: { x: 50, y: 45 },
+        },
       },
       {
         title: "Wykończenie lakierowane",
         description:
           "Lakier w macie — głębia koloru i powierzchnia łatwa w utrzymaniu czystości.",
+        image: {
+          src: assetUrl("products/montebianco/04-angle.jpg"),
+          alt: "Matowe wykończenie frontu Montebianco",
+          focalPoint: { x: 55, y: 40 },
+        },
       },
       {
         title: "System modułowy",
         description:
           "Szafkę połączysz z umywalkami i meblami uzupełniającymi ORiSTO w spójną kompozycję.",
+        image: {
+          src: assetUrl("products/montebianco/03-room.jpg"),
+          alt: "Modułowa aranżacja łazienki z kolekcją Montebianco",
+          focalPoint: { x: 50, y: 55 },
+        },
       },
     ],
   },
@@ -445,6 +497,7 @@ export const montebianco80: Product = {
       sizeCount: 1,
     }),
   ],
+  recentlyViewedProducts: montebiancoRecentlyViewed,
   breadcrumbs: [
     { label: "Strona główna", to: "/" },
     { label: "Łazienka", to: "#" },

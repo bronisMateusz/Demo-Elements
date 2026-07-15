@@ -8,12 +8,16 @@ type ProductSpecificationsProps = {
   specs: ProductSpec[];
 };
 
+/** Set to true to truncate specs and show the expand/collapse control. */
+const SPECIFICATIONS_EXPAND_ENABLED = false;
 const VISIBLE_COUNT = 6;
 
 export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
   const [expanded, setExpanded] = useState(false);
   const panelId = useId();
-  const visibleSpecs = expanded ? specs : specs.slice(0, VISIBLE_COUNT);
+  const showExpandToggle = SPECIFICATIONS_EXPAND_ENABLED && specs.length > VISIBLE_COUNT;
+  const visibleSpecs =
+    !SPECIFICATIONS_EXPAND_ENABLED || expanded ? specs : specs.slice(0, VISIBLE_COUNT);
 
   return (
     <section aria-labelledby="specs-title">
@@ -30,7 +34,7 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
             </div>
           ))}
         </dl>
-        {specs.length > VISIBLE_COUNT ? (
+        {showExpandToggle ? (
           <button
             type="button"
             className={cn(
@@ -47,9 +51,11 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
             />
           </button>
         ) : null}
-        <div id={panelId} className="sr-only">
-          {expanded ? "Pełna specyfikacja widoczna" : "Skrócona specyfikacja"}
-        </div>
+        {showExpandToggle ? (
+          <div id={panelId} className="sr-only">
+            {expanded ? "Pełna specyfikacja widoczna" : "Skrócona specyfikacja"}
+          </div>
+        ) : null}
       </Container>
     </section>
   );

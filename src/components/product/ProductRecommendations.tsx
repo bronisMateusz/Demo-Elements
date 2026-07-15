@@ -1,25 +1,51 @@
+import { useState } from "react";
 import { Container } from "../ui/Container";
-import { SectionHeader } from "../structural/SectionHeader";
 import type { RelatedProduct } from "../../types/product";
+import { useRecentlyViewedProducts } from "../../hooks/useRecentlyViewedProducts";
 import { productCarouselBleedWrapperClassName } from "./productCarouselClassName";
 import { ProductCarousel } from "./ProductCarousel";
+import {
+  ProductCarouselTabsHeader,
+  type ProductCarouselTab,
+} from "./ProductCarouselTabsHeader";
 
 type ProductRecommendationsProps = {
-  title?: string;
-  products: RelatedProduct[];
+  similarProducts: RelatedProduct[];
+  recentlyViewedProducts?: RelatedProduct[];
+  currentProductId: string;
 };
 
 export function ProductRecommendations({
-  title = "Produkty podobne",
-  products,
+  similarProducts,
+  recentlyViewedProducts = [],
+  currentProductId,
 }: ProductRecommendationsProps) {
+  const [activeTab, setActiveTab] = useState<ProductCarouselTab>("similar");
+  const recentProducts = useRecentlyViewedProducts(currentProductId, recentlyViewedProducts);
+  const showRecentTab = recentProducts.length > 0;
+  const activeProducts = activeTab === "similar" ? similarProducts : recentProducts;
+  const labelledBy = activeTab === "similar" ? "similar-title" : "recent-title";
+
   return (
-    <section aria-labelledby="similar-title">
+    <section aria-labelledby={labelledBy}>
       <Container>
-        <SectionHeader title={title} titleId="similar-title" />
+        <ProductCarouselTabsHeader
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          showRecentTab={showRecentTab}
+        />
       </Container>
-      <div className={productCarouselBleedWrapperClassName}>
-        <ProductCarousel products={products} labelledBy="similar-title" layout="bleed" />
+      <div
+        className={productCarouselBleedWrapperClassName}
+        role="tabpanel"
+        aria-labelledby={labelledBy}
+      >
+        <ProductCarousel
+          key={activeTab}
+          products={activeProducts}
+          labelledBy={labelledBy}
+          layout="bleed"
+        />
       </div>
     </section>
   );

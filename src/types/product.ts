@@ -71,6 +71,7 @@ export type ProductDownload = {
 export type ProductFeature = {
   title: string;
   description: string;
+  image?: ProductImage;
 };
 
 export type RelatedProduct = {
@@ -147,5 +148,6 @@ export type Product = {
     label: string;
   };
   similarProducts: RelatedProduct[];
+  recentlyViewedProducts?: RelatedProduct[];
   breadcrumbs: { label: string; to?: string }[];
 };

@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 import { buildPdpSubnavItems, pdpSectionScrollMarginClassName } from "../constants/pdpSubnav";
 import { PageShell } from "../components/layout/PageShell";
 import { AskFab } from "../components/product/AskFab";
@@ -14,6 +15,8 @@ import { ProductSpecifications } from "../components/product/ProductSpecificatio
 import { ProductVisualizationCTA } from "../components/product/ProductVisualizationCTA";
 import { montebianco80 } from "../data/products/montebianco-80";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
+import { recordRecentlyViewedProduct } from "../hooks/useRecentlyViewedProducts";
+import { productToRelatedProduct } from "../lib/productToRelatedProduct";
 
 function RevealSection({ children }: { children: React.ReactNode }) {
   const { ref, className } = useRevealOnScroll();
@@ -27,6 +30,10 @@ function RevealSection({ children }: { children: React.ReactNode }) {
 export function ProductDetailPage() {
   const product = montebianco80;
   const subnavItems = buildPdpSubnavItems();
+
+  useEffect(() => {
+    recordRecentlyViewedProduct(productToRelatedProduct(product));
+  }, [product]);
 
   return (
     <>
@@ -91,7 +98,11 @@ export function ProductDetailPage() {
 
         <RevealSection>
           <Section id="pdp-podobne" className={pdpSectionScrollMarginClassName}>
-            <ProductRecommendations products={product.similarProducts} />
+            <ProductRecommendations
+              similarProducts={product.similarProducts}
+              recentlyViewedProducts={product.recentlyViewedProducts}
+              currentProductId={product.id}
+            />
           </Section>
         </RevealSection>
       </PageShell>
