@@ -1,4 +1,5 @@
 import { Container } from "../ui/Container";
+import { TextRevealLead } from "../motion/TextRevealLead";
 import { Breadcrumbs, type BreadcrumbItem } from "../orientation/Breadcrumbs";
 import { SectionHeader } from "../structural/SectionHeader";
 import type { ProductFeature } from "../../types/product";
@@ -6,6 +7,7 @@ import type { ProductFeature } from "../../types/product";
 type ProductEditorialProps = {
   eyebrow: string;
   title: string;
+  lead: string;
   paragraphs: string[];
   features: ProductFeature[];
   breadcrumbs?: BreadcrumbItem[];
@@ -14,6 +16,7 @@ type ProductEditorialProps = {
 export function ProductEditorial({
   eyebrow,
   title,
+  lead,
   paragraphs,
   features,
   breadcrumbs,
@@ -27,6 +30,7 @@ export function ProductEditorial({
           <div>
             <SectionHeader eyebrow={eyebrow} title={title} titleId="editorial-title" className="mb-8" />
             <div className="space-y-6">
+              <TextRevealLead>{lead}</TextRevealLead>
               {paragraphs.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)} className="t-body-lg max-w-prose">
                   {paragraph}

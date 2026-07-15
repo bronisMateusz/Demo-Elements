@@ -128,6 +128,7 @@ export type Product = {
   editorial: {
     eyebrow: string;
     title: string;
+    lead: string;
     paragraphs: string[];
     features: ProductFeature[];
   };

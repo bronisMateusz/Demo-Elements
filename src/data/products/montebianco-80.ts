@@ -294,8 +294,8 @@ export const montebianco80: Product = {
   editorial: {
     eyebrow: "Informacje o produkcie",
     title: "Klasyczna forma, współczesna funkcjonalność",
+    lead: "Kolekcja szafek podumywalkowych Montebianco zaprasza do aranżowania stylowej łazienki w dobrym guście. Starannie dopracowane proporcje i detale przywodzą na myśl czasy tradycyjnych wartości i estetyki, a klasyczna forma łączy się z perfekcją wykonania i funkcjonalnością, której wymagają dzisiejsze standardy.",
     paragraphs: [
-      "Kolekcja szafek podumywalkowych Montebianco zaprasza do aranżowania stylowej łazienki w dobrym guście. Starannie dopracowane proporcje i detale przywodzą na myśl czasy tradycyjnych wartości i estetyki, a klasyczna forma łączy się z perfekcją wykonania i funkcjonalnością, której wymagają dzisiejsze standardy.",
       "W miejsce standardowo dołączanych uchwytów w dekorze postarzanej cyny możesz dobrać uchwyty lakierowane w kolorze czarnego matu, złotego połysku lub błyszczące, kryształowe, które stworzą klimat glamour. Montebianco to seria uniwersalna i modułowa — dobierzesz do niej różnorodne umywalki z kolekcji ORiSTO i stworzysz unikalną aranżację.",
     ],
     features: [

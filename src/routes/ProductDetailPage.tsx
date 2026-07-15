@@ -52,6 +52,7 @@ export function ProductDetailPage() {
               }))}
               eyebrow={product.editorial.eyebrow}
               title={product.editorial.title}
+              lead={product.editorial.lead}
               paragraphs={product.editorial.paragraphs}
               features={product.editorial.features}
             />
