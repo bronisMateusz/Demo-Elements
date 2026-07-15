@@ -10,7 +10,7 @@ export function productToRelatedProduct(
     image: product.images[0],
     href: "#",
     price: product.price.current,
-    badge: product.badges[0],
+    badge: product.badges.find((badge) => badge.variant !== "brand"),
     hasStorage: true,
   };
 }

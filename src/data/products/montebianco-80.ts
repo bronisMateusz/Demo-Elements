@@ -8,6 +8,9 @@ const montebiancoFrontImage = {
 
 const montebiancoFinishThumbImage = montebiancoFrontImage;
 
+const montebiancoPriceLegalNote =
+  "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie.";
+
 export const montebiancoVariants: ProductVariants = {
   axes: [
     {
@@ -59,8 +62,8 @@ export const montebiancoVariants: ProductVariants = {
         previous: "2 190 zł",
         discount: "Taniej o 400 zł",
         note: "Wyjątkowa cena Elements",
-        legalNote:
-          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+        lowestPrice30Days: "2 090 zł",
+        legalNote: montebiancoPriceLegalNote,
       },
     },
     {
@@ -72,8 +75,8 @@ export const montebiancoVariants: ProductVariants = {
         previous: "2 290 zł",
         discount: "Taniej o 400 zł",
         note: "Wyjątkowa cena Elements",
-        legalNote:
-          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+        lowestPrice30Days: "2 190 zł",
+        legalNote: montebiancoPriceLegalNote,
       },
     },
     {
@@ -85,8 +88,8 @@ export const montebiancoVariants: ProductVariants = {
         previous: "2 490 zł",
         discount: "Taniej o 400 zł",
         note: "Wyjątkowa cena Elements",
-        legalNote:
-          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+        lowestPrice30Days: "2 390 zł",
+        legalNote: montebiancoPriceLegalNote,
       },
       available: false,
       availabilityNote:
@@ -101,8 +104,8 @@ export const montebiancoVariants: ProductVariants = {
         previous: "2 390 zł",
         discount: "Taniej o 400 zł",
         note: "Wyjątkowa cena Elements",
-        legalNote:
-          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+        lowestPrice30Days: "2 190 zł",
+        legalNote: montebiancoPriceLegalNote,
       },
     },
     {
@@ -114,8 +117,8 @@ export const montebiancoVariants: ProductVariants = {
         previous: "2 490 zł",
         discount: "Taniej o 400 zł",
         note: "Wyjątkowa cena Elements",
-        legalNote:
-          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+        lowestPrice30Days: "2 290 zł",
+        legalNote: montebiancoPriceLegalNote,
       },
     },
     {
@@ -127,8 +130,8 @@ export const montebiancoVariants: ProductVariants = {
         previous: "2 690 zł",
         discount: "Taniej o 400 zł",
         note: "Wyjątkowa cena Elements",
-        legalNote:
-          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+        lowestPrice30Days: "2 490 zł",
+        legalNote: montebiancoPriceLegalNote,
       },
     },
   ],
@@ -146,6 +149,7 @@ function related(
   options: {
     hasStorage?: boolean;
     price?: string;
+    pricePrevious?: string;
     subtitle?: string;
     badge?: RelatedProduct["badge"];
     image?: RelatedProduct["image"];
@@ -169,6 +173,7 @@ function related(
     href: "#",
     hasStorage: options.hasStorage ?? true,
     price: options.price,
+    pricePrevious: options.pricePrevious,
     subtitle: options.subtitle,
     badge: options.badge,
     swatch: options.swatch,
@@ -181,7 +186,6 @@ const montebiancoRecentlyViewed: RelatedProduct[] = [
   related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała", {
     subtitle: "Lakier mat",
     price: "890 zł",
-    badge: { label: "Elements Icon", variant: "brand" },
     image: { src: montebiancoFrontImage.src, alt: "Umywalka ORiSTO 80 cm" },
     swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
     colorCount: 2,
@@ -220,18 +224,15 @@ export const montebianco80: Product = {
   brand: "ORiSTO",
   title: "Szafka podumywalkowa Montebianco 80 cm biały mat",
   sku: "KBN: MONTESU0802S02",
-  badges: [
-    { label: "Bestseller", variant: "gold" },
-    { label: "Nowość", variant: "default" },
-  ],
+  badges: [{ label: "Bestseller", variant: "gold" }],
   variants: montebiancoVariants,
   price: {
     current: "1 990 zł",
     previous: "2 390 zł",
     discount: "Taniej o 400 zł",
     note: "Wyjątkowa cena Elements",
-    legalNote:
-      "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+    lowestPrice30Days: "2 190 zł",
+    legalNote: montebiancoPriceLegalNote,
   },
   cta: {
     label: "Interesuje Cię ten produkt? Zadaj pytanie",
@@ -270,7 +271,6 @@ export const montebianco80: Product = {
     related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała", {
       subtitle: "Lakier mat",
       price: "890 zł",
-      badge: { label: "Elements Icon", variant: "brand" },
       image: { src: montebiancoFrontImage.src, alt: "Umywalka ORiSTO 80 cm" },
       images: [
         { src: montebiancoFrontImage.src, alt: "Umywalka ORiSTO — front" },
@@ -282,7 +282,9 @@ export const montebianco80: Product = {
     }),
     related("montebianco-tall", "Montebianco", "Słupek wysoki Montebianco, biały mat", {
       subtitle: "Front MDF wilgocioodporny",
-      price: "2 490 zł",
+      price: "2 090 zł",
+      pricePrevious: "2 490 zł",
+      badge: { label: "Promocja", variant: "promo" },
       image: { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Słupek Montebianco" },
       images: [
         { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Słupek Montebianco — aranżacja" },
@@ -486,7 +488,6 @@ export const montebianco80: Product = {
     related("larga", "Cersanit", "Szafka Larga 80 cm, czarny mat, dwie szuflady", {
       subtitle: "Lakier mat",
       price: "1 990 zł",
-      badge: { label: "Elements Icon", variant: "brand" },
       image: { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka Larga 80 cm" },
       images: [
         { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka Larga — aranżacja" },

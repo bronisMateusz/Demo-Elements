@@ -29,7 +29,7 @@ export function ProductBuyBox({ product }: ProductBuyBoxProps) {
 
   return (
     <div className="lg:pt-6">
-      <ProductBadges badges={product.badges} />
+      <ProductBadges badges={product.badges} price={displayPrice} />
 
       <p className="mb-2 font-body text-xs uppercase tracking-wide text-neutral-500">
         {product.brand}

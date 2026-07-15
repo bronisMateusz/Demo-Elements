@@ -22,6 +22,11 @@
   --color-gold-500: #b8975a;
   --color-gold-600: #9a7d45;
 
+  /* Product badges */
+  --color-badge-brand: #3d5249;
+  --color-promo: #a54840;
+  --color-promo-muted: #faf3f2;
+
   /* Typography */
   --font-heading:
     "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;

@@ -206,7 +206,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     const image = images[0];
 
     return (
-      <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col")}>
+      <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col gap-6 pb-6 lg:gap-8 lg:pb-8")}>
         <div aria-label="Galeria produktu" className={fillViewport ? "h-full min-h-0" : undefined}>
           <GallerySlideContent
             image={image}
@@ -229,7 +229,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   }
 
   return (
-    <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col")}>
+    <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col gap-6 pb-6 lg:gap-8 lg:pb-8")}>
       <div
         className={cn(
           "flex gap-4 lg:gap-6",
@@ -287,8 +287,8 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
 
       <p
         className={cn(
-          "mt-3 text-sm text-neutral-500",
-          fillViewport ? "shrink-0 lg:block" : "hidden lg:block",
+          "text-sm text-neutral-500",
+          fillViewport ? "shrink-0 lg:block" : "mt-3 hidden lg:block",
         )}
         aria-live="polite"
       >

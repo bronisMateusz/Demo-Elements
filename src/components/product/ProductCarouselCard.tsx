@@ -1,5 +1,6 @@
 import { useCallback, useState, type MouseEvent } from "react";
 import { cn } from "../../lib/cn";
+import { Badge } from "../ui/Badge";
 import {
   btnAnimatedBaseClassName,
   btnAnimatedPrimaryClassName,
@@ -70,10 +71,14 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
           />
         ))}
 
-        {product.badge ? (
-          <span className="absolute left-3 top-3 z-[2] inline-flex items-center border-0 bg-[#3d5249] px-2.5 py-1.5 font-body text-[10px] font-medium uppercase leading-none tracking-wide text-neutral-0">
+        {product.badge && product.badge.variant !== "brand" ? (
+          <Badge
+            variant={product.badge.variant ?? "default"}
+            size="sm"
+            className="absolute left-3 top-3 z-[2]"
+          >
             {product.badge.label}
-          </span>
+          </Badge>
         ) : null}
 
         <ProductFavoriteButton
@@ -130,7 +135,21 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
         ) : null}
 
         {product.price ? (
-          <p className="mt-2 mb-0 font-body text-ui text-neutral-900">{product.price}</p>
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <p
+              className={cn(
+                "mb-0 font-body text-ui tabular-nums",
+                product.pricePrevious ? "text-promo" : "text-neutral-900",
+              )}
+            >
+              {product.price}
+            </p>
+            {product.pricePrevious ? (
+              <p className="mb-0 font-body text-sm tabular-nums text-neutral-500 line-through decoration-neutral-400">
+                {product.pricePrevious}
+              </p>
+            ) : null}
+          </div>
         ) : null}
 
         {product.swatch || variantMeta ? (

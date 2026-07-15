@@ -1,6 +1,6 @@
 export type ProductBadge = {
   label: string;
-  variant?: "default" | "gold" | "brand" | "outline";
+  variant?: "default" | "gold" | "brand" | "outline" | "promo";
 };
 
 export type ProductImageFocalPoint = {
@@ -22,6 +22,8 @@ export type ProductPrice = {
   previous?: string;
   discount?: string;
   note?: string;
+  /** Omnibus — lowest price in the 30 days before the reduction (may differ from `previous`). */
+  lowestPrice30Days?: string;
   legalNote?: string;
 };
 
@@ -84,6 +86,7 @@ export type RelatedProduct = {
   href: string;
   hasStorage?: boolean;
   price?: string;
+  pricePrevious?: string;
   subtitle?: string;
   badge?: ProductBadge;
   swatch?: ProductImage;

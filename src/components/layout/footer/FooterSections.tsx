@@ -1,6 +1,7 @@
 import { Container } from "../../ui/Container";
 import { Button } from "../../ui/Button";
 import { footerColumns, footerSocialLinks } from "../../../data/nav";
+import { FooterSmartbeesCredit } from "./FooterSmartbeesCredit";
 
 export function FooterNewsletter() {
   return (
@@ -65,23 +66,26 @@ export function FooterMain() {
 
 export function FooterLegal() {
   return (
-    <Container className="flex flex-col gap-6 border-t border-neutral-200 py-8 md:flex-row md:items-center md:justify-between">
+    <Container className="grid gap-6 border-t border-neutral-200 py-8 md:grid-cols-[1fr_auto] md:items-center">
       <p className="text-sm text-neutral-500">
         © {new Date().getFullYear()} Elements. Wszelkie prawa zastrzeżone.
       </p>
-      <ul className="flex list-none items-center gap-4">
-        {footerSocialLinks.map((link) => (
-          <li key={link.label}>
-            <a
-              href={link.href}
-              className="inline-flex h-10 w-10 items-center justify-center text-neutral-600 transition-colors hover:text-gold-500"
-              aria-label={link.label}
-            >
-              <i className={link.iconClass} aria-hidden="true" />
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-wrap items-center gap-5 md:gap-6">
+        <FooterSmartbeesCredit />
+        <ul className="flex list-none items-center gap-4">
+          {footerSocialLinks.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                className="inline-flex h-10 w-10 items-center justify-center text-neutral-600 transition-colors hover:text-gold-500"
+                aria-label={link.label}
+              >
+                <i className={link.iconClass} aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Container>
   );
 }
