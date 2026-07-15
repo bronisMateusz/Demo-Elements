@@ -31287,9 +31287,19 @@ function injectAgentationStyles(minimalToolbar) {
       justify-content: flex-start !important;
     }
 
-    .elements-agentation-toolbar--minimal [class*="toolbarContainer"] {
+    .elements-agentation-toolbar--minimal [class*="toolbarContainer"][class*="expanded"] {
       width: auto !important;
       min-width: 0 !important;
+      margin-left: 0 !important;
+      align-self: flex-start !important;
+    }
+
+    .elements-agentation-toolbar--minimal [class*="toolbarContainer"][class*="collapsed"] {
+      width: 44px !important;
+      height: 44px !important;
+      min-width: 44px !important;
+      border-radius: 22px !important;
+      padding: 0 !important;
       margin-left: 0 !important;
       align-self: flex-start !important;
     }
