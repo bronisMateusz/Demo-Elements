@@ -20,8 +20,8 @@ export function Header() {
     <>
       <header
         className={cn(
-          "site-header sticky top-0 z-[100] bg-bg/95 backdrop-blur-sm",
-          isScrolled && "is-scrolled",
+          "sticky top-0 z-[100] bg-neutral-0/95 backdrop-blur-sm transition-[border-color,background-color] duration-base ease-luxury",
+          isScrolled && "border-b border-neutral-200 [background:color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
         id="siteHeader"
       >

@@ -9,10 +9,10 @@ import { cn } from "../../lib/cn";
 import { buttonClassName } from "../ui/buttonClassName";
 
 const menuItemClass =
-  "flex items-center gap-3 rounded-sm px-3 py-3 text-small font-medium leading-compact text-text-strong no-underline transition-[background-color] duration-fast ease-out hover:bg-bg-muted focus-visible:bg-bg-muted focus-visible:outline-2 focus-visible:outline-offset-[var(--focus-ring-offset)] focus-visible:outline-focus-ring";
+  "flex items-center gap-3 rounded-xs px-3 py-3 text-sm font-medium leading-compact text-neutral-800 no-underline transition-[background-color] duration-fast ease-out hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800";
 
 const sectionTitleClassName =
-  "m-0 px-3 pt-2 pb-1 text-eyebrow font-medium uppercase tracking-wide text-text-muted";
+  "m-0 px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-neutral-500";
 
 function PrototypeMenuLink({
   item,
@@ -41,7 +41,7 @@ function PrototypeMenuSection({
   return (
     <>
       <li role="none">
-        <div className="mx-3 my-2 h-px bg-border" role="separator" aria-hidden="true" />
+        <div className="mx-3 my-2 h-px bg-neutral-200" role="separator" aria-hidden="true" />
         <p className={sectionTitleClassName}>{title}</p>
       </li>
       {items.map((item) => (
@@ -61,7 +61,7 @@ export function PrototypeFabs() {
   useEffect(() => {
     if (!open) return;
 
-    const onPointerDown = (event: MouseEvent) => {
+    const onPointerDown = (event: PointerEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) {
         setOpen(false);
       }
@@ -71,20 +71,25 @@ export function PrototypeFabs() {
       if (event.key === "Escape") setOpen(false);
     };
 
-    document.addEventListener("mousedown", onPointerDown);
+    // Defer so the opening click does not immediately close the menu.
+    const listenerId = window.setTimeout(() => {
+      document.addEventListener("pointerdown", onPointerDown);
+    }, 0);
+
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.removeEventListener("mousedown", onPointerDown);
+      window.clearTimeout(listenerId);
+      document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
   return (
     <div
-      className="fixed right-4 bottom-4 z-[300] max-lg:right-3 max-lg:bottom-3"
+      className="fixed bottom-4 left-1/2 z-[300] -translate-x-1/2 max-lg:bottom-3"
       ref={rootRef}
     >
-      <div className="relative">
+      <div className="relative overflow-visible">
         <button
           type="button"
           className={buttonClassName({
@@ -100,7 +105,7 @@ export function PrototypeFabs() {
           <span className="max-[479px]:sr-only">Zasoby</span>
           <i
             className={cn(
-              "ph ph-caret-down text-sm transition-transform duration-fast ease-out",
+              "ph ph-caret-up text-sm transition-transform duration-fast ease-out",
               open && "rotate-180",
             )}
             aria-hidden="true"
@@ -109,7 +114,7 @@ export function PrototypeFabs() {
 
         {open ? (
           <div
-            className="absolute right-0 bottom-[calc(100%+var(--space-2))] max-h-[min(70vh,28rem)] min-w-[min(360px,calc(100vw-var(--space-6)))] overflow-auto rounded-sm border border-border bg-bg shadow-2"
+            className="absolute bottom-full left-1/2 z-10 mb-2 max-h-[min(70vh,28rem)] min-w-[min(360px,calc(100vw-2*var(--spacing-gutter)))] -translate-x-1/2 overflow-auto rounded-xs border border-neutral-200 bg-neutral-0 shadow-2"
             id={menuId}
             role="menu"
             aria-label="Skróty prototypu"

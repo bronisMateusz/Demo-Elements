@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { cn } from "../lib/cn";
 import { isMotionPaused, subscribeMotionPreference } from "../lib/a11yPreferences";
 
 type UseRevealOnScrollOptions = {
@@ -44,5 +45,12 @@ export function useRevealOnScroll<T extends HTMLElement = HTMLDivElement>(
     });
   }, []);
 
-  return { ref, isVisible, className: isVisible ? "reveal-on-scroll is-visible" : "reveal-on-scroll" };
+  return {
+    ref,
+    isVisible,
+    className: cn(
+      "translate-y-3 opacity-0 transition-[opacity,transform] duration-base ease-luxury",
+      isVisible && "translate-y-0 opacity-100",
+    ),
+  };
 }

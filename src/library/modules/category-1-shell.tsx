@@ -16,7 +16,7 @@ export const headerModule: LibraryModule = {
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName} data-lib-full-bleed>
           <Header />
-          <div className="grid min-h-32 place-items-center border-b border-dashed border-border bg-bg-muted text-small text-text-muted">
+          <div className="grid min-h-32 place-items-center border-b border-dashed border-neutral-200 bg-neutral-50 text-sm text-neutral-500">
             Treść strony
           </div>
         </div>

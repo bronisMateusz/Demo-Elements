@@ -4,9 +4,9 @@ import { cn } from "../../lib/cn";
 export type SectionTone = "default" | "muted" | "warm";
 
 const sectionTones: Record<SectionTone, string> = {
-  default: "bg-bg",
-  muted: "bg-bg-muted",
-  warm: "bg-bg-warm",
+  default: "bg-neutral-0",
+  muted: "bg-neutral-50",
+  warm: "bg-neutral-100",
 };
 
 type SectionProps = {

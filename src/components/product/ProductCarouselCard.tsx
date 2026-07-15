@@ -1,26 +1,22 @@
 import { useCallback, useState, type MouseEvent } from "react";
 import { cn } from "../../lib/cn";
-import { useProductFavorites } from "../../hooks/useProductFavorites";
+import {
+  btnAnimatedBaseClassName,
+  btnAnimatedPrimaryClassName,
+} from "../ui/btnAnimatedClassName";
 import type { RelatedProduct } from "../../types/product";
+import { ProductFavoriteButton } from "./ProductFavoriteButton";
 
 type ProductCarouselCardProps = {
   product: RelatedProduct;
   className?: string;
+  compact?: boolean;
 };
 
-export function ProductCarouselCard({ product, className }: ProductCarouselCardProps) {
+export function ProductCarouselCard({ product, className, compact = false }: ProductCarouselCardProps) {
   const images = product.images?.length ? product.images : [product.image];
   const [cartAdded, setCartAdded] = useState(false);
-  const { isFavorite, toggle } = useProductFavorites(product.id);
-
-  const toggleFavorite = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-      toggle();
-    },
-    [toggle],
-  );
+  const hasMultipleImages = images.length > 1;
 
   const handleQuickAdd = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -40,54 +36,62 @@ export function ProductCarouselCard({ product, className }: ProductCarouselCardP
 
   return (
     <article
-      className={cn("product-card product-card--carousel group/card relative flex h-full flex-col", className)}
+      className={cn("group/card relative flex h-full flex-col bg-neutral-0", className)}
     >
       <a
         href={product.href}
-        className="product-card__overlay-link"
+        className="absolute inset-0 z-[1] no-underline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800"
         aria-label={`Przejdź do: ${product.title}`}
       >
         <span className="sr-only">Przejdź do: {product.title}</span>
       </a>
 
-      <div
-        className={cn(
-          "product-card__media relative aspect-square shrink-0 overflow-hidden bg-bg-product-card",
-          images.length > 1 && "product-card__media--multi",
-        )}
-      >
+      <div className="relative aspect-square shrink-0 overflow-hidden bg-[#eef1f4]">
         {images.map((image, index) => (
           <img
             key={`${product.id}-${index}`}
             src={image.src}
             alt={image.alt || product.title}
-            className="product-card__image product-card__image-layer absolute inset-0 h-full w-full object-cover"
+            className={cn(
+              "absolute inset-0 h-full w-full object-cover transition-opacity duration-slow ease-luxury",
+              index === 0
+                ? cn(
+                    "opacity-100",
+                    hasMultipleImages &&
+                      "group-hover/card:opacity-0 group-focus-within/card:opacity-0",
+                  )
+                : cn(
+                    "opacity-0",
+                    hasMultipleImages &&
+                      "group-hover/card:opacity-100 group-focus-within/card:opacity-100",
+                  ),
+            )}
             loading="lazy"
           />
         ))}
 
         {product.badge ? (
-          <span className="product-card__badge absolute left-3 top-3 z-[2]">{product.badge.label}</span>
+          <span className="absolute left-3 top-3 z-[2] inline-flex items-center border-0 bg-[#3d5249] px-2.5 py-1.5 font-body text-[10px] font-medium uppercase leading-none tracking-wide text-neutral-0">
+            {product.badge.label}
+          </span>
         ) : null}
 
-        <button
-          type="button"
-          className={cn(
-            "product-card__wishlist absolute right-3 top-3 z-[2]",
-            isFavorite && "product-card__wishlist--active",
-          )}
-          aria-label={isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych"}
-          aria-pressed={isFavorite}
-          onClick={toggleFavorite}
-        >
-          <i className={cn("ph", isFavorite ? "ph-heart-fill" : "ph-heart")} aria-hidden="true" />
-        </button>
+        <ProductFavoriteButton
+          sku={product.id}
+          stopPropagation
+          variant="elevated"
+          className="absolute right-3 top-3 z-[2]"
+        />
 
         <button
           type="button"
           className={cn(
-            "product-card__quick-add",
-            cartAdded && "product-card__quick-add--added",
+            btnAnimatedBaseClassName,
+            btnAnimatedPrimaryClassName,
+            "absolute inset-x-4 bottom-4 z-[3] inline-flex h-11 items-center justify-center gap-2 border-0 px-4 font-body text-sm font-medium uppercase leading-none tracking-wide opacity-0 shadow-1 transition-opacity duration-base ease-luxury pointer-events-none",
+            "group-hover/card:pointer-events-auto group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:opacity-100",
+            cartAdded && "pointer-events-auto opacity-100",
+            "[&_i]:text-inherit",
           )}
           aria-live="polite"
           onClick={handleQuickAdd}
@@ -106,15 +110,27 @@ export function ProductCarouselCard({ product, className }: ProductCarouselCardP
         </button>
       </div>
 
-      <div className="product-card__body flex flex-1 flex-col px-4 pb-5 pt-4">
-        <h3 className="m-0 font-heading text-[18px] leading-[1.35] text-text">{product.title}</h3>
+      <div
+        className={cn(
+          "flex flex-1 flex-col pt-4",
+          compact ? "px-3 pb-4" : "px-4 pb-5",
+        )}
+      >
+        <h3
+          className={cn(
+            "m-0 font-heading text-neutral-900",
+            compact ? "text-sm leading-compact" : "text-[18px] leading-[1.35]",
+          )}
+        >
+          {product.title}
+        </h3>
 
         {product.subtitle ? (
-          <p className="mt-1.5 mb-0 font-body text-small text-text-muted">{product.subtitle}</p>
+          <p className="mt-1.5 mb-0 font-body text-sm text-neutral-500">{product.subtitle}</p>
         ) : null}
 
         {product.price ? (
-          <p className="mt-2 mb-0 font-body text-ui text-text">{product.price}</p>
+          <p className="mt-2 mb-0 font-body text-ui text-neutral-900">{product.price}</p>
         ) : null}
 
         {product.swatch || variantMeta ? (
@@ -123,12 +139,12 @@ export function ProductCarouselCard({ product, className }: ProductCarouselCardP
               <img
                 src={product.swatch.src}
                 alt={product.swatch.alt || "Próbka koloru"}
-                className="h-6 w-6 shrink-0 border border-border object-cover"
+                className="h-6 w-6 shrink-0 bg-transparent object-contain"
                 loading="lazy"
               />
             ) : null}
             {variantMeta ? (
-              <span className="font-body text-small text-text-muted">{variantMeta}</span>
+              <span className="font-body text-sm text-neutral-500">{variantMeta}</span>
             ) : null}
           </div>
         ) : null}

@@ -12,7 +12,7 @@ export function NotFoundPage() {
       </Helmet>
       <PageShell>
         <Container className="flex min-h-[50vh] flex-col items-center justify-center py-24 text-center">
-          <p className="mb-4 font-body text-eyebrow uppercase tracking-wide text-text-muted">404</p>
+          <p className="mb-4 font-body text-xs uppercase tracking-wide text-neutral-500">404</p>
           <h1 className="t-h1 mb-4">Strona nie została znaleziona</h1>
           <p className="t-body mb-8 max-w-md">
             Szukana strona nie istnieje lub została przeniesiona.
@@ -20,7 +20,7 @@ export function NotFoundPage() {
           <Link to="/" className={buttonClassName({ variant: "primary" })}>
             Wróć do produktu
           </Link>
-          <Link to="/biblioteka" className="mt-4 text-ui text-text-body hover:text-text">
+          <Link to="/biblioteka" className="mt-4 text-ui text-neutral-600 hover:text-neutral-900">
             Przejdź do biblioteki komponentów
           </Link>
         </Container>

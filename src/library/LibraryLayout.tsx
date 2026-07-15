@@ -19,15 +19,18 @@ function LibraryDevToggle() {
   const { devMode, setDevMode } = useLibraryDevModeActions();
 
   return (
-    <label className="a11y-toggle shrink-0 rounded-sm">
-      <span className="a11y-toggle__label">Tryb dev</span>
+    <label className="inline-flex shrink-0 cursor-pointer select-none items-center gap-2 rounded-xs">
+      <span className="text-sm text-neutral-600">Tryb dev</span>
       <input
         type="checkbox"
-        className="a11y-toggle__input"
+        className="peer sr-only"
         checked={devMode}
         onChange={(event) => setDevMode(event.target.checked)}
       />
-      <span className="a11y-toggle__switch" aria-hidden="true" />
+      <span
+        className="relative inline-block h-5 w-9 rounded-full bg-neutral-200 transition-colors duration-fast ease-out after:absolute after:left-0.5 after:top-0.5 after:size-4 after:rounded-full after:bg-neutral-0 after:transition-transform after:duration-fast after:ease-out after:content-[''] peer-checked:bg-neutral-800 peer-checked:after:translate-x-4"
+        aria-hidden="true"
+      />
     </label>
   );
 }
@@ -38,13 +41,13 @@ function LibrarySiteHeader() {
       <div className="container flex h-16 items-center justify-between">
         <Link
           to="/"
-          className="font-heading text-xl text-text no-underline"
+          className="font-heading text-xl text-neutral-900 no-underline"
           aria-label="Elements — strona główna"
         >
           Elements
         </Link>
         <div className="flex items-center gap-4">
-          <span className="hidden text-small text-text-muted sm:inline">Biblioteka komponentów</span>
+          <span className="hidden text-sm text-neutral-500 sm:inline">Biblioteka komponentów</span>
           <LibraryDevToggle />
         </div>
       </div>

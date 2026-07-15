@@ -46,8 +46,8 @@ async function copyRuntimeAssets() {
   }
 
   const requiredProductFiles = [
-    "montebianco/01-front.jpg",
-    "montebianco/placeholder.jpg",
+    "montebianco/01-front.png",
+    "montebianco/02-detail.jpg",
   ];
 
   for (const fileName of requiredProductFiles) {

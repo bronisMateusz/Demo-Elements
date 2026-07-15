@@ -4,15 +4,15 @@ import { cn } from "../../lib/cn";
 export type EyebrowVariant = "default" | "gold" | "muted";
 
 const eyebrowTextVariants: Record<EyebrowVariant, string> = {
-  default: "text-text-muted",
-  gold: "text-gold",
-  muted: "text-text-body",
+  default: "text-neutral-500",
+  gold: "text-gold-500",
+  muted: "text-neutral-600",
 };
 
 const eyebrowRuleVariants: Record<EyebrowVariant, string> = {
-  default: "bg-border-strong",
-  gold: "bg-gold",
-  muted: "bg-border",
+  default: "bg-neutral-300",
+  gold: "bg-gold-500",
+  muted: "bg-neutral-200",
 };
 
 type EyebrowProps = {
@@ -31,7 +31,7 @@ export function Eyebrow({
   return (
     <span
       className={cn(
-        "mb-4 inline-flex items-center gap-3 font-body text-eyebrow font-medium uppercase leading-none tracking-wide",
+        "mb-4 inline-flex items-center gap-3 font-body text-xs font-medium uppercase leading-none tracking-wide",
         eyebrowTextVariants[variant],
         className,
       )}

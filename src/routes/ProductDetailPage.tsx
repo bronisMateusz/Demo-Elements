@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { PageShell } from "../components/layout/PageShell";
+import { AskFab } from "../components/product/AskFab";
 import { Section } from "../components/structural/Section";
 import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
 import { ProductDownloads } from "../components/product/ProductDownloads";
@@ -7,7 +8,6 @@ import { ProductEditorial } from "../components/product/ProductEditorial";
 import { ProductHero } from "../components/product/ProductHero";
 import { ProductInspiration } from "../components/product/ProductInspiration";
 import { ProductRecommendations } from "../components/product/ProductRecommendations";
-import { ProductSeriesGrid } from "../components/product/ProductSeriesGrid";
 import { ProductSpecifications } from "../components/product/ProductSpecifications";
 import { ProductVisualizationCTA } from "../components/product/ProductVisualizationCTA";
 import { montebianco80 } from "../data/products/montebianco-80";
@@ -37,12 +37,6 @@ export function ProductDetailPage() {
 
       <PageShell>
         <ProductHero product={product} />
-
-        <RevealSection>
-          <Section tone="muted">
-            <ProductSeriesGrid title={product.seriesTitle} products={product.seriesProducts} />
-          </Section>
-        </RevealSection>
 
         <RevealSection>
           <Section>
@@ -95,6 +89,8 @@ export function ProductDetailPage() {
           </Section>
         </RevealSection>
       </PageShell>
+
+      <AskFab href={product.cta.href} label={product.cta.actionLabel} />
     </>
   );
 }

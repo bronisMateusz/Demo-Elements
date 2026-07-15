@@ -1,0 +1,61 @@
+---
+description: Tailwind class quality (canonical form, sort order, logical properties)
+globs: src/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# Class quality
+
+Write classes in canonical Tailwind v4 form. After edits: `npm run lint`.
+
+## Correctness
+
+- Only known DS utilities — no typos like `items-cetner`.
+- No conflicting classes on the same element (e.g. `block flex`).
+- No duplicate classes.
+- No redundant variants (e.g. `flex hover:flex`).
+
+## Canonical form (Tailwind v4)
+
+Prefer **named utilities** from theme over `[...]` when Tailwind / `suggestCanonicalClasses` offers them:
+
+- `grow` not `flex-grow`; `bg-linear-to-r` not `bg-gradient-to-r`.
+- `m-0` not `-m-0`; `size-full` not `w-full h-full`.
+- `gap-8` not `gap-x-8 gap-y-8` when values are equal.
+- `rotate-18` not `rotate-[18deg]`; `-rotate-18` not `rotate-[-18deg]`.
+- Negative arbitrary (when no named utility): `top-[-5px]` not `-top-[5px]`.
+- Important as **suffix**: `flex!`, `hover:text-white!` — not `!flex`.
+
+Before saving a class with `[...]`, check IDE suggestions / whether a bracket-free shortcut exists.
+
+## Order and syntax
+
+- Official Tailwind sort order: layout → spacing → typography → color → misc.
+- Consistent variant order: `hover:dark:` not `dark:hover:` (per project convention).
+- Shorthand: `m-2` not `mt-2 mr-2 mb-2 ml-2`.
+- Single space between classes; no trailing spaces.
+
+## Direction (logical, canonical)
+
+Prefer logical inline properties in Tailwind v4 canonical form:
+
+- `inset-s-*` / `inset-e-*` — not `start-*`, `end-*`, `left-*`, `right-*` for inline axis
+  - e.g. `focus:inset-s-4`, `inset-s-5`, `inset-s-1/2`
+- `inset-x-*` when both inline sides share the same value — e.g. `inset-x-0`
+- `ms-*` / `me-*` / `ps-*` / `pe-*` instead of `ml-*` / `mr-*` / `pl-*` / `pr-*`
+- `origin-start` instead of `origin-left`
+
+## Complexity limits
+
+- Target: ≤20 classes per element. When exceeded — extract a child element or a `*ClassName.ts` helper.
+- Do not add classes “just in case”; each must change something.
+
+## Examples
+
+```tsx
+// ✗
+<div className="absolute left-0 right-0 rotate-[18deg] focus:start-4 h-[100px] bg-[#2c2c2c]" />
+
+// ✓
+<div className="absolute inset-x-0 rotate-18 focus:inset-s-4 h-25 bg-neutral-800" />
+```

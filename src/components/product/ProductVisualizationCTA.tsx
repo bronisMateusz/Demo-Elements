@@ -11,7 +11,7 @@ export function ProductVisualizationCTA({ title, href, label }: ProductVisualiza
   return (
     <section aria-labelledby="viz-cta-title">
       <Container>
-        <div className="border-t border-border py-12 text-center md:py-16">
+        <div className="border-t border-neutral-200 py-12 text-center md:py-16">
           <h2 className="t-h3 mx-auto mb-8 max-w-2xl" id="viz-cta-title">
             {title}
           </h2>

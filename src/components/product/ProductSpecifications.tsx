@@ -19,14 +19,14 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
     <section aria-labelledby="specs-title">
       <Container>
         <SectionHeader title="Specyfikacja techniczna" titleId="specs-title" />
-        <dl className="grid gap-x-12 gap-y-0 border-t border-border sm:grid-cols-2">
+        <dl className="grid gap-x-12 gap-y-0 border-t border-neutral-200 sm:grid-cols-2">
           {visibleSpecs.map((spec) => (
             <div
               key={spec.label}
-              className="grid grid-cols-[1fr_auto] gap-4 border-b border-border py-4"
+              className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-200 py-4"
             >
-              <dt className="text-ui text-text-body">{spec.label}</dt>
-              <dd className="text-ui text-text text-right">{spec.value}</dd>
+              <dt className="text-ui text-neutral-600">{spec.label}</dt>
+              <dd className="text-ui text-neutral-900 text-right">{spec.value}</dd>
             </div>
           ))}
         </dl>
@@ -34,7 +34,7 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
           <button
             type="button"
             className={cn(
-              "mt-6 inline-flex items-center gap-2 font-body text-ui text-text-strong underline-offset-4 hover:underline",
+              "mt-6 inline-flex items-center gap-2 font-body text-ui text-neutral-800 underline-offset-4 hover:underline",
             )}
             aria-expanded={expanded}
             aria-controls={panelId}

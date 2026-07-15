@@ -12,7 +12,7 @@ export function ProductArchitectCTA({ title, description, href, label }: Product
   return (
     <section aria-labelledby="architect-cta-title">
       <Container>
-        <div className="flex flex-col gap-6 border border-border bg-bg-muted p-8 md:flex-row md:items-center md:justify-between md:p-12">
+        <div className="flex flex-col gap-6 border border-neutral-200 bg-neutral-50 p-8 md:flex-row md:items-center md:justify-between md:p-12">
           <div className="max-w-xl">
             <h2 className="t-h3 mb-3" id="architect-cta-title">
               {title}

@@ -1,5 +1,6 @@
 import { Container } from "../ui/Container";
 import type { RelatedProduct } from "../../types/product";
+import { productCarouselBleedWrapperClassName } from "./productCarouselClassName";
 import { ProductCarousel } from "./ProductCarousel";
 
 type ProductSeriesGridProps = {
@@ -24,7 +25,7 @@ export function ProductSeriesGrid({
           </h2>
           <a
             href={linkHref}
-            className="inline-flex items-center gap-2 font-body text-eyebrow uppercase tracking-wide text-text-body no-underline transition-colors hover:text-text"
+            className="inline-flex items-center gap-2 font-body text-xs uppercase tracking-wide text-neutral-600 no-underline transition-colors hover:text-neutral-900"
           >
             {linkLabel}
             <i className="ph ph-arrow-right text-sm" aria-hidden="true" />
@@ -32,8 +33,12 @@ export function ProductSeriesGrid({
         </div>
       </Container>
 
-      <div className="product-carousel-bleed">
-        <ProductCarousel products={products} labelledBy="series-title" bleed={false} />
+      <div className={productCarouselBleedWrapperClassName}>
+        <ProductCarousel
+          products={products}
+          labelledBy="series-title"
+          layout="bleed"
+        />
       </div>
     </div>
   );

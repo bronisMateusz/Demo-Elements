@@ -1,5 +1,6 @@
 import { category1Modules } from "./modules/category-1-shell";
 import { category2Modules } from "./modules/category-2-orientation";
+import { category2MotionModules } from "./modules/category-2-motion";
 import { category3Modules } from "./modules/category-3-product";
 import type { LibraryCategory } from "./types";
 
@@ -17,15 +18,15 @@ export const libraryCategories: LibraryCategory[] = [
     number: 2,
     slug: "orientacja-i-nawigacja",
     title: "Orientacja i nawigacja",
-    subtitle: "Okruszki nawigacji i elementy orientacyjne.",
-    modules: category2Modules,
+    subtitle: "Okruszki, CTA, animacje layout (SharedLayoutBg / Underline).",
+    modules: [...category2Modules, ...category2MotionModules],
   },
   {
     id: "cat-3",
     number: 3,
     slug: "produkt",
     title: "Produkt",
-    subtitle: "Komponenty strony produktu — galeria, buy box, karta, specyfikacja.",
+    subtitle: "Komponenty strony produktu — galeria, buy box, warianty, karta, specyfikacja.",
     modules: category3Modules,
   },
 ];

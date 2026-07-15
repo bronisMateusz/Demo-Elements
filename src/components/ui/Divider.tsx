@@ -5,5 +5,5 @@ type DividerProps = {
 };
 
 export function Divider({ className }: DividerProps) {
-  return <hr className={cn("m-0 border-0 border-t border-border", className)} aria-hidden="true" />;
+  return <hr className={cn("m-0 border-0 border-t border-neutral-200", className)} aria-hidden="true" />;
 }

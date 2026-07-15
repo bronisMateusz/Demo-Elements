@@ -34,7 +34,7 @@ export function ProductEditorial({
               ))}
             </div>
           </div>
-          <ul className="flex list-none flex-col gap-8 border-t border-border pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
+          <ul className="flex list-none flex-col gap-8 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
             {features.map((feature) => (
               <li key={feature.title}>
                 <h3 className="t-h4 mb-2">{feature.title}</h3>

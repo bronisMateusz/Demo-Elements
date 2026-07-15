@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { lockLightboxScroll } from "../../hooks/useSiteChrome";
@@ -12,13 +11,9 @@ import "swiper/css";
 
 type ProductGalleryProps = {
   images: ProductImage[];
-  /** W hero PDP — wypełnia sticky kolumnę (100svh − header). */
+  /** On PDP hero — fills the sticky column (100svh − header). */
   layout?: "default" | "viewport";
 };
-
-const galleryZoomCursorStyle = {
-  cursor: `url("${assetUrl("cursors/gallery-plus.svg")}") 16 16, crosshair`,
-} as const;
 
 type GalleryProgressRailProps = {
   count: number;
@@ -32,9 +27,9 @@ function GalleryProgressRail({ count, activeIndex, onSelect }: GalleryProgressRa
   return (
     <div className="hidden h-full w-6 shrink-0 lg:block">
       <div className="relative h-full">
-        <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border">
+        <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-neutral-200">
           <span
-            className="absolute left-0 w-px bg-text transition-[top,height] duration-base ease-out"
+            className="absolute left-0 w-px bg-neutral-900 transition-[top,height] duration-base ease-out"
             style={{
               top: `${activeIndex * segmentHeight}%`,
               height: `${segmentHeight}%`,
@@ -141,12 +136,11 @@ function GallerySlideContent({
       <button
         type="button"
         className={cn(
-          "relative w-full overflow-hidden bg-bg-muted",
+          "relative w-full cursor-crosshair overflow-hidden bg-neutral-50",
           fillViewport
             ? "flex h-full min-h-[min(60vh,640px)] lg:min-h-0"
             : "block aspect-[4/5]",
         )}
-        style={galleryZoomCursorStyle}
         onClick={onOpen}
         aria-label={`Powiększ zdjęcie ${index + 1}`}
       >
@@ -251,8 +245,10 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
 
         <Swiper
           className={cn(
-            "product-gallery-swiper min-w-0 flex-1",
-            fillViewport ? "product-gallery-swiper--viewport h-full" : "product-gallery-swiper--default",
+            "min-w-0 w-full flex-1 [&_.swiper-slide]:h-auto",
+            fillViewport
+              ? "h-full min-h-0 [&_.swiper-slide]:flex [&_.swiper-slide]:h-full [&_.swiper-slide]:items-center"
+              : "max-h-[calc(100svh-var(--spacing-header-h)-48px)]",
           )}
           direction="vertical"
           slidesPerView={1}
@@ -291,7 +287,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
 
       <p
         className={cn(
-          "mt-3 text-small text-text-muted",
+          "mt-3 text-sm text-neutral-500",
           fillViewport ? "shrink-0 lg:block" : "hidden lg:block",
         )}
         aria-live="polite"

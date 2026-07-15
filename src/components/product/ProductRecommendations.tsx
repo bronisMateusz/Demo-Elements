@@ -1,6 +1,7 @@
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../structural/SectionHeader";
 import type { RelatedProduct } from "../../types/product";
+import { productCarouselBleedWrapperClassName } from "./productCarouselClassName";
 import { ProductCarousel } from "./ProductCarousel";
 
 type ProductRecommendationsProps = {
@@ -17,8 +18,8 @@ export function ProductRecommendations({
       <Container>
         <SectionHeader title={title} titleId="similar-title" />
       </Container>
-      <div className="product-carousel-bleed">
-        <ProductCarousel products={products} labelledBy="similar-title" bleed={false} />
+      <div className={productCarouselBleedWrapperClassName}>
+        <ProductCarousel products={products} labelledBy="similar-title" layout="bleed" />
       </div>
     </section>
   );

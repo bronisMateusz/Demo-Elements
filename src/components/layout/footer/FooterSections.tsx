@@ -4,10 +4,10 @@ import { footerColumns, footerSocialLinks } from "../../../data/nav";
 
 export function FooterNewsletter() {
   return (
-    <div className="border-b border-border py-12 md:py-16">
+    <div className="border-b border-neutral-200 py-12 md:py-16">
       <Container className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div className="max-w-md">
-          <p className="mb-2 font-body text-eyebrow uppercase tracking-wide text-text-muted">
+          <p className="mb-2 font-body text-xs uppercase tracking-wide text-neutral-500">
             Newsletter
           </p>
           <h2 className="t-h3">Inspiracje prosto na Twój adres e-mail</h2>
@@ -26,7 +26,7 @@ export function FooterNewsletter() {
             id="footer-email"
             type="email"
             placeholder="Twój adres e-mail"
-            className="h-12 flex-1 border border-border bg-bg px-4 font-body text-ui text-text outline-none transition-[border-color] focus:border-text-strong"
+            className="h-12 flex-1 border border-neutral-200 bg-neutral-0 px-4 font-body text-ui text-neutral-900 outline-none transition-[border-color] focus:border-neutral-800"
           />
           <Button as="button" type="submit" variant="primary">
             Zapisz się
@@ -42,7 +42,7 @@ export function FooterMain() {
     <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4 md:py-16">
       {footerColumns.map((column) => (
         <div key={column.title}>
-          <h3 className="mb-4 font-body text-eyebrow uppercase tracking-wide text-text-muted">
+          <h3 className="mb-4 font-body text-xs uppercase tracking-wide text-neutral-500">
             {column.title}
           </h3>
           <ul className="flex list-none flex-col gap-3">
@@ -50,7 +50,7 @@ export function FooterMain() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className="text-ui text-text-body no-underline transition-colors hover:text-text"
+                  className="text-ui text-neutral-600 no-underline transition-colors hover:text-neutral-900"
                 >
                   {link.label}
                 </a>
@@ -65,8 +65,8 @@ export function FooterMain() {
 
 export function FooterLegal() {
   return (
-    <Container className="flex flex-col gap-6 border-t border-border py-8 md:flex-row md:items-center md:justify-between">
-      <p className="text-small text-text-muted">
+    <Container className="flex flex-col gap-6 border-t border-neutral-200 py-8 md:flex-row md:items-center md:justify-between">
+      <p className="text-sm text-neutral-500">
         © {new Date().getFullYear()} Elements. Wszelkie prawa zastrzeżone.
       </p>
       <ul className="flex list-none items-center gap-4">
@@ -74,7 +74,7 @@ export function FooterLegal() {
           <li key={link.label}>
             <a
               href={link.href}
-              className="inline-flex h-10 w-10 items-center justify-center text-text-body transition-colors hover:text-gold"
+              className="inline-flex h-10 w-10 items-center justify-center text-neutral-600 transition-colors hover:text-gold-500"
               aria-label={link.label}
             >
               <i className={link.iconClass} aria-hidden="true" />

@@ -4,16 +4,16 @@ export type ProductBadge = {
 };
 
 export type ProductImageFocalPoint = {
-  /** Pozioma oś kadrowania (0–100), zgodna z konwencją Drupal Focal Point. */
+  /** Horizontal focal axis (0–100), Drupal Focal Point convention. */
   x: number;
-  /** Pionowa oś kadrowania (0–100), zgodna z konwencją Drupal Focal Point. */
+  /** Vertical focal axis (0–100), Drupal Focal Point convention. */
   y: number;
 };
 
 export type ProductImage = {
   src: string;
   alt: string;
-  /** Opcjonalny punkt ostrości — mapowany 1:1 na Drupal 11 media focal point. */
+  /** Optional focus point — maps 1:1 to Drupal 11 media focal point. */
   focalPoint?: ProductImageFocalPoint;
 };
 
@@ -78,7 +78,7 @@ export type RelatedProduct = {
   brand: string;
   title: string;
   image: ProductImage;
-  /** Dodatkowe ujęcia — karuzela w karcie na hover (jak OKA prd-Card). */
+  /** Extra shots — carousel on card hover (OKA prd-Card). */
   images?: ProductImage[];
   href: string;
   hasStorage?: boolean;
@@ -108,13 +108,19 @@ export type Product = {
   price: ProductPrice;
   cta: {
     label: string;
+    /** Intro copy for ask-row (e.g. "Interesuje Cię ten produkt?"). */
+    lead?: string;
+    /** Highlighted CTA fragment (e.g. "Zadaj pytanie"). */
+    actionLabel?: string;
     href: string;
     secondaryLabel?: string;
     secondaryHref?: string;
   };
-  offerNote?: {
-    title: string;
+  salonCard?: {
+    eyebrow: string;
     description: string;
+    href: string;
+    label: string;
   };
   images: ProductImage[];
   seriesTitle: string;

@@ -1,0 +1,85 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@theme",
+      "description": "Tailwind CSS v4 — design system tokens (--color-*, --font-*, …).",
+      "references": [
+        {
+          "name": "Theme variables",
+          "url": "https://tailwindcss.com/docs/theme"
+        }
+      ]
+    },
+    {
+      "name": "@utility",
+      "description": "Tailwind CSS v4 — custom utility class in CSS.",
+      "references": [
+        {
+          "name": "Adding custom styles",
+          "url": "https://tailwindcss.com/docs/adding-custom-styles"
+        }
+      ]
+    },
+    {
+      "name": "@apply",
+      "description": "Tailwind CSS — apply utility classes to regular CSS.",
+      "references": [
+        {
+          "name": "Functions and directives",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#apply"
+        }
+      ]
+    },
+    {
+      "name": "@source",
+      "description": "Tailwind CSS v4 — additional scan paths for classes.",
+      "references": [
+        {
+          "name": "Detecting classes in source files",
+          "url": "https://tailwindcss.com/docs/detecting-classes-in-source-files"
+        }
+      ]
+    },
+    {
+      "name": "@plugin",
+      "description": "Tailwind CSS v4 — plugin in CSS file.",
+      "references": [
+        {
+          "name": "Functions and directives",
+          "url": "https://tailwindcss.com/docs/functions-and-directives"
+        }
+      ]
+    },
+    {
+      "name": "@variant",
+      "description": "Tailwind CSS v4 — custom variant.",
+      "references": [
+        {
+          "name": "Adding custom variants",
+          "url": "https://tailwindcss.com/docs/adding-custom-styles#adding-custom-variants"
+        }
+      ]
+    },
+    {
+      "name": "@custom-variant",
+      "description": "Tailwind CSS v4 — custom variant alias (e.g. dark).",
+      "references": [
+        {
+          "name": "Adding custom variants",
+          "url": "https://tailwindcss.com/docs/adding-custom-styles#adding-custom-variants"
+        }
+      ]
+    },
+    {
+      "name": "@reference",
+      "description": "Tailwind CSS v4 — import theme/utilities without emitting CSS.",
+      "references": [
+        {
+          "name": "Referencing other CSS files",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#reference"
+        }
+      ]
+    }
+  ]
+}

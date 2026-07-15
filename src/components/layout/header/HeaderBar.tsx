@@ -13,7 +13,7 @@ export function HeaderBar({ onMenuToggle, isScrolled }: HeaderBarProps) {
   return (
     <div
       className={cn(
-        "container flex h-[var(--header-h)] items-center justify-between gap-6",
+        "container flex h-header-h items-center justify-between gap-6",
       )}
     >
       <Link
@@ -36,7 +36,7 @@ export function HeaderBar({ onMenuToggle, isScrolled }: HeaderBarProps) {
             <li key={item.href}>
               <a
                 href={item.href}
-                className="font-body text-ui text-text-body no-underline transition-colors hover:text-text"
+                className="font-body text-ui text-neutral-600 no-underline transition-colors hover:text-neutral-900"
               >
                 {item.label}
               </a>
