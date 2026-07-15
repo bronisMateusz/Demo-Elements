@@ -15,7 +15,17 @@ Klient widuje stabilny kod z `release`. Zespół pracuje na `main` z pełnym rev
 
 1. Połącz repo `Demo-Elements` z Vercel.
 2. **Settings → Git → Production Branch** → ustaw na `release` (nie `main`).
-3. **Settings → Environment Variables** — dodaj zmienne:
+3. **Settings → Environment Variables → Import .env** — importuj pliki z folderu [`env/`](../env/README.md):
+
+| Plik | Scope przy imporcie |
+|------|---------------------|
+| `env/vercel.shared.env` | Production and Preview |
+| `env/vercel.production.env` | Production |
+| `env/vercel.preview.env` | Preview |
+
+Po imporcie `vercel.shared.env` podmień `GITHUB_TOKEN` na prawdziwy PAT. Po pierwszym deployu `main` zaktualizuj `ALLOWED_ORIGINS` na URL preview z Vercel.
+
+Alternatywnie — ręcznie w panelu:
 
 ### Wspólne (Production + Preview)
 
