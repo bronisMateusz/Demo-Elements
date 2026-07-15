@@ -1,0 +1,184 @@
+import { assetUrl } from "../../app/assets";
+import type { Product, RelatedProduct } from "../../types/product";
+
+const placeholder = (name: string): RelatedProduct["image"] => ({
+  src: assetUrl(`products/montebianco/${name}`),
+  alt: "",
+});
+
+function related(
+  id: string,
+  brand: string,
+  title: string,
+  hasStorage = true,
+): RelatedProduct {
+  return {
+    id,
+    brand,
+    title,
+    image: { src: assetUrl("products/montebianco/placeholder.jpg"), alt: title },
+    href: "#",
+    hasStorage,
+  };
+}
+
+export const montebianco80: Product = {
+  id: "montebianco-80",
+  slug: "montebianco-80",
+  brand: "ORiSTO",
+  title: "Szafka podumywalkowa Montebianco 80 cm biały mat",
+  sku: "KBN: MONTESU0802S02",
+  badges: [
+    { label: "ORiSTO", variant: "outline" },
+    { label: "Bestseller", variant: "gold" },
+    { label: "Nowość", variant: "default" },
+  ],
+  price: {
+    current: "1 990 zł",
+    previous: "2 390 zł",
+    discount: "Taniej o 400 zł",
+    note: "Wyjątkowa cena Elements",
+    legalNote:
+      "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+  },
+  cta: {
+    label: "Interesuje Cię ten produkt? Zadaj pytanie",
+    href: "#kontakt",
+  },
+  offerNote: {
+    title: "Oferta indywidualna",
+    description:
+      "Skontaktuj się z nami — nasz doradca przygotuje dla Ciebie indywidualną ofertę i odpowie na wszystkie pytania. Bezpłatnie i bez zobowiązań.",
+  },
+  images: [
+    {
+      src: assetUrl("products/montebianco/01-front.jpg"),
+      alt: "Szafka podumywalkowa Montebianco 80 cm biały mat — widok produktu",
+    },
+    {
+      src: assetUrl("products/montebianco/02-detail.jpg"),
+      alt: "Szafka Montebianco — detal szuflad i wnętrza",
+      focalPoint: { x: 0, y: 48 },
+    },
+    {
+      src: assetUrl("products/montebianco/03-room.jpg"),
+      alt: "Szafka Montebianco w aranżacji łazienki",
+    },
+    {
+      src: assetUrl("products/montebianco/04-angle.jpg"),
+      alt: "Szafka Montebianco — aranżacja z umywalką i lustrem",
+      focalPoint: { x: 58, y: 60 },
+    },
+  ],
+  seriesTitle: "Inne produkty z tej serii",
+  seriesProducts: [
+    related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała"),
+    related("montebianco-tall", "Montebianco", "Słupek wysoki Montebianco, biały mat"),
+    related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie"),
+    related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat"),
+    related("montebianco-wall", "Montebianco", "Szafka wisząca Montebianco 60 cm"),
+  ],
+  editorial: {
+    eyebrow: "Informacje o produkcie",
+    title: "Klasyczna forma, współczesna funkcjonalność",
+    paragraphs: [
+      "Kolekcja szafek podumywalkowych Montebianco zaprasza do aranżowania stylowej łazienki w dobrym guście. Starannie dopracowane proporcje i detale przywodzą na myśl czasy tradycyjnych wartości i estetyki, a klasyczna forma łączy się z perfekcją wykonania i funkcjonalnością, której wymagają dzisiejsze standardy.",
+      "W miejsce standardowo dołączanych uchwytów w dekorze postarzanej cyny możesz dobrać uchwyty lakierowane w kolorze czarnego matu, złotego połysku lub błyszczące, kryształowe, które stworzą klimat glamour. Montebianco to seria uniwersalna i modułowa — dobierzesz do niej różnorodne umywalki z kolekcji ORiSTO i stworzysz unikalną aranżację.",
+    ],
+    features: [
+      {
+        title: "Front z MDF wilgocioodpornej",
+        description:
+          "Płyta odporna na parę i wilgoć — front nie pęcznieje i zachowuje geometrię przez lata.",
+      },
+      {
+        title: "Wykończenie lakierowane",
+        description:
+          "Lakier w macie — głębia koloru i powierzchnia łatwa w utrzymaniu czystości.",
+      },
+      {
+        title: "System modułowy",
+        description:
+          "Szafkę połączysz z umywalkami i meblami uzupełniającymi ORiSTO w spójną kompozycję.",
+      },
+    ],
+  },
+  specifications: [
+    { label: "Szerokość", value: "796 mm" },
+    { label: "Materiał frontu", value: "MDF wilgocioodporna" },
+    { label: "Wysokość", value: "603 mm" },
+    { label: "Powierzchnia", value: "lakier" },
+    { label: "Głębokość", value: "459 mm" },
+    { label: "Wykończenie / dekor", value: "lakierowany" },
+    { label: "Liczba szuflad", value: "2" },
+    { label: "Kolor", value: "biały" },
+    { label: "Montaż", value: "wiszący" },
+    { label: "Poziom połysku", value: "mat" },
+  ],
+  downloads: [
+    { title: "Plik 1", format: "PDF", size: "0,8 MB", href: "#" },
+    { title: "Plik 2", format: "PDF", size: "1,2 MB", href: "#" },
+    { title: "Plik 3", format: "PDF", size: "4,6 MB", href: "#" },
+    { title: "Plik 4", format: "PDF", size: "1,1 MB", href: "#" },
+  ],
+  architectCta: {
+    title: "Projektujesz zawodowo?",
+    description:
+      "W naszej Strefie architekta znajdziesz katalogi, tekstury, modele 3D i inne przydatne pliki.",
+    href: "#strefa-architekta",
+    label: "Przejdź do strefy architekta",
+  },
+  inspirations: [
+    {
+      id: "insp-1",
+      title: "Klasyczna elegancja w jasnej łazience",
+      image: placeholder("inspiration-1.jpg"),
+      items: [
+        "Szafka Montebianco 80 cm — ten produkt",
+        "Umywalka meblowa ORiSTO 80 cm",
+        "Bateria umywalkowa, złoto szczotkowane",
+        "Lustro Montebianco 80 cm w ramie",
+      ],
+    },
+    {
+      id: "insp-2",
+      title: "Ciepły minimalizm z akcentami drewna",
+      image: placeholder("inspiration-2.jpg"),
+      items: [
+        "Szafka Montebianco 80 cm — ten produkt",
+        "Słupek wysoki Montebianco, biały mat",
+        "Bateria umywalkowa, czarny mat",
+      ],
+    },
+    {
+      id: "insp-3",
+      title: "Klasyka glamour z połyskiem",
+      image: placeholder("inspiration-3.jpg"),
+      items: [
+        "Szafka Montebianco 80 cm — ten produkt",
+        "Lustro Montebianco 80 cm w ramie",
+        "Uchwyty kryształowe, złoty połysk",
+        "Bateria umywalkowa, złoto połysk",
+      ],
+    },
+  ],
+  visualizationCta: {
+    title:
+      "Chcesz zobaczyć możliwości Twojej nowej łazienki? Przygotujemy dla Ciebie jej wizualizację.",
+    href: "#wizualizacja",
+    label: "Poznaj szczegóły",
+  },
+  similarProducts: [
+    related("d-neo", "Duravit", "Szafka podumywalkowa D-Neo 78 cm, len brąz"),
+    related("mellow", "Elita", "Szafka Mellow 80 cm fume mat, dwie szuflady"),
+    related("soho", "Elita", "Szafka Soho 80 cm fume mat, front ryflowane szkło"),
+    related("ella", "Roca", "Szafka Ella 100 cm, zielony mat, soft-close"),
+    related("larga", "Cersanit", "Szafka Larga 80 cm, czarny mat, dwie szuflady"),
+  ],
+  breadcrumbs: [
+    { label: "Strona główna", to: "/" },
+    { label: "Łazienka", to: "#" },
+    { label: "Meble łazienkowe", to: "#" },
+    { label: "Montebianco 80 cm" },
+  ],
+};

@@ -1,0 +1,106 @@
+import { Helmet } from "react-helmet-async";
+import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
+import { PageShell } from "../components/layout/PageShell";
+import { Section } from "../components/structural/Section";
+import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
+import { ProductDownloads } from "../components/product/ProductDownloads";
+import { ProductEditorial } from "../components/product/ProductEditorial";
+import { ProductHero } from "../components/product/ProductHero";
+import { ProductInspiration } from "../components/product/ProductInspiration";
+import { ProductRecommendations } from "../components/product/ProductRecommendations";
+import { ProductSeriesGrid } from "../components/product/ProductSeriesGrid";
+import { ProductSpecifications } from "../components/product/ProductSpecifications";
+import { ProductVisualizationCTA } from "../components/product/ProductVisualizationCTA";
+import { montebianco80 } from "../data/products/montebianco-80";
+import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
+
+function RevealSection({ children }: { children: React.ReactNode }) {
+  const { ref, className } = useRevealOnScroll();
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
+}
+
+export function ProductDetailPage() {
+  const product = montebianco80;
+
+  return (
+    <>
+      <Helmet>
+        <title>{product.title} — Elements</title>
+        <meta
+          name="description"
+          content={`${product.title}. Odkryj kolekcję Montebianco — klasyczna forma i współczesna funkcjonalność.`}
+        />
+      </Helmet>
+
+      <PageShell
+        breadcrumbs={
+          <Breadcrumbs
+            items={product.breadcrumbs.map((item, index, arr) => ({
+              ...item,
+              current: index === arr.length - 1,
+            }))}
+          />
+        }
+      >
+        <ProductHero product={product} />
+
+        <RevealSection>
+          <Section tone="muted">
+            <ProductSeriesGrid title={product.seriesTitle} products={product.seriesProducts} />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section>
+            <ProductEditorial
+              eyebrow={product.editorial.eyebrow}
+              title={product.editorial.title}
+              paragraphs={product.editorial.paragraphs}
+              features={product.editorial.features}
+            />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section tone="warm">
+            <ProductSpecifications specs={product.specifications} />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section>
+            <ProductDownloads downloads={product.downloads} />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section tone="muted">
+            <ProductArchitectCTA {...product.architectCta} />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section>
+            <ProductInspiration arrangements={product.inspirations} />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section tone="warm">
+            <ProductVisualizationCTA {...product.visualizationCta} />
+          </Section>
+        </RevealSection>
+
+        <RevealSection>
+          <Section>
+            <ProductRecommendations products={product.similarProducts} />
+          </Section>
+        </RevealSection>
+      </PageShell>
+    </>
+  );
+}
