@@ -184,7 +184,6 @@ export const montebianco80: Product = {
   title: "Szafka podumywalkowa Montebianco 80 cm biały mat",
   sku: "KBN: MONTESU0802S02",
   badges: [
-    { label: "ORiSTO", variant: "outline" },
     { label: "Bestseller", variant: "gold" },
     { label: "Nowość", variant: "default" },
   ],

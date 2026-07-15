@@ -331,7 +331,7 @@ export function ButtonAskFabDemo() {
         </div>
       </div>
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Floating CTA na PDP — ten sam Primary co w bibliotece (neutral-800, animacja gold, ikona w kolorze tekstu). Pojawia się po scrollu w prawym dolnym rogu.
+        Floating CTA na PDP — ten sam Primary co w bibliotece. Pojawia się po scrollu, znika przed stopką.
       </p>
     </div>
   );

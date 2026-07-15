@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { cn } from "../../lib/cn";
 import { askFabClassName } from "../ui/askFabClassName";
 
+/** Hide when footer top enters this band above the viewport bottom (FAB height + offset + gap). */
+const FOOTER_CLEARANCE_PX = 120;
+
 type AskFabProps = {
   href?: string;
   label?: string;
   className?: string;
   /** Scroll offset (px) after which the FAB becomes visible. */
   showAfterScroll?: number;
+  /** Footer element to watch; defaults to `footer[role="contentinfo"]`. */
+  footerSelector?: string;
 };
 
 export function AskFab({
@@ -15,15 +20,41 @@ export function AskFab({
   label = "Zadaj pytanie",
   className,
   showAfterScroll = 320,
+  footerSelector = 'footer[role="contentinfo"]',
 }: AskFabProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > showAfterScroll);
-    onScroll();
+    const footer = document.querySelector<HTMLElement>(footerSelector);
+    if (!footer) return;
+
+    let scrolledEnough = window.scrollY > showAfterScroll;
+    let footerNear = false;
+
+    const syncVisible = () => setVisible(scrolledEnough && !footerNear);
+
+    const onScroll = () => {
+      scrolledEnough = window.scrollY > showAfterScroll;
+      syncVisible();
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        footerNear = entry.isIntersecting;
+        syncVisible();
+      },
+      { rootMargin: `0px 0px -${FOOTER_CLEARANCE_PX}px 0px`, threshold: 0 },
+    );
+
+    observer.observe(footer);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [showAfterScroll]);
+    onScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [showAfterScroll, footerSelector]);
 
   return (
     <a
