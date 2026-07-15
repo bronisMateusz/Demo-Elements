@@ -31283,6 +31283,20 @@ function injectAgentationStyles(minimalToolbar) {
       bottom: 1rem !important;
       width: auto !important;
       max-width: calc(100vw - 2rem);
+      display: flex !important;
+      justify-content: flex-start !important;
+    }
+
+    .elements-agentation-toolbar--minimal [class*="toolbarContainer"] {
+      width: auto !important;
+      min-width: 0 !important;
+      margin-left: 0 !important;
+      align-self: flex-start !important;
+    }
+
+    .elements-agentation-toolbar--minimal [class*="controlsContent"] {
+      width: auto !important;
+      gap: 0 !important;
     }
 
     .elements-agentation-toolbar [class*="sendButtonWrapper"] {
@@ -31290,11 +31304,11 @@ function injectAgentationStyles(minimalToolbar) {
     }
 
     ${minimalToolbar ? `
-    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(1),
-    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(2),
-    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(3),
-    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(4),
-    .elements-agentation-toolbar [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(7) {
+    .elements-agentation-toolbar--minimal [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(1),
+    .elements-agentation-toolbar--minimal [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(2),
+    .elements-agentation-toolbar--minimal [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(3),
+    .elements-agentation-toolbar--minimal [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(4),
+    .elements-agentation-toolbar--minimal [class*="controlsContent"] > [class*="buttonWrapper"]:nth-child(7) {
       display: none !important;
     }
     ` : ""}
@@ -31410,7 +31424,7 @@ function mountAgentation() {
 	mountEl.setAttribute("data-agentation-root", "");
 	document.body.appendChild(mountEl);
 	const props = {
-		className: "elements-agentation-toolbar",
+		className: minimalToolbar ? "elements-agentation-toolbar elements-agentation-toolbar--minimal" : "elements-agentation-toolbar",
 		webhookUrl,
 		onSessionCreated(sessionId) {
 			console.info("[Agentation] sesja:", sessionId);
