@@ -31373,11 +31373,6 @@ function mountAgentation() {
 			submitFeedbackToGithub(output).then((result) => {
 				if (result.issueUrl) notifyIssueCreated(result.issueUrl, result.issueNumber);
 			}).catch(notifyIssueFailed);
-		},
-		onSubmit(output) {
-			submitFeedbackToGithub(output).then((result) => {
-				if (result.issueUrl) notifyIssueCreated(result.issueUrl, result.issueNumber);
-			}).catch(notifyIssueFailed);
 		}
 	};
 	if (endpoint) props.endpoint = endpoint;
