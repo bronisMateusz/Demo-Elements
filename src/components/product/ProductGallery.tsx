@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import type { Swiper as SwiperInstance } from "swiper";
+import { A11y, Keyboard, Mousewheel } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { lockLightboxScroll } from "../../hooks/useSiteChrome";
 import { IconButton } from "../ui/IconButton";
 import type { ProductImage } from "../../types/product";
+import "swiper/css";
 
 type ProductGalleryProps = {
   images: ProductImage[];
@@ -121,28 +125,19 @@ function ProductGalleryLightbox({
   );
 }
 
-function GallerySlide({
+function GallerySlideContent({
   image,
   index,
   onOpen,
-  slideRef,
   fillViewport = false,
 }: {
   image: ProductImage;
   index: number;
   onOpen: () => void;
-  slideRef: (node: HTMLElement | null) => void;
   fillViewport?: boolean;
 }) {
   return (
-    <figure
-      ref={slideRef}
-      data-index={index}
-      className={cn(
-        "m-0 shrink-0 snap-start snap-always",
-        fillViewport && "flex h-full w-full min-h-0 items-center",
-      )}
-    >
+    <figure className="m-0 h-full w-full">
       <button
         type="button"
         className={cn(
@@ -158,10 +153,7 @@ function GallerySlide({
         <img
           src={image.src}
           alt={image.alt}
-          className={cn(
-            "h-full w-full",
-            fillViewport ? "object-contain" : "object-cover",
-          )}
+          className="h-full w-full object-cover"
           style={{ objectPosition: productImageObjectPosition(image) }}
           loading={index === 0 ? "eager" : "lazy"}
           draggable={false}
@@ -176,8 +168,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const slideRefs = useRef<(HTMLElement | null)[]>([]);
+  const swiperRef = useRef<SwiperInstance | null>(null);
 
   const isMulti = images.length > 1;
   const fillViewport = layout === "viewport";
@@ -205,38 +196,13 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [lightboxOpen, isMulti, images.length]);
 
-  useEffect(() => {
-    if (!isMulti || !scrollRef.current) return;
-
-    const root = scrollRef.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const mostVisible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (!mostVisible) return;
-
-        const index = Number(mostVisible.target.getAttribute("data-index"));
-        if (!Number.isNaN(index)) setActiveIndex(index);
-      },
-      { root, threshold: [0.35, 0.55, 0.75] },
-    );
-
-    slideRefs.current.forEach((node) => {
-      if (node) observer.observe(node);
-    });
-
-    return () => observer.disconnect();
-  }, [isMulti, images]);
-
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
 
-  const scrollToIndex = (index: number) => {
-    slideRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const goToSlide = (index: number) => {
+    swiperRef.current?.slideTo(index);
     setActiveIndex(index);
   };
 
@@ -248,11 +214,10 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     return (
       <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col")}>
         <div aria-label="Galeria produktu" className={fillViewport ? "h-full min-h-0" : undefined}>
-          <GallerySlide
+          <GallerySlideContent
             image={image}
             index={0}
             onOpen={() => openLightbox(0)}
-            slideRef={() => undefined}
             fillViewport={fillViewport}
           />
         </div>
@@ -281,32 +246,47 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         <GalleryProgressRail
           count={images.length}
           activeIndex={activeIndex}
-          onSelect={scrollToIndex}
+          onSelect={goToSlide}
         />
 
-        <div
-          ref={scrollRef}
+        <Swiper
           className={cn(
-            "min-w-0 flex-1 snap-y snap-mandatory scroll-smooth",
-            fillViewport
-              ? "h-full min-h-0 overflow-y-auto overscroll-contain"
-              : "space-y-2 lg:max-h-[calc(100svh-var(--header-h)-48px)] lg:overflow-y-auto lg:overscroll-contain",
-            "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "product-gallery-swiper min-w-0 flex-1",
+            fillViewport ? "product-gallery-swiper--viewport h-full" : "product-gallery-swiper--default",
           )}
+          direction="vertical"
+          slidesPerView={1}
+          spaceBetween={fillViewport ? 0 : 8}
+          speed={480}
+          modules={[Mousewheel, Keyboard, A11y]}
+          mousewheel={{
+            forceToAxis: true,
+            releaseOnEdges: true,
+            sensitivity: 0.85,
+          }}
+          keyboard={{ enabled: true, onlyInViewport: true }}
+          a11y={{
+            prevSlideMessage: "Poprzednie zdjęcie",
+            nextSlideMessage: "Następne zdjęcie",
+          }}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          onSlideChange={(swiper) => {
+            setActiveIndex(swiper.activeIndex);
+          }}
         >
           {images.map((image, index) => (
-            <GallerySlide
-              key={image.src}
-              image={image}
-              index={index}
-              onOpen={() => openLightbox(index)}
-              slideRef={(node) => {
-                slideRefs.current[index] = node;
-              }}
-              fillViewport={fillViewport}
-            />
+            <SwiperSlide key={image.src}>
+              <GallerySlideContent
+                image={image}
+                index={index}
+                onOpen={() => openLightbox(index)}
+                fillViewport={fillViewport}
+              />
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
 
       <p

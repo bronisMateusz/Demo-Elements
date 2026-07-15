@@ -1,28 +1,40 @@
 import { Container } from "../ui/Container";
-import { SectionHeader } from "../structural/SectionHeader";
 import type { RelatedProduct } from "../../types/product";
-import { ProductCard } from "./ProductCard";
+import { ProductCarousel } from "./ProductCarousel";
 
 type ProductSeriesGridProps = {
   title: string;
   products: RelatedProduct[];
+  linkHref?: string;
+  linkLabel?: string;
 };
 
-export function ProductSeriesGrid({ title, products }: ProductSeriesGridProps) {
+export function ProductSeriesGrid({
+  title,
+  products,
+  linkHref = "#",
+  linkLabel = "Zobacz całą serię",
+}: ProductSeriesGridProps) {
   return (
-    <section aria-labelledby="series-title">
+    <div aria-labelledby="series-title">
       <Container>
-        <SectionHeader title={title} titleId="series-title" />
-        <div className="flex gap-6 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-5">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              className="w-[min(72vw,240px)] shrink-0 md:w-auto"
-            />
-          ))}
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 md:mb-10">
+          <h2 className="t-h2" id="series-title">
+            {title}
+          </h2>
+          <a
+            href={linkHref}
+            className="inline-flex items-center gap-2 font-body text-eyebrow uppercase tracking-wide text-text-body no-underline transition-colors hover:text-text"
+          >
+            {linkLabel}
+            <i className="ph ph-arrow-right text-sm" aria-hidden="true" />
+          </a>
         </div>
       </Container>
-    </section>
+
+      <div className="product-carousel-bleed">
+        <ProductCarousel products={products} labelledBy="series-title" bleed={false} />
+      </div>
+    </div>
   );
 }

@@ -10,7 +10,7 @@ export const productGalleryModule: LibraryModule = {
   id: "3.1",
   slug: "product-gallery",
   title: "ProductGallery",
-  description: "Pionowa galeria ze scroll-snap, wskaźnikiem postępu i lightboxem.",
+  description: "Pionowa galeria Swiper ze scroll-snap, wskaźnikiem postępu i lightboxem.",
   variants: [
     {
       id: "multi",
@@ -68,6 +68,17 @@ export const productCardModule: LibraryModule = {
       render: () => (
         <Container className="max-w-xs py-8">
           <ProductCard product={montebianco80.seriesProducts[0]} />
+        </Container>
+      ),
+    },
+    {
+      id: "carousel",
+      label: "Karta karuzeli (OKA)",
+      description:
+        "Faux-link, badge, ulubione, zmiana zdjęcia na hover, szybkie dodanie do koszyka i meta wariantów.",
+      render: () => (
+        <Container className="max-w-[424px] py-8">
+          <ProductCard product={montebianco80.seriesProducts[0]} layout="carousel" />
         </Container>
       ),
     },

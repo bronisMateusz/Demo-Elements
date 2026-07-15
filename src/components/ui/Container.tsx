@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { cn } from "../../lib/cn";
 
-export const containerClassName = "container w-full";
+export const containerClassName = "container";
 
 export function Container({
   className,

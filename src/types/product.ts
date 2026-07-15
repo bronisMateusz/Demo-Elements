@@ -78,8 +78,16 @@ export type RelatedProduct = {
   brand: string;
   title: string;
   image: ProductImage;
+  /** Dodatkowe ujęcia — karuzela w karcie na hover (jak OKA prd-Card). */
+  images?: ProductImage[];
   href: string;
   hasStorage?: boolean;
+  price?: string;
+  subtitle?: string;
+  badge?: ProductBadge;
+  swatch?: ProductImage;
+  colorCount?: number;
+  sizeCount?: number;
 };
 
 export type InspirationArrangement = {

@@ -1,12 +1,18 @@
 import { cn } from "../../lib/cn";
 import type { RelatedProduct } from "../../types/product";
+import { ProductCarouselCard } from "./ProductCarouselCard";
 
 type ProductCardProps = {
   product: RelatedProduct;
   className?: string;
+  layout?: "default" | "carousel";
 };
 
-export function ProductCard({ product, className }: ProductCardProps) {
+export function ProductCard({ product, className, layout = "default" }: ProductCardProps) {
+  if (layout === "carousel") {
+    return <ProductCarouselCard product={product} className={className} />;
+  }
+
   return (
     <article className={cn("product-card group", className)}>
       <a href={product.href} className="block no-underline">

@@ -39,7 +39,7 @@ export function libCatNavLinkClassName({ active = false }: { active?: boolean } 
 
 export const libModuleClassName = cn(
   "mb-12 last:mb-0 overflow-hidden rounded-sm border border-border bg-bg shadow-subtle",
-  "mx-[var(--container-padding)]",
+  "mx-auto w-full",
 );
 
 export const libModuleHeaderClassName = "container border-b border-border py-8 md:py-10";

@@ -1,7 +1,7 @@
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../structural/SectionHeader";
 import type { RelatedProduct } from "../../types/product";
-import { ProductCard } from "./ProductCard";
+import { ProductCarousel } from "./ProductCarousel";
 
 type ProductRecommendationsProps = {
   title?: string;
@@ -16,12 +16,10 @@ export function ProductRecommendations({
     <section aria-labelledby="similar-title">
       <Container>
         <SectionHeader title={title} titleId="similar-title" />
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
       </Container>
+      <div className="product-carousel-bleed">
+        <ProductCarousel products={products} labelledBy="similar-title" bleed={false} />
+      </div>
     </section>
   );
 }

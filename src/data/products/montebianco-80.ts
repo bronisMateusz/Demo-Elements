@@ -141,15 +141,37 @@ function related(
   id: string,
   brand: string,
   title: string,
-  hasStorage = true,
+  options: {
+    hasStorage?: boolean;
+    price?: string;
+    subtitle?: string;
+    badge?: RelatedProduct["badge"];
+    image?: RelatedProduct["image"];
+    images?: RelatedProduct["images"];
+    swatch?: RelatedProduct["swatch"];
+    colorCount?: number;
+    sizeCount?: number;
+  } = {},
 ): RelatedProduct {
+  const image = options.image ?? {
+    src: assetUrl("products/montebianco/placeholder.jpg"),
+    alt: title,
+  };
+
   return {
     id,
     brand,
     title,
-    image: { src: assetUrl("products/montebianco/placeholder.jpg"), alt: title },
+    image,
+    images: options.images,
     href: "#",
-    hasStorage,
+    hasStorage: options.hasStorage ?? true,
+    price: options.price,
+    subtitle: options.subtitle,
+    badge: options.badge,
+    swatch: options.swatch,
+    colorCount: options.colorCount,
+    sizeCount: options.sizeCount,
   };
 }
 
@@ -204,11 +226,66 @@ export const montebianco80: Product = {
   ],
   seriesTitle: "Inne produkty z tej serii",
   seriesProducts: [
-    related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała"),
-    related("montebianco-tall", "Montebianco", "Słupek wysoki Montebianco, biały mat"),
-    related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie"),
-    related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat"),
-    related("montebianco-wall", "Montebianco", "Szafka wisząca Montebianco 60 cm"),
+    related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała", {
+      subtitle: "Lakier mat",
+      price: "890 zł",
+      badge: { label: "Elements Icon", variant: "brand" },
+      image: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Umywalka ORiSTO 80 cm" },
+      images: [
+        { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Umywalka ORiSTO — front" },
+        { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Umywalka ORiSTO — detal" },
+      ],
+      swatch: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Biały mat" },
+      colorCount: 2,
+      sizeCount: 1,
+    }),
+    related("montebianco-tall", "Montebianco", "Słupek wysoki Montebianco, biały mat", {
+      subtitle: "Front MDF wilgocioodporny",
+      price: "2 490 zł",
+      image: { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Słupek Montebianco" },
+      images: [
+        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Słupek Montebianco — aranżacja" },
+        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Słupek Montebianco — detal" },
+      ],
+      swatch: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Biały mat" },
+      colorCount: 3,
+    }),
+    related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie", {
+      subtitle: "Wykończenie ręczne",
+      price: "1 290 zł",
+      badge: { label: "Bestseller", variant: "gold" },
+      image: { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco" },
+      images: [
+        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco — front" },
+        { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Lustro Montebianco — detal ramy" },
+      ],
+      swatch: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Biały mat" },
+      colorCount: 2,
+      sizeCount: 1,
+    }),
+    related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat", {
+      subtitle: "System modułowy",
+      price: "1 690 zł",
+      image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna Montebianco" },
+      images: [
+        { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna — detal" },
+        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka boczna — aranżacja" },
+      ],
+      swatch: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Biały mat" },
+      colorCount: 3,
+      sizeCount: 1,
+    }),
+    related("montebianco-wall", "Montebianco", "Szafka wisząca Montebianco 60 cm", {
+      subtitle: "Montaż wiszący",
+      price: "1 490 zł",
+      image: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Szafka wisząca Montebianco" },
+      images: [
+        { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Szafka wisząca — front" },
+        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Szafka wisząca — perspektywa" },
+      ],
+      swatch: { src: assetUrl("products/montebianco/01-front.jpg"), alt: "Biały mat" },
+      colorCount: 2,
+    }),
   ],
   editorial: {
     eyebrow: "Informacje o produkcie",
