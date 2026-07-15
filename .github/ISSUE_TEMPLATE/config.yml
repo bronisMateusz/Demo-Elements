@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Podgląd na GitHub Pages
+    url: https://bronisMateusz.github.io/Demo-Elements/
+    about: Otwórz wdrożoną wersję demo (Elements PDP + biblioteka komponentów).
+  - name: Biblioteka komponentów
+    url: https://bronisMateusz.github.io/Demo-Elements/biblioteka/naglowek-i-stopka
+    about: Przegląd komponentów shell, orientacji i produktu.

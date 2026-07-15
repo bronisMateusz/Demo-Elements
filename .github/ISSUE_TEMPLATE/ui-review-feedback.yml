@@ -1,0 +1,62 @@
+name: UI Review — feedback z Agentation
+description: Zgłoś uwagi z narzędzia review (Copy z toolbara Agentation).
+title: "[UI Review] "
+labels:
+  - ui-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Wklej **cały** tekst z przycisku **Copy** w toolbarze Agentation (bez skracania).
+        Podgląd: https://bronisMateusz.github.io/Demo-Elements/
+
+  - type: input
+    id: reviewer
+    attributes:
+      label: Kto zgłasza
+      placeholder: imię / rola
+    validations:
+      required: false
+
+  - type: input
+    id: preview_url
+    attributes:
+      label: URL podglądu
+      placeholder: https://bronisMateusz.github.io/Demo-Elements/
+      value: https://bronisMateusz.github.io/Demo-Elements/
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorytet
+      options:
+        - Bloker
+        - Ważne
+        - Drobna uwaga
+    validations:
+      required: false
+
+  - type: textarea
+    id: agentation_feedback
+    attributes:
+      label: Feedback z Agentation
+      description: Wklej output z Copy — nagłówki Page Feedback, Location, Feedback itd.
+      placeholder: |
+        ## Page Feedback: /Demo-Elements/
+        **Viewport:** 1440×900
+
+        ### 1. …
+        **Location:** …
+        **Feedback:** …
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Uwagi dodatkowe
+      placeholder: kontekst, decyzje projektowe, linki do Figma…
+    validations:
+      required: false
