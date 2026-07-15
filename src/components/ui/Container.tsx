@@ -1,8 +1,7 @@
 import { type ReactNode } from "react";
 import { cn } from "../../lib/cn";
 
-export const containerClassName =
-  "mx-auto w-full max-w-[var(--container)] px-[var(--gutter)]";
+export const containerClassName = "container w-full";
 
 export function Container({
   className,

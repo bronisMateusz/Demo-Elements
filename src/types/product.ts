@@ -25,6 +25,37 @@ export type ProductPrice = {
   legalNote?: string;
 };
 
+export type ProductVariantOption = {
+  id: string;
+  label: string;
+  swatch?: string;
+  image?: ProductImage;
+  unavailable?: boolean;
+  unavailableNote?: string;
+};
+
+export type ProductVariantAxis = {
+  id: string;
+  label: string;
+  type: "chip" | "swatch" | "thumbnail";
+  options: ProductVariantOption[];
+};
+
+export type ProductVariantCombination = {
+  selection: Record<string, string>;
+  sku: string;
+  title: string;
+  price: ProductPrice;
+  available?: boolean;
+  availabilityNote?: string;
+};
+
+export type ProductVariants = {
+  axes: ProductVariantAxis[];
+  combinations: ProductVariantCombination[];
+  defaultSelection: Record<string, string>;
+};
+
 export type ProductSpec = {
   label: string;
   value: string;
@@ -65,6 +96,7 @@ export type Product = {
   title: string;
   sku: string;
   badges: ProductBadge[];
+  variants?: ProductVariants;
   price: ProductPrice;
   cta: {
     label: string;

@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { PageShell } from "../components/layout/PageShell";
 import { Section } from "../components/structural/Section";
 import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
@@ -36,16 +35,7 @@ export function ProductDetailPage() {
         />
       </Helmet>
 
-      <PageShell
-        breadcrumbs={
-          <Breadcrumbs
-            items={product.breadcrumbs.map((item, index, arr) => ({
-              ...item,
-              current: index === arr.length - 1,
-            }))}
-          />
-        }
-      >
+      <PageShell>
         <ProductHero product={product} />
 
         <RevealSection>
@@ -57,6 +47,10 @@ export function ProductDetailPage() {
         <RevealSection>
           <Section>
             <ProductEditorial
+              breadcrumbs={product.breadcrumbs.map((item, index, arr) => ({
+                ...item,
+                current: index === arr.length - 1,
+              }))}
               eyebrow={product.editorial.eyebrow}
               title={product.editorial.title}
               paragraphs={product.editorial.paragraphs}

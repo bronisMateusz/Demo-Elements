@@ -1,5 +1,136 @@
 import { assetUrl } from "../../app/assets";
-import type { Product, RelatedProduct } from "../../types/product";
+import type { Product, ProductVariants, RelatedProduct } from "../../types/product";
+
+const montebiancoFinishThumbImage = {
+  src: assetUrl("products/montebianco/01-front.jpg"),
+  alt: "Szafka podumywalkowa Montebianco — widok produktu",
+};
+
+const montebiancoVariants: ProductVariants = {
+  axes: [
+    {
+      id: "width",
+      label: "Szerokość",
+      type: "chip",
+      options: [
+        { id: "60", label: "60 cm" },
+        { id: "80", label: "80 cm" },
+        {
+          id: "100",
+          label: "100 cm",
+          unavailable: true,
+          unavailableNote: "Wersja 100 cm wraca do oferty w III kw. 2026.",
+        },
+      ],
+    },
+    {
+      id: "finish",
+      label: "Wykończenie",
+      type: "thumbnail",
+      options: [
+        {
+          id: "white-mat",
+          label: "Biały mat",
+          image: montebiancoFinishThumbImage,
+        },
+        {
+          id: "graphite-mat",
+          label: "Grafit mat",
+          image: montebiancoFinishThumbImage,
+        },
+        {
+          id: "oak-natural",
+          label: "Dąb naturalny",
+          image: montebiancoFinishThumbImage,
+        },
+      ],
+    },
+  ],
+  defaultSelection: { width: "80", finish: "white-mat" },
+  combinations: [
+    {
+      selection: { width: "60", finish: "white-mat" },
+      sku: "KBN: MONTESU0602S02",
+      title: "Szafka podumywalkowa Montebianco 60 cm biały mat",
+      price: {
+        current: "1 790 zł",
+        previous: "2 190 zł",
+        discount: "Taniej o 400 zł",
+        note: "Wyjątkowa cena Elements",
+        legalNote:
+          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+      },
+    },
+    {
+      selection: { width: "60", finish: "graphite-mat" },
+      sku: "KBN: MONTESU0602S04",
+      title: "Szafka podumywalkowa Montebianco 60 cm grafit mat",
+      price: {
+        current: "1 890 zł",
+        previous: "2 290 zł",
+        discount: "Taniej o 400 zł",
+        note: "Wyjątkowa cena Elements",
+        legalNote:
+          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+      },
+    },
+    {
+      selection: { width: "60", finish: "oak-natural" },
+      sku: "KBN: MONTESU0602S06",
+      title: "Szafka podumywalkowa Montebianco 60 cm dąb naturalny",
+      price: {
+        current: "2 090 zł",
+        previous: "2 490 zł",
+        discount: "Taniej o 400 zł",
+        note: "Wyjątkowa cena Elements",
+        legalNote:
+          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+      },
+      available: false,
+      availabilityNote:
+        "Wykończenie dąb naturalny w szerokości 60 cm jest chwilowo niedostępne. Doradca potwierdzi termin dostawy.",
+    },
+    {
+      selection: { width: "80", finish: "white-mat" },
+      sku: "KBN: MONTESU0802S02",
+      title: "Szafka podumywalkowa Montebianco 80 cm biały mat",
+      price: {
+        current: "1 990 zł",
+        previous: "2 390 zł",
+        discount: "Taniej o 400 zł",
+        note: "Wyjątkowa cena Elements",
+        legalNote:
+          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+      },
+    },
+    {
+      selection: { width: "80", finish: "graphite-mat" },
+      sku: "KBN: MONTESU0802S04",
+      title: "Szafka podumywalkowa Montebianco 80 cm grafit mat",
+      price: {
+        current: "2 090 zł",
+        previous: "2 490 zł",
+        discount: "Taniej o 400 zł",
+        note: "Wyjątkowa cena Elements",
+        legalNote:
+          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+      },
+    },
+    {
+      selection: { width: "80", finish: "oak-natural" },
+      sku: "KBN: MONTESU0802S06",
+      title: "Szafka podumywalkowa Montebianco 80 cm dąb naturalny",
+      price: {
+        current: "2 290 zł",
+        previous: "2 690 zł",
+        discount: "Taniej o 400 zł",
+        note: "Wyjątkowa cena Elements",
+        legalNote:
+          "Ceny brutto. Ostateczną ofertę potwierdzi doradca w salonie. Najniższa cena z ostatnich 30 dni przed obniżką.",
+      },
+    },
+  ],
+};
 
 const placeholder = (name: string): RelatedProduct["image"] => ({
   src: assetUrl(`products/montebianco/${name}`),
@@ -33,6 +164,7 @@ export const montebianco80: Product = {
     { label: "Bestseller", variant: "gold" },
     { label: "Nowość", variant: "default" },
   ],
+  variants: montebiancoVariants,
   price: {
     current: "1 990 zł",
     previous: "2 390 zł",

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { lockLightboxScroll } from "../../hooks/useSiteChrome";
@@ -7,11 +8,179 @@ import type { ProductImage } from "../../types/product";
 
 type ProductGalleryProps = {
   images: ProductImage[];
+  /** W hero PDP — wypełnia sticky kolumnę (100svh − header). */
+  layout?: "default" | "viewport";
 };
 
-export function ProductGallery({ images }: ProductGalleryProps) {
+const galleryZoomCursorStyle = {
+  cursor: `url("${assetUrl("cursors/gallery-plus.svg")}") 16 16, crosshair`,
+} as const;
+
+type GalleryProgressRailProps = {
+  count: number;
+  activeIndex: number;
+  onSelect: (index: number) => void;
+};
+
+function GalleryProgressRail({ count, activeIndex, onSelect }: GalleryProgressRailProps) {
+  const segmentHeight = 100 / count;
+
+  return (
+    <div className="hidden h-full w-6 shrink-0 lg:block">
+      <div className="relative h-full">
+        <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border">
+          <span
+            className="absolute left-0 w-px bg-text transition-[top,height] duration-base ease-out"
+            style={{
+              top: `${activeIndex * segmentHeight}%`,
+              height: `${segmentHeight}%`,
+            }}
+          />
+        </div>
+
+        <div className="flex h-full flex-col">
+          {Array.from({ length: count }, (_, index) => (
+            <button
+              key={index}
+              type="button"
+              className="flex-1 cursor-pointer"
+              aria-label={`Przejdź do zdjęcia ${index + 1}`}
+              aria-current={index === activeIndex ? "true" : undefined}
+              onClick={() => onSelect(index)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type ProductGalleryLightboxProps = {
+  images: ProductImage[];
+  index: number;
+  onClose: () => void;
+  onIndexChange: (index: number) => void;
+};
+
+function ProductGalleryLightbox({
+  images,
+  index,
+  onClose,
+  onIndexChange,
+}: ProductGalleryLightboxProps) {
+  const active = images[index];
+  const hasMultiple = images.length > 1;
+
+  return (
+    <div
+      className="fixed inset-0 z-[250] flex items-center justify-center bg-neutral-900/90 p-4 md:p-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Powiększone zdjęcie produktu"
+    >
+      <button
+        type="button"
+        className="absolute inset-0"
+        aria-label="Zamknij podgląd"
+        onClick={onClose}
+      />
+      <div className="relative z-10 max-h-full max-w-5xl">
+        <img
+          src={active.src}
+          alt={active.alt}
+          className="max-h-[85vh] w-auto max-w-full object-contain"
+        />
+        {hasMultiple ? (
+          <div className="absolute top-0 right-0 flex gap-2">
+            <IconButton
+              label="Poprzednie zdjęcie"
+              iconClass="ph ph-caret-left"
+              variant="on-dark"
+              onClick={() => onIndexChange((index - 1 + images.length) % images.length)}
+            />
+            <IconButton
+              label="Następne zdjęcie"
+              iconClass="ph ph-caret-right"
+              variant="on-dark"
+              onClick={() => onIndexChange((index + 1) % images.length)}
+            />
+            <IconButton
+              label="Zamknij"
+              iconClass="ph ph-x"
+              variant="on-dark"
+              onClick={onClose}
+            />
+          </div>
+        ) : (
+          <div className="absolute top-0 right-0">
+            <IconButton label="Zamknij" iconClass="ph ph-x" variant="on-dark" onClick={onClose} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function GallerySlide({
+  image,
+  index,
+  onOpen,
+  slideRef,
+  fillViewport = false,
+}: {
+  image: ProductImage;
+  index: number;
+  onOpen: () => void;
+  slideRef: (node: HTMLElement | null) => void;
+  fillViewport?: boolean;
+}) {
+  return (
+    <figure
+      ref={slideRef}
+      data-index={index}
+      className={cn(
+        "m-0 shrink-0 snap-start snap-always",
+        fillViewport && "flex h-full w-full min-h-0 items-center",
+      )}
+    >
+      <button
+        type="button"
+        className={cn(
+          "relative w-full overflow-hidden bg-bg-muted",
+          fillViewport
+            ? "flex h-full min-h-[min(60vh,640px)] lg:min-h-0"
+            : "block aspect-[4/5]",
+        )}
+        style={galleryZoomCursorStyle}
+        onClick={onOpen}
+        aria-label={`Powiększ zdjęcie ${index + 1}`}
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          className={cn(
+            "h-full w-full",
+            fillViewport ? "object-contain" : "object-cover",
+          )}
+          style={{ objectPosition: productImageObjectPosition(image) }}
+          loading={index === 0 ? "eager" : "lazy"}
+          draggable={false}
+        />
+      </button>
+    </figure>
+  );
+}
+
+export function ProductGallery({ images, layout = "default" }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLElement | null)[]>([]);
+
+  const isMulti = images.length > 1;
+  const fillViewport = layout === "viewport";
 
   useEffect(() => {
     lockLightboxScroll(lightboxOpen);
@@ -23,109 +192,141 @@ export function ProductGallery({ images }: ProductGalleryProps) {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setLightboxOpen(false);
-      if (event.key === "ArrowRight") setActiveIndex((i) => (i + 1) % images.length);
-      if (event.key === "ArrowLeft") setActiveIndex((i) => (i - 1 + images.length) % images.length);
+      if (!isMulti) return;
+      if (event.key === "ArrowRight") {
+        setLightboxIndex((current) => (current + 1) % images.length);
+      }
+      if (event.key === "ArrowLeft") {
+        setLightboxIndex((current) => (current - 1 + images.length) % images.length);
+      }
     };
 
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [lightboxOpen, images.length]);
+  }, [lightboxOpen, isMulti, images.length]);
 
-  const active = images[activeIndex];
+  useEffect(() => {
+    if (!isMulti || !scrollRef.current) return;
 
-  return (
-    <>
-      <div className="flex flex-col gap-4 lg:flex-row lg:gap-6">
-        <div className="order-2 flex gap-2 overflow-x-auto lg:order-1 lg:flex-col lg:overflow-visible">
-          {images.map((image, index) => (
-            <button
-              key={image.src}
-              type="button"
-              className={cn(
-                "relative aspect-[4/5] w-16 shrink-0 overflow-hidden border bg-bg-muted transition-[border-color,opacity] duration-fast lg:w-20",
-                index === activeIndex
-                  ? "border-text opacity-100"
-                  : "border-border opacity-70 hover:opacity-100",
-              )}
-              onClick={() => setActiveIndex(index)}
-              aria-label={`Pokaż zdjęcie ${index + 1}`}
-              aria-current={index === activeIndex ? "true" : undefined}
-            >
-              <img
-                src={image.src}
-                alt=""
-                className="h-full w-full object-cover"
-                style={{ objectPosition: productImageObjectPosition(image) }}
-                loading="lazy"
-              />
-            </button>
-          ))}
+    const root = scrollRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const mostVisible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!mostVisible) return;
+
+        const index = Number(mostVisible.target.getAttribute("data-index"));
+        if (!Number.isNaN(index)) setActiveIndex(index);
+      },
+      { root, threshold: [0.35, 0.55, 0.75] },
+    );
+
+    slideRefs.current.forEach((node) => {
+      if (node) observer.observe(node);
+    });
+
+    return () => observer.disconnect();
+  }, [isMulti, images]);
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const scrollToIndex = (index: number) => {
+    slideRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveIndex(index);
+  };
+
+  if (images.length === 0) return null;
+
+  if (!isMulti) {
+    const image = images[0];
+
+    return (
+      <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col")}>
+        <div aria-label="Galeria produktu" className={fillViewport ? "h-full min-h-0" : undefined}>
+          <GallerySlide
+            image={image}
+            index={0}
+            onOpen={() => openLightbox(0)}
+            slideRef={() => undefined}
+            fillViewport={fillViewport}
+          />
         </div>
 
-        <div className="relative order-1 flex-1 lg:order-2">
-          <button
-            type="button"
-            className="group relative aspect-[4/5] w-full overflow-hidden bg-bg-muted"
-            onClick={() => setLightboxOpen(true)}
-            aria-label="Powiększ zdjęcie produktu"
-          >
-            <img
-              key={active.src}
-              src={active.src}
-              alt={active.alt}
-              className="product-gallery__main-img h-full w-full object-cover"
-              style={{ objectPosition: productImageObjectPosition(active) }}
+        {lightboxOpen ? (
+          <ProductGalleryLightbox
+            images={images}
+            index={lightboxIndex}
+            onClose={() => setLightboxOpen(false)}
+            onIndexChange={setLightboxIndex}
+          />
+        ) : null}
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col")}>
+      <div
+        className={cn(
+          "flex gap-4 lg:gap-6",
+          fillViewport && "min-h-0 flex-1",
+        )}
+        aria-label="Galeria produktu"
+      >
+        <GalleryProgressRail
+          count={images.length}
+          activeIndex={activeIndex}
+          onSelect={scrollToIndex}
+        />
+
+        <div
+          ref={scrollRef}
+          className={cn(
+            "min-w-0 flex-1 snap-y snap-mandatory scroll-smooth",
+            fillViewport
+              ? "h-full min-h-0 overflow-y-auto overscroll-contain"
+              : "space-y-2 lg:max-h-[calc(100svh-var(--header-h)-48px)] lg:overflow-y-auto lg:overscroll-contain",
+            "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          )}
+        >
+          {images.map((image, index) => (
+            <GallerySlide
+              key={image.src}
+              image={image}
+              index={index}
+              onOpen={() => openLightbox(index)}
+              slideRef={(node) => {
+                slideRefs.current[index] = node;
+              }}
+              fillViewport={fillViewport}
             />
-            <span className="absolute right-4 bottom-4 flex items-center gap-2 bg-bg/90 px-3 py-2 text-small text-text-body opacity-0 transition-opacity group-hover:opacity-100">
-              <i className="ph ph-magnifying-glass-plus" aria-hidden="true" />
-              Powiększ
-            </span>
-          </button>
+          ))}
         </div>
       </div>
 
+      <p
+        className={cn(
+          "mt-3 text-small text-text-muted",
+          fillViewport ? "shrink-0 lg:block" : "hidden lg:block",
+        )}
+        aria-live="polite"
+      >
+        Zdjęcie {activeIndex + 1} z {images.length}
+      </p>
+
       {lightboxOpen ? (
-        <div
-          className="fixed inset-0 z-[250] flex items-center justify-center bg-neutral-900/90 p-4 md:p-8"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Powiększone zdjęcie produktu"
-        >
-          <button
-            type="button"
-            className="absolute inset-0"
-            aria-label="Zamknij podgląd"
-            onClick={() => setLightboxOpen(false)}
-          />
-          <div className="relative z-10 max-h-full max-w-5xl">
-            <img
-              src={active.src}
-              alt={active.alt}
-              className="max-h-[85vh] w-auto max-w-full object-contain"
-            />
-            <div className="absolute top-0 right-0 flex gap-2">
-              <IconButton
-                label="Poprzednie zdjęcie"
-                iconClass="ph ph-caret-left"
-                variant="on-dark"
-                onClick={() => setActiveIndex((i) => (i - 1 + images.length) % images.length)}
-              />
-              <IconButton
-                label="Następne zdjęcie"
-                iconClass="ph ph-caret-right"
-                variant="on-dark"
-                onClick={() => setActiveIndex((i) => (i + 1) % images.length)}
-              />
-              <IconButton
-                label="Zamknij"
-                iconClass="ph ph-x"
-                variant="on-dark"
-                onClick={() => setLightboxOpen(false)}
-              />
-            </div>
-          </div>
-        </div>
+        <ProductGalleryLightbox
+          images={images}
+          index={lightboxIndex}
+          onClose={() => setLightboxOpen(false)}
+          onIndexChange={setLightboxIndex}
+        />
       ) : null}
-    </>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { assetUrl } from "../../../app/assets";
 import { cn } from "../../../lib/cn";
 import { mainNavItems } from "../../../data/nav";
 import { IconButton } from "../../ui/IconButton";
@@ -17,10 +18,16 @@ export function HeaderBar({ onMenuToggle, isScrolled }: HeaderBarProps) {
     >
       <Link
         to="/"
-        className="font-heading text-[clamp(22px,2.5vw,28px)] tracking-tight text-text no-underline"
+        className="inline-flex shrink-0 items-center no-underline"
         aria-label="Elements — strona główna"
       >
-        Elements
+        <img
+          src={assetUrl("logo-elements.svg")}
+          alt=""
+          width={108}
+          height={106}
+          className="h-[clamp(32px,4vw,44px)] w-auto"
+        />
       </Link>
 
       <nav className="absolute left-1/2 hidden -translate-x-1/2 lg:block" aria-label="Główne menu">

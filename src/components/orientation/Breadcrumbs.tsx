@@ -11,12 +11,31 @@ type BreadcrumbsProps = {
   items: BreadcrumbItem[];
   label?: string;
   className?: string;
+  /** `top` — pod headerem; `section` — w treści sekcji (PDP / opis produktu) */
+  variant?: "top" | "section";
 };
 
-export function Breadcrumbs({ items, label = "Okruszki nawigacji", className }: BreadcrumbsProps) {
+export function Breadcrumbs({
+  items,
+  label = "Okruszki nawigacji",
+  className,
+  variant = "top",
+}: BreadcrumbsProps) {
+  const isSection = variant === "section";
+
   return (
-    <nav className={cn("py-6", className)} aria-label={label}>
-      <ol className="container flex flex-wrap items-center gap-x-2 gap-y-1 text-small text-text-muted">
+    <nav
+      className={cn(isSection ? "mb-8" : "py-6", className)}
+      aria-label={label}
+    >
+      <ol
+        className={cn(
+          "flex flex-wrap items-center gap-x-2 gap-y-1 text-text-muted",
+          isSection
+            ? "text-eyebrow leading-[1.4] tracking-normal normal-case"
+            : "container text-small",
+        )}
+      >
         {items.map((item, index) => (
           <li
             key={`${item.label}-${index}`}
@@ -24,7 +43,13 @@ export function Breadcrumbs({ items, label = "Okruszki nawigacji", className }: 
             aria-current={item.current ? "page" : undefined}
           >
             {item.to && !item.current ? (
-              <Link to={item.to} className="text-text-body transition-colors hover:text-text">
+              <Link
+                to={item.to}
+                className={cn(
+                  "transition-colors hover:text-text",
+                  isSection ? "text-text-muted" : "text-text-body",
+                )}
+              >
                 {item.label}
               </Link>
             ) : (

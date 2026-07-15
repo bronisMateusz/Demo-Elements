@@ -1,4 +1,5 @@
 import { Container } from "../ui/Container";
+import { Breadcrumbs, type BreadcrumbItem } from "../orientation/Breadcrumbs";
 import { SectionHeader } from "../structural/SectionHeader";
 import type { ProductFeature } from "../../types/product";
 
@@ -7,12 +8,21 @@ type ProductEditorialProps = {
   title: string;
   paragraphs: string[];
   features: ProductFeature[];
+  breadcrumbs?: BreadcrumbItem[];
 };
 
-export function ProductEditorial({ eyebrow, title, paragraphs, features }: ProductEditorialProps) {
+export function ProductEditorial({
+  eyebrow,
+  title,
+  paragraphs,
+  features,
+  breadcrumbs,
+}: ProductEditorialProps) {
   return (
     <section aria-labelledby="editorial-title">
       <Container>
+        {breadcrumbs ? <Breadcrumbs items={breadcrumbs} variant="section" /> : null}
+
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-20">
           <div>
             <SectionHeader eyebrow={eyebrow} title={title} titleId="editorial-title" className="mb-8" />

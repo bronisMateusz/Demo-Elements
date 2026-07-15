@@ -10,15 +10,25 @@ export const productGalleryModule: LibraryModule = {
   id: "3.1",
   slug: "product-gallery",
   title: "ProductGallery",
-  description: "Galeria produktu z miniaturami, lightboxem i nawigacją klawiaturową.",
+  description: "Pionowa galeria ze scroll-snap, wskaźnikiem postępu i lightboxem.",
   variants: [
     {
-      id: "default",
+      id: "multi",
       label: "4 zdjęcia",
-      description: "Galeria z miniaturami i powiększeniem.",
+      description: "Wiele zdjęć — przewijanie w pionie w stylu Zara Home.",
       render: () => (
-        <Container className="py-8">
+        <Container className="max-w-xl py-8">
           <ProductGallery images={montebianco80.images} />
+        </Container>
+      ),
+    },
+    {
+      id: "single",
+      label: "1 zdjęcie",
+      description: "Pojedyncze zdjęcie bez paska postępu.",
+      render: () => (
+        <Container className="max-w-xl py-8">
+          <ProductGallery images={[montebianco80.images[0]]} />
         </Container>
       ),
     },
@@ -29,12 +39,13 @@ export const productBuyBoxModule: LibraryModule = {
   id: "3.2",
   slug: "product-buy-box",
   title: "ProductBuyBox",
-  description: "Panel zakupowy z badge'ami, ceną i CTA.",
+  description:
+    "Panel zakupowy z wariantami, ulubionymi, ceną i CTA.",
   variants: [
     {
       id: "default",
-      label: "Montebianco 80",
-      description: "Pełny buy box produktu demo.",
+      label: "Montebianco z wariantami",
+      description: "Buy box z selektorem chipów (szerokość) i miniatur produktu (wykończenie).",
       render: () => (
         <Container className="max-w-md py-8">
           <ProductBuyBox product={montebianco80} />

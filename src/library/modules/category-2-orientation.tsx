@@ -9,6 +9,7 @@ export const breadcrumbsModule: LibraryModule = {
   optionalProps: [
     { name: "items", type: "BreadcrumbItem[]", required: true },
     { name: "label", type: "string", defaultValue: "Okruszki nawigacji" },
+    { name: "variant", type: '"top" | "section"', defaultValue: "top" },
   ],
   variants: [
     {
@@ -37,6 +38,27 @@ export const breadcrumbsModule: LibraryModule = {
             { label: "Montebianco 80 cm", current: true },
           ]}
         />
+      ),
+    },
+    {
+      id: "section",
+      label: "W sekcji PDP",
+      description: "Kompaktowe okruszki nad opisem produktu (jak OKA).",
+      render: () => (
+        <div className="container py-8">
+          <Breadcrumbs
+            variant="section"
+            items={[
+              { label: "Strona główna", to: "/" },
+              { label: "Łazienka", to: "#" },
+              { label: "Meble łazienkowe", to: "#" },
+              { label: "Montebianco 80 cm", current: true },
+            ]}
+          />
+          <p className="t-body-lg max-w-prose text-text-body">
+            Kolekcja Montebianco zaprasza do aranżowania stylowej łazienki w dobrym guście…
+          </p>
+        </div>
       ),
     },
   ],
