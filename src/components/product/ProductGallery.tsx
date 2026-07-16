@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
-import { lockLightboxScroll } from "../../hooks/useSiteChrome";
-import { IconButton } from "../ui/IconButton";
+import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
+import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
+import type { LightboxOpenOrigin } from "./ProductGalleryLightboxFlyer";
 import "swiper/css";
 
 type ProductGalleryProps = {
@@ -54,83 +55,30 @@ function GalleryProgressRail({ count, activeIndex, onSelect }: GalleryProgressRa
   );
 }
 
-type ProductGalleryLightboxProps = {
-  images: ProductImage[];
-  index: number;
-  onClose: () => void;
-  onIndexChange: (index: number) => void;
-};
-
-function ProductGalleryLightbox({
-  images,
-  index,
-  onClose,
-  onIndexChange,
-}: ProductGalleryLightboxProps) {
-  const active = images[index];
-  const hasMultiple = images.length > 1;
-
-  return (
-    <div
-      className="fixed inset-0 z-[250] flex items-center justify-center bg-neutral-900/90 p-4 md:p-8"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Powiększone zdjęcie produktu"
-    >
-      <button
-        type="button"
-        className="absolute inset-0"
-        aria-label="Zamknij podgląd"
-        onClick={onClose}
-      />
-      <div className="relative z-10 max-h-full max-w-5xl">
-        <img
-          src={active.src}
-          alt={active.alt}
-          className="max-h-[85vh] w-auto max-w-full object-contain"
-        />
-        {hasMultiple ? (
-          <div className="absolute top-0 right-0 flex gap-2">
-            <IconButton
-              label="Poprzednie zdjęcie"
-              iconClass="ph ph-caret-left"
-              variant="on-dark"
-              onClick={() => onIndexChange((index - 1 + images.length) % images.length)}
-            />
-            <IconButton
-              label="Następne zdjęcie"
-              iconClass="ph ph-caret-right"
-              variant="on-dark"
-              onClick={() => onIndexChange((index + 1) % images.length)}
-            />
-            <IconButton
-              label="Zamknij"
-              iconClass="ph ph-x"
-              variant="on-dark"
-              onClick={onClose}
-            />
-          </div>
-        ) : (
-          <div className="absolute top-0 right-0">
-            <IconButton label="Zamknij" iconClass="ph ph-x" variant="on-dark" onClick={onClose} />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function GallerySlideContent({
   image,
   index,
   onOpen,
+  registerImage,
+  isHidden = false,
   fillViewport = false,
 }: {
   image: ProductImage;
   index: number;
-  onOpen: () => void;
+  onOpen: (origin: LightboxOpenOrigin) => void;
+  registerImage: (index: number, node: HTMLImageElement | null) => void;
+  isHidden?: boolean;
   fillViewport?: boolean;
 }) {
+  const handleOpen = (event: MouseEvent<HTMLButtonElement>) => {
+    const img = event.currentTarget.querySelector("img");
+    const rect = img?.getBoundingClientRect() ?? event.currentTarget.getBoundingClientRect();
+    onOpen({
+      rect,
+      objectPosition: productImageObjectPosition(image),
+    });
+  };
+
   return (
     <figure className="m-0 h-full w-full">
       <button
@@ -141,13 +89,14 @@ function GallerySlideContent({
             ? "flex h-full min-h-[min(60vh,640px)] lg:min-h-0"
             : "block aspect-[4/5]",
         )}
-        onClick={onOpen}
+        onClick={handleOpen}
         aria-label={`Powiększ zdjęcie ${index + 1}`}
       >
         <img
+          ref={(node) => registerImage(index, node)}
           src={image.src}
           alt={image.alt}
-          className="h-full w-full object-cover"
+          className={cn("h-full w-full object-cover", isHidden && "opacity-0")}
           style={{ objectPosition: productImageObjectPosition(image) }}
           loading={index === 0 ? "eager" : "lazy"}
           draggable={false}
@@ -161,11 +110,26 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxOrigin, setLightboxOrigin] = useState<LightboxOpenOrigin | null>(null);
+  const [lightboxClosing, setLightboxClosing] = useState(false);
 
   const swiperRef = useRef<SwiperInstance | null>(null);
+  const slideImageRefs = useRef<Map<number, HTMLImageElement>>(new Map());
 
   const isMulti = images.length > 1;
   const fillViewport = layout === "viewport";
+
+  const registerSlideImage = useCallback((index: number, node: HTMLImageElement | null) => {
+    if (node) {
+      slideImageRefs.current.set(index, node);
+      return;
+    }
+    slideImageRefs.current.delete(index);
+  }, []);
+
+  const getSlideRect = useCallback((index: number) => {
+    return slideImageRefs.current.get(index)?.getBoundingClientRect() ?? null;
+  }, []);
 
   useEffect(() => {
     lockLightboxScroll(lightboxOpen);
@@ -173,31 +137,42 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   }, [lightboxOpen]);
 
   useEffect(() => {
-    if (!lightboxOpen) return;
+    return () => liftHeaderAboveLightbox(false);
+  }, []);
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setLightboxOpen(false);
-      if (!isMulti) return;
-      if (event.key === "ArrowRight") {
-        setLightboxIndex((current) => (current + 1) % images.length);
-      }
-      if (event.key === "ArrowLeft") {
-        setLightboxIndex((current) => (current - 1 + images.length) % images.length);
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [lightboxOpen, isMulti, images.length]);
-
-  const openLightbox = (index: number) => {
+  const openLightbox = (index: number, origin: LightboxOpenOrigin) => {
     setLightboxIndex(index);
+    setLightboxOrigin(origin);
+    setLightboxClosing(false);
+    liftHeaderAboveLightbox(false);
     setLightboxOpen(true);
+  };
+
+  // While the fly-back plays, lift the sticky site header above the lightbox so
+  // the shrinking image tucks under it instead of covering it.
+  const startClosing = () => {
+    setLightboxClosing(true);
+    liftHeaderAboveLightbox(true);
   };
 
   const goToSlide = (index: number) => {
     swiperRef.current?.slideTo(index);
     setActiveIndex(index);
+  };
+
+  // Keep the background gallery in sync while the lightbox is open, so the
+  // closing fly-back targets the slide the user is actually leaving from.
+  const handleLightboxIndexChange = (index: number) => {
+    setLightboxIndex(index);
+    swiperRef.current?.slideTo(index, 0);
+    setActiveIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    setLightboxOrigin(null);
+    setLightboxClosing(false);
+    liftHeaderAboveLightbox(false);
   };
 
   if (images.length === 0) return null;
@@ -211,17 +186,22 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
           <GallerySlideContent
             image={image}
             index={0}
-            onOpen={() => openLightbox(0)}
+            onOpen={(origin) => openLightbox(0, origin)}
+            registerImage={registerSlideImage}
+            isHidden={lightboxClosing && lightboxIndex === 0}
             fillViewport={fillViewport}
           />
         </div>
 
-        {lightboxOpen ? (
+        {lightboxOpen && lightboxOrigin ? (
           <ProductGalleryLightbox
             images={images}
             index={lightboxIndex}
-            onClose={() => setLightboxOpen(false)}
-            onIndexChange={setLightboxIndex}
+            origin={lightboxOrigin}
+            getSlideRect={getSlideRect}
+            onClosingStart={startClosing}
+            onClose={closeLightbox}
+            onIndexChange={handleLightboxIndexChange}
           />
         ) : null}
       </div>
@@ -260,7 +240,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
             releaseOnEdges: true,
             sensitivity: 0.85,
           }}
-          keyboard={{ enabled: true, onlyInViewport: true }}
+          keyboard={{ enabled: !lightboxOpen, onlyInViewport: true }}
           a11y={{
             prevSlideMessage: "Poprzednie zdjęcie",
             nextSlideMessage: "Następne zdjęcie",
@@ -277,7 +257,9 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
               <GallerySlideContent
                 image={image}
                 index={index}
-                onOpen={() => openLightbox(index)}
+                onOpen={(origin) => openLightbox(index, origin)}
+                registerImage={registerSlideImage}
+                isHidden={lightboxClosing && lightboxIndex === index}
                 fillViewport={fillViewport}
               />
             </SwiperSlide>
@@ -295,12 +277,15 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         Zdjęcie {activeIndex + 1} z {images.length}
       </p>
 
-      {lightboxOpen ? (
+      {lightboxOpen && lightboxOrigin ? (
         <ProductGalleryLightbox
           images={images}
           index={lightboxIndex}
-          onClose={() => setLightboxOpen(false)}
-          onIndexChange={setLightboxIndex}
+          origin={lightboxOrigin}
+          getSlideRect={getSlideRect}
+          onClosingStart={startClosing}
+          onClose={closeLightbox}
+          onIndexChange={handleLightboxIndexChange}
         />
       ) : null}
     </div>

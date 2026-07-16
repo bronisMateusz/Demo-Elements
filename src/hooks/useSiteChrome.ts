@@ -20,3 +20,8 @@ export function lockPageScroll(locked: boolean) {
 export function lockLightboxScroll(locked: boolean) {
   document.documentElement.classList.toggle("has-lightbox-open", locked);
 }
+
+/** Lift the sticky header above the lightbox while the closing fly-back plays. */
+export function liftHeaderAboveLightbox(lifted: boolean) {
+  document.documentElement.classList.toggle("lightbox-closing", lifted);
+}

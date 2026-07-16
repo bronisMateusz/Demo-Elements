@@ -190,11 +190,17 @@ html.elements-pause-motion *::after {
   transition-duration: 0.001ms !important;
 }
 
+/* Lock scroll on the root only — adding overflow:hidden to <body> would make it
+   a scroll container and break the sticky header (it would jump by scroll offset). */
 html.has-drawer-open,
-html.has-drawer-open body,
-html.has-lightbox-open,
-html.has-lightbox-open body {
+html.has-lightbox-open {
   @apply overflow-hidden;
+}
+
+/* During the lightbox fly-back, lift the header above the overlay (z-[400]) so
+   the shrinking image tucks under it instead of covering it. */
+html.lightbox-closing #siteHeader {
+  @apply z-420;
 }
 
 html.elements-pause-motion .motion-fill-surface::before {
