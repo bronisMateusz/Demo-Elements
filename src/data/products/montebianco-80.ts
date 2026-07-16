@@ -394,6 +394,13 @@ export const montebianco80: Product = {
       "W naszej Strefie architekta znajdziesz katalogi, tekstury, modele 3D i inne przydatne pliki.",
     href: "#strefa-architekta",
     label: "Przejdź do strefy architekta",
+    eyebrow: "Strefa architekta",
+    image: {
+      src: assetUrl("products/montebianco/03-room.jpg"),
+      alt: "Łazienka z kolekcją Montebianco — aranżacja dla architektów",
+      focalPoint: { x: 50, y: 55 },
+    },
+    video: "video/architect-cta.mp4",
   },
   inspirations: [
     {

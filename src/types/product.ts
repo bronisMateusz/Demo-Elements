@@ -143,6 +143,10 @@ export type Product = {
     description: string;
     href: string;
     label: string;
+    eyebrow?: string;
+    image: ProductImage;
+    /** Path under `assets/` — looped background video for the media panel. */
+    video?: string;
   };
   inspirations: InspirationArrangement[];
   visualizationCta: {

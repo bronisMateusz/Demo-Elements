@@ -30,6 +30,11 @@ async function copyRuntimeAssets() {
   await mkdir(path.dirname(productsDestDir), { recursive: true });
   await cp(productsSourceDir, productsDestDir, { recursive: true });
 
+  const videoSourceDir = path.resolve(projectRoot, "assets/video");
+  const videoDestDir = path.resolve(projectRoot, "dist/assets/video");
+  await mkdir(videoDestDir, { recursive: true });
+  await cp(videoSourceDir, videoDestDir, { recursive: true });
+
   const requiredFaviconFiles = [
     "favicon.svg",
     "favicon-96x96.png",
@@ -54,6 +59,8 @@ async function copyRuntimeAssets() {
     const expectedPath = path.resolve(productsDestDir, fileName);
     await access(expectedPath);
   }
+
+  await access(path.resolve(videoDestDir, "architect-cta.mp4"));
 }
 
 copyRuntimeAssets().catch((error) => {

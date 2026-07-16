@@ -10,34 +10,52 @@ export const textRevealLeadTypographyClassName =
 type TextRevealLeadProps = {
   children: string;
   className?: string;
+  typographyClassName?: string;
+  mutedClassName?: string;
+  fillClassName?: string;
 };
 
 type TextRevealLineProps = {
   line: string;
   progress: number;
+  typographyClassName: string;
+  mutedClassName: string;
+  fillClassName: string;
 };
 
-function TextRevealLine({ line, progress }: TextRevealLineProps) {
+function TextRevealLine({
+  line,
+  progress,
+  typographyClassName,
+  mutedClassName,
+  fillClassName,
+}: TextRevealLineProps) {
   const clipRight = `${(1 - progress) * 100}%`;
 
   return (
     <div className="relative overflow-hidden">
-      <p className={cn(textRevealLeadTypographyClassName, "text-neutral-200")}>{line}</p>
+      <p className={cn(typographyClassName, mutedClassName)}>{line}</p>
       <div
         className="absolute inset-0 overflow-hidden"
         data-text-reveal-el="overlay"
         style={{ clipPath: `inset(0 ${clipRight} 0 0)` }}
       >
-        <p className={textRevealLeadTypographyClassName}>{line}</p>
+        <p className={cn(typographyClassName, fillClassName)}>{line}</p>
       </div>
     </div>
   );
 }
 
-export function TextRevealLead({ children, className }: TextRevealLeadProps) {
+export function TextRevealLead({
+  children,
+  className,
+  typographyClassName = textRevealLeadTypographyClassName,
+  mutedClassName = "text-neutral-200",
+  fillClassName = "text-neutral-900",
+}: TextRevealLeadProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduce = useMotionReduced();
-  const lines = useTextLineSplit(children, containerRef, textRevealLeadTypographyClassName);
+  const lines = useTextLineSplit(children, containerRef, typographyClassName);
   const lineCount = lines?.length ?? 1;
   const progress = useScrollRevealProgress(containerRef, {
     start: 0.9,
@@ -46,7 +64,7 @@ export function TextRevealLead({ children, className }: TextRevealLeadProps) {
 
   if (reduce) {
     return (
-      <p className={cn(textRevealLeadTypographyClassName, "max-w-prose", className)}>{children}</p>
+      <p className={cn(typographyClassName, fillClassName, "max-w-prose", className)}>{children}</p>
     );
   }
 
@@ -60,11 +78,14 @@ export function TextRevealLead({ children, className }: TextRevealLeadProps) {
               key={`${index}-${line.slice(0, 24)}`}
               line={line}
               progress={getLineRevealProgress(progress, index, lines.length)}
+              typographyClassName={typographyClassName}
+              mutedClassName={mutedClassName}
+              fillClassName={fillClassName}
             />
           ))}
         </div>
       ) : (
-        <p className={cn(textRevealLeadTypographyClassName, "text-neutral-200")} aria-hidden="true">
+        <p className={cn(typographyClassName, mutedClassName)} aria-hidden="true">
           {children}
         </p>
       )}

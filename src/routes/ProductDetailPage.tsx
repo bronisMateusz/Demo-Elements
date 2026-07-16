@@ -79,9 +79,7 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section tone="muted">
-            <ProductArchitectCTA {...product.architectCta} />
-          </Section>
+          <ProductArchitectCTA {...product.architectCta} />
         </RevealSection>
 
         <RevealSection>

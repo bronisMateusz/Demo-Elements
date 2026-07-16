@@ -3,7 +3,7 @@ import { cn } from "../../lib/cn";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { LiquidCtaGlow } from "../motion/LiquidCtaGlow";
-import { textRevealLeadTypographyClassName } from "../motion/TextRevealLead";
+import { TextRevealLead } from "../motion/TextRevealLead";
 import { EASE_OUT } from "../../lib/motionEase";
 
 type ProductVisualizationCTAProps = {
@@ -35,20 +35,15 @@ export function ProductVisualizationCTA({
         <div className="relative overflow-hidden rounded-xs">
           <LiquidCtaGlow />
 
-          <div className="relative z-10 mx-auto flex min-h-[min(360px,52vh)] max-w-3xl flex-col items-center justify-center px-6 py-10 text-center md:min-h-[min(420px,48vh)] md:px-10 md:py-14">
-            <motion.h2
-              id="viz-cta-title"
-              className={cn(
-                textRevealLeadTypographyClassName,
-                "mx-auto text-balance text-neutral-0",
-              )}
-              initial={reducedMotion ? false : { opacity: 0, filter: "blur(10px)", y: 12 }}
-              whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.85, ease: EASE_OUT }}
+          <div className="relative z-10 mx-auto flex min-h-[460px] max-w-5xl flex-col items-center justify-center px-6 py-14 text-center md:min-h-[560px] md:px-10 md:py-18">
+            <TextRevealLead
+              className="mx-auto max-w-none text-balance"
+              typographyClassName="font-heading text-[clamp(34px,4.1vw,62px)] leading-[1.12] tracking-tight"
+              mutedClassName="text-neutral-0/30"
+              fillClassName="text-neutral-0"
             >
               {title}
-            </motion.h2>
+            </TextRevealLead>
 
             <motion.div
               className="mt-8 flex flex-wrap items-center justify-center gap-3"

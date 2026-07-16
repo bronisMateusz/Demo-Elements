@@ -1,4 +1,4 @@
-const bundledAssets = import.meta.glob("../../assets/**/*.{png,jpg,jpeg,webp,svg,gif}", {
+const bundledAssets = import.meta.glob("../../assets/**/*.{png,jpg,jpeg,webp,svg,gif,mp4}", {
   eager: true,
   query: "?url",
   import: "default",

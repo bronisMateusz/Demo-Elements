@@ -23,7 +23,7 @@ export const askRowIconClassName = cn(
 
 export const askRowChevronClassName = cn(
   askRowIconClassName,
-  "ml-auto group-hover/ask:translate-x-1 group-focus-visible/ask:translate-x-1",
+  "ml-auto",
 );
 
 export function askRowPreviewClassName(
@@ -32,9 +32,9 @@ export function askRowPreviewClassName(
 ) {
   return cn(
     state === "hover" &&
-      "before:scale-y-100 border-gold-500 text-neutral-0 [&_strong]:text-neutral-0 [&_i]:text-neutral-0 [&_i:last-child]:translate-x-1",
+      "before:scale-y-100 border-gold-500 text-neutral-0 [&_strong]:text-neutral-0 [&_i]:text-neutral-0",
     state === "active" &&
-      "before:scale-y-100 translate-y-px border-gold-500 text-neutral-0 [&_strong]:text-neutral-0 [&_i]:text-neutral-0 [&_i:last-child]:translate-x-1",
+      "before:scale-y-100 translate-y-px border-gold-500 text-neutral-0 [&_strong]:text-neutral-0 [&_i]:text-neutral-0",
     state === "focus" &&
       "outline-2 outline-offset-[var(--spacing-focus-ring-offset)] outline-neutral-800",
     className,
