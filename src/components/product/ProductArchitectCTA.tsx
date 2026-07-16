@@ -3,6 +3,7 @@ import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Button } from "../ui/Button";
 import { Eyebrow } from "../ui/Eyebrow";
+import { TextRevealLead } from "../motion/TextRevealLead";
 import type { ProductImage } from "../../types/product";
 
 type ProductArchitectCTAProps = {
@@ -77,9 +78,16 @@ export function ProductArchitectCTA({
             </Eyebrow>
 
             <div className="flex flex-1 flex-col justify-center gap-5 py-10 md:gap-6 md:py-12">
-              <h2 className="t-h1 text-balance" id="architect-cta-title">
+              <TextRevealLead
+                id="architect-cta-title"
+                revealUnit="word"
+                className="max-w-none text-balance"
+                typographyClassName="font-heading text-h1 leading-heading tracking-tight"
+                mutedClassName="text-neutral-900/20"
+                fillClassName="text-neutral-900"
+              >
                 {title}
-              </h2>
+              </TextRevealLead>
               <p className="t-body-lg max-w-lg text-neutral-700">{description}</p>
             </div>
 

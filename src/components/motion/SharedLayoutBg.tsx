@@ -89,7 +89,7 @@ export function SharedLayoutBg({
                     animate="animate"
                     exit="exit"
                     custom={activeId !== null}
-                    className="pointer-events-none absolute inset-y-0"
+                    className="pointer-events-none absolute inset-y-0 z-0"
                     style={{ left: -inset, right: -inset }}
                   >
                     {activeId === childKey ? (

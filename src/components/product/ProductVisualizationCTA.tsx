@@ -37,6 +37,8 @@ export function ProductVisualizationCTA({
 
           <div className="relative z-10 mx-auto flex min-h-[460px] max-w-5xl flex-col items-center justify-center px-6 py-14 text-center md:min-h-[560px] md:px-10 md:py-18">
             <TextRevealLead
+              id="viz-cta-title"
+              revealUnit="word"
               className="mx-auto max-w-none text-balance"
               typographyClassName="font-heading text-[clamp(34px,4.1vw,62px)] leading-[1.12] tracking-tight"
               mutedClassName="text-neutral-0/30"

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { cn } from "../../lib/cn";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { useScrollRevealProgress } from "../../hooks/useScrollRevealProgress";
@@ -10,9 +10,19 @@ export const textRevealLeadTypographyClassName =
 type TextRevealLeadProps = {
   children: string;
   className?: string;
+  id?: string;
+  /** `line` — one line at a time; `word` — sequential word reveal (better for centered multi-line headings). */
+  revealUnit?: "line" | "word";
   typographyClassName?: string;
   mutedClassName?: string;
   fillClassName?: string;
+};
+
+type TextRevealSegmentProps = {
+  text: string;
+  progress: number;
+  mutedClassName: string;
+  fillClassName: string;
 };
 
 type TextRevealLineProps = {
@@ -22,6 +32,33 @@ type TextRevealLineProps = {
   mutedClassName: string;
   fillClassName: string;
 };
+
+function TextRevealSegment({
+  text,
+  progress,
+  mutedClassName,
+  fillClassName,
+}: TextRevealSegmentProps) {
+  const clipRight = `${(1 - progress) * 100}%`;
+
+  // inline-block is required so absolute overlay shares the word box
+  // (inline + absolute inset-0 draws a second visible word beside the muted one).
+  return (
+    <span className="relative inline-block">
+      <span className={mutedClassName}>{text}</span>
+      <span
+        className={cn(
+          "pointer-events-none absolute inset-0 overflow-hidden whitespace-nowrap",
+          fillClassName,
+        )}
+        data-text-reveal-el="overlay"
+        style={{ clipPath: `inset(0 ${clipRight} 0 0)` }}
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
 
 function TextRevealLine({
   line,
@@ -49,29 +86,50 @@ function TextRevealLine({
 export function TextRevealLead({
   children,
   className,
+  id,
+  revealUnit = "line",
   typographyClassName = textRevealLeadTypographyClassName,
   mutedClassName = "text-neutral-200",
   fillClassName = "text-neutral-900",
 }: TextRevealLeadProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduce = useMotionReduced();
+  const words = useMemo(() => children.split(/\s+/).filter(Boolean), [children]);
   const lines = useTextLineSplit(children, containerRef, typographyClassName);
-  const lineCount = lines?.length ?? 1;
+  const segmentCount = revealUnit === "word" ? words.length : (lines?.length ?? 1);
   const progress = useScrollRevealProgress(containerRef, {
     start: 0.9,
-    end: Math.max(0.28, 0.5 - lineCount * 0.018),
+    end: Math.max(0.22, 0.52 - segmentCount * (revealUnit === "word" ? 0.012 : 0.018)),
   });
 
   if (reduce) {
     return (
-      <p className={cn(typographyClassName, fillClassName, "max-w-prose", className)}>{children}</p>
+      <p id={id} className={cn(typographyClassName, fillClassName, "max-w-prose", className)}>
+        {children}
+      </p>
     );
   }
 
   return (
     <div ref={containerRef} className={cn("text-reveal relative max-w-prose", className)}>
-      <p className="sr-only">{children}</p>
-      {lines ? (
+      <p id={id} className="sr-only">
+        {children}
+      </p>
+      {revealUnit === "word" ? (
+        <p className={cn(typographyClassName)} aria-hidden="true">
+          {words.map((word, index) => (
+            <span key={`${index}-${word}`}>
+              <TextRevealSegment
+                text={word}
+                progress={getLineRevealProgress(progress, index, words.length)}
+                mutedClassName={mutedClassName}
+                fillClassName={fillClassName}
+              />
+              {index < words.length - 1 ? " " : null}
+            </span>
+          ))}
+        </p>
+      ) : revealUnit === "line" && lines ? (
         <div className="relative" aria-hidden="true">
           {lines.map((line, index) => (
             <TextRevealLine

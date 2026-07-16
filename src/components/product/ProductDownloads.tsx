@@ -1,5 +1,6 @@
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../structural/SectionHeader";
+import { SharedLayoutBg } from "../motion/SharedLayoutBg";
 import type { ProductDownload } from "../../types/product";
 
 type ProductDownloadsProps = {
@@ -11,14 +12,18 @@ export function ProductDownloads({ downloads }: ProductDownloadsProps) {
     <section aria-labelledby="downloads-title">
       <Container>
         <SectionHeader title="Pliki do pobrania" titleId="downloads-title" />
-        <ul className="flex list-none flex-col divide-y divide-neutral-200 border-y border-neutral-200">
-          {downloads.map((file) => (
-            <li key={file.title}>
+        <div className="border-y border-neutral-200">
+          <SharedLayoutBg
+            className="w-full flex-col divide-y divide-neutral-200"
+            pillClassName="rounded-xs bg-neutral-100"
+          >
+            {downloads.map((file) => (
               <a
+                key={file.title}
                 href={file.href}
-                className="flex items-center justify-between gap-4 py-5 no-underline transition-colors hover:bg-neutral-50"
+                className="relative flex items-center justify-between gap-4 py-5 no-underline"
               >
-                <div className="flex items-center gap-4">
+                <div className="relative z-10 flex min-w-0 flex-1 items-center gap-4">
                   <span className="font-body text-xs uppercase tracking-wide text-neutral-500">
                     {file.format}
                   </span>
@@ -27,14 +32,14 @@ export function ProductDownloads({ downloads }: ProductDownloadsProps) {
                     <p className="text-sm text-neutral-500">{file.size}</p>
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-2 text-ui text-neutral-600">
+                <span className="relative z-10 inline-flex shrink-0 items-center gap-2 text-ui text-neutral-600">
                   Pobierz
                   <i className="ph ph-download-simple" aria-hidden="true" />
                 </span>
               </a>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </SharedLayoutBg>
+        </div>
       </Container>
     </section>
   );

@@ -16,7 +16,10 @@ export function LiquidCtaGlow({ className }: LiquidCtaGlowProps) {
 
   return (
     <div
-      className={cn("pointer-events-none absolute inset-0 overflow-hidden bg-gold-600", className)}
+      className={cn(
+        "pointer-events-none absolute inset-0 overflow-hidden bg-gold-600",
+        className,
+      )}
       aria-hidden="true"
     >
       <svg className="absolute h-0 w-0" aria-hidden="true">
@@ -61,13 +64,14 @@ export function LiquidCtaGlow({ className }: LiquidCtaGlowProps) {
         style={{ filter: `url(#${filterId})` }}
       >
         <div className="liquid-cta-blob absolute left-[-5%] top-[5%] h-[70%] w-[55%] rounded-full bg-gold-400/90 blur-2xl" />
-        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute right-[-10%] top-[-5%] h-[65%] w-[50%] rounded-full bg-gold-100 blur-2xl [animation-delay:-6s]" />
+        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute right-[-10%] top-[-5%] h-[65%] w-[50%] rounded-full bg-gold-400/70 blur-2xl [animation-delay:-6s]" />
         <div className="liquid-cta-blob absolute bottom-[-15%] left-[20%] h-[60%] w-[55%] rounded-full bg-gold-500/85 blur-2xl [animation-delay:-12s]" />
-        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute bottom-[5%] right-[15%] h-[50%] w-[45%] rounded-full bg-[#f5ead0] blur-2xl [animation-delay:-18s]" />
+        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute bottom-[5%] right-[15%] h-[50%] w-[45%] rounded-full bg-gold-500/75 blur-2xl [animation-delay:-18s]" />
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-br from-gold-600/40 via-transparent to-neutral-900/25" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(26,26,26,0.28),transparent_55%)]" />
+      <div className="absolute inset-0 bg-neutral-900/12" />
+      <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/25 via-gold-600/20 to-neutral-900/35" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(26,26,26,0.42),transparent_55%)]" />
     </div>
   );
 }

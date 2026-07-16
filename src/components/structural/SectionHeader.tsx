@@ -1,5 +1,6 @@
 import { cn } from "../../lib/cn";
 import { Eyebrow, type EyebrowVariant } from "../ui/Eyebrow";
+import { TextRevealLead } from "../motion/TextRevealLead";
 
 type SectionHeaderProps = {
   eyebrow?: string;
@@ -33,9 +34,16 @@ export function SectionHeader({
           {eyebrow}
         </Eyebrow>
       ) : null}
-      <h2 className="t-h2" id={titleId}>
+      <TextRevealLead
+        id={titleId}
+        revealUnit="word"
+        className={cn("max-w-none", align === "center" && "mx-auto")}
+        typographyClassName="font-heading text-h2 leading-heading tracking-tight"
+        mutedClassName="text-neutral-900/20"
+        fillClassName="text-neutral-900"
+      >
         {title}
-      </h2>
+      </TextRevealLead>
       {lead ? <p className="t-body-lg mt-4 max-w-2xl">{lead}</p> : null}
     </header>
   );
