@@ -2,10 +2,15 @@ import { FooterLegal, FooterMain, FooterNewsletter } from "./footer/FooterSectio
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-neutral-200 bg-neutral-50" role="contentinfo">
-      <FooterNewsletter />
-      <FooterMain />
-      <FooterLegal />
+    <footer className="mt-16" role="contentinfo">
+      <div className="relative z-10">
+        <FooterNewsletter />
+      </div>
+      {/* Pull footer fill up so it starts at mid-newsletter (half the card overlaps page bg). */}
+      <div className="relative -mt-[140px] bg-neutral-50 pt-[140px] md:-mt-[160px] md:pt-[160px]">
+        <FooterMain />
+        <FooterLegal />
+      </div>
     </footer>
   );
 }

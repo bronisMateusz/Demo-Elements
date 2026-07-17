@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { PDP_HEADER_HEIGHT_PX } from "../../constants/pdpSubnav";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
+import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
 import { HeaderBar } from "./header/HeaderBar";
 import { HeaderUtility } from "./header/HeaderUtility";
 import { MobileDrawer } from "./MobileDrawer";
@@ -32,6 +33,13 @@ export function Header() {
   const lastScrollY = useRef(0);
   const chromeLocked = drawerOpen || salonOpen || productsOpen;
   const chromeConcealed = concealed && !chromeLocked;
+
+  const openSalonDrawer = useCallback(() => {
+    setProductsOpen(false);
+    setSalonOpen(true);
+  }, []);
+
+  useSalonDrawerRequest(openSalonDrawer);
 
   useEffect(() => {
     const onScroll = () => {
@@ -82,10 +90,7 @@ export function Header() {
         <header id="siteHeader">
           <HeaderBar
             onMenuToggle={() => setDrawerOpen(true)}
-            onSalonToggle={() => {
-              setProductsOpen(false);
-              setSalonOpen(true);
-            }}
+            onSalonToggle={openSalonDrawer}
             salonOpen={salonOpen}
             isScrolled={isScrolled}
             productsOpen={productsOpen}

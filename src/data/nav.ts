@@ -109,6 +109,7 @@ export const productsMegaMenu: MegaMenuColumn[] = [
 export const salonNav = {
   label: "Wybierz salon",
   note: "Umów spotkanie",
+  changeNote: "Zmień salon",
   href: "#salony",
 } as const;
 
@@ -125,11 +126,25 @@ export const salonDrawerCopy = {
   resultsHeading: "Salony w pobliżu",
   learnMoreLabel: "Dowiedz się więcej",
   selectLabel: "Wybierz",
+  selectedLabel: "Wybrany",
   consent:
     "Korzystając z lokalizacji, wyrażasz zgodę na użycie plików cookies w celu wskazania najbliższego salonu.",
   consentLearnMoreLabel: "Dowiedz się więcej",
   learnMoreHref: "#cookies",
   emptyResults: "Brak salonów dla podanego zapytania.",
+} as const;
+
+export const salonCardCopy = {
+  selectedEyebrow: "Twój salon",
+  changeLabel: "Zmień",
+  selectedDescription:
+    "Chcesz zobaczyć ten produkt na żywo? Skontaktuj się z salonem — potwierdzimy dostępność i umówimy prezentację.",
+  hoursToggle: "Adres i godziny otwarcia",
+  addressColumnLabel: "Adres",
+  hoursColumnLabel: "Godziny otwarcia",
+  askLabel: "Wyślij pytanie do salonu",
+  defaultPhone: "+48 22 000 00 00",
+  defaultHours: ["pon.–pt. 10:00–18:00", "sob. 10:00–14:00"],
 } as const;
 
 /** Salon points — copy from eh-salon-results prototype. */
@@ -288,6 +303,8 @@ export const salonOptions = [
   },
 ] as const;
 
+export type SalonOption = (typeof salonOptions)[number];
+
 export const favoritesNav = {
   label: "Schowek",
   href: "#schowek",
@@ -304,47 +321,54 @@ export const utilityNavItems = [
   { label: "Salony i kontakt", href: "#salony" },
 ] as const;
 
+export const footerBrand = {
+  title: "ELEMENTS",
+  description:
+    "Sieć 19 salonów łazienek premium. 10 000 m² ekspozycji, ponad 40 000 produktów renomowanych marek i doradcy, którzy pomogą Ci dobrze wybrać.",
+} as const;
+
 export const footerColumns = [
   {
-    title: "Sklep",
+    title: "Na skróty",
     links: [
-      { label: "Kolekcje", href: "#" },
-      { label: "Produkty", href: "#" },
-      { label: "Nowości", href: "#" },
-      { label: "Salony", href: "#" },
-    ],
-  },
-  {
-    title: "Inspiracje",
-    links: [
-      { label: "Lookbook", href: "#" },
-      { label: "Aranżacje", href: "#" },
-      { label: "Strefa architekta", href: "#" },
-      { label: "Wizualizacje 3D", href: "#" },
+      { label: "Produkty", href: "#produkty" },
+      { label: "Inspiracje", href: "#inspiracje" },
+      { label: "Znajdź salon", href: "#salony" },
+      { label: "Dla Architekta", href: "#strefa-architekta" },
     ],
   },
   {
     title: "Pomoc",
     links: [
-      { label: "Kontakt", href: "#" },
-      { label: "FAQ", href: "#" },
-      { label: "Dostawa i montaż", href: "#" },
-      { label: "Gwarancja", href: "#" },
+      { label: "Kontakt", href: "#kontakt" },
+      { label: "Do pobrania", href: "#do-pobrania" },
+      { label: "Producenci", href: "#producenci" },
     ],
   },
   {
-    title: "Elements",
+    title: "Salony",
     links: [
-      { label: "O marce", href: "#" },
-      { label: "Kariera", href: "#" },
-      { label: "Polityka prywatności", href: "#" },
-      { label: "Regulamin", href: "#" },
+      { label: "Warszawa", href: "#salon-warszawa" },
+      { label: "Kraków", href: "#salon-krakow" },
+      { label: "Poznań", href: "#salon-poznan" },
+      { label: "Wszystkie lokalizacje", href: "#salony", trailing: "→" },
+    ],
+  },
+  {
+    title: "Informacje",
+    links: [
+      { label: "Polityka prywatności", href: "#polityka-prywatnosci" },
+      { label: "Regulamin", href: "#regulamin" },
     ],
   },
 ] as const;
 
+export const footerLegal = {
+  copyright: "Elements Show / Grupa HBH",
+} as const;
+
 export const footerSocialLinks = [
+  { label: "Facebook", href: "https://facebook.com", iconClass: "ph ph-facebook-logo" },
   { label: "Instagram", href: "https://instagram.com", iconClass: "ph ph-instagram-logo" },
   { label: "Pinterest", href: "https://pinterest.com", iconClass: "ph ph-pinterest-logo" },
-  { label: "LinkedIn", href: "https://linkedin.com", iconClass: "ph ph-linkedin-logo" },
 ] as const;

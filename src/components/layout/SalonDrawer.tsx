@@ -2,10 +2,12 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { distanceKm, formatDistanceKm } from "../../lib/geo";
 import { salonDrawerCopy, salonOptions } from "../../data/nav";
+import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { Button } from "../ui/Button";
 import { IconButton } from "../ui/IconButton";
 import { DrawerShell } from "./DrawerShell";
+import { inputClassName } from "../ui/inputClassName";
 
 type SalonDrawerProps = {
   open: boolean;
@@ -22,6 +24,7 @@ type LocateStatus = "idle" | "loading" | "ready" | "error";
 export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const searchId = useId();
+  const { salon: selectedSalon, select } = useSelectedSalon();
   const [query, setQuery] = useState("");
   const [userCoords, setUserCoords] = useState<UserCoords | null>(null);
   const [locateStatus, setLocateStatus] = useState<LocateStatus>("idle");
@@ -103,6 +106,11 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
 
   const locateBusy = locateStatus === "loading";
 
+  const handleSelect = (id: string) => {
+    select(id);
+    onClose();
+  };
+
   return (
     <DrawerShell
       open={open}
@@ -143,12 +151,7 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={salonDrawerCopy.searchPlaceholder}
                 autoComplete="off"
-                className={cn(
-                  "h-12 w-full rounded-xs border border-neutral-200 bg-neutral-0 py-2 pr-3 pl-10",
-                  "font-body text-ui text-neutral-900 placeholder:text-neutral-400",
-                  "outline-none transition-[border-color] duration-fast ease-out",
-                  "focus:border-neutral-800",
-                )}
+                className={cn(inputClassName, "bg-neutral-0 py-2 pr-3 pl-10")}
               />
             </label>
             <button
@@ -205,37 +208,57 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
             <p className="m-0 py-6 text-sm text-neutral-500">{salonDrawerCopy.emptyResults}</p>
           ) : (
             <ul className="m-0 flex list-none flex-col gap-3 p-0">
-              {filteredSalons.map(({ salon, distanceKm: km }) => (
-                <li
-                  key={salon.id}
-                  className="rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-5"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <p className="m-0 font-body text-ui font-medium text-neutral-900">
-                      {salon.name}
+              {filteredSalons.map(({ salon, distanceKm: km }) => {
+                const isSelected = selectedSalon?.id === salon.id;
+
+                return (
+                  <li
+                    key={salon.id}
+                    className={cn(
+                      "rounded-xs border bg-neutral-50 px-5 py-5",
+                      isSelected ? "border-neutral-900" : "border-neutral-200",
+                    )}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="m-0 font-body text-ui font-medium text-neutral-900">
+                        {salon.name}
+                      </p>
+                      {km != null ? (
+                        <span className="shrink-0 text-xs text-neutral-500">
+                          {formatDistanceKm(km)}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 mb-0 text-sm leading-relaxed text-neutral-500">
+                      {salon.address}
                     </p>
-                    {km != null ? (
-                      <span className="shrink-0 text-xs text-neutral-500">
-                        {formatDistanceKm(km)}
-                      </span>
-                    ) : null}
-                  </div>
-                  <p className="mt-1 mb-0 text-sm leading-relaxed text-neutral-500">
-                    {salon.address}
-                  </p>
-                  <div className="mt-5 flex items-center justify-between gap-4">
-                    <a
-                      href={salon.href}
-                      className="text-sm text-neutral-700 underline underline-offset-2 transition-colors duration-fast ease-out hover:text-gold-500"
-                    >
-                      {salonDrawerCopy.learnMoreLabel}
-                    </a>
-                    <Button as="button" type="button" variant="primary" size="sm" onClick={onClose}>
-                      {salonDrawerCopy.selectLabel}
-                    </Button>
-                  </div>
-                </li>
-              ))}
+                    <div className="mt-5 flex items-center justify-between gap-4">
+                      <a
+                        href={salon.href}
+                        className="text-sm text-neutral-700 underline underline-offset-2 transition-colors duration-fast ease-out hover:text-gold-500"
+                      >
+                        {salonDrawerCopy.learnMoreLabel}
+                      </a>
+                      <Button
+                        as="button"
+                        type="button"
+                        variant={isSelected ? "primary" : "secondary"}
+                        size="sm"
+                        onClick={() => handleSelect(salon.id)}
+                      >
+                        {isSelected ? (
+                          <>
+                            <i className="ph ph-check" aria-hidden="true" />
+                            {salonDrawerCopy.selectedLabel}
+                          </>
+                        ) : (
+                          salonDrawerCopy.selectLabel
+                        )}
+                      </Button>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>

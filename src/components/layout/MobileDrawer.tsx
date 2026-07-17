@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import { favoritesNav, mainNavItems, productsMegaMenu, salonNav } from "../../data/nav";
 import { useProductFavoritesCount } from "../../hooks/useProductFavorites";
+import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { IconButton } from "../ui/IconButton";
 import { DrawerShell } from "./DrawerShell";
@@ -16,6 +17,7 @@ type MobileDrawerProps = {
 export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const favoritesCount = useProductFavoritesCount();
+  const { salon } = useSelectedSalon();
   const [productsExpanded, setProductsExpanded] = useState(false);
 
   useEffect(() => {
@@ -137,8 +139,12 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
             >
               <i className="ph ph-map-pin text-xl text-neutral-700" aria-hidden="true" />
               <span className="min-w-0 flex-1">
-                <span className="block font-body text-ui text-neutral-900">{salonNav.label}</span>
-                <span className="mt-0.5 block text-xs text-neutral-500">{salonNav.note}</span>
+                <span className="block truncate font-body text-ui text-neutral-900">
+                  {salon?.name ?? salonNav.label}
+                </span>
+                <span className="mt-0.5 block text-xs text-neutral-500">
+                  {salon ? salonNav.changeNote : salonNav.note}
+                </span>
               </span>
               <i className="ph ph-caret-right text-sm text-neutral-500" aria-hidden="true" />
             </button>

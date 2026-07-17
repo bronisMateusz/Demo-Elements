@@ -7,6 +7,7 @@ import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { IconButton } from "../ui/IconButton";
 import { DrawerShell } from "../layout/DrawerShell";
+import { inputClassName } from "../ui/inputClassName";
 
 type AskDrawerProps = {
   open: boolean;
@@ -16,13 +17,6 @@ type AskDrawerProps = {
   productSku: string;
   productImage: ProductImage;
 };
-
-const fieldClassName = cn(
-  "h-12 w-full rounded-xs border border-neutral-200 bg-neutral-50 px-4",
-  "font-body text-ui text-neutral-900 placeholder:text-neutral-400",
-  "outline-none transition-[border-color,background-color] duration-fast ease-out",
-  "focus:border-neutral-800 focus:bg-neutral-0",
-);
 
 const labelClassName = "mb-1.5 block text-sm font-medium text-neutral-900";
 
@@ -166,7 +160,7 @@ export function AskDrawer({
                 aria-required="true"
                 autoComplete="given-name"
                 placeholder={askDrawerCopy.namePlaceholder}
-                className={fieldClassName}
+                className={inputClassName}
               />
             </div>
 
@@ -183,7 +177,7 @@ export function AskDrawer({
                 aria-required="true"
                 autoComplete="email"
                 placeholder={askDrawerCopy.contactPlaceholder}
-                className={fieldClassName}
+                className={inputClassName}
               />
             </div>
 
@@ -205,7 +199,7 @@ export function AskDrawer({
                 autoComplete="postal-code"
                 inputMode="numeric"
                 placeholder={askDrawerCopy.postalPlaceholder}
-                className={fieldClassName}
+                className={inputClassName}
               />
             </div>
 
@@ -222,7 +216,7 @@ export function AskDrawer({
                 rows={4}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                className={cn(fieldClassName, "h-auto min-h-28 resize-y py-3 leading-relaxed")}
+                className={cn(inputClassName, "h-auto min-h-28 resize-y py-3 leading-relaxed")}
               />
             </div>
 

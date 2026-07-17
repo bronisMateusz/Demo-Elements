@@ -4,6 +4,7 @@ import { assetUrl } from "../../../app/assets";
 import { cn } from "../../../lib/cn";
 import { favoritesNav, mainNavItems, salonNav } from "../../../data/nav";
 import { useProductFavoritesCount } from "../../../hooks/useProductFavorites";
+import { useSelectedSalon } from "../../../hooks/useSelectedSalon";
 import { IconButton } from "../../ui/IconButton";
 import { ProductsMegaMenu } from "./ProductsMegaMenu";
 
@@ -25,6 +26,10 @@ function HeaderSalonButton({
   onClick: () => void;
   open?: boolean;
 }) {
+  const { salon } = useSelectedSalon();
+  const label = salon?.name ?? salonNav.label;
+  const note = salon ? salonNav.changeNote : salonNav.note;
+
   return (
     <button
       type="button"
@@ -42,11 +47,11 @@ function HeaderSalonButton({
         aria-hidden="true"
       />
       <span className="min-w-0">
-        <span className="block font-body text-ui leading-compact text-neutral-800 transition-colors duration-fast ease-out group-hover/salon:text-gold-500">
-          {salonNav.label}
+        <span className="block truncate font-body text-ui leading-compact text-neutral-800 transition-colors duration-fast ease-out group-hover/salon:text-gold-500">
+          {label}
         </span>
-        <span className="mt-0.5 block text-xs leading-compact text-neutral-500 transition-colors duration-fast ease-out group-hover/salon:text-neutral-700">
-          {salonNav.note}
+        <span className="mt-0.5 block truncate text-xs leading-compact text-neutral-500 transition-colors duration-fast ease-out group-hover/salon:text-neutral-700">
+          {note}
         </span>
       </span>
       <i

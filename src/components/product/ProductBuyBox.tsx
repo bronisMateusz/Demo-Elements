@@ -77,7 +77,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
       />
 
       {product.salonCard ? (
-        <ProductSalonCard className="mt-10" {...product.salonCard} />
+        <ProductSalonCard className="mt-10" {...product.salonCard} onAskOpen={onAskOpen} />
       ) : null}
 
       <ProductPairWith title={product.seriesTitle} products={product.seriesProducts} />
