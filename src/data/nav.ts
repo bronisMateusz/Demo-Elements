@@ -1,15 +1,29 @@
 export type NavItem = {
   label: string;
   href: string;
+  /** Visual chevron only — no mega-menu in this demo. */
+  hasMenu?: boolean;
 };
 
 export const mainNavItems: NavItem[] = [
-  { label: "Kolekcje", href: "#kolekcje" },
-  { label: "Produkty", href: "#produkty" },
+  { label: "Produkty", href: "#produkty", hasMenu: true },
   { label: "Inspiracje", href: "#inspiracje" },
-  { label: "O nas", href: "#o-nas" },
-  { label: "Kontakt", href: "#kontakt" },
+  { label: "Nowości", href: "#nowosci" },
+  { label: "Outlet", href: "#outlet" },
+  { label: "Bestsellery", href: "#bestsellery" },
+  { label: "Producenci", href: "#producenci" },
 ];
+
+export const salonNav = {
+  label: "Wybierz salon",
+  note: "Umów spotkanie",
+  href: "#salony",
+} as const;
+
+export const favoritesNav = {
+  label: "Schowek",
+  href: "#schowek",
+} as const;
 
 export const footerColumns = [
   {

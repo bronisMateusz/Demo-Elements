@@ -1,6 +1,7 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const STORAGE_KEY = "elements-product-favorites";
+const CHANGE_EVENT = "elements-favorites-changed";
 
 function readFavorites(): string[] {
   try {
@@ -18,10 +19,27 @@ function readFavorites(): string[] {
 
 function writeFavorites(favorites: string[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+  window.dispatchEvent(new Event(CHANGE_EVENT));
+}
+
+function useFavoritesList() {
+  const [favorites, setFavorites] = useState(readFavorites);
+
+  useEffect(() => {
+    const sync = () => setFavorites(readFavorites());
+    window.addEventListener(CHANGE_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener(CHANGE_EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
+
+  return [favorites, setFavorites] as const;
 }
 
 export function useProductFavorites(sku: string) {
-  const [favorites, setFavorites] = useState(readFavorites);
+  const [favorites, setFavorites] = useFavoritesList();
 
   const isFavorite = favorites.includes(sku);
 
@@ -34,7 +52,13 @@ export function useProductFavorites(sku: string) {
       writeFavorites(next);
       return next;
     });
-  }, [sku]);
+  }, [setFavorites, sku]);
 
   return { isFavorite, toggle };
+}
+
+/** Bookmark count for header / drawer badge — stays in sync across tabs and toggles. */
+export function useProductFavoritesCount() {
+  const [favorites] = useFavoritesList();
+  return favorites.length;
 }

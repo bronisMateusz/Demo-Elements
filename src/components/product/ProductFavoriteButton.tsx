@@ -37,11 +37,14 @@ export function ProductFavoriteButton({
         active: isFavorite,
         className: cn(isFavorite && "text-gold-500 hover:text-gold-500", className),
       })}
-      aria-label={isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych"}
+      aria-label={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
       aria-pressed={isFavorite}
       onClick={handleClick}
     >
-      <i className={isFavorite ? "ph-fill ph-heart" : "ph ph-heart"} aria-hidden="true" />
+      <i
+        className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+        aria-hidden="true"
+      />
     </button>
   );
 }

@@ -7,12 +7,12 @@ export const headerModule: LibraryModule = {
   id: "1.1",
   slug: "header",
   title: "Header",
-  description: "Główny nagłówek marki Elements — logo, nawigacja desktop i trigger menu mobilnego.",
+  description: "Główny nagłówek marki Elements — logo, menu, selektor salonu, schowek i menu mobilne.",
   variants: [
     {
       id: "default",
       label: "Domyślny",
-      description: "Sticky header z logo po lewej i nawigacją wycentrowaną.",
+      description: "Sticky header: logo, linki, Wybierz salon, szukaj i schowek z badge.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName} data-lib-full-bleed>
           <Header />

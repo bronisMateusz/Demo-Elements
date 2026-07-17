@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
-import { mainNavItems } from "../../data/nav";
+import { favoritesNav, mainNavItems, salonNav } from "../../data/nav";
+import { useProductFavoritesCount } from "../../hooks/useProductFavorites";
 import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { IconButton } from "../ui/IconButton";
 
@@ -12,6 +13,7 @@ type MobileDrawerProps = {
 
 export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const favoritesCount = useProductFavoritesCount();
 
   useEffect(() => {
     lockPageScroll(open);
@@ -60,14 +62,49 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="block py-3 font-body text-lg text-neutral-900 no-underline transition-colors hover:text-gold-500"
+                  className="flex items-center gap-2 py-3 font-body text-lg text-neutral-900 no-underline transition-colors hover:text-gold-500"
                   onClick={onClose}
                 >
                   {item.label}
+                  {item.hasMenu ? (
+                    <i className="ph ph-caret-down text-sm text-neutral-500" aria-hidden="true" />
+                  ) : null}
                 </a>
               </li>
             ))}
           </ul>
+
+          <div className="mt-8 flex flex-col gap-4 border-t border-neutral-200 pt-8">
+            <a
+              href={salonNav.href}
+              className="flex items-center gap-2.5 no-underline"
+              onClick={onClose}
+            >
+              <i className="ph ph-map-pin text-xl text-neutral-700" aria-hidden="true" />
+              <span>
+                <span className="block font-body text-ui text-neutral-900">{salonNav.label}</span>
+                <span className="mt-0.5 block text-xs text-neutral-500">{salonNav.note}</span>
+              </span>
+            </a>
+            <a
+              href={favoritesNav.href}
+              className="flex items-center gap-3 font-body text-ui text-neutral-900 no-underline hover:text-gold-500"
+              onClick={onClose}
+            >
+              <i
+                className={
+                  favoritesCount > 0
+                    ? "ph-fill ph-bookmark-simple text-xl"
+                    : "ph ph-bookmark-simple text-xl"
+                }
+                aria-hidden="true"
+              />
+              <span>
+                {favoritesNav.label}
+                {favoritesCount > 0 ? ` (${favoritesCount})` : ""}
+              </span>
+            </a>
+          </div>
         </nav>
         <div className="border-t border-neutral-200 px-6 py-6">
           <Link
