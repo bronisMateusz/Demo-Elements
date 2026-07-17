@@ -1,4 +1,5 @@
 import { Badge } from "../ui/Badge";
+import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 import type { ProductBadge, ProductPrice } from "../../types/product";
 import { ProductAskRow } from "./ProductAskRow";
@@ -6,28 +7,54 @@ import { ProductAskRow } from "./ProductAskRow";
 type ProductBadgesProps = {
   badges: ProductBadge[];
   price?: ProductPrice;
+  brand?: string;
+  className?: string;
 };
 
 const PROMO_BADGE: ProductBadge = { label: "Promocja", variant: "promo" };
+
+const BRAND_LOGOS: Record<string, string> = {
+  oristo: "brands/oristo.svg",
+};
+
+function brandLogoPath(brand: string) {
+  return BRAND_LOGOS[brand.toLowerCase().replace(/\s+/g, "")];
+}
 
 function isPromoPrice(price?: ProductPrice) {
   return Boolean(price?.previous || price?.discount);
 }
 
-export function ProductBadges({ badges, price }: ProductBadgesProps) {
+export function ProductBadges({ badges, price, brand, className }: ProductBadgesProps) {
   const hasPromoBadge = badges.some(
     (badge) => badge.variant === "promo" || badge.label.toLowerCase() === "promocja",
   );
   const displayBadges =
     isPromoPrice(price) && !hasPromoBadge ? [PROMO_BADGE, ...badges] : badges;
+  const logoPath = brand ? brandLogoPath(brand) : undefined;
 
   return (
-    <div className="mb-4 flex flex-wrap gap-2">
-      {displayBadges.map((badge) => (
-        <Badge key={badge.label} variant={badge.variant ?? "default"}>
-          {badge.label}
-        </Badge>
-      ))}
+    <div className={cn("mb-4 flex flex-wrap items-center gap-x-3 gap-y-2", className)}>
+      {brand ? (
+        logoPath ? (
+          <img
+            src={assetUrl(logoPath)}
+            alt={brand}
+            className="h-3.5 w-auto md:h-4"
+            width={120}
+            height={21}
+          />
+        ) : (
+          <p className="m-0 font-body text-xs uppercase tracking-wide text-neutral-500">{brand}</p>
+        )
+      ) : null}
+      <div className="flex flex-wrap gap-2">
+        {displayBadges.map((badge) => (
+          <Badge key={badge.label} variant={badge.variant ?? "default"}>
+            {badge.label}
+          </Badge>
+        ))}
+      </div>
     </div>
   );
 }
@@ -45,52 +72,56 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
   const isPromo = Boolean(price.previous || price.discount);
 
   return (
-    <div className="border-t border-neutral-200 pt-8">
-      <div className="space-y-5">
+    <div className="pt-8">
+      <div
+        className={cn(
+          "space-y-4",
+          isPromo && "rounded-xs border border-promo/15 bg-promo-muted px-5 py-5",
+        )}
+      >
         {price.note ? (
-          <p className="font-body text-xs font-medium uppercase tracking-wide text-neutral-500">
+          <p
+            className={cn(
+              "m-0 font-body text-xs font-semibold uppercase tracking-widest",
+              isPromo ? "text-promo" : "text-neutral-500",
+            )}
+          >
             {price.note}
           </p>
         ) : null}
 
         <div>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
             <p
               className={cn(
-                "font-heading text-[clamp(32px,3.2vw,40px)] leading-none tracking-tight",
+                "font-heading text-[clamp(36px,3.6vw,48px)] leading-none tracking-tight",
                 isPromo ? "text-promo" : "text-neutral-900",
               )}
             >
               {price.current}
             </p>
             {price.discount ? (
-              <span className="inline-flex items-center rounded-xs bg-promo px-2.5 py-1 font-body text-xs font-medium tabular-nums leading-none text-neutral-0">
+              <span className="mb-1 inline-flex items-center rounded-xs bg-promo px-2.5 py-1 font-body text-xs font-medium tabular-nums leading-none text-neutral-0">
                 {price.discount}
               </span>
             ) : null}
           </div>
 
           {price.previous || price.lowestPrice30Days ? (
-            <dl className="mt-3 grid gap-x-6 gap-y-1 font-body text-xs text-neutral-500 sm:grid-cols-2">
+            <dl className="mt-4 space-y-1.5 font-body text-sm text-neutral-600">
               {price.previous ? (
-                <div>
-                  <dt className="sr-only">Cena przed obniżką</dt>
-                  <dd>
-                    Cena przed obniżką{" "}
-                    <span className="tabular-nums line-through decoration-neutral-400">
-                      {price.previous}
-                    </span>
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <dt className="text-neutral-500">Cena przed obniżką</dt>
+                  <dd className="m-0 tabular-nums line-through decoration-neutral-400">
+                    {price.previous}
                   </dd>
                 </div>
               ) : null}
               {price.lowestPrice30Days ? (
-                <div>
-                  <dt className="sr-only">Najniższa cena z ostatnich 30 dni przed obniżką</dt>
-                  <dd>
-                    Najniższa cena z ostatnich 30 dni przed obniżką{" "}
-                    <span className="tabular-nums font-medium text-neutral-700">
-                      {price.lowestPrice30Days}
-                    </span>
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <dt className="text-neutral-500">Najniższa cena z 30 dni przed obniżką</dt>
+                  <dd className="m-0 tabular-nums font-medium text-neutral-800">
+                    {price.lowestPrice30Days}
                   </dd>
                 </div>
               ) : null}
@@ -99,7 +130,7 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
         </div>
 
         {price.legalNote ? (
-          <p className="max-w-[52ch] font-body text-xs leading-relaxed text-neutral-500">
+          <p className="m-0 max-w-[52ch] font-body text-xs leading-relaxed text-neutral-500">
             {price.legalNote}
           </p>
         ) : null}

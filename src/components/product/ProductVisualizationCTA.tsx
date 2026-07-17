@@ -57,8 +57,8 @@ export function ProductVisualizationCTA({
               <Button
                 href={href}
                 variant="primary"
-                size="sm"
-                className="border-neutral-0 bg-neutral-0 text-neutral-900 hover:border-neutral-100 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:border-neutral-0 focus-visible:text-neutral-900"
+                size="lg"
+                className="border-neutral-0 bg-neutral-0 text-neutral-900 hover:border-gold-500 hover:text-neutral-0 focus-visible:border-gold-500 focus-visible:text-neutral-0"
               >
                 {label}
                 <i className="ph ph-arrow-right" aria-hidden="true" />
@@ -67,11 +67,11 @@ export function ProductVisualizationCTA({
                 <Button
                   href={secondary.href}
                   variant="secondary"
-                  size="sm"
+                  size="lg"
                   className={cn(
                     "border-neutral-0/45 bg-neutral-0/10 text-neutral-0 backdrop-blur-sm",
-                    "hover:border-neutral-0/70 hover:bg-neutral-0/18 hover:text-neutral-0",
-                    "focus-visible:border-neutral-0 focus-visible:text-neutral-0",
+                    "hover:border-gold-500 hover:text-neutral-0",
+                    "focus-visible:border-gold-500 focus-visible:text-neutral-0",
                   )}
                 >
                   {secondary.label}

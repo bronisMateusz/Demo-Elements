@@ -1,11 +1,5 @@
 import { cn } from "../../lib/cn";
-import {
-  askRowActionClassName,
-  askRowChevronClassName,
-  askRowClassName,
-  askRowIconClassName,
-  askRowTextClassName,
-} from "./askRowClassName";
+import { Button } from "../ui/Button";
 
 type ProductAskRowProps = {
   href: string;
@@ -14,18 +8,18 @@ type ProductAskRowProps = {
   className?: string;
 };
 
+/** Lead copy + separate CTA — not a full-bleed “mega” button. */
 export function ProductAskRow({ href, lead, actionLabel, className }: ProductAskRowProps) {
   return (
-    <a
-      href={href}
-      className={cn(askRowClassName, className)}
-      aria-label={`${lead} ${actionLabel}`}
-    >
-      <i className={cn("ph ph-chat-circle", askRowIconClassName)} aria-hidden="true" />
-      <span className={askRowTextClassName}>
-        {lead} <strong className={askRowActionClassName}>{actionLabel}</strong>
-      </span>
-      <i className={cn("ph ph-caret-right", askRowChevronClassName)} aria-hidden="true" />
-    </a>
+    <div className={cn("flex flex-col gap-4", className)}>
+      <p className="m-0 font-body text-base leading-body text-neutral-600">{lead}</p>
+      <div>
+        <Button href={href} variant="secondary" size="lg" ariaLabel={`${lead} ${actionLabel}`}>
+          <i className="ph ph-chat-circle" aria-hidden="true" />
+          {actionLabel}
+          <i className="ph ph-arrow-right" aria-hidden="true" />
+        </Button>
+      </div>
+    </div>
   );
 }

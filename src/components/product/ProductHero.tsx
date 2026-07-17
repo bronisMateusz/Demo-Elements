@@ -14,12 +14,15 @@ export function ProductHero({ product }: ProductHeroProps) {
   return (
     <section className="pb-[var(--spacing-section-sm)] md:pb-[var(--spacing-section)]" aria-label="Prezentacja produktu">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-12 xl:gap-16">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-0">
           <div className="min-w-0 lg:sticky lg:top-header-h lg:h-[calc(100svh-var(--spacing-header-h))]">
             <ProductGallery images={product.images} layout="viewport" />
           </div>
-          <div className="min-w-0 overflow-visible">
-            <ProductBuyBox product={product} />
+
+          <div className="min-w-0 lg:pt-10">
+            <div className="w-full lg:sticky lg:top-[calc(var(--spacing-header-h)+2.5rem)] lg:mx-auto lg:w-5/6 lg:max-w-[650px]">
+              <ProductBuyBox product={product} />
+            </div>
           </div>
         </div>
       </Container>

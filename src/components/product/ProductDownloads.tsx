@@ -12,22 +12,22 @@ export function ProductDownloads({ downloads }: ProductDownloadsProps) {
     <section aria-labelledby="downloads-title">
       <Container>
         <SectionHeader title="Pliki do pobrania" titleId="downloads-title" />
-        <div className="border-y border-neutral-200">
+        <div className="border-t border-neutral-200">
           <SharedLayoutBg
-            className="w-full flex-col divide-y divide-neutral-200"
+            className="grid w-full lg:grid-cols-2"
             pillClassName="rounded-xs bg-neutral-100"
           >
             {downloads.map((file) => (
               <a
                 key={file.title}
                 href={file.href}
-                className="relative flex items-center justify-between gap-4 py-5 no-underline"
+                className="relative flex items-center justify-between gap-4 border-b border-neutral-200 px-4 py-5 no-underline lg:odd:border-r"
               >
-                <div className="relative z-10 flex min-w-0 flex-1 items-center gap-4">
+                <div className="relative z-10 flex min-w-0 items-center gap-4">
                   <span className="font-body text-xs uppercase tracking-wide text-neutral-500">
                     {file.format}
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-ui text-neutral-900">{file.title}</p>
                     <p className="text-sm text-neutral-500">{file.size}</p>
                   </div>

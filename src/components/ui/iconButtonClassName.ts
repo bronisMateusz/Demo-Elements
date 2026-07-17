@@ -10,7 +10,7 @@ type IconButtonClassNameOptions = {
 };
 
 const iconButtonBase = cn(
-  "icon-btn inline-flex h-10 w-10 min-h-10 min-w-10 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800 transition-[background-color,color,border-color] duration-fast ease-out",
+  "icon-btn inline-flex h-12 w-12 min-h-12 min-w-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800 transition-[background-color,color,border-color] duration-fast ease-out",
   phosphorIconInFlexClassName,
   "[&_i]:text-xl",
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",

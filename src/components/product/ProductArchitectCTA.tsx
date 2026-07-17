@@ -35,7 +35,7 @@ export function ProductArchitectCTA({
     >
       <div className="w-full">
         <div className="grid overflow-hidden md:grid-cols-2">
-          <div className="relative min-h-[360px] md:min-h-[min(640px,58vw)]">
+          <div className="relative min-h-[280px] md:min-h-[min(420px,38vw)]">
             {showVideo ? (
               <video
                 className="absolute inset-0 h-full w-full object-cover"
@@ -64,35 +64,35 @@ export function ProductArchitectCTA({
               <img
                 src={assetUrl("sygnet.svg")}
                 alt=""
-                className="size-24 opacity-95 brightness-0 invert md:size-32 lg:size-36"
-                width={144}
-                height={144}
+                className="size-24 opacity-95 brightness-0 invert md:size-32 lg:size-40"
+                width={160}
+                height={160}
                 draggable={false}
               />
             </div>
           </div>
 
-          <div className="flex flex-col bg-gold-100 px-10 py-12 md:px-14 md:py-16 lg:px-16 lg:py-20">
+          <div className="flex flex-col bg-gold-100 px-8 py-8 md:px-10 md:py-10 lg:px-12 lg:py-12">
             <Eyebrow variant="gold" className="mb-0 text-sm tracking-widest text-gold-600">
               {eyebrow}
             </Eyebrow>
 
-            <div className="flex flex-1 flex-col justify-center gap-5 py-10 md:gap-6 md:py-12">
+            <div className="flex flex-1 flex-col justify-center gap-4 py-6 md:gap-5 md:py-8">
               <TextRevealLead
                 id="architect-cta-title"
                 revealUnit="word"
                 className="max-w-none text-balance"
-                typographyClassName="font-heading text-h1 leading-heading tracking-tight"
+                typographyClassName="font-heading text-h2 leading-heading tracking-tight"
                 mutedClassName="text-neutral-900/20"
                 fillClassName="text-neutral-900"
               >
                 {title}
               </TextRevealLead>
-              <p className="t-body-lg max-w-lg text-neutral-700">{description}</p>
+              <p className="t-body max-w-lg text-neutral-700">{description}</p>
             </div>
 
             <div className="flex justify-end">
-              <Button href={href} variant="primary">
+              <Button href={href} variant="primary" size="lg">
                 {label}
                 <i className="ph ph-arrow-right" aria-hidden="true" />
               </Button>

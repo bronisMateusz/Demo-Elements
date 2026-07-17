@@ -77,7 +77,7 @@ export function FooterLegal() {
             <li key={link.label}>
               <a
                 href={link.href}
-                className="inline-flex h-10 w-10 items-center justify-center text-neutral-600 transition-colors hover:text-gold-500"
+                className="inline-flex h-12 w-12 items-center justify-center text-neutral-600 transition-colors hover:text-gold-500"
                 aria-label={link.label}
               >
                 <i className={link.iconClass} aria-hidden="true" />

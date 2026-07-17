@@ -158,9 +158,8 @@ export function ProductCarousel({
           className={productCarouselSwiperClassName(resolvedLayout)}
           modules={[A11y, Mousewheel]}
           watchOverflow
-          grabCursor
           slidesPerView="auto"
-          spaceBetween={isInline ? 12 : 16}
+          spaceBetween={isInline ? 12 : 5}
           slidesOffsetBefore={resolvedLayout === "bleed" ? gutterPx : undefined}
           slidesOffsetAfter={resolvedLayout === "bleed" || isInlineBleed ? gutterPx : undefined}
           mousewheel={{

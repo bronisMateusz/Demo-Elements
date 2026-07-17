@@ -1,5 +1,6 @@
-import { useCallback, useState, type MouseEvent } from "react";
+import { useCallback, type MouseEvent } from "react";
 import { cn } from "../../lib/cn";
+import { useProductFavorites } from "../../hooks/useProductFavorites";
 import { Badge } from "../ui/Badge";
 import {
   btnAnimatedBaseClassName,
@@ -16,15 +17,17 @@ type ProductCarouselCardProps = {
 
 export function ProductCarouselCard({ product, className, compact = false }: ProductCarouselCardProps) {
   const images = product.images?.length ? product.images : [product.image];
-  const [cartAdded, setCartAdded] = useState(false);
+  const { isFavorite, toggle } = useProductFavorites(product.id);
   const hasMultipleImages = images.length > 1;
 
-  const handleQuickAdd = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setCartAdded(true);
-    window.setTimeout(() => setCartAdded(false), 2000);
-  }, []);
+  const handleAddToClipboard = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!isFavorite) toggle();
+    },
+    [isFavorite, toggle],
+  );
 
   const variantMeta = [
     product.colorCount ? `+${product.colorCount} kolory` : null,
@@ -37,7 +40,7 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
 
   return (
     <article
-      className={cn("group/card relative flex h-full flex-col bg-neutral-0", className)}
+      className={cn("group/card relative flex h-full cursor-pointer flex-col bg-neutral-0", className)}
     >
       <a
         href={product.href}
@@ -48,28 +51,43 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
       </a>
 
       <div className="relative aspect-square shrink-0 overflow-hidden bg-[#eef1f4]">
-        {images.map((image, index) => (
-          <img
-            key={`${product.id}-${index}`}
-            src={image.src}
-            alt={image.alt || product.title}
-            className={cn(
-              "absolute inset-0 h-full w-full object-cover transition-opacity duration-slow ease-luxury",
-              index === 0
-                ? cn(
-                    "opacity-100",
+        {images.map((image, index) => {
+          const isPrimary = index === 0;
+          const isHoverImage = index === 1;
+          const imageMotion = cn(
+            "origin-center",
+            "transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]",
+            "motion-reduce:transition-none",
+          );
+
+          return (
+            <img
+              key={`${product.id}-${index}`}
+              src={image.src}
+              alt={image.alt || product.title}
+              className={cn(
+                "absolute inset-0 h-full w-full object-cover",
+                imageMotion,
+                isPrimary &&
+                  cn(
+                    "z-[1] opacity-100",
                     hasMultipleImages &&
                       "group-hover/card:opacity-0 group-focus-within/card:opacity-0",
-                  )
-                : cn(
-                    "opacity-0",
-                    hasMultipleImages &&
-                      "group-hover/card:opacity-100 group-focus-within/card:opacity-100",
                   ),
-            )}
-            loading="lazy"
-          />
-        ))}
+                isHoverImage &&
+                  cn(
+                    // Use transform (not Tailwind scale-*) so opacity+scale animate together.
+                    "z-0 opacity-0 [transform:scale(1.2)]",
+                    "group-hover/card:opacity-100 group-hover/card:[transform:scale(1)]",
+                    "group-focus-within/card:opacity-100 group-focus-within/card:[transform:scale(1)]",
+                    "motion-reduce:[transform:scale(1)]",
+                  ),
+                !isPrimary && !isHoverImage && "hidden",
+              )}
+              loading="lazy"
+            />
+          );
+        })}
 
         {product.badge && product.badge.variant !== "brand" ? (
           <Badge
@@ -93,23 +111,24 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
           className={cn(
             btnAnimatedBaseClassName,
             btnAnimatedPrimaryClassName,
-            "absolute inset-x-4 bottom-4 z-[3] inline-flex h-11 items-center justify-center gap-2 border-0 px-4 font-body text-sm font-medium leading-none opacity-0 shadow-1 transition-opacity duration-base ease-luxury pointer-events-none",
+            "absolute inset-x-4 bottom-4 z-[3] inline-flex h-11 items-center justify-center gap-2 border-0 px-4 font-body text-sm font-medium leading-none opacity-0 shadow-1 transition-opacity duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] pointer-events-none",
             "group-hover/card:pointer-events-auto group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:opacity-100",
-            cartAdded && "pointer-events-auto opacity-100",
+            isFavorite && "pointer-events-auto opacity-100",
             "[&_i]:text-inherit",
           )}
           aria-live="polite"
-          onClick={handleQuickAdd}
+          aria-pressed={isFavorite}
+          onClick={handleAddToClipboard}
         >
-          {cartAdded ? (
+          {isFavorite ? (
             <>
-              <i className="ph ph-check" aria-hidden="true" />
-              Dodano do koszyka
+              <i className="ph-fill ph-bookmark-simple" aria-hidden="true" />
+              W schowku
             </>
           ) : (
             <>
-              <i className="ph ph-shopping-bag" aria-hidden="true" />
-              Do koszyka
+              <i className="ph ph-bookmark-simple" aria-hidden="true" />
+              Dodaj do schowka
             </>
           )}
         </button>

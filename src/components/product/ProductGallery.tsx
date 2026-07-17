@@ -6,6 +6,7 @@ import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
+import { IconButton } from "../ui/IconButton";
 import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "./ProductGalleryLightboxFlyer";
 import "swiper/css";
@@ -16,40 +17,87 @@ type ProductGalleryProps = {
   layout?: "default" | "viewport";
 };
 
-type GalleryProgressRailProps = {
-  count: number;
+type GalleryThumbnailRailProps = {
+  images: ProductImage[];
   activeIndex: number;
   onSelect: (index: number) => void;
 };
 
-function GalleryProgressRail({ count, activeIndex, onSelect }: GalleryProgressRailProps) {
-  const segmentHeight = 100 / count;
+function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnailRailProps) {
+  return (
+    <div className="hidden h-full w-14 shrink-0 flex-col lg:flex" aria-label="Miniatury galerii">
+      <div className="mx-auto min-h-4 w-px flex-1 bg-neutral-200" aria-hidden="true" />
+
+      <div className="flex flex-col justify-end gap-2">
+        {images.map((image, index) => {
+          const isActive = index === activeIndex;
+
+          return (
+            <button
+              key={image.src}
+              type="button"
+              className={cn(
+                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-neutral-50 transition-[opacity,border-color] duration-base ease-out",
+                isActive
+                  ? "border-neutral-900 opacity-100"
+                  : "border-neutral-200 opacity-55 hover:opacity-100",
+              )}
+              aria-label={`Przejdź do zdjęcia ${index + 1}`}
+              aria-current={isActive ? "true" : undefined}
+              onClick={() => onSelect(index)}
+            >
+              <img
+                src={image.src}
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{ objectPosition: productImageObjectPosition(image) }}
+                loading="lazy"
+                draggable={false}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+type GalleryControlsProps = {
+  activeIndex: number;
+  count: number;
+  onPrev: () => void;
+  onNext: () => void;
+  onZoom: () => void;
+};
+
+function GalleryControls({ activeIndex, count, onPrev, onNext, onZoom }: GalleryControlsProps) {
+  const atStart = activeIndex <= 0;
+  const atEnd = activeIndex >= count - 1;
 
   return (
-    <div className="hidden h-full w-6 shrink-0 lg:block">
-      <div className="relative h-full">
-        <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-neutral-200">
-          <span
-            className="absolute left-0 w-px bg-neutral-900 transition-[top,height] duration-base ease-out"
-            style={{
-              top: `${activeIndex * segmentHeight}%`,
-              height: `${segmentHeight}%`,
-            }}
-          />
-        </div>
-
-        <div className="flex h-full flex-col">
-          {Array.from({ length: count }, (_, index) => (
-            <button
-              key={index}
-              type="button"
-              className="flex-1 cursor-pointer"
-              aria-label={`Przejdź do zdjęcia ${index + 1}`}
-              aria-current={index === activeIndex ? "true" : undefined}
-              onClick={() => onSelect(index)}
-            />
-          ))}
-        </div>
+    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+      <div className="pointer-events-auto flex gap-1">
+        <IconButton
+          label="Powiększ zdjęcie"
+          iconClass="ph ph-magnifying-glass-plus"
+          variant="elevated"
+          className="shadow-subtle"
+          onClick={onZoom}
+        />
+        <IconButton
+          label="Poprzednie zdjęcie"
+          iconClass="ph ph-caret-up"
+          variant="elevated"
+          className={cn("shadow-subtle", atStart && "pointer-events-none opacity-35")}
+          onClick={atStart ? undefined : onPrev}
+        />
+        <IconButton
+          label="Następne zdjęcie"
+          iconClass="ph ph-caret-down"
+          variant="elevated"
+          className={cn("shadow-subtle", atEnd && "pointer-events-none opacity-35")}
+          onClick={atEnd ? undefined : onNext}
+        />
       </div>
     </div>
   );
@@ -160,6 +208,26 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     setActiveIndex(index);
   };
 
+  const goToPrev = () => {
+    if (activeIndex <= 0) return;
+    goToSlide(activeIndex - 1);
+  };
+
+  const goToNext = () => {
+    if (activeIndex >= images.length - 1) return;
+    goToSlide(activeIndex + 1);
+  };
+
+  const openZoom = () => {
+    const image = images[activeIndex];
+    if (!image) return;
+    const rect = getSlideRect(activeIndex) ?? new DOMRect(0, 0, 0, 0);
+    openLightbox(activeIndex, {
+      rect,
+      objectPosition: productImageObjectPosition(image),
+    });
+  };
+
   // Keep the background gallery in sync while the lightbox is open, so the
   // closing fly-back targets the slide the user is actually leaving from.
   const handleLightboxIndexChange = (index: number) => {
@@ -217,54 +285,69 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         )}
         aria-label="Galeria produktu"
       >
-        <GalleryProgressRail
-          count={images.length}
+        <GalleryThumbnailRail
+          images={images}
           activeIndex={activeIndex}
           onSelect={goToSlide}
         />
 
-        <Swiper
+        <div
           className={cn(
-            "min-w-0 w-full flex-1 [&_.swiper-slide]:h-auto",
-            fillViewport
-              ? "h-full min-h-0 [&_.swiper-slide]:flex [&_.swiper-slide]:h-full [&_.swiper-slide]:items-center"
-              : "max-h-[calc(100svh-var(--spacing-header-h)-48px)]",
+            "relative min-w-0 flex-1",
+            fillViewport && "flex h-full min-h-0 flex-col",
           )}
-          direction="vertical"
-          slidesPerView={1}
-          spaceBetween={fillViewport ? 0 : 8}
-          speed={480}
-          modules={[Mousewheel, Keyboard, A11y]}
-          mousewheel={{
-            forceToAxis: true,
-            releaseOnEdges: true,
-            sensitivity: 0.85,
-          }}
-          keyboard={{ enabled: !lightboxOpen, onlyInViewport: true }}
-          a11y={{
-            prevSlideMessage: "Poprzednie zdjęcie",
-            nextSlideMessage: "Następne zdjęcie",
-          }}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          onSlideChange={(swiper) => {
-            setActiveIndex(swiper.activeIndex);
-          }}
         >
-          {images.map((image, index) => (
-            <SwiperSlide key={image.src}>
-              <GallerySlideContent
-                image={image}
-                index={index}
-                onOpen={(origin) => openLightbox(index, origin)}
-                registerImage={registerSlideImage}
-                isHidden={lightboxClosing && lightboxIndex === index}
-                fillViewport={fillViewport}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          <Swiper
+            className={cn(
+              "min-w-0 w-full [&_.swiper-slide]:h-auto",
+              fillViewport
+                ? "h-full min-h-0 flex-1 [&_.swiper-slide]:flex [&_.swiper-slide]:h-full [&_.swiper-slide]:items-center"
+                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)]",
+            )}
+            direction="vertical"
+            slidesPerView={1}
+            spaceBetween={fillViewport ? 0 : 8}
+            speed={480}
+            modules={[Mousewheel, Keyboard, A11y]}
+            mousewheel={{
+              forceToAxis: true,
+              releaseOnEdges: true,
+              sensitivity: 0.85,
+            }}
+            keyboard={{ enabled: !lightboxOpen, onlyInViewport: true }}
+            a11y={{
+              prevSlideMessage: "Poprzednie zdjęcie",
+              nextSlideMessage: "Następne zdjęcie",
+            }}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            onSlideChange={(swiper) => {
+              setActiveIndex(swiper.activeIndex);
+            }}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide key={image.src}>
+                <GallerySlideContent
+                  image={image}
+                  index={index}
+                  onOpen={(origin) => openLightbox(index, origin)}
+                  registerImage={registerSlideImage}
+                  isHidden={lightboxClosing && lightboxIndex === index}
+                  fillViewport={fillViewport}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <GalleryControls
+            activeIndex={activeIndex}
+            count={images.length}
+            onPrev={goToPrev}
+            onNext={goToNext}
+            onZoom={openZoom}
+          />
+        </div>
       </div>
 
       <p

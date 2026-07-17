@@ -208,7 +208,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "ask-row",
       label: "Ask row (PDP)",
-      description: "Lekki wiersz CTA w bloku ceny — ikona czatu, lead + akcja, chevron.",
+      description: "Lead jako tekst + osobny przycisk CTA (secondary · lg) pod ceną.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonAskRowDemo />

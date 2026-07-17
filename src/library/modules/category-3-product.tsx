@@ -84,7 +84,7 @@ export const productCardModule: LibraryModule = {
       id: "carousel",
       label: "Karta karuzeli (OKA)",
       description:
-        "Faux-link, badge, ulubione, zmiana zdjęcia na hover, szybkie dodanie do koszyka i meta wariantów.",
+        "Faux-link, badge, ulubione, zmiana zdjęcia na hover, dodanie do schowka i meta wariantów.",
       render: () => (
         <Container className="max-w-[424px] py-8">
           <ProductCard product={montebianco80.seriesProducts[0]} layout="carousel" />

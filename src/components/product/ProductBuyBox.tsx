@@ -28,12 +28,8 @@ export function ProductBuyBox({ product }: ProductBuyBoxProps) {
     : "Zapytaj o dostępność";
 
   return (
-    <div className="lg:pt-6">
-      <ProductBadges badges={product.badges} price={displayPrice} />
-
-      <p className="mb-2 font-body text-xs uppercase tracking-wide text-neutral-500">
-        {product.brand}
-      </p>
+    <div>
+      <ProductBadges brand={product.brand} badges={product.badges} price={displayPrice} />
 
       <div className="mb-3 flex items-start justify-between gap-4">
         <h1 className="t-h2 min-w-0 flex-1">{displayTitle}</h1>

@@ -318,7 +318,8 @@ function LightboxControls({
         <IconButton
           label={isZoomed ? "Pomniejsz" : "Powiększ"}
           iconClass={isZoomed ? "ph ph-magnifying-glass-minus" : "ph ph-magnifying-glass-plus"}
-          className="pointer-events-auto"
+          variant="elevated"
+          className="pointer-events-auto shadow-subtle"
           onClick={onToggleZoom}
         />
       </div>
@@ -327,7 +328,8 @@ function LightboxControls({
         <IconButton
           label="Zamknij"
           iconClass="ph ph-x"
-          className="pointer-events-auto"
+          variant="elevated"
+          className="pointer-events-auto shadow-subtle"
           onClick={onClose}
         />
       </div>
@@ -338,7 +340,8 @@ function LightboxControls({
             <IconButton
               label="Poprzednie zdjęcie"
               iconClass="ph ph-caret-left"
-              className="pointer-events-auto"
+              variant="elevated"
+              className="pointer-events-auto shadow-subtle"
               onClick={onPrev}
             />
           </div>
@@ -346,7 +349,8 @@ function LightboxControls({
             <IconButton
               label="Następne zdjęcie"
               iconClass="ph ph-caret-right"
-              className="pointer-events-auto"
+              variant="elevated"
+              className="pointer-events-auto shadow-subtle"
               onClick={onNext}
             />
           </div>

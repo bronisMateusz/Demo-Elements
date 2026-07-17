@@ -8,7 +8,6 @@ import {
   libBtnStateLabelClassName,
   libBtnStatesGridClassName,
   libButtonPreviewClassName,
-  libAskRowPreviewClassName,
   libIconButtonPreviewClassName,
   type LibButtonPreviewState,
 } from "../libStyles";
@@ -255,33 +254,16 @@ export function ButtonLiveHoverDemo() {
 }
 
 export function ButtonAskRowDemo() {
-  const states: LibButtonPreviewState[] = ["default", "hover", "focus", "active"];
-
   return (
-    <div className="grid gap-8">
-      <div className={libBtnStatesGridClassName}>
-        {states.map((state) => (
-          <div key={state} className={libBtnStateClassName}>
-            <span className={libBtnStateLabelClassName}>Ask row · {stateLabel(state)}</span>
-            <ProductAskRow
-              href="#"
-              lead="Interesuje Cię ten produkt?"
-              actionLabel="Zadaj pytanie"
-              className={libAskRowPreviewClassName({ state })}
-            />
-          </div>
-        ))}
-      </div>
-      <div className="grid max-w-xl gap-3">
-        <p className="m-0 text-sm text-neutral-600">
-          Najedź kursorem — złote wypełnienie od dołu i przesunięcie chevrona (ten sam język animacji co Primary / Secondary / Gold).
-        </p>
-        <ProductAskRow
-          href="#"
-          lead="Interesuje Cię ten produkt?"
-          actionLabel="Zadaj pytanie"
-        />
-      </div>
+    <div className="grid max-w-xl gap-3">
+      <p className="m-0 text-sm text-neutral-600">
+        Lead jako zwykły tekst, CTA jako osobny przycisk (secondary · lg) — bez pełnoszerokościowego „mega” wiersza.
+      </p>
+      <ProductAskRow
+        href="#"
+        lead="Interesuje Cię ten produkt?"
+        actionLabel="Zadaj pytanie"
+      />
     </div>
   );
 }

@@ -23,7 +23,7 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
     <section aria-labelledby="specs-title">
       <Container>
         <SectionHeader title="Specyfikacja techniczna" titleId="specs-title" />
-        <dl className="grid gap-x-12 gap-y-0 border-t border-neutral-200 sm:grid-cols-2">
+        <dl className="grid gap-x-12 gap-y-0 border-t border-neutral-200 sm:grid-cols-2 xl:grid-cols-3">
           {visibleSpecs.map((spec) => (
             <div
               key={spec.label}

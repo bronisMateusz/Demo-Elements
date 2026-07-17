@@ -38,7 +38,7 @@ const buttonBaseAnimated = cn(
 );
 
 const buttonSizes: Record<ButtonSize, string> = {
-  sm: "h-10 px-5 text-sm",
+  sm: "h-12 px-5 text-sm",
   md: "",
   lg: "h-[52px] px-10",
 };

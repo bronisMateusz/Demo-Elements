@@ -9,8 +9,10 @@ export const btnAnimatedBaseClassName = cn(
   btnAnimatedFillClassName,
 );
 
-export const btnAnimatedPrimaryClassName =
-  "border-transparent bg-neutral-800 text-neutral-0 hover:text-neutral-0 focus-visible:text-neutral-0";
+export const btnAnimatedPrimaryClassName = cn(
+  "border-transparent bg-neutral-800 text-neutral-0 hover:text-neutral-0 focus-visible:text-neutral-0",
+  "hover:border-gold-500 focus-visible:border-gold-500",
+);
 
 export const btnAnimatedSecondaryClassName = cn(
   "border-neutral-200 bg-transparent text-neutral-800",

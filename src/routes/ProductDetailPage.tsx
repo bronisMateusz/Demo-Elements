@@ -94,11 +94,7 @@ export function ProductDetailPage() {
 
         <RevealSection>
           <Section id="pdp-podobne" className={pdpSectionScrollMarginClassName}>
-            <ProductRecommendations
-              similarProducts={product.similarProducts}
-              recentlyViewedProducts={product.recentlyViewedProducts}
-              currentProductId={product.id}
-            />
+            <ProductRecommendations similarProducts={product.similarProducts} />
           </Section>
         </RevealSection>
       </PageShell>
