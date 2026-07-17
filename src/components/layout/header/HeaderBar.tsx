@@ -7,15 +7,26 @@ import { IconButton } from "../../ui/IconButton";
 
 type HeaderBarProps = {
   onMenuToggle: () => void;
+  onSalonToggle: () => void;
+  salonOpen?: boolean;
   isScrolled: boolean;
 };
 
-function HeaderSalonLink() {
+function HeaderSalonButton({
+  onClick,
+  open = false,
+}: {
+  onClick: () => void;
+  open?: boolean;
+}) {
   return (
-    <a
-      href={salonNav.href}
+    <button
+      type="button"
+      onClick={onClick}
+      aria-haspopup="dialog"
+      aria-expanded={open}
       className={cn(
-        "group/salon hidden min-w-0 items-center gap-2 rounded-xs px-2 py-1.5 no-underline transition-colors duration-fast ease-out lg:flex",
+        "group/salon hidden min-w-0 items-center gap-2.5 rounded-xs px-2 py-1.5 text-left transition-colors duration-fast ease-out lg:flex",
         "hover:bg-neutral-100",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
       )}
@@ -25,15 +36,18 @@ function HeaderSalonLink() {
         aria-hidden="true"
       />
       <span className="min-w-0">
-        <span className="flex items-center gap-1 font-body text-ui leading-compact text-neutral-700 transition-colors group-hover/salon:text-neutral-900">
+        <span className="block font-body text-ui leading-compact text-neutral-700 transition-colors group-hover/salon:text-neutral-900">
           {salonNav.label}
-          <i className="ph ph-caret-down text-[11px] text-neutral-500" aria-hidden="true" />
         </span>
         <span className="mt-0.5 block text-xs leading-compact text-neutral-500">
           {salonNav.note}
         </span>
       </span>
-    </a>
+      <i
+        className="ph ph-caret-down shrink-0 text-xs leading-none text-neutral-500"
+        aria-hidden="true"
+      />
+    </button>
   );
 }
 
@@ -64,9 +78,9 @@ function HeaderFavoritesLink() {
   );
 }
 
-export function HeaderBar({ onMenuToggle, isScrolled }: HeaderBarProps) {
+export function HeaderBar({ onMenuToggle, onSalonToggle, salonOpen = false, isScrolled }: HeaderBarProps) {
   return (
-    <div className="container flex h-header-h items-center gap-4 xl:gap-6">
+    <div className="container flex h-header-bar-h items-center gap-4 xl:gap-6">
       <Link
         to="/"
         className="inline-flex shrink-0 items-center no-underline"
@@ -100,7 +114,7 @@ export function HeaderBar({ onMenuToggle, isScrolled }: HeaderBarProps) {
       </nav>
 
       <div className="ml-auto flex shrink-0 items-center gap-1 border-l border-neutral-200 pl-3 lg:ml-0 lg:pl-4">
-        <HeaderSalonLink />
+        <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
         <IconButton label="Szukaj" iconClass="ph ph-magnifying-glass" variant="default" />
         <HeaderFavoritesLink />
         <IconButton

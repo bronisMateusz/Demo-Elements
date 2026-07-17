@@ -17,11 +17,11 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
 
   return (
     <>
-      <div ref={sentinelRef} className="h-px" aria-hidden="true" />
+      <div ref={sentinelRef} id="pdp-subnav-sentinel" className="h-px" aria-hidden="true" />
       <nav
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-header-h z-[99] border-b border-transparent bg-neutral-0/95 backdrop-blur-sm transition-[border-color,background-color] duration-base ease-luxury",
+          "pdp-subnav sticky top-header-h z-[99] border-b border-transparent bg-neutral-0/95 backdrop-blur-sm transition-[border-color,background-color,transform] duration-base ease-luxury",
           stuck && "is-stuck border-neutral-200 [background:color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
         aria-label="Sekcje strony produktu"

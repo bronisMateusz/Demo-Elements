@@ -52,7 +52,12 @@
   --spacing-section-sm: clamp(48px, 8vw, 72px);
   --spacing-section: clamp(64px, 10vw, 96px);
   --spacing-gutter: clamp(20px, 2.222vw, 40px);
-  --spacing-header-h: 72px;
+  /* Main nav bar only — full sticky chrome = utility + bar (see base layer). */
+  --spacing-header-bar-h: 72px;
+  --spacing-header-utility-h: 44px;
+  --spacing-header-h: 116px;
+  /* Sticky/scroll offset — collapses to 0 while the site header is auto-hidden. */
+  --spacing-header-offset: 116px;
 
   /* Shadows — brand-specific; no 1:1 map to shadow-sm/md/lg */
   --shadow-subtle: 0 1px 3px rgba(26, 26, 26, 0.04);
@@ -80,6 +85,13 @@
   html {
     @apply overflow-x-clip;
     -webkit-text-size-adjust: 100%;
+
+    /* Utility bar is desktop-only — keep sticky offsets in sync on smaller viewports. */
+    @media (width < 64rem) {
+      --spacing-header-utility-h: 0px;
+      --spacing-header-h: 72px;
+      --spacing-header-offset: 72px;
+    }
   }
 
   html:focus-within {
@@ -199,8 +211,52 @@ html.has-lightbox-open {
 
 /* During the lightbox fly-back, lift the header above the overlay (z-[400]) so
    the shrinking image tucks under it instead of covering it. */
-html.lightbox-closing #siteHeader {
+html.lightbox-closing #siteHeader,
+html.lightbox-closing #siteHeaderUtility,
+html.lightbox-closing #siteHeaderBar {
   @apply z-420;
+}
+
+/* Sticky content offsets collapse while site chrome is off-screen. */
+html.site-header-concealed {
+  --spacing-header-offset: 0px;
+}
+
+/* Menu layers share timing; delays create level-by-level reveal / conceal. */
+.site-header-layer {
+  transition:
+    transform var(--transition-duration-base) var(--ease-luxury),
+    border-color var(--transition-duration-base) var(--ease-luxury),
+    background-color var(--transition-duration-base) var(--ease-luxury);
+}
+
+#siteHeaderUtility {
+  transition: transform var(--transition-duration-base) var(--ease-luxury);
+}
+
+/* Reveal (scroll up): utility first, then bar + section menu together (no overlap). */
+html:not(.site-header-concealed) #siteHeaderUtility {
+  transition-delay: 0ms;
+}
+html:not(.site-header-concealed) #siteHeaderBar {
+  transition-delay: 100ms;
+}
+html:not(.site-header-concealed) #pdpSubnav {
+  transition-delay: 100ms;
+}
+
+/* Conceal (scroll down): all chrome layers move together — avoids gaps between levels. */
+html.site-header-concealed #siteHeaderUtility,
+html.site-header-concealed #siteHeaderBar,
+html.site-header-concealed #pdpSubnav {
+  transform: translateY(calc(-1 * var(--spacing-header-h)));
+  transition-delay: 0ms;
+}
+
+html.elements-pause-motion .site-header-layer,
+html.elements-pause-motion #pdpSubnav,
+html.elements-pause-motion #siteHeaderUtility {
+  transition: none !important;
 }
 
 html.elements-pause-motion .motion-fill-surface::before {

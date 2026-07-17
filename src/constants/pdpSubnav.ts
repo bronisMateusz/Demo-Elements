@@ -3,9 +3,11 @@ export type PdpSubnavItem = {
   label: string;
 };
 
-/** Header + subnav + small gap — used for scroll-spy and anchor offset. */
-export const PDP_HEADER_HEIGHT_PX = 72;
-export const PDP_SUBNAV_SCROLL_OFFSET_PX = PDP_HEADER_HEIGHT_PX + 58 + 8;
+/** Full sticky site header height (utility + bar on lg+, bar only below). */
+export const PDP_HEADER_HEIGHT_PX = 116;
+export const PDP_HEADER_BAR_HEIGHT_PX = 72;
+export const PDP_SUBNAV_HEIGHT_PX = 58;
+export const PDP_SUBNAV_SCROLL_OFFSET_PX = PDP_HEADER_HEIGHT_PX + PDP_SUBNAV_HEIGHT_PX + 8;
 
 export function buildPdpSubnavItems(): PdpSubnavItem[] {
   return [
@@ -18,4 +20,4 @@ export function buildPdpSubnavItems(): PdpSubnavItem[] {
 }
 
 export const pdpSectionScrollMarginClassName =
-  "scroll-mt-[calc(var(--spacing-header-h)+58px+8px)]";
+  "scroll-mt-[calc(var(--spacing-header-offset)+58px+8px)]";

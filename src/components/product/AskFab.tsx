@@ -8,6 +8,14 @@ import { productImageObjectPosition } from "../../lib/productImageStyle";
 
 /** Hide when footer top enters this band above the viewport bottom. */
 const FOOTER_CLEARANCE_PX = 160;
+const DEFAULT_SHOW_AFTER_SCROLL_PX = 320;
+
+/** Prefer showing after the PDP hero leaves view — falls back to a fixed offset. */
+function getShowAfterScrollPx(fallback: number): number {
+  const hero = document.querySelector<HTMLElement>('[aria-label="Prezentacja produktu"]');
+  if (!hero) return fallback;
+  return Math.max(fallback, hero.offsetTop + hero.offsetHeight - 160);
+}
 
 type AskFabProps = {
   sku: string;
@@ -17,7 +25,7 @@ type AskFabProps = {
   askHref?: string;
   askLabel?: string;
   className?: string;
-  /** Scroll offset (px) after which the bar becomes visible. */
+  /** Scroll offset (px) after which the bar becomes visible (minimum / non-PDP fallback). */
   showAfterScroll?: number;
   footerSelector?: string;
 };
@@ -30,7 +38,7 @@ export function AskFab({
   askHref = "#kontakt",
   askLabel = "Zadaj pytanie",
   className,
-  showAfterScroll = 320,
+  showAfterScroll = DEFAULT_SHOW_AFTER_SCROLL_PX,
   footerSelector = 'footer[role="contentinfo"]',
 }: AskFabProps) {
   const [visible, setVisible] = useState(false);
@@ -40,13 +48,14 @@ export function AskFab({
     const footer = document.querySelector<HTMLElement>(footerSelector);
     if (!footer) return;
 
-    let scrolledEnough = window.scrollY > showAfterScroll;
+    const threshold = () => getShowAfterScrollPx(showAfterScroll);
+    let scrolledEnough = window.scrollY > threshold();
     let footerNear = false;
 
     const syncVisible = () => setVisible(scrolledEnough && !footerNear);
 
     const onScroll = () => {
-      scrolledEnough = window.scrollY > showAfterScroll;
+      scrolledEnough = window.scrollY > threshold();
       syncVisible();
     };
 

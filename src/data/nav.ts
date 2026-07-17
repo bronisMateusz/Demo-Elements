@@ -20,10 +20,28 @@ export const salonNav = {
   href: "#salony",
 } as const;
 
+export const salonOptions = [
+  { id: "warszawa", name: "Elements Warszawa", address: "ul. Mokotowska 12, Warszawa" },
+  { id: "krakow", name: "Elements Kraków", address: "ul. Karmelicka 28, Kraków" },
+  { id: "wroclaw", name: "Elements Wrocław", address: "ul. Świdnicka 8, Wrocław" },
+  { id: "gdansk", name: "Elements Gdańsk", address: "ul. Długa 45, Gdańsk" },
+] as const;
+
 export const favoritesNav = {
   label: "Schowek",
   href: "#schowek",
 } as const;
+
+export const utilityTagline = "Od pomysłu do gotowej łazienki";
+
+export const utilityNavItems = [
+  { label: "Strefa architekta", href: "#strefa-architekta", iconClass: "ph ph-triangle" },
+  { label: "Strefa instalatora", href: "#strefa-instalatora", iconClass: "ph ph-wrench", dividerAfter: true },
+  { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
+  { label: "Konfigurator kabin", href: "#konfigurator-kabin" },
+  { label: "Blog", href: "#blog" },
+  { label: "Salony i kontakt", href: "#salony" },
+] as const;
 
 export const footerColumns = [
   {

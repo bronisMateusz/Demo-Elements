@@ -51,7 +51,7 @@ export function ProductEditorial({
         {breadcrumbs ? <Breadcrumbs items={breadcrumbs} variant="section" /> : null}
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
-          <div className="min-w-0 lg:sticky lg:top-[calc(var(--spacing-header-h)+58px+1rem)] lg:self-start">
+          <div className="min-w-0 lg:sticky lg:top-[calc(var(--spacing-header-offset)+58px+1rem)] lg:self-start">
             <SectionHeader eyebrow={eyebrow} title={title} titleId="editorial-title" className="mb-8" />
             <div className="space-y-6">
               <TextRevealLead>{lead}</TextRevealLead>

@@ -9,9 +9,10 @@ import { IconButton } from "../ui/IconButton";
 type MobileDrawerProps = {
   open: boolean;
   onClose: () => void;
+  onSalonOpen?: () => void;
 };
 
-export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
+export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const favoritesCount = useProductFavoritesCount();
 
@@ -75,17 +76,21 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           </ul>
 
           <div className="mt-8 flex flex-col gap-4 border-t border-neutral-200 pt-8">
-            <a
-              href={salonNav.href}
-              className="flex items-center gap-2.5 no-underline"
-              onClick={onClose}
+            <button
+              type="button"
+              className="flex w-full items-center gap-2.5 text-left"
+              onClick={() => {
+                onClose();
+                onSalonOpen?.();
+              }}
             >
               <i className="ph ph-map-pin text-xl text-neutral-700" aria-hidden="true" />
-              <span>
+              <span className="min-w-0 flex-1">
                 <span className="block font-body text-ui text-neutral-900">{salonNav.label}</span>
                 <span className="mt-0.5 block text-xs text-neutral-500">{salonNav.note}</span>
               </span>
-            </a>
+              <i className="ph ph-caret-right text-sm text-neutral-500" aria-hidden="true" />
+            </button>
             <a
               href={favoritesNav.href}
               className="flex items-center gap-3 font-body text-ui text-neutral-900 no-underline hover:text-gold-500"

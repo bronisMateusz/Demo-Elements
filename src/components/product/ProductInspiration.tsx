@@ -134,7 +134,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
 
                 <div
                   className={cn(
-                    "md:sticky md:top-[calc(var(--spacing-header-h)+58px+1rem)] md:self-start",
+                    "md:sticky md:top-[calc(var(--spacing-header-offset)+58px+1rem)] md:self-start",
                     imageLast && "md:order-1",
                   )}
                 >

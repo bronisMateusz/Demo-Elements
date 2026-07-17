@@ -1,7 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { isMotionPaused } from "../lib/a11yPreferences";
 import type { PdpSubnavItem } from "../constants/pdpSubnav";
-import { PDP_HEADER_HEIGHT_PX, PDP_SUBNAV_SCROLL_OFFSET_PX } from "../constants/pdpSubnav";
+import { PDP_HEADER_HEIGHT_PX, PDP_SUBNAV_HEIGHT_PX } from "../constants/pdpSubnav";
+
+const SUBNAV_GAP_PX = 8;
+
+function readHeaderHeightPx() {
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue("--spacing-header-h")
+    .trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : PDP_HEADER_HEIGHT_PX;
+}
+
+function readHeaderOffsetPx() {
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue("--spacing-header-offset")
+    .trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : PDP_HEADER_HEIGHT_PX;
+}
+
+function readSubnavScrollOffsetPx() {
+  return readHeaderOffsetPx() + PDP_SUBNAV_HEIGHT_PX + SUBNAV_GAP_PX;
+}
 
 export function usePdpSubnav(items: PdpSubnavItem[]) {
   const sectionIds = items.map((item) => item.id);
@@ -13,24 +35,46 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setStuck(!entry.isIntersecting),
-      { threshold: 0, rootMargin: `-${PDP_HEADER_HEIGHT_PX}px 0px 0px 0px` },
-    );
+    // Fixed to the *current* full header height — must NOT follow --spacing-header-offset,
+    // or concealing the header flips stuck on/off and the chrome flickers.
+    const observe = () => {
+      const headerH = readHeaderHeightPx();
+      const observer = new IntersectionObserver(
+        ([entry]) => setStuck(!entry.isIntersecting),
+        { threshold: 0, rootMargin: `-${headerH}px 0px 0px 0px` },
+      );
+      observer.observe(sentinel);
+      return observer;
+    };
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    let observer = observe();
+    const onResize = () => {
+      observer.disconnect();
+      observer = observe();
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("pdp-subnav-stuck", stuck);
+    return () => document.documentElement.classList.remove("pdp-subnav-stuck");
+  }, [stuck]);
 
   useEffect(() => {
     if (sectionIds.length === 0) return;
 
     const updateActive = () => {
+      const offset = readSubnavScrollOffsetPx();
       let current = sectionIds[0];
       for (const id of sectionIds) {
         const element = document.getElementById(id);
         if (!element) continue;
-        if (element.getBoundingClientRect().top <= PDP_SUBNAV_SCROLL_OFFSET_PX) {
+        if (element.getBoundingClientRect().top <= offset) {
           current = id;
         }
       }
@@ -51,7 +95,7 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
     if (!element) return;
 
     const top =
-      element.getBoundingClientRect().top + window.scrollY - PDP_SUBNAV_SCROLL_OFFSET_PX + 1;
+      element.getBoundingClientRect().top + window.scrollY - readSubnavScrollOffsetPx() + 1;
 
     window.scrollTo({
       top,
