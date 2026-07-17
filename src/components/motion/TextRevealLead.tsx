@@ -97,9 +97,10 @@ export function TextRevealLead({
   const words = useMemo(() => children.split(/\s+/).filter(Boolean), [children]);
   const lines = useTextLineSplit(children, containerRef, typographyClassName);
   const segmentCount = revealUnit === "word" ? words.length : (lines?.length ?? 1);
+  // Start above the sticky product bar; finish before editorial sticky freezes rect.top.
   const progress = useScrollRevealProgress(containerRef, {
-    start: 0.9,
-    end: Math.max(0.22, 0.52 - segmentCount * (revealUnit === "word" ? 0.012 : 0.018)),
+    start: 0.8,
+    end: Math.max(0.4, 0.55 - segmentCount * (revealUnit === "word" ? 0.01 : 0.014)),
   });
 
   if (reduce) {
