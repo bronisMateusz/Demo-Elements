@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "elements-product-favorites";
-const CHANGE_EVENT = "elements-favorites-changed";
+
+type Listener = () => void;
+
+const listeners = new Set<Listener>();
 
 function readFavorites(): string[] {
   try {
@@ -19,46 +22,55 @@ function readFavorites(): string[] {
 
 function writeFavorites(favorites: string[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
-  window.dispatchEvent(new Event(CHANGE_EVENT));
+  listeners.forEach((listener) => listener());
+}
+
+function subscribe(listener: Listener) {
+  listeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY || event.key === null) listener();
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+/** Stable string snapshot so useSyncExternalStore can bail out on equal data. */
+function getFavoritesSnapshot() {
+  return readFavorites().join("\0");
+}
+
+function getFavoritesServerSnapshot() {
+  return "";
 }
 
 function useFavoritesList() {
-  const [favorites, setFavorites] = useState(readFavorites);
-
-  useEffect(() => {
-    const sync = () => setFavorites(readFavorites());
-    window.addEventListener(CHANGE_EVENT, sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener(CHANGE_EVENT, sync);
-      window.removeEventListener("storage", sync);
-    };
-  }, []);
-
-  return [favorites, setFavorites] as const;
+  const snapshot = useSyncExternalStore(
+    subscribe,
+    getFavoritesSnapshot,
+    getFavoritesServerSnapshot,
+  );
+  return snapshot === "" ? [] : snapshot.split("\0");
 }
 
 export function useProductFavorites(sku: string) {
-  const [favorites, setFavorites] = useFavoritesList();
-
+  const favorites = useFavoritesList();
   const isFavorite = favorites.includes(sku);
 
   const toggle = useCallback(() => {
-    setFavorites((current) => {
-      const next = current.includes(sku)
-        ? current.filter((entry) => entry !== sku)
-        : [...current, sku];
-
-      writeFavorites(next);
-      return next;
-    });
-  }, [setFavorites, sku]);
+    const current = readFavorites();
+    const next = current.includes(sku)
+      ? current.filter((entry) => entry !== sku)
+      : [...current, sku];
+    writeFavorites(next);
+  }, [sku]);
 
   return { isFavorite, toggle };
 }
 
 /** Bookmark count for header / drawer badge - stays in sync across tabs and toggles. */
 export function useProductFavoritesCount() {
-  const [favorites] = useFavoritesList();
-  return favorites.length;
+  return useFavoritesList().length;
 }
