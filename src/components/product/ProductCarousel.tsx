@@ -120,7 +120,7 @@ export function ProductCarousel({
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
 
-  const enableLoop = products.length > 1;
+  const enableLoop = !isInline && products.length > 1;
   const slides = useMemo(
     () => (enableLoop ? withClonedSlides(products, isInline ? 8 : 12) : products),
     [products, enableLoop, isInline],
