@@ -26,10 +26,11 @@ export function Header() {
   useSiteChrome();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [salonOpen, setSalonOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [concealed, setConcealed] = useState(false);
   const lastScrollY = useRef(0);
-  const chromeLocked = drawerOpen || salonOpen;
+  const chromeLocked = drawerOpen || salonOpen || productsOpen;
   const chromeConcealed = concealed && !chromeLocked;
 
   useEffect(() => {
@@ -72,18 +73,23 @@ export function Header() {
       <div
         id="siteHeaderBar"
         className={cn(
-          "site-header-layer sticky top-0 z-[101] bg-neutral-0/95 backdrop-blur-sm lg:top-header-utility-h",
+          "site-header-layer sticky top-0 z-[101] border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm lg:top-header-utility-h",
           "transition-[border-color,background-color,transform] duration-base ease-luxury",
           isScrolled &&
-            "border-b border-neutral-200 [background:color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
+            "[background:color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
       >
         <header id="siteHeader">
           <HeaderBar
             onMenuToggle={() => setDrawerOpen(true)}
-            onSalonToggle={() => setSalonOpen(true)}
+            onSalonToggle={() => {
+              setProductsOpen(false);
+              setSalonOpen(true);
+            }}
             salonOpen={salonOpen}
             isScrolled={isScrolled}
+            productsOpen={productsOpen}
+            onProductsOpenChange={setProductsOpen}
           />
         </header>
       </div>
