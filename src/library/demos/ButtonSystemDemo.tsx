@@ -257,7 +257,7 @@ export function ButtonAskRowDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Lead jako zwykły tekst, CTA jako osobny przycisk (secondary · lg) — bez pełnoszerokościowego „mega” wiersza.
+        Cena + ask w jednym panelu; samodzielny wariant z neutralną ramką.
       </p>
       <ProductAskRow
         href="#"

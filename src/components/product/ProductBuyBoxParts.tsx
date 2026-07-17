@@ -1,4 +1,5 @@
 import { Badge } from "../ui/Badge";
+import { Eyebrow } from "../ui/Eyebrow";
 import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 import type { ProductBadge, ProductPrice } from "../../types/product";
@@ -69,81 +70,73 @@ type ProductPriceBlockProps = {
 };
 
 export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
-  const isPromo = Boolean(price.previous || price.discount);
-
   return (
     <div className="pt-8">
-      <div
-        className={cn(
-          "space-y-4",
-          isPromo && "rounded-xs border border-promo/15 bg-promo-muted px-5 py-5",
-        )}
-      >
-        {price.note ? (
-          <p
-            className={cn(
-              "m-0 font-body text-xs font-semibold uppercase tracking-widest",
-              isPromo ? "text-promo" : "text-neutral-500",
-            )}
-          >
-            {price.note}
-          </p>
-        ) : null}
+      <div className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50">
+        <div className="space-y-4 px-5 py-5">
+          {price.note ? (
+            <Eyebrow variant="gold" className="mb-0 text-promo">
+              {price.note}
+            </Eyebrow>
+          ) : null}
 
-        <div>
-          <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
-            <p
-              className={cn(
-                "font-heading text-[clamp(36px,3.6vw,48px)] leading-none tracking-tight",
-                isPromo ? "text-promo" : "text-neutral-900",
-              )}
-            >
-              {price.current}
-            </p>
-            {price.discount ? (
-              <span className="mb-1 inline-flex items-center rounded-xs bg-promo px-2.5 py-1 font-body text-xs font-medium tabular-nums leading-none text-neutral-0">
-                {price.discount}
-              </span>
+          <div>
+            <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
+              <p
+                className={cn(
+                  "font-heading text-[clamp(36px,3.6vw,48px)] leading-none tracking-tight",
+                  price.discount ? "text-promo" : "text-neutral-900",
+                )}
+              >
+                {price.current}
+              </p>
+              {price.discount ? (
+                <span className="mb-1 inline-flex items-center rounded-xs bg-promo px-2.5 py-1 font-body text-xs font-medium tabular-nums leading-none text-neutral-0">
+                  {price.discount}
+                </span>
+              ) : null}
+            </div>
+
+            {price.previous || price.lowestPrice30Days ? (
+              <dl className="mt-4 space-y-1.5 font-body text-sm text-neutral-600">
+                {price.previous ? (
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    <dt className="text-neutral-500">Cena przed obniżką</dt>
+                    <dd className="m-0 tabular-nums line-through decoration-neutral-400">
+                      {price.previous}
+                    </dd>
+                  </div>
+                ) : null}
+                {price.lowestPrice30Days ? (
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    <dt className="text-neutral-500">Najniższa cena z 30 dni przed obniżką</dt>
+                    <dd className="m-0 tabular-nums font-medium text-neutral-800">
+                      {price.lowestPrice30Days}
+                    </dd>
+                  </div>
+                ) : null}
+              </dl>
             ) : null}
           </div>
 
-          {price.previous || price.lowestPrice30Days ? (
-            <dl className="mt-4 space-y-1.5 font-body text-sm text-neutral-600">
-              {price.previous ? (
-                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                  <dt className="text-neutral-500">Cena przed obniżką</dt>
-                  <dd className="m-0 tabular-nums line-through decoration-neutral-400">
-                    {price.previous}
-                  </dd>
-                </div>
-              ) : null}
-              {price.lowestPrice30Days ? (
-                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                  <dt className="text-neutral-500">Najniższa cena z 30 dni przed obniżką</dt>
-                  <dd className="m-0 tabular-nums font-medium text-neutral-800">
-                    {price.lowestPrice30Days}
-                  </dd>
-                </div>
-              ) : null}
-            </dl>
+          {price.legalNote ? (
+            <p className="m-0 max-w-[52ch] font-body text-xs leading-relaxed text-neutral-500">
+              {price.legalNote}
+            </p>
           ) : null}
         </div>
 
-        {price.legalNote ? (
-          <p className="m-0 max-w-[52ch] font-body text-xs leading-relaxed text-neutral-500">
-            {price.legalNote}
-          </p>
+        {askCta ? (
+          <div className="border-t border-neutral-200 bg-neutral-0 px-5 py-5">
+            <ProductAskRow
+              embedded
+              href={askCta.href}
+              lead={askCta.lead}
+              actionLabel={askCta.actionLabel}
+            />
+          </div>
         ) : null}
       </div>
-
-      {askCta ? (
-        <ProductAskRow
-          className="mt-8"
-          href={askCta.href}
-          lead={askCta.lead}
-          actionLabel={askCta.actionLabel}
-        />
-      ) : null}
     </div>
   );
 }

@@ -6,20 +6,30 @@ type ProductAskRowProps = {
   lead: string;
   actionLabel: string;
   className?: string;
+  /** Inside ProductPriceBlock — no outer frame. */
+  embedded?: boolean;
 };
 
-/** Lead copy + separate CTA — not a full-bleed “mega” button. */
-export function ProductAskRow({ href, lead, actionLabel, className }: ProductAskRowProps) {
+export function ProductAskRow({
+  href,
+  lead,
+  actionLabel,
+  className,
+  embedded = false,
+}: ProductAskRowProps) {
   return (
-    <div className={cn("flex flex-col gap-4", className)}>
-      <p className="m-0 font-body text-base leading-body text-neutral-600">{lead}</p>
-      <div>
-        <Button href={href} variant="secondary" size="lg" ariaLabel={`${lead} ${actionLabel}`}>
-          <i className="ph ph-chat-circle" aria-hidden="true" />
-          {actionLabel}
-          <i className="ph ph-arrow-right" aria-hidden="true" />
-        </Button>
-      </div>
+    <div
+      className={cn(
+        "flex flex-col gap-4",
+        !embedded && "rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-5",
+        className,
+      )}
+    >
+      <p className="m-0 font-heading text-[18px] leading-[1.35] text-neutral-900">{lead}</p>
+      <Button href={href} variant="secondary" size="lg" full ariaLabel={`${lead} ${actionLabel}`}>
+        <i className="ph ph-chat-circle" aria-hidden="true" />
+        {actionLabel}
+      </Button>
     </div>
   );
 }
