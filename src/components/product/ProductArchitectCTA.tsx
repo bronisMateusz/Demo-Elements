@@ -91,7 +91,7 @@ export function ProductArchitectCTA({
               <p className="t-body max-w-lg text-neutral-700">{description}</p>
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-start">
               <Button href={href} variant="primary" size="lg">
                 {label}
                 <i className="ph ph-triangle" aria-hidden="true" />

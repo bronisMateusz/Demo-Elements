@@ -30,53 +30,55 @@ export function FooterNewsletter() {
             aria-hidden="true"
           />
 
-          <div className="relative flex h-full min-h-[280px] flex-col justify-between gap-8 p-8 md:min-h-[320px] md:p-10 lg:flex-row lg:items-end lg:gap-12 lg:p-12">
-            <div className="max-w-lg">
-              <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-wide text-neutral-0/70">
-                <img
-                  src={assetUrl("sygnet.svg")}
-                  alt=""
-                  className="size-3.5 shrink-0 brightness-0 invert opacity-70"
-                  width={14}
-                  height={14}
-                  draggable={false}
-                />
-                Newsletter
-              </p>
-              <h2 className="m-0 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-heading font-normal text-neutral-0">
-                Inspiracje prosto na Twój adres e-mail
-              </h2>
-              <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-0/80 md:text-ui">
-                Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na wydarzenia Elements.
-              </p>
-            </div>
+          <div className="relative flex h-full min-h-[280px] items-end justify-center p-8 md:min-h-[320px] md:p-10 lg:p-12">
+            <div className="flex w-full max-w-5xl flex-col justify-between gap-8 lg:flex-row lg:items-end lg:gap-10">
+              <div className="max-w-lg">
+                <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-wide text-neutral-0/70">
+                  <img
+                    src={assetUrl("sygnet.svg")}
+                    alt=""
+                    className="size-3.5 shrink-0 brightness-0 invert opacity-70"
+                    width={14}
+                    height={14}
+                    draggable={false}
+                  />
+                  Newsletter
+                </p>
+                <h2 className="m-0 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-heading font-normal text-neutral-0">
+                  Inspiracje prosto na Twój adres e-mail
+                </h2>
+                <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-0/80 md:text-ui">
+                  Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na wydarzenia Elements.
+                </p>
+              </div>
 
-            <form
-              className={cn(
-                "w-full max-w-md shrink-0 rounded-xl border border-neutral-0/35",
-                "bg-neutral-0/20 p-2.5 shadow-2 backdrop-blur-md",
-                "sm:flex sm:items-center",
-              )}
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label className="sr-only" htmlFor="footer-email">
-                Adres e-mail
-              </label>
-              <input
-                id="footer-email"
-                type="email"
-                placeholder="Twój adres e-mail"
-                className={cn(inputClassName, "mb-2 sm:mb-0 sm:flex-1 sm:rounded-r-none")}
-              />
-              <Button
-                as="button"
-                type="submit"
-                variant="primary"
-                className="w-full sm:w-auto sm:rounded-l-none"
+              <form
+                className={cn(
+                  "w-full max-w-md shrink-0 rounded-xl border border-neutral-0/35",
+                  "bg-neutral-0/20 p-2.5 shadow-2 backdrop-blur-md",
+                  "sm:flex sm:items-center",
+                )}
+                onSubmit={(event) => event.preventDefault()}
               >
-                Zapisz się
-              </Button>
-            </form>
+                <label className="sr-only" htmlFor="footer-email">
+                  Adres e-mail
+                </label>
+                <input
+                  id="footer-email"
+                  type="email"
+                  placeholder="Twój adres e-mail"
+                  className={cn(inputClassName, "mb-2 sm:mb-0 sm:flex-1 sm:rounded-r-none")}
+                />
+                <Button
+                  as="button"
+                  type="submit"
+                  variant="primary"
+                  className="w-full sm:w-auto sm:rounded-l-none"
+                >
+                  Zapisz się
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
       </Container>
