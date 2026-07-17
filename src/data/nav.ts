@@ -14,7 +14,7 @@ export const mainNavItems: NavItem[] = [
   { label: "Producenci", href: "#producenci" },
 ];
 
-/** Mega-menu columns — layout inspired by OKA; links from eh-mega prototype. */
+/** Mega-menu columns - layout inspired by OKA; links from eh-mega prototype. */
 export type MegaMenuLink = {
   label: string;
   href: string;
@@ -138,7 +138,7 @@ export const salonCardCopy = {
   selectedEyebrow: "Twój salon",
   changeLabel: "Zmień",
   selectedDescription:
-    "Chcesz zobaczyć ten produkt na żywo? Skontaktuj się z salonem — potwierdzimy dostępność i umówimy prezentację.",
+    "Chcesz zobaczyć ten produkt na żywo? Skontaktuj się z salonem - potwierdzimy dostępność i umówimy prezentację.",
   hoursToggle: "Adres i godziny otwarcia",
   addressColumnLabel: "Adres",
   hoursColumnLabel: "Godziny otwarcia",
@@ -147,7 +147,7 @@ export const salonCardCopy = {
   defaultHours: ["pon.–pt. 10:00–18:00", "sob. 10:00–14:00"],
 } as const;
 
-/** Salon points — copy from eh-salon-results prototype. */
+/** Salon points - copy from eh-salon-results prototype. */
 export const salonOptions = [
   {
     id: "warszawa",
@@ -175,7 +175,7 @@ export const salonOptions = [
   },
   {
     id: "poznan",
-    name: "ELEMENTS Poznań — Swadzim",
+    name: "ELEMENTS Poznań - Swadzim",
     address: "ul. Przykładowa 3, Swadzim",
     href: "#salon-poznan",
     lat: 52.4484,
@@ -255,7 +255,7 @@ export const salonOptions = [
   },
   {
     id: "gliwice1",
-    name: "ELEMENTS Gliwice — Pszczyńska",
+    name: "ELEMENTS Gliwice - Pszczyńska",
     address: "ul. Pszczyńska 0, Gliwice",
     href: "#salon-gliwice1",
     lat: 50.2768,
@@ -263,7 +263,7 @@ export const salonOptions = [
   },
   {
     id: "gliwice2",
-    name: "ELEMENTS Gliwice — Uszczyka",
+    name: "ELEMENTS Gliwice - Uszczyka",
     address: "ul. Uszczyka 0, Gliwice",
     href: "#salon-gliwice2",
     lat: 50.3108,
@@ -287,7 +287,7 @@ export const salonOptions = [
   },
   {
     id: "koszalin1",
-    name: "ELEMENTS Koszalin — Franciszkańska",
+    name: "ELEMENTS Koszalin - Franciszkańska",
     address: "ul. Franciszkańska 0, Koszalin",
     href: "#salon-koszalin1",
     lat: 54.1985,
@@ -295,7 +295,7 @@ export const salonOptions = [
   },
   {
     id: "koszalin2",
-    name: "ELEMENTS Koszalin — Żytnia",
+    name: "ELEMENTS Koszalin - Żytnia",
     address: "ul. Żytnia 0, Koszalin",
     href: "#salon-koszalin2",
     lat: 54.1648,
@@ -323,8 +323,15 @@ export const utilityNavItems = [
 
 export const footerBrand = {
   title: "ELEMENTS",
-  description:
-    "Sieć 19 salonów łazienek premium. 10 000 m² ekspozycji, ponad 40 000 produktów renomowanych marek i doradcy, którzy pomogą Ci dobrze wybrać.",
+  descriptionParts: [
+    "Sieć ",
+    { bold: "19" },
+    " salonów łazienek premium. ",
+    { bold: "10 000" },
+    " m² ekspozycji, ponad ",
+    { bold: "40 000" },
+    " produktów renomowanych marek i doradcy, którzy pomogą Ci dobrze wybrać.",
+  ],
 } as const;
 
 export const footerColumns = [

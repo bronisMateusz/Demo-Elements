@@ -39,10 +39,10 @@ export function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.title} — Elements</title>
+        <title>{product.title} - Elements</title>
         <meta
           name="description"
-          content={`${product.title}. Odkryj kolekcję Montebianco — klasyczna forma i współczesna funkcjonalność.`}
+          content={`${product.title}. Odkryj kolekcję Montebianco - klasyczna forma i współczesna funkcjonalność.`}
         />
       </Helmet>
 

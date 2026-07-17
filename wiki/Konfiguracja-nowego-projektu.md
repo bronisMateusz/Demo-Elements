@@ -24,7 +24,7 @@ Wzorowane na: **Demo-Elements**, API ze **Smartbees-Exporter**.
 
 ---
 
-## 2. Vercel — nowy projekt
+## 2. Vercel - nowy projekt
 
 1. Import repo z GitHub
 2. **Environments → Production → Branch Tracking** → `release`
@@ -34,7 +34,7 @@ Wzorowane na: **Demo-Elements**, API ze **Smartbees-Exporter**.
 
 ---
 
-## 3. Zmienne — szablon
+## 3. Zmienne - szablon
 
 ### `env/vercel.shared.env` (Production and Preview)
 
@@ -61,7 +61,7 @@ VITE_AGENTATION_WEBHOOK_URL=/api/agentation-feedback
 
 ---
 
-## 4. package.json — skrypty
+## 4. package.json - skrypty
 
 ```json
 {

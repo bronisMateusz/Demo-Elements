@@ -15,7 +15,7 @@ export function rectFromDomRect(rect: DOMRectReadOnly): LightboxRect {
 }
 
 /**
- * Lightbox image frame — image contained within the viewport, top-aligned,
+ * Lightbox image frame - image contained within the viewport, top-aligned,
  * centered horizontally. Mirrors the slide's `object-contain object-top` so the
  * fly-in handoff lands on the exact same rect (no scale/position jump).
  */

@@ -7,10 +7,10 @@ alwaysApply: true
 
 On every UI change in this project:
 
-1. **Style with Tailwind** — do not add `<style>`, inline `style=""`, or new CSS files outside `src/styles/app.css`.
-2. **Token first** — a color/spacing used ≥2 times → add to `@theme` or `@utility` in `app.css`, then use the class in components.
-3. **Run lint** — `npm run lint` before finishing.
-4. **Prefer defaults** — use Tailwind's built-in scale (`text-sm`, `gap-4`, `rounded-md`) when values match; see `code-conventions.mdc`.
+1. **Style with Tailwind** - do not add `<style>`, inline `style=""`, or new CSS files outside `src/styles/app.css`.
+2. **Token first** - a color/spacing used ≥2 times → add to `@theme` or `@utility` in `app.css`, then use the class in components.
+3. **Run lint** - `npm run lint` before finishing.
+4. **Prefer defaults** - use Tailwind's built-in scale (`text-sm`, `gap-4`, `rounded-md`) when values match; see `code-conventions.mdc`.
 
 ## Refactoring existing code
 
@@ -22,9 +22,9 @@ On every UI change in this project:
 
 Project includes `.vscode/settings.json` for Tailwind v4:
 
-- `files.associations` — `*.css` as `tailwindcss` (Tailwind CSS IntelliSense)
-- `css.customData` — `.vscode/tailwind.css-data.json` (`@theme`, `@utility`, `@apply`, …)
-- `css.lint.unknownAtRules: ignore` — fallback when the file is validated as plain CSS
+- `files.associations` - `*.css` as `tailwindcss` (Tailwind CSS IntelliSense)
+- `css.customData` - `.vscode/tailwind.css-data.json` (`@theme`, `@utility`, `@apply`, …)
+- `css.lint.unknownAtRules: ignore` - fallback when the file is validated as plain CSS
 - `tailwindCSS.experimental.configFile` → `src/styles/app.css`
 
 Install **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`). After changing settings: **Reload Window**.
@@ -32,4 +32,4 @@ Install **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`). After chang
 ## Avoid
 
 - Random dependency upgrades while working on CSS-only changes.
-- Class formatters without pointing at `src/styles/app.css` — sort order may not match custom `@theme`.
+- Class formatters without pointing at `src/styles/app.css` - sort order may not match custom `@theme`.

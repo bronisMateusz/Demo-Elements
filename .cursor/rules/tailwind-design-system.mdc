@@ -12,9 +12,9 @@ See also `code-conventions.mdc` for token hygiene (prefer Tailwind defaults when
 
 ## Tokens over magic values
 
-- Colors from `@theme`: `bg-neutral-0`, `text-neutral-600`, `bg-gold-500`, `border-neutral-200` — not `bg-[#2c2c2c]`, not `text-[rgb(...)]`.
-- Fonts: `font-heading`, `font-body` — not inline `font-family`.
-- When a theme utility exists: `text-ui`, `shadow-1` — not `text-[15px]`, not `shadow-[0_2px_8px_...]`.
+- Colors from `@theme`: `bg-neutral-0`, `text-neutral-600`, `bg-gold-500`, `border-neutral-200` - not `bg-[#2c2c2c]`, not `text-[rgb(...)]`.
+- Fonts: `font-heading`, `font-body` - not inline `font-family`.
+- When a theme utility exists: `text-ui`, `shadow-1` - not `text-[15px]`, not `shadow-[0_2px_8px_...]`.
 - Typography: prefer `text-xs`, `text-sm`, `text-base`, `text-lg` for standard sizes; keep `text-ui`, `text-h4`, fluid `text-h1`–`text-display-xl` for brand-only sizes.
 
 ## Custom utilities in CSS, not in components
@@ -37,16 +37,16 @@ Allowed when **no** named utility exists in theme:
 - one-off typography: `tracking-[0.06em]`, `text-[10px]` on carousel badges
 - `color-mix(...)` referencing a token, not a raw hex
 
-Before adding `[...]`, check `suggestCanonicalClasses` — e.g. `text-lg` instead of `text-[18px]`.
+Before adding `[...]`, check `suggestCanonicalClasses` - e.g. `text-lg` instead of `text-[18px]`.
 
 ## Styling in components
 
-- **Tailwind classes only** in `className` — no `<style>`, no inline `style=""` (exception: rare dynamic values from JS, e.g. motion transforms).
+- **Tailwind classes only** in `className` - no `<style>`, no inline `style=""` (exception: rare dynamic values from JS, e.g. motion transforms).
 - Complex class sets → `cn()` from `src/lib/cn.ts` or dedicated `*ClassName.ts` exports.
 - Button/card variants → `Record<Variant, string>` maps (e.g. `buttonClassName.ts`, `askRowClassName.ts`).
 
 ## React
 
-- Attribute: `className` — not `class`.
-- Conditional classes: `cn("base", isActive && "active", className)` — not string concatenation.
+- Attribute: `className` - not `class`.
+- Conditional classes: `cn("base", isActive && "active", className)` - not string concatenation.
 - `tailwind-merge` via `cn()` resolves conflicts when props override classes.

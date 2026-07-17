@@ -11,7 +11,7 @@ import { AskDrawer } from "./AskDrawer";
 const FOOTER_CLEARANCE_PX = 160;
 const DEFAULT_SHOW_AFTER_SCROLL_PX = 320;
 
-/** Prefer showing after the PDP hero leaves view — falls back to a fixed offset. */
+/** Prefer showing after the PDP hero leaves view - falls back to a fixed offset. */
 function getShowAfterScrollPx(fallback: number): number {
   const hero = document.querySelector<HTMLElement>('[aria-label="Prezentacja produktu"]');
   if (!hero) return fallback;
@@ -32,7 +32,7 @@ type AskFabProps = {
   /** Scroll offset (px) after which the bar becomes visible (minimum / non-PDP fallback). */
   showAfterScroll?: number;
   footerSelector?: string;
-  /** Controlled open — when provided with onAskOpenChange. */
+  /** Controlled open - when provided with onAskOpenChange. */
   askOpen?: boolean;
   onAskOpenChange?: (open: boolean) => void;
 };

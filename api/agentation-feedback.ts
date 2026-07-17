@@ -53,7 +53,7 @@ function buildTitle(output: string, pageUrl?: string): string {
         : rawFeedback
       : "Review";
 
-  return `[UI Review] ${path} — ${summary}`;
+  return `[UI Review] ${path} - ${summary}`;
 }
 
 function buildBody(output: string, pageUrl?: string, timestamp?: number): string {

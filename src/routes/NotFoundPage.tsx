@@ -8,7 +8,7 @@ export function NotFoundPage() {
   return (
     <>
       <Helmet>
-        <title>404 — Elements</title>
+        <title>404 - Elements</title>
       </Helmet>
       <PageShell>
         <Container className="flex min-h-[50vh] flex-col items-center justify-center py-24 text-center">

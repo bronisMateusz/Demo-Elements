@@ -1,9 +1,9 @@
-# Elements — Wiki
+# Elements - Wiki
 
 Dokumentacja operacyjna projektu **Demo-Elements**: deploy na Vercel (dwa środowiska) oraz feedback wizualny z **Agentation** → automatyczne **GitHub Issues**.
 
 > Źródło w repo: folder [`wiki/`](../wiki/) (synchronizowany z GitHub Wiki).  
-> Aktualny preview zespołu: **https://elements-dev.vercel.app**
+> Aktualny preview zespołu: **<https://elements-dev.vercel.app>**
 
 ---
 
@@ -39,7 +39,7 @@ Dev: Cursor + GitHub MCP → czyta issue → poprawki → merge main → release
 | `assets/agentation-entry.jsx` | Konfiguracja toolbaru, webhook, UI (lewy dolny róg, tryb minimal) |
 | `env/*.env` | Szablony do importu w Vercel |
 | `scripts/build-vercel.mjs` | Warunkowy build Agentation (`team` vs `client`) |
-| `.github/workflows/ci.yml` | Lint + build matrix (bez deploy — deploy robi Vercel) |
+| `.github/workflows/ci.yml` | Lint + build matrix (bez deploy - deploy robi Vercel) |
 | `.github/ISSUE_TEMPLATE/` | Szablon ręcznego UI Review (fallback) |
 
 ---

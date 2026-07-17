@@ -13,7 +13,7 @@ import "swiper/css";
 
 type ProductGalleryProps = {
   images: ProductImage[];
-  /** On PDP hero — fills the sticky column (100svh − header). */
+  /** On PDP hero - fills the sticky column (100svh − header). */
   layout?: "default" | "viewport";
 };
 

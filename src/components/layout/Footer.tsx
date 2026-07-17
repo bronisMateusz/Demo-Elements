@@ -6,7 +6,7 @@ export function Footer() {
       <div className="relative z-10">
         <FooterNewsletter />
       </div>
-      {/* Pull footer fill up so it starts at mid-newsletter (half the card overlaps page bg). */}
+      {/* Half of newsletter min-height so fill starts mid-banner. */}
       <div className="relative -mt-[140px] bg-neutral-50 pt-[140px] md:-mt-[160px] md:pt-[160px]">
         <FooterMain />
         <FooterLegal />

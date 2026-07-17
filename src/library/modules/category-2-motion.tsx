@@ -11,7 +11,7 @@ export const sharedLayoutBgModule: LibraryModule = {
   slug: "shared-layout-bg",
   title: "SharedLayoutBg",
   description:
-    "Przesuwane tło hover (layoutId) między elementami listy — port z beUI. Używane w chipach wariantów i segment control.",
+    "Przesuwane tło hover (layoutId) między elementami listy - port z beUI. Używane w chipach wariantów i segment control.",
   optionalProps: [
     { name: "children", type: "ReactNode", required: true, description: "Elementy z kluczem React (key)." },
     { name: "className", type: "string", description: "Klasa kontenera flex." },
@@ -22,7 +22,7 @@ export const sharedLayoutBgModule: LibraryModule = {
     {
       id: "chip-row",
       label: "Wiersz chipów",
-      description: "Hover przesuwa jasne tło między opcjami — wzorzec VariantChipGroup.",
+      description: "Hover przesuwa jasne tło między opcjami - wzorzec VariantChipGroup.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <SharedLayoutBgDemo />
@@ -32,7 +32,7 @@ export const sharedLayoutBgModule: LibraryModule = {
     {
       id: "segment",
       label: "Segment control",
-      description: "Pigułka w ramce — np. przełącznik widoku listy / siatki.",
+      description: "Pigułka w ramce - np. przełącznik widoku listy / siatki.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <SharedLayoutBgSegmentDemo />

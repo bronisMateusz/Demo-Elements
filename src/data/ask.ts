@@ -1,7 +1,7 @@
 export const askDrawerCopy = {
   title: "Masz pytanie o ten produkt?",
   description:
-    "Podaj kod pocztowy — przekażemy je do najbliższego salonu. Odpowiemy w 1 dzień roboczy.",
+    "Podaj kod pocztowy - przekażemy je do najbliższego salonu. Odpowiemy w 1 dzień roboczy.",
   nameLabel: "Imię",
   namePlaceholder: "Twoje imię",
   contactLabel: "Telefon lub e-mail",
@@ -13,7 +13,7 @@ export const askDrawerCopy = {
   messageTemplate:
     "Dzień dobry, proszę o ofertę i dostępność produktu: {title} ({sku}).",
   consent:
-    "Wyrażam zgodę na kontakt w sprawie mojego zapytania. Administratorem danych jest Grupa HBH — szczegóły w",
+    "Wyrażam zgodę na kontakt w sprawie mojego zapytania. Administratorem danych jest Grupa HBH - szczegóły w",
   privacyLabel: "Polityce prywatności",
   privacyHref: "#polityka-prywatnosci",
   marketingLabel: "Zgody marketingowe (opcjonalne)",

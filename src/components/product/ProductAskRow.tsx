@@ -6,7 +6,7 @@ type ProductAskRowProps = {
   lead: string;
   actionLabel: string;
   className?: string;
-  /** Inside ProductPriceBlock — no outer frame. */
+  /** Inside ProductPriceBlock - no outer frame. */
   embedded?: boolean;
   onAskOpen?: () => void;
 };

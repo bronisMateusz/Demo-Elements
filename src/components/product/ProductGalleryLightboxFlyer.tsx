@@ -20,7 +20,7 @@ type ProductGalleryLightboxFlyerProps = {
   origin: LightboxOpenOrigin;
   mode: "enter" | "exit";
   fadingOut?: boolean;
-  /** Live size of the lightbox container — the box the slide fills. */
+  /** Live size of the lightbox container - the box the slide fills. */
   getViewport: () => { width: number; height: number };
   onPositionComplete: () => void;
   onFadeComplete?: () => void;
@@ -86,7 +86,7 @@ export function ProductGalleryLightboxFlyer({
   const frameBackgroundOpacity = handoffActive ? 0 : 1;
 
   // Cover crop matches the gallery thumbnail (focal) and the lightbox slide
-  // (centered — the target box shares the image aspect, so there is no crop).
+  // (centered - the target box shares the image aspect, so there is no crop).
   const thumbPosition = origin.objectPosition ?? "50% 50%";
   const positionFrom = mode === "enter" ? thumbPosition : "50% 50%";
   const positionTo = mode === "enter" ? "50% 50%" : thumbPosition;

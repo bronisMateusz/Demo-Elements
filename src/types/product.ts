@@ -13,7 +13,7 @@ export type ProductImageFocalPoint = {
 export type ProductImage = {
   src: string;
   alt: string;
-  /** Optional focus point — maps 1:1 to Drupal 11 media focal point. */
+  /** Optional focus point - maps 1:1 to Drupal 11 media focal point. */
   focalPoint?: ProductImageFocalPoint;
 };
 
@@ -22,7 +22,7 @@ export type ProductPrice = {
   previous?: string;
   discount?: string;
   note?: string;
-  /** Omnibus — lowest price in the 30 days before the reduction (may differ from `previous`). */
+  /** Omnibus - lowest price in the 30 days before the reduction (may differ from `previous`). */
   lowestPrice30Days?: string;
   legalNote?: string;
 };
@@ -81,7 +81,7 @@ export type RelatedProduct = {
   brand: string;
   title: string;
   image: ProductImage;
-  /** Extra shots — carousel on card hover (OKA prd-Card). */
+  /** Extra shots - carousel on card hover (OKA prd-Card). */
   images?: ProductImage[];
   href: string;
   hasStorage?: boolean;
@@ -145,7 +145,7 @@ export type Product = {
     label: string;
     eyebrow?: string;
     image: ProductImage;
-    /** Path under `assets/` — looped background video for the media panel. */
+    /** Path under `assets/` - looped background video for the media panel. */
     video?: string;
   };
   inspirations: InspirationArrangement[];

@@ -7,7 +7,7 @@ export const headerModule: LibraryModule = {
   id: "1.1",
   slug: "header",
   title: "Header",
-  description: "Główny nagłówek marki Elements — logo, menu, selektor salonu, schowek i menu mobilne.",
+  description: "Główny nagłówek marki Elements - logo, menu, selektor salonu, schowek i menu mobilne.",
   variants: [
     {
       id: "default",

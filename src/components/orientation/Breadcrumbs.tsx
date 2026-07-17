@@ -11,7 +11,7 @@ type BreadcrumbsProps = {
   items: BreadcrumbItem[];
   label?: string;
   className?: string;
-  /** `top` — below header; `section` — in section content (PDP / product description). */
+  /** `top` - below header; `section` - in section content (PDP / product description). */
   variant?: "top" | "section";
 };
 

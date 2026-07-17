@@ -132,10 +132,10 @@ export function ButtonFullWidthDemo() {
   return (
     <div className="grid max-w-md gap-4">
       <button type="button" className={libButtonPreviewClassName({ variant: "primary", full: true })}>
-        Pełna szerokość — Primary
+        Pełna szerokość - Primary
       </button>
       <button type="button" className={libButtonPreviewClassName({ variant: "secondary", full: true })}>
-        Pełna szerokość — Secondary
+        Pełna szerokość - Secondary
       </button>
     </div>
   );
@@ -236,7 +236,7 @@ export function ButtonLiveHoverDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Najedź kursorem — Primary, Secondary i Gold mają animację wypełnienia złotem od dołu (OKA).
+        Najedź kursorem - Primary, Secondary i Gold mają animację wypełnienia złotem od dołu (OKA).
       </p>
       <div className={libBtnRowClassName}>
         <button type="button" className={libButtonPreviewClassName({ variant: "primary" })}>
@@ -272,7 +272,7 @@ export function ButtonQuickAddDemo() {
   return (
     <div className="grid max-w-md gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Przycisk szybkiego dodania w karuzeli produktów — ten sam system animacji co Primary.
+        Przycisk szybkiego dodania w karuzeli produktów - ten sam system animacji co Primary.
       </p>
       <button
         type="button"
@@ -317,7 +317,7 @@ export function ButtonAskFabDemo() {
         </div>
       </div>
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Sticky bar na PDP (jak OKA) — tytuł/cena na desktopie, dwa CTA: schowek + pytanie. Pojawia się po scrollu,
+        Sticky bar na PDP (jak OKA) - tytuł/cena na desktopie, dwa CTA: schowek + pytanie. Pojawia się po scrollu,
         znika przed stopką.
       </p>
     </div>

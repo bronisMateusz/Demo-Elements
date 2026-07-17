@@ -17,7 +17,7 @@ export function Container({
   className?: string;
   children: ReactNode;
   as?: "div" | "section" | "article" | "header" | "footer" | "nav";
-  /** `content` — readable max width for text/list sections on ultrawide screens. */
+  /** `content` - readable max width for text/list sections on ultrawide screens. */
   size?: ContainerSize;
 }) {
   return (

@@ -10,7 +10,7 @@
 
 ### Preview nie ma osobnego brancha w UI
 
-To normalne — Preview = wszystkie branche oprócz production brancha. Filtruj Deployments: **All Environments → Preview**, branch `main`.
+To normalne - Preview = wszystkie branche oprócz production brancha. Filtruj Deployments: **All Environments → Preview**, branch `main`.
 
 ### Build fail na Vercel
 
@@ -18,7 +18,7 @@ To normalne — Preview = wszystkie branche oprócz production brancha. Filtruj 
 npm ci && VITE_DEPLOY_TARGET=team VITE_AGENTATION_ENABLED=true npm run build:vercel
 ```
 
-lokalnie — powtórz env z panelu Vercel.
+lokalnie - powtórz env z panelu Vercel.
 
 ---
 
@@ -32,8 +32,8 @@ lokalnie — powtórz env z panelu Vercel.
 
 ### Brak przycisku Send
 
-- Webhook musi być pełnym URL (`https://origin/api/...`) — bundel robi to automatycznie
-- W Settings Agentation wyłącz **Auto-Send** — wtedy Send jest obok Copy
+- Webhook musi być pełnym URL (`https://origin/api/...`) - bundel robi to automatycznie
+- W Settings Agentation wyłącz **Auto-Send** - wtedy Send jest obok Copy
 - W trybie minimal Send powinien być widoczny po poprawnym webhooku
 
 ### Toolbar zasłania UI / za szeroki
@@ -44,19 +44,19 @@ lokalnie — powtórz env z panelu Vercel.
 
 ### Zamknięty toolbar „rozjechany” (nie okrągły)
 
-Naprawione w bundlu — `collapsed` wymusza 44×44. Redeploy + hard refresh.
+Naprawione w bundlu - `collapsed` wymusza 44×44. Redeploy + hard refresh.
 
 ---
 
 ## Feedback / GitHub Issues
 
-### Send / Copy — brak issue
+### Send / Copy - brak issue
 
 1. **Network** → `POST /api/agentation-feedback`
-   - **404** — stary deploy bez folderu `api/` → redeploy
-   - **500** — brak `GITHUB_TOKEN` na Vercel
-   - **502** — token bez uprawnień Issues lub wygasły PAT
-   - **CORS** — sprawdź `ALLOWED_ORIGINS` (bez trailing slash, dokładny origin preview)
+   - **404** - stary deploy bez folderu `api/` → redeploy
+   - **500** - brak `GITHUB_TOKEN` na Vercel
+   - **502** - token bez uprawnień Issues lub wygasły PAT
+   - **CORS** - sprawdź `ALLOWED_ORIGINS` (bez trailing slash, dokładny origin preview)
 
 2. Vercel → **Logs** → Functions → `[agentation-feedback]`
 
@@ -70,7 +70,7 @@ Naprawione w bundlu — `collapsed` wymusza 44×44. Redeploy + hard refresh.
 
 ### Issue bez etykiety `ui-review`
 
-Etykieta musi istnieć w repo GitHub. API retry bez labeli przy 422 — sprawdź logi.
+Etykieta musi istnieć w repo GitHub. API retry bez labeli przy 422 - sprawdź logi.
 
 ---
 
@@ -95,7 +95,7 @@ Dobrze: `https://elements-dev.vercel.app,http://localhost:5173`
 
 ## Lokalny dev z API
 
-`npm run dev` **nie** serwuje `api/` — tylko Vite.
+`npm run dev` **nie** serwuje `api/` - tylko Vite.
 
 Do testu auto-issue lokalnie:
 

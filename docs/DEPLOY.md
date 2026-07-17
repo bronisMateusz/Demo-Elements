@@ -1,14 +1,14 @@
-# Deploy na Vercel — dwa środowiska (klient vs zespół)
+# Deploy na Vercel - dwa środowiska (klient vs zespół)
 
 > **Pełna dokumentacja:** [GitHub Wiki](https://github.com/bronisMateusz/Demo-Elements/wiki) (źródło: folder [`wiki/`](../wiki/))
 
-Hosting: **Vercel** (frontend + API). GitHub Pages jest wyłączone — deploy robi Vercel po pushu.
+Hosting: **Vercel** (frontend + API). GitHub Pages jest wyłączone - deploy robi Vercel po pushu.
 
 ## Model
 
 | Środowisko | Branch Vercel | Env w panelu | Agentation | Auto-issue GitHub |
 |------------|---------------|--------------|------------|-------------------|
-| **Klient** | `release` → Production | Production | wyłączone | — |
+| **Klient** | `release` → Production | Production | wyłączone | - |
 | **Zespół** | `main` → Preview | Preview | zawsze włączone | Send → `/api/agentation-feedback` |
 
 Klient widuje stabilny kod z `release`. Zespół pracuje na `main` z pełnym review (pinezki + automatyczne issue).
@@ -17,7 +17,7 @@ Klient widuje stabilny kod z `release`. Zespół pracuje na `main` z pełnym rev
 
 1. Połącz repo `Demo-Elements` z Vercel.
 2. **Settings → Git → Production Branch** → ustaw na `release` (nie `main`).
-3. **Settings → Environment Variables → Import .env** — importuj pliki z folderu [`env/`](../env/README.md):
+3. **Settings → Environment Variables → Import .env** - importuj pliki z folderu [`env/`](../env/README.md):
 
 | Plik | Scope przy imporcie |
 |------|---------------------|
@@ -27,7 +27,7 @@ Klient widuje stabilny kod z `release`. Zespół pracuje na `main` z pełnym rev
 
 Po imporcie `vercel.shared.env` podmień `GITHUB_TOKEN` na prawdziwy PAT. Po pierwszym deployu `main` zaktualizuj `ALLOWED_ORIGINS` na URL preview z Vercel.
 
-Alternatywnie — ręcznie w panelu:
+Alternatywnie - ręcznie w panelu:
 
 ### Wspólne (Production + Preview)
 
@@ -37,14 +37,14 @@ Alternatywnie — ręcznie w panelu:
 | `GITHUB_REPO` | `bronisMateusz/Demo-Elements` |
 | `ALLOWED_ORIGINS` | URL preview zespołu + localhost, np. `https://demo-elements-xxx.vercel.app,http://localhost:5173` |
 
-### Production (klient — branch `release`)
+### Production (klient - branch `release`)
 
 | Zmienna | Wartość |
 |---------|---------|
 | `VITE_DEPLOY_TARGET` | `client` |
 | `VITE_AGENTATION_ENABLED` | `false` |
 
-### Preview (zespół — branch `main` i inne)
+### Preview (zespół - branch `main` i inne)
 
 | Zmienna | Wartość |
 |---------|---------|
@@ -52,7 +52,7 @@ Alternatywnie — ręcznie w panelu:
 | `VITE_AGENTATION_ENABLED` | `true` |
 | `VITE_AGENTATION_WEBHOOK_URL` | `/api/agentation-feedback` |
 
-4. **Domains** (opcjonalnie):
+1. **Domains** (opcjonalnie):
    - Production → np. `elements.klient.pl` (branch `release`)
    - Preview alias dla `main` → np. `elements-team.vercel.app` (Vercel → Domains → assign to branch)
 
@@ -96,13 +96,13 @@ npm run build:team    # jak preview zespołu
 npm run build:client  # jak production klienta
 ```
 
-## API — auto-issue
+## API - auto-issue
 
 Endpoint: `POST /api/agentation-feedback`
 
 Obsługuje webhook Agentation (`event: "submit"`) i tworzy issue z pełnym markdownem.
 
-Token GitHub **nigdy** nie trafia do przeglądarki — tylko Vercel serverless.
+Token GitHub **nigdy** nie trafia do przeglądarki - tylko Vercel serverless.
 
 ## GitHub Actions
 

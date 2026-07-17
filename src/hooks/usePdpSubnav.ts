@@ -35,7 +35,7 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
-    // Fixed to the *current* full header height — must NOT follow --spacing-header-offset,
+    // Fixed to the *current* full header height - must NOT follow --spacing-header-offset,
     // or concealing the header flips stuck on/off and the chrome flickers.
     const observe = () => {
       const headerH = readHeaderHeightPx();

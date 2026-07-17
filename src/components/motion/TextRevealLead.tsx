@@ -11,7 +11,7 @@ type TextRevealLeadProps = {
   children: string;
   className?: string;
   id?: string;
-  /** `line` — one line at a time; `word` — sequential word reveal (better for centered multi-line headings). */
+  /** `line` - one line at a time; `word` - sequential word reveal (better for centered multi-line headings). */
   revealUnit?: "line" | "word";
   typographyClassName?: string;
   mutedClassName?: string;

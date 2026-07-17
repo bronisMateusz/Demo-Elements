@@ -5,7 +5,7 @@ type ProductFixedBarClassNameOptions = {
   className?: string;
 };
 
-/** OKA-style sticky PDP bar — full-bleed on mobile, inset on desktop. */
+/** OKA-style sticky PDP bar - full-bleed on mobile, inset on desktop. */
 export function productFixedBarClassName({
   visible = true,
   className,
@@ -20,7 +20,7 @@ export function productFixedBarClassName({
   );
 }
 
-/** @deprecated Use productFixedBarClassName — kept for library previews during migration. */
+/** @deprecated Use productFixedBarClassName - kept for library previews during migration. */
 export function askFabClassName({
   visible = true,
   fixed = true,

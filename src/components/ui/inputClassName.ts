@@ -1,6 +1,6 @@
 import { cn } from "../../lib/cn";
 
-/** Shared text-field surface — use for all site inputs/textareas. */
+/** Shared text-field surface - use for all site inputs/textareas. */
 export const inputClassName = cn(
   "h-12 w-full rounded-xs border border-neutral-200 bg-neutral-50 px-4",
   "font-body text-ui text-neutral-900 placeholder:text-neutral-400",

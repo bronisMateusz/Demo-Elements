@@ -42,7 +42,7 @@ function LibrarySiteHeader() {
         <Link
           to="/"
           className="font-heading text-xl text-neutral-900 no-underline"
-          aria-label="Elements — strona główna"
+          aria-label="Elements - strona główna"
         >
           Elements
         </Link>
@@ -77,10 +77,10 @@ export function LibraryLayout() {
   return (
     <LibraryDevModeProvider>
       <Helmet>
-        <title>Biblioteka komponentów — Elements</title>
+        <title>Biblioteka komponentów - Elements</title>
         <meta
           name="description"
-          content="Katalog modułów UI marki Elements — warianty i stany komponentów."
+          content="Katalog modułów UI marki Elements - warianty i stany komponentów."
         />
       </Helmet>
 

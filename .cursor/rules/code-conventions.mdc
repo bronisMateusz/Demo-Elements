@@ -12,8 +12,8 @@ alwaysApply: true
 - Keep comments brief; explain non-obvious intent, not what the code already states.
 
 ```css
-/* ❌ Layout — poza domyślną skalą spacing Tailwinda */
-/* ✅ Layout — outside Tailwind's default spacing scale */
+/* ❌ Layout - poza domyślną skalą spacing Tailwinda */
+/* ✅ Layout - outside Tailwind's default spacing scale */
 ```
 
 ## Tailwind `@theme` tokens
@@ -21,11 +21,13 @@ alwaysApply: true
 Prefer Tailwind defaults when values match 1:1. Only add custom tokens when the design system needs something Tailwind does not provide. Full DS rules: `tailwind-design-system.mdc`.
 
 **Use Tailwind defaults for:**
+
 - Font sizes: `text-xs` (12px), `text-sm` (14px), `text-base` (16px), `text-lg` (18px)
 - Spacing scale: `p-2`, `gap-4`, `bottom-4`, etc.
-- Semantic colors in components: `neutral-*`, `gold-*` directly — avoid redundant `--color-bg` / `--color-text` aliases
+- Semantic colors in components: `neutral-*`, `gold-*` directly - avoid redundant `--color-bg` / `--color-text` aliases
 
 **Keep custom `@theme` tokens for:**
+
 - Brand color scales (`neutral-*`, `gold-*`)
 - Fluid typography (`display-xl`, `h1`–`h3` clamps)
 - Brand-only sizes (`text-ui` 15px, `text-h4` 22px)

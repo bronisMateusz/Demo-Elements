@@ -5,7 +5,7 @@ import { isMotionPaused, subscribeMotionPreference } from "../../lib/a11yPrefere
 type LoopingWordProps = {
   words: readonly string[];
   intervalMs?: number;
-  /** Align active word toward the trailing edge — keeps the next inline token close. */
+  /** Align active word toward the trailing edge - keeps the next inline token close. */
   align?: "start" | "end";
   className?: string;
 };

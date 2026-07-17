@@ -1,4 +1,4 @@
-# Wiki — synchronizacja z GitHub
+# Wiki - synchronizacja z GitHub
 
 Pliki w tym folderze są **źródłem prawdy** dla [GitHub Wiki](https://github.com/bronisMateusz/Demo-Elements/wiki) projektu Demo-Elements.
 
@@ -13,7 +13,7 @@ cp wiki/*.md /tmp/Demo-Elements.wiki/
 cd /tmp/Demo-Elements.wiki
 git add .
 git commit -m "docs: aktualizacja wiki pipeline i feedback"
-git push origin master   # lub main — zależnie od domyślnej gałęzi wiki
+git push origin master   # lub main - zależnie od domyślnej gałęzi wiki
 ```
 
 Alternatywnie: edycja bezpośrednio w przeglądarce na GitHub → Wiki.

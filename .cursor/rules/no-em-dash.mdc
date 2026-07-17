@@ -1,0 +1,20 @@
+---
+description: Use ASCII hyphens only, never em dashes
+alwaysApply: true
+---
+
+# Dashes / myślniki
+
+Do **not** use the em dash (`—`, U+2014) anywhere: UI copy, comments, docs, commit messages, or chat replies for this project.
+
+Use a classic hyphen-minus (`-`) instead.
+
+```text
+❌ Odpowiemy w 1 dzień roboczy — szczegóły w salonie.
+✅ Odpowiemy w 1 dzień roboczy - szczegóły w salonie.
+
+❌ Layout — outside Tailwind's default spacing scale
+✅ Layout - outside Tailwind's default spacing scale
+```
+
+Also avoid copying em dashes from prototypes; normalize them to `-` when porting content.

@@ -26,7 +26,7 @@ export function ProductsMegaMenu({ open, id = "products-mega-menu" }: ProductsMe
     <div
       id={id}
       role="region"
-      aria-label="Produkty — menu rozwinięte"
+      aria-label="Produkty - menu rozwinięte"
       hidden={!open}
       className={cn(
         "absolute inset-x-0 top-full z-[110] border-t border-neutral-200 bg-neutral-0 shadow-2",

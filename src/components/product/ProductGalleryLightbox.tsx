@@ -293,7 +293,7 @@ type LightboxControlsProps = {
   onSelect: (index: number) => void;
 };
 
-/** Controls layer — kept above the flyer (z-[410]) so it never gets covered. */
+/** Controls layer - kept above the flyer (z-[410]) so it never gets covered. */
 function LightboxControls({
   images,
   index,

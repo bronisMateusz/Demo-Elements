@@ -24,7 +24,7 @@ export const productGalleryModule: LibraryModule = {
     {
       id: "multi",
       label: "4 zdjęcia",
-      description: "Wiele zdjęć — przewijanie w pionie w stylu Zara Home.",
+      description: "Wiele zdjęć - przewijanie w pionie w stylu Zara Home.",
       render: () => (
         <Container className="max-w-xl py-8">
           <ProductGallery images={montebianco80.images} />
@@ -98,7 +98,7 @@ export const productSalonCardModule: LibraryModule = {
   id: "3.5",
   slug: "product-salon-card",
   title: "ProductSalonCard",
-  description: "Ciemna karta salonu w buy boxie — sygnet, serif, złote akcenty i link strzałka.",
+  description: "Ciemna karta salonu w buy boxie - sygnet, serif, złote akcenty i link strzałka.",
   variants: [
     {
       id: "default",
@@ -123,7 +123,7 @@ export const productVariantSelectorModule: LibraryModule = {
   slug: "product-variant-selector",
   title: "ProductVariantSelector",
   description:
-    "Selektor osi wariantów PDP — chip (szerokość), miniatura (wykończenie) i swatch. Chip: SharedLayoutBg + layoutId wyboru. Miniatura: SharedLayoutUnderline na hover.",
+    "Selektor osi wariantów PDP - chip (szerokość), miniatura (wykończenie) i swatch. Chip: SharedLayoutBg + layoutId wyboru. Miniatura: SharedLayoutUnderline na hover.",
   optionalProps: [
     { name: "variants", type: "ProductVariants", required: true },
     { name: "selection", type: "Record<string, string>", required: true },
@@ -133,7 +133,7 @@ export const productVariantSelectorModule: LibraryModule = {
     {
       id: "full",
       label: "Pełny selektor",
-      description: "Obie osie Montebianco — chip + miniatura.",
+      description: "Obie osie Montebianco - chip + miniatura.",
       render: () => (
         <Container className="max-w-md py-8">
           <div className={libPreviewArticleClassName}>
@@ -195,7 +195,7 @@ export const productPairWithModule: LibraryModule = {
   slug: "product-pair-with",
   title: "ProductPairWith",
   description:
-    "Karuzela „Inne produkty z tej serii” w buy boxie — nagłówek ze strzałkami, karta karuzeli OKA (ulubione, quick-add, hover).",
+    "Karuzela „Inne produkty z tej serii” w buy boxie - nagłówek ze strzałkami, karta karuzeli OKA (ulubione, quick-add, hover).",
   optionalProps: [
     { name: "title", type: "string", required: true },
     { name: "products", type: "RelatedProduct[]", required: true },
@@ -204,7 +204,7 @@ export const productPairWithModule: LibraryModule = {
     {
       id: "default",
       label: "W buy boxie",
-      description: "Pod ceną i ask-row — ta sama karta co w „Produkty podobne”.",
+      description: "Pod ceną i ask-row - ta sama karta co w „Produkty podobne”.",
       render: () => (
         <Container className="max-w-md py-8">
           <ProductPairWith title={montebianco80.seriesTitle} products={montebianco80.seriesProducts} />

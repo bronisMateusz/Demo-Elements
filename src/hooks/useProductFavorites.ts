@@ -57,7 +57,7 @@ export function useProductFavorites(sku: string) {
   return { isFavorite, toggle };
 }
 
-/** Bookmark count for header / drawer badge — stays in sync across tabs and toggles. */
+/** Bookmark count for header / drawer badge - stays in sync across tabs and toggles. */
 export function useProductFavoritesCount() {
   const [favorites] = useFavoritesList();
   return favorites.length;

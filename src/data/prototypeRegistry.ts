@@ -20,7 +20,7 @@ export const prototypeSections: PrototypeSection[] = [
     title: "Strony",
     items: [
       { label: "Product Detail Page", to: "/", iconClass: "ph ph-armchair" },
-      { label: "404 — Strona nie znaleziona", to: "/404", iconClass: "ph ph-warning-circle" },
+      { label: "404 - Strona nie znaleziona", to: "/404", iconClass: "ph ph-warning-circle" },
     ],
   },
   {

@@ -1,6 +1,6 @@
 # Pliki env do importu w Vercel
 
-Szablony **bez prawdziwych sekretów** — commitowane w repo. Import w panelu:
+Szablony **bez prawdziwych sekretów** - commitowane w repo. Import w panelu:
 
 **Vercel → Project → Settings → Environment Variables → Import .env**
 

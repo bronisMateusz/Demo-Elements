@@ -42,15 +42,15 @@ Na **Production** (`client`) Agentation jest wyłączone.
 
 ---
 
-## Toolbar — UX dla reviewera
+## Toolbar - UX dla reviewera
 
 Domyślny tryb **minimal** (skonfigurowany w `assets/agentation-entry.jsx`):
 
 | Widoczne | Ukryte |
 |----------|--------|
-| **Send** — wysyłka do GitHub | Pause animacji |
-| **Clear** — wyczyść pinezki | Layout mode |
-| **Exit** — zamknij toolbar | Show/hide markers, Copy, Settings |
+| **Send** - wysyłka do GitHub | Pause animacji |
+| **Clear** - wyczyść pinezki | Layout mode |
+| **Exit** - zamknij toolbar | Show/hide markers, Copy, Settings |
 
 - Pozycja: **lewy dolny róg** (nie zasłania Zasobników po prawej)
 - Po sukcesie: zielony toast „Wysłano do GitHub: issue #N”
@@ -59,9 +59,10 @@ Domyślny tryb **minimal** (skonfigurowany w `assets/agentation-entry.jsx`):
 ### Dlaczego nie widać przycisku Send czasem?
 
 Agentation v3:
+
 - **Send** pojawia się gdy webhook URL jest poprawny (`https://...`) i **Auto-Send = OFF**
 - Bundel ustawia webhook i `webhooksEnabled: false` w localStorage przy starcie
-- W polu Settings → Webhook URL może być puste wizualnie (Agentation trzyma URL w localStorage) — to nie blokuje wysyłki
+- W polu Settings → Webhook URL może być puste wizualnie (Agentation trzyma URL w localStorage) - to nie blokuje wysyłki
 
 ---
 
@@ -71,7 +72,7 @@ Plik: `assets/agentation-entry.jsx`
 
 - `VITE_AGENTATION_WEBHOOK_URL` (build time) → domyślnie `/api/agentation-feedback`
 - Runtime: rozwijane do `https://{origin}/api/agentation-feedback`
-- **Nie używaj** `onSubmit` + webhook jednocześnie — powoduje **duplikaty issue** (Send woła oba). Obecnie tylko webhook Agentation.
+- **Nie używaj** `onSubmit` + webhook jednocześnie - powoduje **duplikaty issue** (Send woła oba). Obecnie tylko webhook Agentation.
 
 Po zmianie w entry:
 
@@ -82,7 +83,7 @@ git add assets/agentation-bundle.js assets/agentation-entry.jsx
 
 ---
 
-## GitHub — token i uprawnienia
+## GitHub - token i uprawnienia
 
 ### Fine-grained PAT (zalecane)
 
@@ -90,7 +91,7 @@ git add assets/agentation-bundle.js assets/agentation-entry.jsx
 2. Repository access: tylko docelowe repo
 3. Permissions:
    - **Issues: Read and write**
-   - (opcjonalnie) **Contents: Read and write** — jeśli kiedyś dołączacie zrzuty do repo
+   - (opcjonalnie) **Contents: Read and write** - jeśli kiedyś dołączacie zrzuty do repo
 
 ### Zmienne Vercel
 
@@ -107,10 +108,10 @@ Po dodaniu/zmianie tokena: **Redeploy** preview.
 ## Issue w GitHub
 
 - Etykieta: **`ui-review`**
-- Tytuł: `[UI Review] /ścieżka — pierwsza uwaga`
+- Tytuł: `[UI Review] /ścieżka - pierwsza uwaga`
 - Treść: pełny markdown z Agentation + kontekst techniczny (URL, data)
 
-Filtr: https://github.com/bronisMateusz/Demo-Elements/issues?q=label%3Aui-review
+Filtr: <https://github.com/bronisMateusz/Demo-Elements/issues?q=label%3Aui-review>
 
 ### Szablon ręczny (fallback)
 
@@ -119,10 +120,11 @@ Jeśli auto-issue nie działa:
 
 ---
 
-## Dev — odczyt issue w Cursorze
+## Dev - odczyt issue w Cursorze
 
 1. Skonfiguruj GitHub MCP w Cursorze (jak w projekcie AKF)
 2. Prompt przykładowy:
+
    ```
    Pokaż otwarte issue z etykietą ui-review w bronisMateusz/Demo-Elements
    i zaimplementuj pierwszą uwagę.

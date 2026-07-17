@@ -151,7 +151,7 @@ export function HeaderBar({
         <Link
           to="/"
           className="inline-flex shrink-0 items-center no-underline"
-          aria-label="Elements — strona główna"
+          aria-label="Elements - strona główna"
         >
           <img
             src={assetUrl("logo-elements.svg")}

@@ -10,7 +10,7 @@ Write classes in canonical Tailwind v4 form. After edits: `npm run lint`.
 
 ## Correctness
 
-- Only known DS utilities — no typos like `items-cetner`.
+- Only known DS utilities - no typos like `items-cetner`.
 - No conflicting classes on the same element (e.g. `block flex`).
 - No duplicate classes.
 - No redundant variants (e.g. `flex hover:flex`).
@@ -24,7 +24,7 @@ Prefer **named utilities** from theme over `[...]` when Tailwind / `suggestCanon
 - `gap-8` not `gap-x-8 gap-y-8` when values are equal.
 - `rotate-18` not `rotate-[18deg]`; `-rotate-18` not `rotate-[-18deg]`.
 - Negative arbitrary (when no named utility): `top-[-5px]` not `-top-[5px]`.
-- Important as **suffix**: `flex!`, `hover:text-white!` — not `!flex`.
+- Important as **suffix**: `flex!`, `hover:text-white!` - not `!flex`.
 
 Before saving a class with `[...]`, check IDE suggestions / whether a bracket-free shortcut exists.
 
@@ -39,15 +39,15 @@ Before saving a class with `[...]`, check IDE suggestions / whether a bracket-fr
 
 Prefer logical inline properties in Tailwind v4 canonical form:
 
-- `inset-s-*` / `inset-e-*` — not `start-*`, `end-*`, `left-*`, `right-*` for inline axis
+- `inset-s-*` / `inset-e-*` - not `start-*`, `end-*`, `left-*`, `right-*` for inline axis
   - e.g. `focus:inset-s-4`, `inset-s-5`, `inset-s-1/2`
-- `inset-x-*` when both inline sides share the same value — e.g. `inset-x-0`
+- `inset-x-*` when both inline sides share the same value - e.g. `inset-x-0`
 - `ms-*` / `me-*` / `ps-*` / `pe-*` instead of `ml-*` / `mr-*` / `pl-*` / `pr-*`
 - `origin-start` instead of `origin-left`
 
 ## Complexity limits
 
-- Target: ≤20 classes per element. When exceeded — extract a child element or a `*ClassName.ts` helper.
+- Target: ≤20 classes per element. When exceeded - extract a child element or a `*ClassName.ts` helper.
 - Do not add classes “just in case”; each must change something.
 
 ## Examples

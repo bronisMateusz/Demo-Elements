@@ -1,6 +1,6 @@
-# Pipeline Vercel — dwa środowiska
+# Pipeline Vercel - dwa środowiska
 
-Hosting: **Vercel** (frontend statyczny + serverless API). **GitHub Pages wyłączone** — deploy po pushu robi Vercel.
+Hosting: **Vercel** (frontend statyczny + serverless API). **GitHub Pages wyłączone** - deploy po pushu robi Vercel.
 
 ## Model branchy
 
@@ -18,7 +18,7 @@ Hosting: **Vercel** (frontend statyczny + serverless API). **GitHub Pages wyłą
 
 **Settings → Environments → Production → Branch Tracking** → ustaw `release`.
 
-**Preview** nie pozwala wybrać jednego brancha — obejmuje **wszystkie branche oprócz production brancha** („All unassigned branches”). Po ustawieniu `release` jako Production, push na `main` automatycznie trafia do Preview.
+**Preview** nie pozwala wybrać jednego brancha - obejmuje **wszystkie branche oprócz production brancha** („All unassigned branches”). Po ustawieniu `release` jako Production, push na `main` automatycznie trafia do Preview.
 
 ---
 
@@ -37,7 +37,7 @@ Hosting: **Vercel** (frontend statyczny + serverless API). **GitHub Pages wyłą
 | Output Directory | `dist` |
 | Install Command | `npm install` (domyślnie) |
 
-Wartości są też w `vercel.json` — override w panelu **nie jest wymagany**.
+Wartości są też w `vercel.json` - override w panelu **nie jest wymagany**.
 
 ### 3. Production Branch
 
@@ -61,8 +61,10 @@ Import z folderu `env/` w repo (**Settings → Environment Variables → Import 
 | `env/vercel.preview.env` | **Preview** |
 
 Po imporcie:
+
 1. Podmień `GITHUB_TOKEN` na prawdziwy PAT (Issues + Contents write).
 2. Ustaw `ALLOWED_ORIGINS` na rzeczywisty URL preview (bez trailing slash), np.:
+
    ```
    https://elements-dev.vercel.app,http://localhost:5173,http://localhost:8875
    ```
@@ -75,7 +77,7 @@ Repo → **Settings → Pages → Source: None**.
 
 ## Zmienne środowiskowe
 
-### Wspólne (Production and Preview) — server API
+### Wspólne (Production and Preview) - server API
 
 | Zmienna | Opis |
 |---------|------|
@@ -104,9 +106,9 @@ Repo → **Settings → Pages → Source: None**.
 
 `npm run build:vercel` → `scripts/build-vercel.mjs`:
 
-1. `npm run build` — Vite + TypeScript → `dist/`
+1. `npm run build` - Vite + TypeScript → `dist/`
 2. Jeśli `VITE_AGENTATION_ENABLED=true` → `npm run build:agentation` → `assets/agentation-bundle.js` → kopia do `dist/assets/`
-3. `npm run build:runtime-assets` — favicony, zdjęcia produktów
+3. `npm run build:runtime-assets` - favicony, zdjęcia produktów
 
 `vercel.json` rewrite: wszystko poza `/api/` → `index.html` (SPA).
 
@@ -118,7 +120,7 @@ Plik: `.github/workflows/ci.yml`
 
 - Uruchamia się na push/PR do dowolnego brancha
 - Matrix: build `team` + build `client`
-- **Nie deployuje** — deploy tylko przez Vercel
+- **Nie deployuje** - deploy tylko przez Vercel
 
 ---
 

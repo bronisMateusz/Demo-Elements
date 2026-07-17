@@ -6,7 +6,7 @@ type LiquidCtaGlowProps = {
   className?: string;
 };
 
-/** Absolute fill — use on the CTA section root. */
+/** Absolute fill - use on the CTA section root. */
 export function LiquidCtaGlow({ className }: LiquidCtaGlowProps) {
   const rawId = useId();
   const filterId = `liquid-cta-${rawId.replace(/:/g, "")}`;

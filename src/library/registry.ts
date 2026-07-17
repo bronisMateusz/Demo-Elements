@@ -10,7 +10,7 @@ export const libraryCategories: LibraryCategory[] = [
     number: 1,
     slug: "naglowek-i-stopka",
     title: "Nagłówek i stopka",
-    subtitle: "Shell portalu — header i footer marki Elements.",
+    subtitle: "Shell portalu - header i footer marki Elements.",
     modules: category1Modules,
   },
   {
@@ -26,7 +26,7 @@ export const libraryCategories: LibraryCategory[] = [
     number: 3,
     slug: "produkt",
     title: "Produkt",
-    subtitle: "Komponenty strony produktu — galeria, buy box, warianty, karta, specyfikacja.",
+    subtitle: "Komponenty strony produktu - galeria, buy box, warianty, karta, specyfikacja.",
     modules: category3Modules,
   },
 ];

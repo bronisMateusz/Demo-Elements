@@ -93,7 +93,7 @@ export const buttonModule: LibraryModule = {
   slug: "button",
   title: "Przycisk / CTA",
   description:
-    "System przycisków Elements — warianty Primary, Secondary, Gold, Ghost i Tertiary; rozmiary; stany; IconButton (default, bordered, elevated, on-dark); ask-row i quick-add.",
+    "System przycisków Elements - warianty Primary, Secondary, Gold, Ghost i Tertiary; rozmiary; stany; IconButton (default, bordered, elevated, on-dark); ask-row i quick-add.",
   optionalProps: [
     { name: "variant", type: "ButtonVariant", defaultValue: "primary" },
     { name: "size", type: '"sm" | "md" | "lg"', defaultValue: "md" },
@@ -117,7 +117,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "sizes",
       label: "Rozmiary",
-      description: "Large (52px), Default (48px), Small (40px) — na przykładzie Primary.",
+      description: "Large (52px), Default (48px), Small (40px) - na przykładzie Primary.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonSizesDemo />
@@ -128,7 +128,7 @@ export const buttonModule: LibraryModule = {
       id: "primary-states",
       label: "Stany · Primary",
       description:
-        "Hover z animacją złotego wypełnienia od dołu (before:scale-y-100 w preview). Focus — ring WCAG.",
+        "Hover z animacją złotego wypełnienia od dołu (before:scale-y-100 w preview). Focus - ring WCAG.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonPrimaryStatesDemo />
@@ -148,7 +148,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "gold-states",
       label: "Stany · Gold",
-      description: "Złota obwódka — wypełnienie złotem na hover.",
+      description: "Złota obwódka - wypełnienie złotem na hover.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonGoldStatesDemo />
@@ -158,7 +158,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "ghost-states",
       label: "Stany · Ghost",
-      description: "Przezroczyste tło — hover z delikatnym wypełnieniem bg-muted.",
+      description: "Przezroczyste tło - hover z delikatnym wypełnieniem bg-muted.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonGhostStatesDemo />
@@ -168,7 +168,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "tertiary-states",
       label: "Stany · Tertiary",
-      description: "Link-style — hover ze złotym podkreśleniem.",
+      description: "Link-style - hover ze złotym podkreśleniem.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonTertiaryStatesDemo />
@@ -188,7 +188,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "full-width",
       label: "Pełna szerokość",
-      description: "Prop full — typowe w buy boxie i formularzach.",
+      description: "Prop full - typowe w buy boxie i formularzach.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonFullWidthDemo />
@@ -198,7 +198,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "live-hover",
       label: "Animacja hover (interaktywna)",
-      description: "Najedź kursorem — złote wypełnienie wjeżdża od dołu jak na OKA.",
+      description: "Najedź kursorem - złote wypełnienie wjeżdża od dołu jak na OKA.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonLiveHoverDemo />
@@ -219,7 +219,7 @@ export const buttonModule: LibraryModule = {
       id: "ask-fab",
       label: "Fixed bar (PDP)",
       description:
-        "Sticky pasek jak OKA — miniatura/tytuł/cena na desktopie, CTA: Dodaj do schowka + Zadaj pytanie. Po scrollu, znika przed stopką.",
+        "Sticky pasek jak OKA - miniatura/tytuł/cena na desktopie, CTA: Dodaj do schowka + Zadaj pytanie. Po scrollu, znika przed stopką.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonAskFabDemo />

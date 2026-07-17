@@ -16,7 +16,7 @@ export function FooterNewsletter() {
   return (
     <div className="relative pb-0">
       <Container>
-        <div className="relative min-h-[280px] overflow-hidden rounded-2xl shadow-2 md:min-h-[320px]">
+        <div className="relative min-h-[280px] overflow-hidden rounded-xs shadow-2 md:min-h-[320px]">
           <img
             src={assetUrl("products/montebianco/03-room.jpg")}
             alt=""
@@ -54,7 +54,7 @@ export function FooterNewsletter() {
 
               <form
                 className={cn(
-                  "w-full max-w-md shrink-0 rounded-xl border border-neutral-0/35",
+                  "w-full max-w-md shrink-0 rounded-xs border border-neutral-0/35",
                   "bg-neutral-0/20 p-2.5 shadow-2 backdrop-blur-md",
                   "sm:flex sm:items-center",
                 )}
@@ -73,7 +73,7 @@ export function FooterNewsletter() {
                   as="button"
                   type="submit"
                   variant="primary"
-                  className="w-full sm:w-auto sm:rounded-l-none"
+                  className="w-full rounded-xs sm:w-auto sm:rounded-l-none"
                 >
                   Zapisz się
                 </Button>
@@ -104,13 +104,21 @@ export function FooterMain() {
                 <img
                   src={assetUrl("logo-elements.svg")}
                   alt={footerBrand.title}
-                  className="mb-3 h-[clamp(28px,3.5vw,36px)] w-auto"
-                  width={160}
-                  height={36}
+                  className="mb-3 h-[clamp(32px,4vw,44px)] w-auto"
+                  width={108}
+                  height={106}
                   draggable={false}
                 />
-                <p className="mb-0 max-w-[18rem] text-sm leading-relaxed text-neutral-500">
-                  {footerBrand.description}
+                <p className="mb-0 max-w-[18rem] text-sm leading-relaxed text-neutral-500 italic">
+                  {footerBrand.descriptionParts.map((part, index) =>
+                    typeof part === "string" ? (
+                      <span key={index}>{part}</span>
+                    ) : (
+                      <strong key={index} className="font-semibold text-neutral-700">
+                        {part.bold}
+                      </strong>
+                    ),
+                  )}
                 </p>
                 <ul className="mt-6 flex list-none items-center gap-1 p-0">
                   {footerSocialLinks.map((link) => (
@@ -143,7 +151,7 @@ export function FooterMain() {
                       <li key={link.label}>
                         <a
                           href={link.href}
-                          className="text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
+                          className="block w-full text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
                         >
                           {link.label}
                           {"trailing" in link && link.trailing ? (
