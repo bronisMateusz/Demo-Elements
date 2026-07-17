@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -34,10 +34,21 @@ type ProductCarouselProps = {
   header?: ProductCarouselHeader;
 };
 
+/** Clone products until we have enough slides to fill wide viewports in loop mode. */
+function withClonedSlides(products: RelatedProduct[], minSlides: number): RelatedProduct[] {
+  if (products.length <= 1) return products;
+  const slides: RelatedProduct[] = [];
+  while (slides.length < minSlides) {
+    slides.push(...products);
+  }
+  return slides;
+}
+
 function CarouselNavButtons({
   atStart,
   atEnd,
   layout,
+  loop,
   onPrev,
   onNext,
   className,
@@ -45,10 +56,14 @@ function CarouselNavButtons({
   atStart: boolean;
   atEnd: boolean;
   layout: ProductCarouselLayout;
+  loop: boolean;
   onPrev: () => void;
   onNext: () => void;
   className?: string;
 }) {
+  const prevDisabled = !loop && atStart;
+  const nextDisabled = !loop && atEnd;
+
   return (
     <div className={cn("flex shrink-0 items-center gap-1", className)}>
       <button
@@ -58,11 +73,11 @@ function CarouselNavButtons({
           className: productCarouselNavClassName({
             placement: "header",
             layout,
-            disabled: atStart,
+            disabled: prevDisabled,
           }),
         })}
         aria-label="Poprzednie produkty"
-        disabled={atStart}
+        disabled={prevDisabled}
         onClick={onPrev}
       >
         <i className="ph ph-caret-left" aria-hidden="true" />
@@ -74,11 +89,11 @@ function CarouselNavButtons({
           className: productCarouselNavClassName({
             placement: "header",
             layout,
-            disabled: atEnd,
+            disabled: nextDisabled,
           }),
         })}
         aria-label="Następne produkty"
-        disabled={atEnd}
+        disabled={nextDisabled}
         onClick={onNext}
       >
         <i className="ph ph-caret-right" aria-hidden="true" />
@@ -105,7 +120,18 @@ export function ProductCarousel({
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
 
+  const enableLoop = products.length > 1;
+  const slides = useMemo(
+    () => (enableLoop ? withClonedSlides(products, isInline ? 8 : 12) : products),
+    [products, enableLoop, isInline],
+  );
+
   const syncEdges = (instance: SwiperInstance) => {
+    if (instance.params.loop) {
+      setAtStart(false);
+      setAtEnd(false);
+      return;
+    }
     setAtStart(instance.isBeginning);
     setAtEnd(instance.isEnd);
   };
@@ -115,10 +141,13 @@ export function ProductCarousel({
   const headerNav = isInline && header;
   const swiperKey =
     resolvedLayout === "bleed"
-      ? `bleed-${gutterPx}`
+      ? `bleed-${gutterPx}-${slides.length}`
       : isInlineBleed
-        ? `inline-bleed-${gutterPx}-${bleedRightWidth ?? 0}`
-        : resolvedLayout;
+        ? `inline-bleed-${gutterPx}-${bleedRightWidth ?? 0}-${slides.length}`
+        : `${resolvedLayout}-${slides.length}`;
+
+  const prevDisabled = !enableLoop && atStart;
+  const nextDisabled = !enableLoop && atEnd;
 
   return (
     <div
@@ -141,6 +170,7 @@ export function ProductCarousel({
               atStart={atStart}
               atEnd={atEnd}
               layout={resolvedLayout}
+              loop={enableLoop}
               onPrev={slidePrev}
               onNext={slideNext}
             />
@@ -157,14 +187,16 @@ export function ProductCarousel({
           key={swiperKey}
           className={productCarouselSwiperClassName(resolvedLayout)}
           modules={[A11y, Mousewheel]}
-          watchOverflow
+          watchOverflow={!enableLoop}
+          loop={enableLoop}
+          loopAdditionalSlides={enableLoop ? products.length : 0}
           slidesPerView="auto"
           spaceBetween={isInline ? 12 : 5}
           slidesOffsetBefore={resolvedLayout === "bleed" ? gutterPx : undefined}
           slidesOffsetAfter={resolvedLayout === "bleed" || isInlineBleed ? gutterPx : undefined}
           mousewheel={{
             forceToAxis: true,
-            releaseOnEdges: true,
+            releaseOnEdges: !enableLoop,
             sensitivity: 0.85,
           }}
           onSwiper={(instance) => {
@@ -179,9 +211,9 @@ export function ProductCarousel({
             nextSlideMessage: "Następne produkty",
           }}
         >
-          {products.map((product) => (
+          {slides.map((product, index) => (
             <SwiperSlide
-              key={product.id}
+              key={`${product.id}-${index}`}
               className={productCarouselSlideClassName(resolvedLayout)}
             >
               <ProductCard
@@ -204,11 +236,11 @@ export function ProductCarousel({
               className: productCarouselNavClassName({
                 placement: "prev",
                 layout: resolvedLayout,
-                disabled: atStart,
+                disabled: prevDisabled,
               }),
             })}
             aria-label="Poprzednie produkty"
-            disabled={atStart}
+            disabled={prevDisabled}
             onClick={slidePrev}
           >
             <i className="ph ph-caret-left" aria-hidden="true" />
@@ -220,11 +252,11 @@ export function ProductCarousel({
               className: productCarouselNavClassName({
                 placement: "next",
                 layout: resolvedLayout,
-                disabled: atEnd,
+                disabled: nextDisabled,
               }),
             })}
             aria-label="Następne produkty"
-            disabled={atEnd}
+            disabled={nextDisabled}
             onClick={slideNext}
           >
             <i className="ph ph-caret-right" aria-hidden="true" />
