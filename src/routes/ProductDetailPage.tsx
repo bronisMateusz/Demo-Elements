@@ -99,7 +99,14 @@ export function ProductDetailPage() {
         </RevealSection>
       </PageShell>
 
-      <AskFab href={product.cta.href} label={product.cta.actionLabel} />
+      <AskFab
+        sku={product.sku}
+        title={product.title}
+        price={product.price.current}
+        image={product.images[0]}
+        askHref={product.cta.href}
+        askLabel={product.cta.actionLabel}
+      />
     </>
   );
 }

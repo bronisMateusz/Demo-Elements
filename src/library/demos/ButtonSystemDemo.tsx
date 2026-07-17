@@ -294,26 +294,31 @@ export function ButtonAskFabDemo() {
     <div className="grid gap-8">
       <div className={libBtnStatesGridClassName}>
         <div className={libBtnStateClassName}>
-          <span className={libBtnStateLabelClassName}>Ask FAB · default</span>
-          <div className="relative flex min-h-20 items-end justify-end rounded-xs bg-neutral-100 p-4">
-            <a href="#" className={askFabClassName({ fixed: false, visible: true })}>
-              <i className="ph ph-chat-circle" aria-hidden="true" />
-              <span>Zadaj pytanie</span>
-            </a>
-          </div>
-        </div>
-        <div className={libBtnStateClassName}>
-          <span className={libBtnStateLabelClassName}>Ask FAB · hidden (przed scroll)</span>
-          <div className="relative flex min-h-20 items-end justify-end rounded-xs bg-neutral-100 p-4">
-            <a href="#" className={askFabClassName({ fixed: false, visible: false })} aria-hidden="true" tabIndex={-1}>
-              <i className="ph ph-chat-circle" aria-hidden="true" />
-              <span>Zadaj pytanie</span>
-            </a>
+          <span className={libBtnStateLabelClassName}>Fixed bar · visible</span>
+          <div className="relative overflow-hidden rounded-xs bg-neutral-100 p-4">
+            <div className={askFabClassName({ fixed: false, visible: true })}>
+              <div className="flex items-center gap-3 border border-neutral-200 bg-neutral-0 px-4 py-3 shadow-2">
+                <div className="hidden size-12 shrink-0 bg-neutral-200 sm:block" />
+                <div className="hidden min-w-0 flex-1 sm:block">
+                  <p className="m-0 truncate font-heading text-[18px] leading-tight">Montebianco 80 cm</p>
+                  <p className="mt-1 mb-0 text-ui tabular-nums">1 990 zł</p>
+                </div>
+                <div className="flex w-full gap-2 sm:w-auto">
+                  <button type="button" className={libButtonPreviewClassName({ variant: "secondary", size: "lg" })}>
+                    Dodaj do schowka
+                  </button>
+                  <button type="button" className={libButtonPreviewClassName({ variant: "primary", size: "lg" })}>
+                    Zadaj pytanie
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Floating CTA na PDP — ten sam Primary co w bibliotece. Pojawia się po scrollu, znika przed stopką.
+        Sticky bar na PDP (jak OKA) — tytuł/cena na desktopie, dwa CTA: schowek + pytanie. Pojawia się po scrollu,
+        znika przed stopką.
       </p>
     </div>
   );

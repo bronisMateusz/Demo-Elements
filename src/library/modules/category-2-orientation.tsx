@@ -217,8 +217,9 @@ export const buttonModule: LibraryModule = {
     },
     {
       id: "ask-fab",
-      label: "Ask FAB (PDP)",
-      description: "Primary FAB — ten sam język co przyciski biblioteki, pojawia się po scrollu w prawym dolnym rogu.",
+      label: "Fixed bar (PDP)",
+      description:
+        "Sticky pasek jak OKA — miniatura/tytuł/cena na desktopie, CTA: Dodaj do schowka + Zadaj pytanie. Po scrollu, znika przed stopką.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonAskFabDemo />

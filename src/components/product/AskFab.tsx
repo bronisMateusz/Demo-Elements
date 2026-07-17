@@ -1,28 +1,40 @@
 import { useEffect, useState } from "react";
 import { cn } from "../../lib/cn";
-import { askFabClassName } from "../ui/askFabClassName";
+import { useProductFavorites } from "../../hooks/useProductFavorites";
+import type { ProductImage } from "../../types/product";
+import { Button } from "../ui/Button";
+import { productFixedBarClassName } from "../ui/askFabClassName";
+import { productImageObjectPosition } from "../../lib/productImageStyle";
 
-/** Hide when footer top enters this band above the viewport bottom (FAB height + offset + gap). */
-const FOOTER_CLEARANCE_PX = 120;
+/** Hide when footer top enters this band above the viewport bottom. */
+const FOOTER_CLEARANCE_PX = 160;
 
 type AskFabProps = {
-  href?: string;
-  label?: string;
+  sku: string;
+  title: string;
+  price: string;
+  image: ProductImage;
+  askHref?: string;
+  askLabel?: string;
   className?: string;
-  /** Scroll offset (px) after which the FAB becomes visible. */
+  /** Scroll offset (px) after which the bar becomes visible. */
   showAfterScroll?: number;
-  /** Footer element to watch; defaults to `footer[role="contentinfo"]`. */
   footerSelector?: string;
 };
 
 export function AskFab({
-  href = "#kontakt",
-  label = "Zadaj pytanie",
+  sku,
+  title,
+  price,
+  image,
+  askHref = "#kontakt",
+  askLabel = "Zadaj pytanie",
   className,
   showAfterScroll = 320,
   footerSelector = 'footer[role="contentinfo"]',
 }: AskFabProps) {
   const [visible, setVisible] = useState(false);
+  const { isFavorite, toggle } = useProductFavorites(sku);
 
   useEffect(() => {
     const footer = document.querySelector<HTMLElement>(footerSelector);
@@ -57,17 +69,61 @@ export function AskFab({
   }, [showAfterScroll, footerSelector]);
 
   return (
-    <a
+    <aside
       id="askFab"
-      href={href}
-      className={cn(askFabClassName({ visible, className }))}
+      className={cn(productFixedBarClassName({ visible, className }))}
       aria-hidden={!visible}
-      tabIndex={visible ? 0 : -1}
-      data-action="ask"
-      data-event="click_cta"
+      aria-label="Szybkie akcje produktu"
     >
-      <i className="ph ph-chat-circle" aria-hidden="true" />
-      <span>{label}</span>
-    </a>
+      <div className="flex items-center gap-3 border border-neutral-200/80 bg-neutral-0 px-4 py-3 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
+        <div className="hidden size-12 shrink-0 overflow-hidden bg-neutral-100 lg:block">
+          <img
+            src={image.src}
+            alt=""
+            className="h-full w-full object-cover"
+            style={{ objectPosition: productImageObjectPosition(image) }}
+            width={48}
+            height={48}
+            draggable={false}
+          />
+        </div>
+
+        <div className="hidden min-w-0 flex-1 lg:block">
+          <p className="m-0 truncate font-heading text-[18px] leading-tight text-neutral-900">
+            {title}
+          </p>
+          <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">{price}</p>
+        </div>
+
+        <div className="flex w-full gap-2 lg:w-auto lg:shrink-0">
+          <Button
+            as="button"
+            type="button"
+            variant="secondary"
+            size="lg"
+            className="min-w-0 flex-1 lg:flex-none"
+            ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
+            onClick={toggle}
+          >
+            <i
+              className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+              aria-hidden="true"
+            />
+            <span className="truncate">{isFavorite ? "W schowku" : "Dodaj do schowka"}</span>
+          </Button>
+
+          <Button
+            href={askHref}
+            variant="primary"
+            size="lg"
+            className="min-w-0 flex-1 no-underline lg:flex-none"
+            ariaLabel={askLabel}
+          >
+            <i className="ph ph-chat-circle" aria-hidden="true" />
+            <span className="truncate">{askLabel}</span>
+          </Button>
+        </div>
+      </div>
+    </aside>
   );
 }
