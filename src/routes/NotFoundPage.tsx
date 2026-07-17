@@ -20,9 +20,6 @@ export function NotFoundPage() {
           <Link to="/" className={buttonClassName({ variant: "primary" })}>
             Wróć do produktu
           </Link>
-          <Link to="/biblioteka" className="mt-4 text-ui text-neutral-600 hover:text-neutral-900">
-            Przejdź do biblioteki komponentów
-          </Link>
         </Container>
       </PageShell>
     </>

@@ -16,7 +16,7 @@ export function FooterNewsletter() {
   return (
     <div className="relative pb-0">
       <Container>
-        <div className="relative min-h-[280px] overflow-hidden rounded-xs shadow-2 md:min-h-[320px]">
+        <div className="relative min-h-footer-newsletter overflow-hidden rounded-xs shadow-2 md:min-h-footer-newsletter-md">
           <img
             src={assetUrl("products/montebianco/03-room.jpg")}
             alt=""
@@ -30,7 +30,7 @@ export function FooterNewsletter() {
             aria-hidden="true"
           />
 
-          <div className="relative flex h-full min-h-[280px] items-end justify-center p-8 md:min-h-[320px] md:p-10 lg:p-12">
+          <div className="relative flex min-h-full items-end justify-center p-8 md:p-10 lg:p-12">
             <div className="flex w-full max-w-5xl flex-col justify-between gap-8 lg:flex-row lg:items-end lg:gap-10">
               <div className="max-w-lg">
                 <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-wide text-neutral-0/70">
@@ -120,25 +120,6 @@ export function FooterMain() {
                     ),
                   )}
                 </p>
-                <ul className="mt-6 flex list-none items-center gap-1 p-0">
-                  {footerSocialLinks.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className={cn(
-                          "inline-flex size-10 items-center justify-center text-neutral-500",
-                          "transition-colors duration-fast ease-out hover:text-gold-500",
-                          "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
-                        )}
-                        aria-label={link.label}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <i className={cn(link.iconClass, "text-xl leading-none")} aria-hidden="true" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               {footerColumns.map((column) => (
@@ -173,13 +154,45 @@ export function FooterMain() {
   );
 }
 
+function FooterSocialLinks({ className }: { className?: string }) {
+  return (
+    <ul className={cn("m-0 flex list-none items-center justify-center gap-1 p-0", className)}>
+      {footerSocialLinks.map((link) => (
+        <li key={link.label}>
+          <a
+            href={link.href}
+            className={cn(
+              "inline-flex size-10 items-center justify-center text-neutral-500",
+              "transition-colors duration-fast ease-out hover:text-gold-500",
+              "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+            )}
+            aria-label={link.label}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className={cn(link.iconClass, "text-xl leading-none")} aria-hidden="true" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function FooterLegal() {
   return (
-    <Container className="flex flex-col gap-4 border-t border-neutral-200 py-8 sm:flex-row sm:items-center sm:justify-between">
-      <p className="m-0 text-sm text-neutral-500">
+    <Container
+      className={cn(
+        "grid grid-cols-1 items-center gap-4 border-t border-neutral-200 py-8",
+        "sm:grid-cols-[1fr_auto_1fr]",
+      )}
+    >
+      <p className="m-0 text-center text-sm text-neutral-500 sm:text-left">
         © {new Date().getFullYear()} {footerLegal.copyright}
       </p>
-      <FooterSmartbeesCredit />
+      <FooterSocialLinks />
+      <div className="flex justify-center sm:justify-end">
+        <FooterSmartbeesCredit />
+      </div>
     </Container>
   );
 }

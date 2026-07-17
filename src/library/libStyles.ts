@@ -1,5 +1,4 @@
 import { cn } from "../lib/cn";
-import { askRowPreviewClassName } from "../components/product/askRowClassName";
 import {
   buttonClassName,
   type ButtonSize,
@@ -217,17 +216,6 @@ function libIconButtonStateClassName(
   if (state === "focus") return onDark ? focusRingOnContrastClassName : focusRingClassName;
   if (state === "default") return undefined;
   return libIconButtonStateOverrides[variant]?.[state];
-}
-
-export function libAskRowPreviewClassName({
-  state = "default",
-  className,
-}: {
-  state?: LibButtonPreviewState;
-  className?: string;
-}) {
-  if (state === "disabled") return cn(className);
-  return askRowPreviewClassName(state, className);
 }
 
 export function libIconButtonPreviewClassName({

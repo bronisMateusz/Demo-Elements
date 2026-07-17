@@ -59,7 +59,8 @@ export const sharedLayoutUnderlineModule: LibraryModule = {
     {
       id: "thumbnail-row",
       label: "Miniaturki wariantu",
-      description: "Hover: bg-neutral-900/40. Aktywny element trzyma pełne bg-neutral-900 wewnątrz przycisku.",
+      description:
+        "Jak VariantThumbnailGroup: hover = linia bg-neutral-900/40; wybrany = pełne bg-neutral-900. Kliknij, żeby zmienić aktywny.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <SharedLayoutUnderlineDemo />

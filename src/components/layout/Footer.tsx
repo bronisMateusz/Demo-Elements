@@ -7,7 +7,7 @@ export function Footer() {
         <FooterNewsletter />
       </div>
       {/* Half of newsletter min-height so fill starts mid-banner. */}
-      <div className="relative -mt-[140px] bg-neutral-50 pt-[140px] md:-mt-[160px] md:pt-[160px]">
+      <div className="relative -mt-footer-newsletter-overlap bg-neutral-50 pt-footer-newsletter-overlap md:-mt-footer-newsletter-overlap-md md:pt-footer-newsletter-overlap-md">
         <FooterMain />
         <FooterLegal />
       </div>

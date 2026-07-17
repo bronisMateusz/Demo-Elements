@@ -1,11 +1,5 @@
-import { useCallback, type MouseEvent } from "react";
 import { cn } from "../../lib/cn";
-import { useProductFavorites } from "../../hooks/useProductFavorites";
 import { Badge } from "../ui/Badge";
-import {
-  btnAnimatedBaseClassName,
-  btnAnimatedPrimaryClassName,
-} from "../ui/btnAnimatedClassName";
 import type { RelatedProduct } from "../../types/product";
 import { ProductFavoriteButton } from "./ProductFavoriteButton";
 
@@ -17,17 +11,7 @@ type ProductCarouselCardProps = {
 
 export function ProductCarouselCard({ product, className, compact = false }: ProductCarouselCardProps) {
   const images = product.images?.length ? product.images : [product.image];
-  const { isFavorite, toggle } = useProductFavorites(product.id);
   const hasMultipleImages = images.length > 1;
-
-  const handleAddToClipboard = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-      if (!isFavorite) toggle();
-    },
-    [isFavorite, toggle],
-  );
 
   const variantMeta = [
     product.colorCount ? `+${product.colorCount} kolory` : null,
@@ -105,33 +89,6 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
           variant="elevated"
           className="absolute right-3 top-3 z-[2]"
         />
-
-        <button
-          type="button"
-          className={cn(
-            btnAnimatedBaseClassName,
-            btnAnimatedPrimaryClassName,
-            "absolute inset-x-4 bottom-4 z-[3] inline-flex h-11 items-center justify-center gap-2 border-0 px-4 font-body text-sm font-medium leading-none opacity-0 shadow-1 transition-opacity duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] pointer-events-none",
-            "group-hover/card:pointer-events-auto group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:opacity-100",
-            isFavorite && "pointer-events-auto opacity-100",
-            "[&_i]:text-inherit",
-          )}
-          aria-live="polite"
-          aria-pressed={isFavorite}
-          onClick={handleAddToClipboard}
-        >
-          {isFavorite ? (
-            <>
-              <i className="ph-fill ph-bookmark-simple" aria-hidden="true" />
-              W schowku
-            </>
-          ) : (
-            <>
-              <i className="ph ph-bookmark-simple" aria-hidden="true" />
-              Dodaj do schowka
-            </>
-          )}
-        </button>
       </div>
 
       <div

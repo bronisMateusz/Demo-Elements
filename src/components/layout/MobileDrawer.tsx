@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import { favoritesNav, mainNavItems, productsMegaMenu, salonNav } from "../../data/nav";
 import { useProductFavoritesCount } from "../../hooks/useProductFavorites";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
-import { lockPageScroll } from "../../hooks/useSiteChrome";
-import { IconButton } from "../ui/IconButton";
-import { DrawerShell } from "./DrawerShell";
+import { DrawerHeader, DrawerShell } from "./DrawerShell";
 
 type MobileDrawerProps = {
   open: boolean;
@@ -15,35 +13,14 @@ type MobileDrawerProps = {
 };
 
 export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) {
-  const panelRef = useRef<HTMLDivElement>(null);
   const favoritesCount = useProductFavoritesCount();
   const { salon } = useSelectedSalon();
   const [productsExpanded, setProductsExpanded] = useState(false);
 
-  useEffect(() => {
-    lockPageScroll(open);
-    return () => lockPageScroll(false);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setProductsExpanded(false);
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    panelRef.current?.focus();
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setProductsExpanded(false);
     onClose();
-  };
+  }, [onClose]);
 
   return (
     <DrawerShell
@@ -51,13 +28,9 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
       onClose={handleClose}
       label="Menu nawigacji"
       closeLabel="Zamknij menu"
-      panelRef={panelRef}
       className="lg:hidden"
     >
-        <div className="flex items-center justify-between border-b border-neutral-200 px-gutter py-8">
-          <span className="font-heading text-xl text-neutral-900">Menu</span>
-          <IconButton label="Zamknij menu" iconClass="ph ph-x" onClick={handleClose} />
-        </div>
+        <DrawerHeader title="Menu" closeLabel="Zamknij menu" onClose={handleClose} compact />
         <nav className="flex-1 overflow-y-auto px-gutter py-8" aria-label="Menu mobilne">
           <ul className="flex list-none flex-col gap-1">
             {mainNavItems.map((item) => {

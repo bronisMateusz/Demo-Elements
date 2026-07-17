@@ -1,12 +1,10 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { cn } from "../../lib/cn";
 import { distanceKm, formatDistanceKm } from "../../lib/geo";
 import { salonDrawerCopy, salonOptions } from "../../data/nav";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
-import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { Button } from "../ui/Button";
-import { IconButton } from "../ui/IconButton";
-import { DrawerShell } from "./DrawerShell";
+import { DrawerHeader, DrawerShell } from "./DrawerShell";
 import { inputClassName } from "../ui/inputClassName";
 
 type SalonDrawerProps = {
@@ -22,7 +20,6 @@ type UserCoords = {
 type LocateStatus = "idle" | "loading" | "ready" | "error";
 
 export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
-  const panelRef = useRef<HTMLDivElement>(null);
   const searchId = useId();
   const { salon: selectedSalon, select } = useSelectedSalon();
   const [query, setQuery] = useState("");
@@ -51,23 +48,6 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
       }))
       .sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
   }, [query, userCoords]);
-
-  useEffect(() => {
-    lockPageScroll(open);
-    return () => lockPageScroll(false);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    panelRef.current?.focus();
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
 
   const locateNearestSalon = () => {
     if (!navigator.geolocation) {
@@ -117,24 +97,13 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
       onClose={onClose}
       label={salonDrawerCopy.title}
       closeLabel="Zamknij wybór salonu"
-      panelRef={panelRef}
     >
-        <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-gutter pt-8 pb-8">
-          <div className="min-w-0">
-            <p className="m-0 font-body text-xl font-medium text-neutral-900">
-              {salonDrawerCopy.title}
-            </p>
-            <p className="mt-2 mb-0 text-sm leading-relaxed text-neutral-500">
-              {salonDrawerCopy.description}
-            </p>
-          </div>
-          <IconButton
-            label="Zamknij"
-            iconClass="ph ph-x"
-            onClick={onClose}
-            className="-mt-2 -mr-2"
-          />
-        </div>
+        <DrawerHeader
+          title={salonDrawerCopy.title}
+          description={salonDrawerCopy.description}
+          closeLabel="Zamknij"
+          onClose={onClose}
+        />
 
         <div className="flex flex-col gap-4 border-b border-neutral-200 px-gutter py-8">
           <div className="flex items-center gap-2">

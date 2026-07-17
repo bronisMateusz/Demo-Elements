@@ -1,8 +1,10 @@
-import { type ReactNode, type Ref } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../../lib/cn";
 import { EASE_LUXURY } from "../../lib/motionEase";
+import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
+import { IconButton } from "../ui/IconButton";
 
 const PANEL_DURATION_S = 0.4;
 const BACKDROP_DURATION_S = 0.28;
@@ -13,7 +15,6 @@ type DrawerShellProps = {
   label: string;
   closeLabel: string;
   children: ReactNode;
-  panelRef?: Ref<HTMLDivElement>;
   /** Extra classes on the fixed root (e.g. `lg:hidden`). */
   className?: string;
 };
@@ -24,10 +25,27 @@ export function DrawerShell({
   label,
   closeLabel,
   children,
-  panelRef,
   className,
 }: DrawerShellProps) {
   const reduce = useMotionReduced();
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    lockPageScroll(open);
+    return () => lockPageScroll(false);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    panelRef.current?.focus();
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose]);
 
   return (
     <AnimatePresence>
@@ -66,5 +84,48 @@ export function DrawerShell({
         </div>
       ) : null}
     </AnimatePresence>
+  );
+}
+
+type DrawerHeaderProps = {
+  title: string;
+  description?: string;
+  closeLabel: string;
+  onClose: () => void;
+  /** Compact header without description (e.g. mobile menu). */
+  compact?: boolean;
+};
+
+export function DrawerHeader({
+  title,
+  description,
+  closeLabel,
+  onClose,
+  compact = false,
+}: DrawerHeaderProps) {
+  if (compact) {
+    return (
+      <div className="flex items-center justify-between border-b border-neutral-200 px-gutter py-8">
+        <span className="font-heading text-xl text-neutral-900">{title}</span>
+        <IconButton label={closeLabel} iconClass="ph ph-x" onClick={onClose} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-gutter pt-8 pb-8">
+      <div className="min-w-0 pr-2">
+        <p className="m-0 font-body text-xl font-medium text-neutral-900">{title}</p>
+        {description ? (
+          <p className="mt-2 mb-0 text-sm leading-relaxed text-neutral-500">{description}</p>
+        ) : null}
+      </div>
+      <IconButton
+        label={closeLabel}
+        iconClass="ph ph-x"
+        onClick={onClose}
+        className="-mt-2 -mr-2"
+      />
+    </div>
   );
 }

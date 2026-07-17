@@ -3,7 +3,7 @@ import { cn } from "../../lib/cn";
 import { useProductFavorites } from "../../hooks/useProductFavorites";
 import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
-import { productFixedBarClassName } from "../ui/askFabClassName";
+import { productFixedBarClassName } from "../ui/productFixedBarClassName";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { AskDrawer } from "./AskDrawer";
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ProductAskRow } from "../../components/product/ProductAskRow";
-import { askFabClassName } from "../../components/ui/askFabClassName";
+import { productFixedBarClassName } from "../../components/ui/productFixedBarClassName";
 import {
   libBtnDarkSurfaceClassName,
   libBtnRowClassName,
@@ -296,7 +296,12 @@ export function ButtonAskFabDemo() {
         <div className={libBtnStateClassName}>
           <span className={libBtnStateLabelClassName}>Fixed bar · visible</span>
           <div className="relative overflow-hidden rounded-xs bg-neutral-100 p-4">
-            <div className={askFabClassName({ fixed: false, visible: true })}>
+            <div
+              className={productFixedBarClassName({
+                visible: true,
+                className: "static inset-auto translate-y-0",
+              })}
+            >
               <div className="flex items-center gap-3 border border-neutral-200 bg-neutral-0 px-4 py-3 shadow-2">
                 <div className="hidden size-12 shrink-0 bg-neutral-200 sm:block" />
                 <div className="hidden min-w-0 flex-1 sm:block">

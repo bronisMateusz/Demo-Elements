@@ -43,7 +43,7 @@ Before adding `[...]`, check `suggestCanonicalClasses` - e.g. `text-lg` instead 
 
 - **Tailwind classes only** in `className` - no `<style>`, no inline `style=""` (exception: rare dynamic values from JS, e.g. motion transforms).
 - Complex class sets → `cn()` from `src/lib/cn.ts` or dedicated `*ClassName.ts` exports.
-- Button/card variants → `Record<Variant, string>` maps (e.g. `buttonClassName.ts`, `askRowClassName.ts`).
+- Button/card variants → `Record<Variant, string>` maps (e.g. `buttonClassName.ts`, `productFixedBarClassName.ts`).
 
 ## React
 

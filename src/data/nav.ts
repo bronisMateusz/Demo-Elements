@@ -144,7 +144,7 @@ export const salonCardCopy = {
   hoursColumnLabel: "Godziny otwarcia",
   askLabel: "Wyślij pytanie do salonu",
   defaultPhone: "+48 22 000 00 00",
-  defaultHours: ["pon.–pt. 10:00–18:00", "sob. 10:00–14:00"],
+  defaultHours: ["pon.-pt. 10:00-18:00", "sob. 10:00-14:00"],
 } as const;
 
 /** Salon points - copy from eh-salon-results prototype. */

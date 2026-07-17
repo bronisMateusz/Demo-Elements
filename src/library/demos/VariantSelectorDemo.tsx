@@ -3,24 +3,11 @@ import { montebiancoVariants } from "../../data/products/montebianco-80";
 import {
   ProductVariantSelector,
   VariantChipGroup,
-  VariantSwatchGroup,
   VariantThumbnailGroup,
 } from "../../components/product/variant-selector";
-import type { ProductVariantAxis } from "../../types/product";
 
 const chipAxis = montebiancoVariants.axes.find((axis) => axis.type === "chip")!;
 const thumbnailAxis = montebiancoVariants.axes.find((axis) => axis.type === "thumbnail")!;
-
-const swatchAxis: ProductVariantAxis = {
-  id: "finish-swatch",
-  label: "Wykończenie",
-  type: "swatch",
-  options: [
-    { id: "white", label: "Biały mat", swatch: "#f5f3ef" },
-    { id: "graphite", label: "Grafit mat", swatch: "#3d3a37" },
-    { id: "oak", label: "Dąb naturalny", swatch: "#c4a574" },
-  ],
-};
 
 function useAxisSelection(defaultId: string) {
   const [selectedId, setSelectedId] = useState(defaultId);
@@ -48,19 +35,6 @@ export function VariantThumbnailGroupDemo() {
       options={thumbnailAxis.options}
       selectedId={selectedId}
       axisLabel={thumbnailAxis.label}
-      onSelect={onSelect}
-    />
-  );
-}
-
-export function VariantSwatchGroupDemo() {
-  const { selectedId, onSelect } = useAxisSelection("white");
-
-  return (
-    <VariantSwatchGroup
-      options={swatchAxis.options}
-      selectedId={selectedId}
-      axisLabel={swatchAxis.label}
       onSelect={onSelect}
     />
   );

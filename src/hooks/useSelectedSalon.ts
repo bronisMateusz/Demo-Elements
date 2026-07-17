@@ -5,6 +5,10 @@ const STORAGE_KEY = "elements-selected-salon";
 const CHANGE_EVENT = "elements-salon-changed";
 const OPEN_EVENT = "elements-salon-open";
 
+export function getStoredSalonId(): string | null {
+  return readSelectedSalonId();
+}
+
 function readSelectedSalonId(): string | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);

@@ -1,12 +1,10 @@
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useCallback, useId, useState, type FormEvent } from "react";
 import { cn } from "../../lib/cn";
 import { askDrawerCopy, buildAskMessage, formatAskSku } from "../../data/ask";
-import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
-import { IconButton } from "../ui/IconButton";
-import { DrawerShell } from "../layout/DrawerShell";
+import { DrawerHeader, DrawerShell } from "../layout/DrawerShell";
 import { inputClassName } from "../ui/inputClassName";
 
 type AskDrawerProps = {
@@ -37,7 +35,6 @@ export function AskDrawer({
   productSku,
   productImage,
 }: AskDrawerProps) {
-  const panelRef = useRef<HTMLDivElement>(null);
   const nameId = useId();
   const contactId = useId();
   const postalId = useId();
@@ -49,30 +46,11 @@ export function AskDrawer({
   );
   const [submitted, setSubmitted] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setSubmitted(false);
     setMessage(buildAskMessage(productTitle, productSku));
     onClose();
-  };
-
-  useEffect(() => {
-    lockPageScroll(open);
-    return () => lockPageScroll(false);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") handleClose();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    panelRef.current?.focus();
-    return () => document.removeEventListener("keydown", onKeyDown);
-    // handleClose closes + resets form; deps cover product identity changes while open
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: avoid rebinding Escape on every render
-  }, [open, productTitle, productSku, onClose]);
+  }, [onClose, productTitle, productSku]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -85,24 +63,13 @@ export function AskDrawer({
       onClose={handleClose}
       label={askDrawerCopy.title}
       closeLabel="Zamknij formularz pytania"
-      panelRef={panelRef}
     >
-      <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-gutter pt-8 pb-8">
-        <div className="min-w-0 pr-2">
-          <p className="m-0 font-body text-xl font-medium text-neutral-900">
-            {askDrawerCopy.title}
-          </p>
-          <p className="mt-2 mb-0 text-sm leading-relaxed text-neutral-500">
-            {askDrawerCopy.description}
-          </p>
-        </div>
-        <IconButton
-          label={askDrawerCopy.closeLabel}
-          iconClass="ph ph-x"
-          onClick={handleClose}
-          className="-mt-2 -mr-2"
-        />
-      </div>
+      <DrawerHeader
+        title={askDrawerCopy.title}
+        description={askDrawerCopy.description}
+        closeLabel={askDrawerCopy.closeLabel}
+        onClose={handleClose}
+      />
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-gutter py-8">
         {submitted ? (

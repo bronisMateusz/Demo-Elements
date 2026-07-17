@@ -19,19 +19,3 @@ export function productFixedBarClassName({
     className,
   );
 }
-
-/** @deprecated Use productFixedBarClassName - kept for library previews during migration. */
-export function askFabClassName({
-  visible = true,
-  fixed = true,
-  className,
-}: {
-  visible?: boolean;
-  fixed?: boolean;
-  className?: string;
-} = {}) {
-  return productFixedBarClassName({
-    visible,
-    className: cn(!fixed && "static inset-auto translate-y-0", className),
-  });
-}

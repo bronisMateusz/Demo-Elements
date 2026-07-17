@@ -54,6 +54,11 @@
   --spacing-gutter: clamp(20px, 2.222vw, 40px);
   /* Side drawers - matches OKA `.drw-Drawer_Inner` (95vw / max 500px). */
   --max-width-drawer: 500px;
+  /* Footer newsletter banner height and half-overlap into fill. */
+  --spacing-footer-newsletter: 280px;
+  --spacing-footer-newsletter-md: 320px;
+  --spacing-footer-newsletter-overlap: 140px;
+  --spacing-footer-newsletter-overlap-md: 160px;
   /* Main nav bar only - full sticky chrome = utility + bar (see base layer). */
   --spacing-header-bar-h: 72px;
   --spacing-header-utility-h: 44px;

@@ -3,13 +3,15 @@ import { ProductBuyBox } from "../../components/product/ProductBuyBox";
 import { ProductCard } from "../../components/product/ProductCard";
 import { ProductGallery } from "../../components/product/ProductGallery";
 import { ProductPairWith } from "../../components/product/ProductPairWith";
-import { ProductSalonCard } from "../../components/product/ProductSalonCard";
 import { ProductSpecifications } from "../../components/product/ProductSpecifications";
 import { Container } from "../../components/ui/Container";
 import {
+  ProductSalonCardEmptyDemo,
+  ProductSalonCardSelectedDemo,
+} from "../demos/ProductSalonCardDemo";
+import {
   ProductVariantSelectorDemo,
   VariantChipGroupDemo,
-  VariantSwatchGroupDemo,
   VariantThumbnailGroupDemo,
 } from "../demos/VariantSelectorDemo";
 import { libPreviewArticleClassName } from "../libStyles";
@@ -48,7 +50,7 @@ export const productBuyBoxModule: LibraryModule = {
   id: "3.2",
   slug: "product-buy-box",
   title: "ProductBuyBox",
-      description:
+  description:
     "Panel zakupowy z wariantami, ulubionymi, ceną, ask-row, karuzelą serii (Pair it with) i kartą salonu.",
   variants: [
     {
@@ -82,9 +84,9 @@ export const productCardModule: LibraryModule = {
     },
     {
       id: "carousel",
-      label: "Karta karuzeli (OKA)",
+      label: "Karta karuzeli",
       description:
-        "Faux-link, badge, ulubione, zmiana zdjęcia na hover, dodanie do schowka i meta wariantów.",
+        "Faux-link, badge, ulubione, zmiana zdjęcia na hover i meta wariantów.",
       render: () => (
         <Container className="max-w-[424px] py-8">
           <ProductCard product={montebianco80.seriesProducts[0]} layout="carousel" />
@@ -94,24 +96,45 @@ export const productCardModule: LibraryModule = {
   ],
 };
 
+export const productSpecsModule: LibraryModule = {
+  id: "3.4",
+  slug: "product-specifications",
+  title: "ProductSpecifications",
+  description: "Tabela specyfikacji z opcją rozwinięcia.",
+  variants: [
+    {
+      id: "default",
+      label: "Specyfikacja techniczna",
+      description: "Lista parametrów z accordionem.",
+      render: () => <ProductSpecifications specs={montebianco80.specifications} />,
+    },
+  ],
+};
+
 export const productSalonCardModule: LibraryModule = {
   id: "3.5",
   slug: "product-salon-card",
   title: "ProductSalonCard",
-  description: "Ciemna karta salonu w buy boxie - sygnet, serif, złote akcenty i link strzałka.",
+  description:
+    "Karta salonu w buy boxie - stan pusty (CTA wyboru) oraz wybrany salon (godziny, zmiana, pytanie, telefon).",
   variants: [
     {
-      id: "default",
-      label: "Domyślna",
-      description: "Redakcyjny blok neutral-900 z eyebrow i linkiem gold.",
+      id: "empty",
+      label: "Bez salonu",
+      description: "Redakcyjny blok z CTA „Wybierz swój salon”.",
       render: () => (
         <Container className="max-w-md py-8">
-          <ProductSalonCard
-            eyebrow="Obejrzyj na żywo"
-            description="Wybierz najbliższy salon Elements i umów się na prezentację."
-            href="#salony"
-            label="Wybierz swój salon"
-          />
+          <ProductSalonCardEmptyDemo />
+        </Container>
+      ),
+    },
+    {
+      id: "selected",
+      label: "Wybrany salon",
+      description: "Nazwa salonu, accordion adres/godziny, CTA pytania i telefon.",
+      render: () => (
+        <Container className="max-w-md py-8">
+          <ProductSalonCardSelectedDemo />
         </Container>
       ),
     },
@@ -123,7 +146,7 @@ export const productVariantSelectorModule: LibraryModule = {
   slug: "product-variant-selector",
   title: "ProductVariantSelector",
   description:
-    "Selektor osi wariantów PDP - chip (szerokość), miniatura (wykończenie) i swatch. Chip: SharedLayoutBg + layoutId wyboru. Miniatura: SharedLayoutUnderline na hover.",
+    "Selektor osi wariantów PDP - chip (szerokość) i miniatura (wykończenie). Chip: SharedLayoutBg + layoutId wyboru. Miniatura: SharedLayoutUnderline na hover.",
   optionalProps: [
     { name: "variants", type: "ProductVariants", required: true },
     { name: "selection", type: "Record<string, string>", required: true },
@@ -172,21 +195,6 @@ export const productVariantSelectorModule: LibraryModule = {
         </Container>
       ),
     },
-    {
-      id: "swatch",
-      label: "VariantSwatchGroup",
-      description: "Okrągłe próbniki koloru z ringiem na stanie aktywnym.",
-      render: () => (
-        <Container className="max-w-md py-8">
-          <div className={libPreviewArticleClassName}>
-            <p className="mb-3 block text-sm text-neutral-900">
-              <span className="text-neutral-600">Wykończenie:</span> interaktywny demo
-            </p>
-            <VariantSwatchGroupDemo />
-          </div>
-        </Container>
-      ),
-    },
   ],
 };
 
@@ -195,7 +203,7 @@ export const productPairWithModule: LibraryModule = {
   slug: "product-pair-with",
   title: "ProductPairWith",
   description:
-    "Karuzela „Inne produkty z tej serii” w buy boxie - nagłówek ze strzałkami, karta karuzeli OKA (ulubione, quick-add, hover).",
+    "Karuzela „Inne produkty z tej serii” w buy boxie - nagłówek ze strzałkami, karta karuzeli (ulubione, hover zdjęcia).",
   optionalProps: [
     { name: "title", type: "string", required: true },
     { name: "products", type: "RelatedProduct[]", required: true },
@@ -214,27 +222,12 @@ export const productPairWithModule: LibraryModule = {
   ],
 };
 
-export const productSpecsModule: LibraryModule = {
-  id: "3.4",
-  slug: "product-specifications",
-  title: "ProductSpecifications",
-  description: "Tabela specyfikacji z opcją rozwinięcia.",
-  variants: [
-    {
-      id: "default",
-      label: "Specyfikacja techniczna",
-      description: "Lista parametrów z accordionem.",
-      render: () => <ProductSpecifications specs={montebianco80.specifications} />,
-    },
-  ],
-};
-
 export const category3Modules: LibraryModule[] = [
   productGalleryModule,
   productBuyBoxModule,
   productCardModule,
-  productSalonCardModule,
   productSpecsModule,
+  productSalonCardModule,
   productVariantSelectorModule,
   productPairWithModule,
 ];
