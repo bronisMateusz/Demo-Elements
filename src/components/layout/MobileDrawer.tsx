@@ -5,6 +5,7 @@ import { favoritesNav, mainNavItems, productsMegaMenu, salonNav } from "../../da
 import { useProductFavoritesCount } from "../../hooks/useProductFavorites";
 import { lockPageScroll } from "../../hooks/useSiteChrome";
 import { IconButton } from "../ui/IconButton";
+import { DrawerShell } from "./DrawerShell";
 
 type MobileDrawerProps = {
   open: boolean;
@@ -42,31 +43,20 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
     onClose();
   };
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-[200] lg:hidden" role="presentation">
-      <button
-        type="button"
-        className="absolute inset-0 bg-neutral-900/20 backdrop-blur-[2px]"
-        aria-label="Zamknij menu"
-        onClick={handleClose}
-      />
-      <div
-        ref={panelRef}
-        className={cn(
-          "absolute right-0 top-0 flex h-full w-[min(100%,320px)] flex-col bg-neutral-0 shadow-2",
-        )}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menu nawigacji"
-        tabIndex={-1}
-      >
-        <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-5">
+    <DrawerShell
+      open={open}
+      onClose={handleClose}
+      label="Menu nawigacji"
+      closeLabel="Zamknij menu"
+      panelRef={panelRef}
+      className="lg:hidden"
+    >
+        <div className="flex items-center justify-between border-b border-neutral-200 px-gutter py-8">
           <span className="font-heading text-xl text-neutral-900">Menu</span>
           <IconButton label="Zamknij menu" iconClass="ph ph-x" onClick={handleClose} />
         </div>
-        <nav className="flex-1 overflow-y-auto px-6 py-8" aria-label="Menu mobilne">
+        <nav className="flex-1 overflow-y-auto px-gutter py-8" aria-label="Menu mobilne">
           <ul className="flex list-none flex-col gap-1">
             {mainNavItems.map((item) => {
               if (item.hasMenu) {
@@ -172,7 +162,7 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
             </a>
           </div>
         </nav>
-        <div className="border-t border-neutral-200 px-6 py-6">
+        <div className="border-t border-neutral-200 px-gutter py-8">
           <Link
             to="/biblioteka"
             className="text-ui text-neutral-600 no-underline hover:text-neutral-900"
@@ -181,7 +171,6 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
             Biblioteka komponentów
           </Link>
         </div>
-      </div>
-    </div>
+    </DrawerShell>
   );
 }

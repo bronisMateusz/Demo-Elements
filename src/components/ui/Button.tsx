@@ -26,6 +26,7 @@ interface ActionButtonProps {
   full?: boolean;
   className?: string;
   ariaLabel?: string;
+  ariaPressed?: boolean;
   disabled?: boolean;
 }
 
@@ -44,6 +45,7 @@ export function Button(props: ButtonProps) {
         className={classes}
         onClick={props.onClick}
         aria-label={props.ariaLabel}
+        aria-pressed={props.ariaPressed}
         disabled={props.disabled}
       >
         {props.children}

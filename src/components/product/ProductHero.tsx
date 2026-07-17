@@ -6,11 +6,23 @@ import { ProductGallery } from "./ProductGallery";
 type ProductHeroProps = {
   product: Pick<
     Product,
-    "images" | "brand" | "title" | "sku" | "badges" | "variants" | "price" | "cta" | "salonCard" | "seriesTitle" | "seriesProducts"
+    | "id"
+    | "images"
+    | "brand"
+    | "title"
+    | "sku"
+    | "badges"
+    | "variants"
+    | "price"
+    | "cta"
+    | "salonCard"
+    | "seriesTitle"
+    | "seriesProducts"
   >;
+  onAskOpen?: () => void;
 };
 
-export function ProductHero({ product }: ProductHeroProps) {
+export function ProductHero({ product, onAskOpen }: ProductHeroProps) {
   return (
     <section className="pb-[var(--spacing-section-sm)] md:pb-[var(--spacing-section)]" aria-label="Prezentacja produktu">
       <Container>
@@ -21,7 +33,7 @@ export function ProductHero({ product }: ProductHeroProps) {
 
           <div className="min-w-0 lg:pt-10">
             <div className="w-full lg:sticky lg:top-[calc(var(--spacing-header-h)+2.5rem)] lg:mx-auto lg:w-5/6 lg:max-w-[650px]">
-              <ProductBuyBox product={product} />
+              <ProductBuyBox product={product} onAskOpen={onAskOpen} />
             </div>
           </div>
         </div>

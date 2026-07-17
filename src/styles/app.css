@@ -52,6 +52,8 @@
   --spacing-section-sm: clamp(48px, 8vw, 72px);
   --spacing-section: clamp(64px, 10vw, 96px);
   --spacing-gutter: clamp(20px, 2.222vw, 40px);
+  /* Side drawers — matches OKA `.drw-Drawer_Inner` (95vw / max 500px). */
+  --max-width-drawer: 500px;
   /* Main nav bar only — full sticky chrome = utility + bar (see base layer). */
   --spacing-header-bar-h: 72px;
   --spacing-header-utility-h: 44px;

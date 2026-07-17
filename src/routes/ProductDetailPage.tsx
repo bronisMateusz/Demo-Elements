@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { buildPdpSubnavItems, pdpSectionScrollMarginClassName } from "../constants/pdpSubnav";
 import { PageShell } from "../components/layout/PageShell";
 import { AskFab } from "../components/product/AskFab";
@@ -30,6 +30,7 @@ function RevealSection({ children }: { children: React.ReactNode }) {
 export function ProductDetailPage() {
   const product = montebianco80;
   const subnavItems = buildPdpSubnavItems();
+  const [askOpen, setAskOpen] = useState(false);
 
   useEffect(() => {
     recordRecentlyViewedProduct(productToRelatedProduct(product));
@@ -46,7 +47,7 @@ export function ProductDetailPage() {
       </Helmet>
 
       <PageShell>
-        <ProductHero product={product} />
+        <ProductHero product={product} onAskOpen={() => setAskOpen(true)} />
 
         <ProductSubnav items={subnavItems} />
 
@@ -100,12 +101,15 @@ export function ProductDetailPage() {
       </PageShell>
 
       <AskFab
-        sku={product.sku}
+        sku={product.id}
         title={product.title}
+        brand={product.brand}
+        productSku={product.sku}
         price={product.price.current}
         image={product.images[0]}
-        askHref={product.cta.href}
         askLabel={product.cta.actionLabel}
+        askOpen={askOpen}
+        onAskOpenChange={setAskOpen}
       />
     </>
   );

@@ -9,11 +9,22 @@ import { ProductVariantSelector } from "./variant-selector";
 type ProductBuyBoxProps = {
   product: Pick<
     Product,
-    "brand" | "title" | "sku" | "badges" | "variants" | "price" | "cta" | "salonCard" | "seriesTitle" | "seriesProducts"
+    | "id"
+    | "brand"
+    | "title"
+    | "sku"
+    | "badges"
+    | "variants"
+    | "price"
+    | "cta"
+    | "salonCard"
+    | "seriesTitle"
+    | "seriesProducts"
   >;
+  onAskOpen?: () => void;
 };
 
-export function ProductBuyBox({ product }: ProductBuyBoxProps) {
+export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
   const { selection, resolved, selectOption } = useProductVariants(product.variants);
 
   const displayTitle = resolved?.title ?? product.title;
@@ -33,7 +44,7 @@ export function ProductBuyBox({ product }: ProductBuyBoxProps) {
 
       <div className="mb-3 flex items-start justify-between gap-4">
         <h1 className="t-h2 min-w-0 flex-1">{displayTitle}</h1>
-        <ProductFavoriteButton sku={displaySku} variant="bordered" className="mt-1 shrink-0" />
+        <ProductFavoriteButton sku={product.id} variant="bordered" className="mt-1 shrink-0" />
       </div>
 
       <p className="mb-8 text-sm text-neutral-500">{displaySku}</p>
@@ -61,6 +72,7 @@ export function ProductBuyBox({ product }: ProductBuyBoxProps) {
           href: product.cta.href,
           lead: askLead,
           actionLabel: askAction,
+          onAskOpen,
         }}
       />
 

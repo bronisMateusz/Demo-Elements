@@ -11,7 +11,7 @@ export function productFixedBarClassName({
   className,
 }: ProductFixedBarClassNameOptions = {}) {
   return cn(
-    "fixed inset-x-0 bottom-0 z-[250] transition-transform duration-base ease-luxury",
+    "fixed inset-x-0 bottom-0 z-[90] transition-transform duration-base ease-luxury",
     "lg:inset-x-gutter lg:bottom-5",
     visible
       ? "translate-y-0"

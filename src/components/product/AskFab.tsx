@@ -5,6 +5,7 @@ import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { productFixedBarClassName } from "../ui/askFabClassName";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
+import { AskDrawer } from "./AskDrawer";
 
 /** Hide when footer top enters this band above the viewport bottom. */
 const FOOTER_CLEARANCE_PX = 160;
@@ -18,31 +19,43 @@ function getShowAfterScrollPx(fallback: number): number {
 }
 
 type AskFabProps = {
+  /** Favorite storage key (usually product id). */
   sku: string;
   title: string;
+  brand: string;
+  /** Catalog / display SKU shown in the ask drawer. */
+  productSku: string;
   price: string;
   image: ProductImage;
-  askHref?: string;
   askLabel?: string;
   className?: string;
   /** Scroll offset (px) after which the bar becomes visible (minimum / non-PDP fallback). */
   showAfterScroll?: number;
   footerSelector?: string;
+  /** Controlled open — when provided with onAskOpenChange. */
+  askOpen?: boolean;
+  onAskOpenChange?: (open: boolean) => void;
 };
 
 export function AskFab({
   sku,
   title,
+  brand,
+  productSku,
   price,
   image,
-  askHref = "#kontakt",
   askLabel = "Zadaj pytanie",
   className,
   showAfterScroll = DEFAULT_SHOW_AFTER_SCROLL_PX,
   footerSelector = 'footer[role="contentinfo"]',
+  askOpen: askOpenProp,
+  onAskOpenChange,
 }: AskFabProps) {
   const [visible, setVisible] = useState(false);
+  const [askOpenInternal, setAskOpenInternal] = useState(false);
   const { isFavorite, toggle } = useProductFavorites(sku);
+  const askOpen = askOpenProp ?? askOpenInternal;
+  const setAskOpen = onAskOpenChange ?? setAskOpenInternal;
 
   useEffect(() => {
     const footer = document.querySelector<HTMLElement>(footerSelector);
@@ -78,61 +91,78 @@ export function AskFab({
   }, [showAfterScroll, footerSelector]);
 
   return (
-    <aside
-      id="askFab"
-      className={cn(productFixedBarClassName({ visible, className }))}
-      aria-hidden={!visible}
-      aria-label="Szybkie akcje produktu"
-    >
-      <div className="flex items-center gap-3 border border-neutral-200/80 bg-neutral-0 px-4 py-3 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
-        <div className="hidden size-12 shrink-0 overflow-hidden bg-neutral-100 lg:block">
-          <img
-            src={image.src}
-            alt=""
-            className="h-full w-full object-cover"
-            style={{ objectPosition: productImageObjectPosition(image) }}
-            width={48}
-            height={48}
-            draggable={false}
-          />
-        </div>
-
-        <div className="hidden min-w-0 flex-1 lg:block">
-          <p className="m-0 truncate font-heading text-[18px] leading-tight text-neutral-900">
-            {title}
-          </p>
-          <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">{price}</p>
-        </div>
-
-        <div className="flex w-full gap-2 lg:w-auto lg:shrink-0">
-          <Button
-            as="button"
-            type="button"
-            variant="secondary"
-            size="lg"
-            className="min-w-0 flex-1 lg:flex-none"
-            ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
-            onClick={toggle}
-          >
-            <i
-              className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
-              aria-hidden="true"
+    <>
+      <aside
+        id="askFab"
+        className={cn(productFixedBarClassName({ visible, className }))}
+        aria-hidden={!visible}
+        aria-label="Szybkie akcje produktu"
+      >
+        <div className="flex items-center gap-3 border border-neutral-200/80 bg-neutral-0 px-4 py-3 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
+          <div className="hidden size-12 shrink-0 overflow-hidden bg-neutral-100 lg:block">
+            <img
+              src={image.src}
+              alt=""
+              className="h-full w-full object-cover"
+              style={{ objectPosition: productImageObjectPosition(image) }}
+              width={48}
+              height={48}
+              draggable={false}
             />
-            <span className="truncate">{isFavorite ? "W schowku" : "Dodaj do schowka"}</span>
-          </Button>
+          </div>
 
-          <Button
-            href={askHref}
-            variant="primary"
-            size="lg"
-            className="min-w-0 flex-1 no-underline lg:flex-none"
-            ariaLabel={askLabel}
-          >
-            <i className="ph ph-chat-circle" aria-hidden="true" />
-            <span className="truncate">{askLabel}</span>
-          </Button>
+          <div className="hidden min-w-0 flex-1 lg:block">
+            <p className="m-0 truncate font-heading text-[18px] leading-tight text-neutral-900">
+              {title}
+            </p>
+            <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">{price}</p>
+          </div>
+
+          <div className="flex w-full gap-2 lg:w-auto lg:shrink-0">
+            <Button
+              as="button"
+              type="button"
+              variant="secondary"
+              size="lg"
+              className={cn(
+                "min-w-0 flex-1 lg:flex-none",
+                isFavorite && "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
+              )}
+              ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
+              ariaPressed={isFavorite}
+              onClick={toggle}
+            >
+              <i
+                className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+                aria-hidden="true"
+              />
+              <span className="truncate">{isFavorite ? "W schowku" : "Dodaj do schowka"}</span>
+            </Button>
+
+            <Button
+              as="button"
+              type="button"
+              variant="primary"
+              size="lg"
+              className="min-w-0 flex-1 lg:flex-none"
+              ariaLabel={askLabel}
+              onClick={() => setAskOpen(true)}
+            >
+              <i className="ph ph-chat-circle" aria-hidden="true" />
+              <span className="truncate">{askLabel}</span>
+            </Button>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+
+      <AskDrawer
+        open={askOpen}
+        onClose={() => setAskOpen(false)}
+        productTitle={title}
+        productBrand={brand}
+        productSku={productSku}
+        productImage={image}
+      />
+    </>
   );
 }

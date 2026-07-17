@@ -1,11 +1,15 @@
 import { cn } from "../../lib/cn";
 
-/** Shared gold fill animation rising from the bottom (OKA). */
+/**
+ * Shared gold fill rising from the bottom (OKA).
+ * `-inset-px` avoids a 1px hairline under the border while scale-y runs;
+ * border-color uses the same slow luxury timing as the fill.
+ */
 export const btnAnimatedFillClassName =
-  "motion-fill-surface before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:origin-bottom before:scale-y-0 before:bg-gold-500 before:transition-transform before:duration-slow before:ease-luxury before:content-[''] hover:before:scale-y-100 focus-visible:before:scale-y-100 disabled:before:scale-y-0";
+  "motion-fill-surface before:pointer-events-none before:absolute before:-inset-px before:-z-10 before:origin-bottom before:scale-y-0 before:bg-gold-500 before:transition-transform before:duration-slow before:ease-luxury before:content-[''] hover:before:scale-y-100 focus-visible:before:scale-y-100 disabled:before:scale-y-0";
 
 export const btnAnimatedBaseClassName = cn(
-  "relative isolate overflow-hidden transition-[color,border-color] duration-fast ease-out",
+  "relative isolate overflow-hidden transition-[color,border-color] duration-slow ease-luxury",
   btnAnimatedFillClassName,
 );
 
