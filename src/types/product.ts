@@ -18,7 +18,7 @@ export type ProductImage = {
   /**
    * How the image fills gallery frames.
    * `contain` (default) = packshot, no crop.
-   * `cover` = lifestyle / scene - fills the frame (mobile gallery).
+   * `cover` = lifestyle / scene - fills the frame.
    */
   fit?: "contain" | "cover";
 };
