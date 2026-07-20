@@ -105,8 +105,8 @@ export function DrawerHeader({
 }: DrawerHeaderProps) {
   if (compact) {
     return (
-      <div className="flex items-center justify-between border-b border-neutral-200 px-gutter py-8">
-        <span className="font-heading text-xl text-neutral-900">{title}</span>
+      <div className="flex h-header-bar-h shrink-0 items-center justify-between border-b border-neutral-200 px-gutter">
+        <span className="font-heading text-xl leading-none text-neutral-900">{title}</span>
         <IconButton label={closeLabel} iconClass="ph ph-x" onClick={onClose} />
       </div>
     );
