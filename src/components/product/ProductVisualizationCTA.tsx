@@ -25,7 +25,7 @@ export function ProductVisualizationCTA({
   secondary,
 }: ProductVisualizationCTAProps) {
   const reducedMotion = useReducedMotion();
-  const { targetRef, sideInset } = useScrollExpandInset();
+  const { targetRef, sideInset } = useScrollExpandInset<HTMLElement>();
 
   return (
     <section

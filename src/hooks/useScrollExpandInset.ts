@@ -15,8 +15,8 @@ type UseScrollExpandInsetOptions = {
   fallbackMaxPx?: number;
 };
 
-type UseScrollExpandInsetResult = {
-  targetRef: RefObject<HTMLElement | null>;
+type UseScrollExpandInsetResult<T extends HTMLElement> = {
+  targetRef: RefObject<T | null>;
   sideInset: MotionValue<number>;
 };
 
@@ -24,11 +24,11 @@ type UseScrollExpandInsetResult = {
  * Horizontal inset that starts at a wide-shell margin and eases to the page
  * gutter as the target scrolls into view (scroll-expand panels).
  */
-export function useScrollExpandInset({
+export function useScrollExpandInset<T extends HTMLElement = HTMLDivElement>({
   maxWidthVar = "--max-width-wide",
   fallbackMaxPx = WIDE_MAX_FALLBACK_PX,
-}: UseScrollExpandInsetOptions = {}): UseScrollExpandInsetResult {
-  const targetRef = useRef<HTMLElement | null>(null);
+}: UseScrollExpandInsetOptions = {}): UseScrollExpandInsetResult<T> {
+  const targetRef = useRef<T | null>(null);
   const reducedMotion = useReducedMotion();
   const gutterPx = useGutterPx();
   const [startInsetPx, setStartInsetPx] = useState(gutterPx);
