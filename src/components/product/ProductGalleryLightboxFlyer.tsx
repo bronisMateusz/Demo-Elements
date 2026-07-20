@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { cn } from "../../lib/cn";
 import { EASE_LUXURY, EASE_OUT } from "../../lib/motionEase";
 import { LIGHTBOX_MOTION } from "../../lib/lightboxMotion";
 import {
@@ -8,6 +9,7 @@ import {
   rectFromDomRect,
   resolveImageAspectRatio,
 } from "../../lib/lightboxImageRect";
+import { productImageFitClassName } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
 
 export type LightboxOpenOrigin = {
@@ -88,8 +90,9 @@ export function ProductGalleryLightboxFlyer({
   const frameBackgroundInitialOpacity = mode === "exit" ? 0 : 1;
   const frameBackgroundOpacity = handoffActive ? 0 : 1;
 
-  // Cover crop matches the gallery thumbnail (focal) and the lightbox slide
-  // (centered - the target box shares the image aspect, so there is no crop).
+  // Match gallery object-fit so the exit handoff does not flash contain→cover
+  // (or the reverse). Target rect shares the image aspect, so both fits look
+  // identical at the lightbox end of the flight.
   const thumbPosition = origin.objectPosition ?? "50% 50%";
   const positionFrom = mode === "enter" ? thumbPosition : "50% 50%";
   const positionTo = mode === "enter" ? "50% 50%" : thumbPosition;
@@ -151,7 +154,7 @@ export function ProductGalleryLightboxFlyer({
       <motion.img
         src={image.src}
         alt=""
-        className="relative z-[1] block h-full w-full object-contain"
+        className={cn("relative z-[1] block h-full w-full", productImageFitClassName(image))}
         initial={{ objectPosition: positionFrom }}
         animate={{ objectPosition: positionTo }}
         transition={{ duration: FLYER_DURATION_S, ease: EASE_OUT }}

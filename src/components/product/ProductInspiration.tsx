@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -101,7 +101,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
 
   return (
     <section aria-labelledby="inspiration-title" className="overflow-x-clip">
-      <Container>
+      <Container size="content">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
           <div className="min-w-0 max-w-2xl">
             <Eyebrow className="mb-3">Produkt w aranżacji</Eyebrow>
@@ -153,12 +153,16 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
         </div>
       </Container>
 
-      <div className="relative">
+      <div
+        className="relative"
+        style={{ "--inspiration-inset": `${gutterPx}px` } as CSSProperties}
+      >
         <Swiper
           key={`inspiration-${gutterPx}`}
           className={cn(
             "w-full touch-pan-y [touch-action:pan-y_pinch-zoom]",
-            "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[min(96vw,72rem)] [&_.swiper-slide]:shrink-0",
+            // Start at page gutter; peek past the right edge on ultrawide.
+            "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[min(calc(100vw-var(--inspiration-inset)*2-2rem),72rem)] [&_.swiper-slide]:shrink-0",
           )}
           modules={[A11y, Mousewheel]}
           slidesPerView="auto"

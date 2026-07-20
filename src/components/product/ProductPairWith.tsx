@@ -11,7 +11,7 @@ export function ProductPairWith({ title, products }: ProductPairWithProps) {
   if (products.length === 0) return null;
 
   return (
-    <section className="mt-10 overflow-visible pt-10" aria-labelledby="pair-with-title">
+    <section className="mt-10 overflow-x-visible pt-10 lg:pt-0" aria-labelledby="pair-with-title">
       <ProductCarousel
         products={products}
         labelledBy="pair-with-title"

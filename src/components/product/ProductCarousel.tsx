@@ -4,6 +4,7 @@ import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
 import { useBleedRightWidth } from "../../hooks/useBleedRightWidth";
+import { useContentInsetPx } from "../../hooks/useContentInsetPx";
 import { useGutterPx } from "../../hooks/useGutterPx";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
 import type { RelatedProduct } from "../../types/product";
@@ -113,7 +114,10 @@ export function ProductCarousel({
   const resolvedLayout: ProductCarouselLayout = layout ?? (bleed ? "bleed" : "contained");
   const isInline = resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
   const isInlineBleed = resolvedLayout === "inline-bleed";
+  const isBleed = resolvedLayout === "bleed";
   const gutterPx = useGutterPx();
+  const contentInsetPx = useContentInsetPx();
+  const bleedInsetPx = isBleed ? contentInsetPx : gutterPx;
   const trackBleedRef = useRef<HTMLDivElement>(null);
   const bleedRightWidth = useBleedRightWidth(trackBleedRef);
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
@@ -139,12 +143,11 @@ export function ProductCarousel({
   const slidePrev = () => swiper?.slidePrev();
   const slideNext = () => swiper?.slideNext();
   const headerNav = isInline && header;
-  const swiperKey =
-    resolvedLayout === "bleed"
-      ? `bleed-${gutterPx}-${slides.length}`
-      : isInlineBleed
-        ? `inline-bleed-${gutterPx}-${bleedRightWidth ?? 0}-${slides.length}`
-        : `${resolvedLayout}-${slides.length}`;
+  const swiperKey = isBleed
+    ? `bleed-${bleedInsetPx}-${slides.length}`
+    : isInlineBleed
+      ? `inline-bleed-${gutterPx}-${bleedRightWidth ?? 0}-${slides.length}`
+      : `${resolvedLayout}-${slides.length}`;
 
   const prevDisabled = !enableLoop && atStart;
   const nextDisabled = !enableLoop && atEnd;
@@ -180,8 +183,12 @@ export function ProductCarousel({
 
       <div
         ref={isInlineBleed ? trackBleedRef : undefined}
-        className={cn(isInlineBleed && "max-w-none")}
-        style={isInlineBleed && bleedRightWidth ? { width: bleedRightWidth } : undefined}
+        className={cn(isInlineBleed && "relative max-w-none overflow-visible")}
+        style={
+          isInlineBleed && bleedRightWidth
+            ? { width: bleedRightWidth, maxWidth: "none" }
+            : undefined
+        }
       >
         <Swiper
           key={swiperKey}
@@ -192,8 +199,8 @@ export function ProductCarousel({
           loopAdditionalSlides={enableLoop ? products.length : 0}
           slidesPerView="auto"
           spaceBetween={isInline ? 12 : 5}
-          slidesOffsetBefore={resolvedLayout === "bleed" ? gutterPx : undefined}
-          slidesOffsetAfter={resolvedLayout === "bleed" || isInlineBleed ? gutterPx : undefined}
+          slidesOffsetBefore={isBleed ? bleedInsetPx : undefined}
+          slidesOffsetAfter={isBleed ? bleedInsetPx : undefined}
           mousewheel={{
             forceToAxis: true,
             releaseOnEdges: !enableLoop,

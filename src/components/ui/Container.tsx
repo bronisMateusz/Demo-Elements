@@ -3,10 +3,16 @@ import { cn } from "../../lib/cn";
 
 export const containerClassName = "container";
 
-/** Constrains content width on very large viewports (Tailwind `max-w-7xl` = 80rem). */
-export const containerContentClassName = "max-w-7xl";
+/** Content rail - text/list sections on ultrawide (`--max-width-content`). */
+export const containerContentClassName = "max-w-content";
 
-type ContainerSize = "full" | "content";
+/** Wide shell - hero / large CTAs (`--max-width-wide`). */
+export const containerWideClassName = "max-w-wide";
+
+/** Shared box model without `container`'s `max-w-none` (avoids fighting size caps). */
+const containerRailClassName = "mx-auto w-full px-gutter";
+
+type ContainerSize = "full" | "content" | "wide";
 
 export function Container({
   className,
@@ -17,14 +23,15 @@ export function Container({
   className?: string;
   children: ReactNode;
   as?: "div" | "section" | "article" | "header" | "footer" | "nav";
-  /** `content` - readable max width for text/list sections on ultrawide screens. */
+  /** `content` / `wide` - capped rails for ultrawide screens. */
   size?: ContainerSize;
 }) {
   return (
     <Tag
       className={cn(
-        containerClassName,
+        size === "full" ? containerClassName : containerRailClassName,
         size === "content" && containerContentClassName,
+        size === "wide" && containerWideClassName,
         className,
       )}
     >

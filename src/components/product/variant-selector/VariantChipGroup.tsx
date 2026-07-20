@@ -13,7 +13,7 @@ export function VariantChipGroup({ options, selectedId, axisLabel, onSelect }: V
     <div role="group" aria-label={axisLabel}>
       <LayoutGroup id={`variant-chip-${selectedLayoutId}`}>
         <MotionFieldGroup>
-          <SharedLayoutBg className="inline-flex gap-1.5" pillClassName="rounded-xs bg-neutral-100">
+          <SharedLayoutBg className="inline-flex gap-1" pillClassName="rounded-xs bg-neutral-100">
             {options.map((option) => {
               const selected = selectedId === option.id;
 

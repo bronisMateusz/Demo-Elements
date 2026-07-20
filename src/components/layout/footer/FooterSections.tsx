@@ -13,16 +13,21 @@ import { FooterSmartbeesCredit } from "./FooterSmartbeesCredit";
 import { FooterSpotlightRoot, FooterWordmark } from "./FooterWordmark";
 import { inputClassName } from "../../ui/inputClassName";
 import { Checkbox } from "../../motion/Checkbox";
+import { useScrollExpandInset } from "../../../hooks/useScrollExpandInset";
+import { motion } from "motion/react";
 import { useId, useState } from "react";
 
 export function FooterNewsletter() {
   const consentId = useId();
   const [consent, setConsent] = useState(false);
+  const { targetRef, sideInset } = useScrollExpandInset();
 
   return (
-    <div className="relative pb-0">
-      <Container>
-        <div className="relative min-h-footer-newsletter overflow-hidden rounded-xs shadow-2 md:min-h-footer-newsletter-md">
+    <div ref={targetRef} className="relative pb-0">
+      <motion.div
+        className="relative min-h-footer-newsletter overflow-hidden rounded-xs shadow-2 md:min-h-footer-newsletter-md"
+        style={{ marginLeft: sideInset, marginRight: sideInset }}
+      >
           <img
             src={assetUrl("products/montebianco/03-room.jpg")}
             alt=""
@@ -36,8 +41,8 @@ export function FooterNewsletter() {
             aria-hidden="true"
           />
 
-          <div className="relative flex min-h-full items-end justify-center p-8 md:p-10 lg:p-12">
-            <div className="flex w-full max-w-5xl flex-col justify-between gap-8 lg:flex-row lg:items-end lg:gap-10">
+          <div className="relative flex min-h-footer-newsletter items-center justify-center p-8 md:min-h-footer-newsletter-md md:p-10 lg:p-12">
+            <div className="flex w-full max-w-5xl flex-col justify-between gap-8 lg:flex-row lg:items-center lg:gap-10">
               <div className="max-w-lg">
                 <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-wide text-neutral-0/70">
                   <img
@@ -107,8 +112,7 @@ export function FooterNewsletter() {
               </form>
             </div>
           </div>
-        </div>
-      </Container>
+      </motion.div>
     </div>
   );
 }

@@ -39,7 +39,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
     : "Zapytaj o dostępność";
 
   return (
-    <div>
+    <div className="overflow-x-visible">
       <ProductBadges brand={product.brand} badges={product.badges} price={displayPrice} />
 
       <div className="mb-3 flex items-start justify-between gap-4">

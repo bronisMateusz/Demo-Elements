@@ -32,10 +32,7 @@ export function ProductDetailPage() {
   const product = montebianco80;
   const subnavItems = buildPdpSubnavItems();
   const [askOpen, setAskOpen] = useState(false);
-  const breadcrumbItems = product.breadcrumbs.map((item, index, arr) => ({
-    ...item,
-    current: index === arr.length - 1,
-  }));
+  const breadcrumbItems = product.breadcrumbs;
 
   useEffect(() => {
     recordRecentlyViewedProduct(productToRelatedProduct(product));
