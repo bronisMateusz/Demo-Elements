@@ -58,9 +58,6 @@ export function FooterMain() {
                           className="block w-full text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
                         >
                           {link.label}
-                          {"trailing" in link && link.trailing ? (
-                            <span aria-hidden="true"> {link.trailing}</span>
-                          ) : null}
                         </a>
                       </li>
                     ))}
