@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { buildPdpSubnavItems, pdpSectionScrollMarginClassName } from "../constants/pdpSubnav";
 import { PageShell } from "../components/layout/PageShell";
+import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { AskFab } from "../components/product/AskFab";
 import { ProductSubnav } from "../components/product/ProductSubnav";
 import { Section } from "../components/structural/Section";
@@ -31,6 +32,10 @@ export function ProductDetailPage() {
   const product = montebianco80;
   const subnavItems = buildPdpSubnavItems();
   const [askOpen, setAskOpen] = useState(false);
+  const breadcrumbItems = product.breadcrumbs.map((item, index, arr) => ({
+    ...item,
+    current: index === arr.length - 1,
+  }));
 
   useEffect(() => {
     recordRecentlyViewedProduct(productToRelatedProduct(product));
@@ -46,7 +51,15 @@ export function ProductDetailPage() {
         />
       </Helmet>
 
-      <PageShell>
+      <PageShell
+        breadcrumbs={
+          <Breadcrumbs
+            items={breadcrumbItems}
+            variant="top"
+            className="py-3 md:py-4 lg:hidden"
+          />
+        }
+      >
         <ProductHero product={product} onAskOpen={() => setAskOpen(true)} />
 
         <ProductSubnav items={subnavItems} />
@@ -54,10 +67,7 @@ export function ProductDetailPage() {
         <RevealSection>
           <Section id="pdp-opis" className={pdpSectionScrollMarginClassName}>
             <ProductEditorial
-              breadcrumbs={product.breadcrumbs.map((item, index, arr) => ({
-                ...item,
-                current: index === arr.length - 1,
-              }))}
+              breadcrumbs={breadcrumbItems}
               eyebrow={product.editorial.eyebrow}
               title={product.editorial.title}
               lead={product.editorial.lead}

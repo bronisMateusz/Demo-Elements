@@ -13,7 +13,7 @@ import "swiper/css";
 
 type ProductGalleryProps = {
   images: ProductImage[];
-  /** On PDP hero - fills the sticky column (100svh − header). */
+  /** On PDP hero - fills the sticky desktop column (100svh − header) from lg. */
   layout?: "default" | "viewport";
 };
 
@@ -68,39 +68,91 @@ type GalleryControlsProps = {
   onPrev: () => void;
   onNext: () => void;
   onZoom: () => void;
+  onSelect: (index: number) => void;
 };
 
-function GalleryControls({ activeIndex, count, onPrev, onNext, onZoom }: GalleryControlsProps) {
+function GalleryPagination({
+  activeIndex,
+  count,
+  onSelect,
+}: {
+  activeIndex: number;
+  count: number;
+  onSelect: (index: number) => void;
+}) {
+  if (count <= 1) return null;
+
+  return (
+    <div
+      className="pointer-events-none absolute bottom-4 left-4 z-[2] flex items-center gap-1.5 lg:hidden"
+      role="tablist"
+      aria-label="Zdjęcia produktu"
+    >
+      {Array.from({ length: count }, (_, index) => {
+        const isActive = index === activeIndex;
+        return (
+          <button
+            key={index}
+            type="button"
+            role="tab"
+            aria-selected={isActive}
+            aria-label={`Zdjęcie ${index + 1} z ${count}`}
+            className={cn(
+              "pointer-events-auto h-1.5 rounded-full transition-[width,background-color] duration-fast ease-out",
+              isActive
+                ? "w-6 bg-neutral-900"
+                : "w-1.5 bg-neutral-900/35 hover:bg-neutral-900/55",
+            )}
+            onClick={() => onSelect(index)}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function GalleryControls({
+  activeIndex,
+  count,
+  onPrev,
+  onNext,
+  onZoom,
+  onSelect,
+}: GalleryControlsProps) {
   const atStart = activeIndex <= 0;
   const atEnd = activeIndex >= count - 1;
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
-      <div className="pointer-events-auto flex gap-1">
-        {/* Zoom is redundant on mobile - tap the image opens the lightbox. */}
-        <IconButton
-          label="Powiększ zdjęcie"
-          iconClass="ph ph-magnifying-glass-plus"
-          variant="elevated"
-          className="hidden shadow-subtle md:inline-flex"
-          onClick={onZoom}
-        />
-        <IconButton
-          label="Poprzednie zdjęcie"
-          iconClass="ph ph-caret-up"
-          variant="elevated"
-          className={cn("shadow-subtle", atStart && "pointer-events-none opacity-35")}
-          onClick={atStart ? undefined : onPrev}
-        />
-        <IconButton
-          label="Następne zdjęcie"
-          iconClass="ph ph-caret-down"
-          variant="elevated"
-          className={cn("shadow-subtle", atEnd && "pointer-events-none opacity-35")}
-          onClick={atEnd ? undefined : onNext}
-        />
+    <>
+      <GalleryPagination activeIndex={activeIndex} count={count} onSelect={onSelect} />
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+        <div className="pointer-events-auto flex gap-1">
+          {/* Zoom is redundant on mobile - tap the image opens the lightbox. */}
+          <IconButton
+            label="Powiększ zdjęcie"
+            iconClass="ph ph-magnifying-glass-plus"
+            variant="elevated"
+            className="hidden shadow-subtle lg:inline-flex"
+            onClick={onZoom}
+          />
+          <IconButton
+            label="Poprzednie zdjęcie"
+            iconClass="ph ph-caret-up"
+            variant="elevated"
+            className={cn("shadow-subtle", atStart && "pointer-events-none opacity-35")}
+            onClick={atStart ? undefined : onPrev}
+          />
+          <IconButton
+            label="Następne zdjęcie"
+            iconClass="ph ph-caret-down"
+            variant="elevated"
+            className={cn("shadow-subtle", atEnd && "pointer-events-none opacity-35")}
+            onClick={atEnd ? undefined : onNext}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -135,7 +187,12 @@ function GallerySlideContent({
         className={cn(
           "relative w-full cursor-crosshair overflow-hidden bg-neutral-50",
           fillViewport
-            ? "flex aspect-[4/5] w-full items-center justify-center md:aspect-auto md:h-full md:min-h-0"
+            ? cn(
+                // Stack (mobile/tablet): capped height so the gallery does not dominate the viewport.
+                "flex h-[min(56svh,28rem)] w-full items-center justify-center",
+                "md:h-[min(52svh,32rem)]",
+                "lg:aspect-auto lg:h-full lg:min-h-0",
+              )
             : "block aspect-[4/5]",
         )}
         onClick={handleOpen}
@@ -257,12 +314,12 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
       <div
         className={cn(
           "min-w-0",
-          fillViewport && "flex flex-col gap-3 pb-2 md:h-full md:min-h-0 md:gap-6 md:pb-6 lg:gap-8 lg:pb-8",
+          fillViewport && "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
         )}
       >
         <div
           aria-label="Galeria produktu"
-          className={fillViewport ? "md:h-full md:min-h-0" : undefined}
+          className={fillViewport ? "lg:h-full lg:min-h-0" : undefined}
         >
           <GallerySlideContent
             image={image}
@@ -293,13 +350,13 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     <div
       className={cn(
         "min-w-0",
-        fillViewport && "flex flex-col gap-3 pb-2 md:h-full md:min-h-0 md:gap-6 md:pb-6 lg:gap-8 lg:pb-8",
+        fillViewport && "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
       )}
     >
       <div
         className={cn(
           "flex gap-4 lg:gap-6",
-          fillViewport && "md:min-h-0 md:flex-1",
+          fillViewport && "lg:min-h-0 lg:flex-1",
         )}
         aria-label="Galeria produktu"
       >
@@ -312,7 +369,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         <div
           className={cn(
             "relative min-w-0 flex-1",
-            fillViewport && "md:flex md:h-full md:min-h-0 md:flex-col",
+            fillViewport && "lg:flex lg:h-full lg:min-h-0 lg:flex-col",
           )}
         >
           <Swiper
@@ -320,9 +377,10 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
               "min-w-0 w-full",
               fillViewport
                 ? cn(
-                    "aspect-[4/5] [&_.swiper-slide]:h-full",
-                    "md:aspect-auto md:h-full md:min-h-0 md:flex-1",
-                    "md:[&_.swiper-slide]:flex md:[&_.swiper-slide]:h-full md:[&_.swiper-slide]:items-center",
+                    "h-[min(56svh,28rem)] [&_.swiper-slide]:h-full",
+                    "md:h-[min(52svh,32rem)]",
+                    "lg:h-full lg:min-h-0 lg:flex-1",
+                    "lg:[&_.swiper-slide]:flex lg:[&_.swiper-slide]:h-full lg:[&_.swiper-slide]:items-center",
                   )
                 : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] [&_.swiper-slide]:h-auto",
             )}
@@ -368,6 +426,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
             onPrev={goToPrev}
             onNext={goToNext}
             onZoom={openZoom}
+            onSelect={goToSlide}
           />
         </div>
       </div>
@@ -376,7 +435,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         className={cn(
           "text-sm text-neutral-500",
           fillViewport
-            ? "hidden shrink-0 md:block"
+            ? "mt-3 hidden shrink-0 lg:mt-0 lg:block"
             : "mt-3 hidden lg:block",
         )}
         aria-live="polite"

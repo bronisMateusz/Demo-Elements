@@ -29,15 +29,15 @@ export function ProductHero({ product, onAskOpen }: ProductHeroProps) {
       aria-label="Prezentacja produktu"
     >
       <Container>
-        {/* Tablet+: gallery + buy box side by side so the first viewport shows more than media. */}
-        <div className="grid gap-4 md:grid-cols-2 md:items-start md:gap-8 lg:gap-0">
-          {/* Mobile: full-bleed gallery edge-to-edge; tablet+ stays in the grid column. */}
-          <div className="min-w-0 max-md:-mx-gutter md:sticky md:top-header-h md:h-[calc(100svh-var(--spacing-header-h))]">
+        {/* Tablet stacks like mobile; desktop (lg+) is two sticky columns. */}
+        <div className="grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-0">
+          {/* Stack (mobile + tablet): full-bleed gallery; lg+: sticky column. */}
+          <div className="min-w-0 max-lg:-mx-gutter lg:sticky lg:top-header-h lg:h-[calc(100svh-var(--spacing-header-h))]">
             <ProductGallery images={product.images} layout="viewport" />
           </div>
 
-          <div className="min-w-0 md:pt-6 lg:pt-10">
-            <div className="w-full md:sticky md:top-[calc(var(--spacing-header-h)+1.5rem)] lg:top-[calc(var(--spacing-header-h)+2.5rem)] lg:mx-auto lg:w-5/6 lg:max-w-[650px]">
+          <div className="min-w-0 lg:pt-10">
+            <div className="w-full lg:sticky lg:top-[calc(var(--spacing-header-h)+2.5rem)] lg:mx-auto lg:w-5/6 lg:max-w-[650px]">
               <ProductBuyBox product={product} onAskOpen={onAskOpen} />
             </div>
           </div>
