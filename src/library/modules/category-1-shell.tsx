@@ -33,12 +33,12 @@ export const footerModule: LibraryModule = {
   slug: "footer",
   title: "Footer",
   description:
-    "Stopka z bannerem newslettera (overlap w fill), kolumnami linków, wordmarkiem ELEMENTS ze spotlightem i sekcją legal.",
+    "Stopka: obecność salonów (statystyki + miasta), kolumny linków, wordmark ELEMENTS ze spotlightem i sekcja legal. Newsletter jest osobnym SiteNewsletter w PageShell.",
   variants: [
     {
       id: "default",
       label: "Domyślny",
-      description: "Pełna stopka marki Elements - newsletter, kolumny, wordmark, social.",
+      description: "Pełna stopka marki Elements - salony, kolumny, wordmark, social.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName} data-lib-full-bleed>
           <Footer />

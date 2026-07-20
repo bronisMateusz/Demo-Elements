@@ -6,6 +6,8 @@ export type { SharedLayoutUnderlineProps } from "./SharedLayoutUnderline";
 export { TextRevealLead } from "./TextRevealLead";
 export { LoopingWord } from "./LoopingWord";
 export { LiquidCtaGlow } from "./LiquidCtaGlow";
+export { AnimatedNumber } from "./AnimatedNumber";
+export type { AnimatedNumberProps } from "./AnimatedNumber";
 export { Checkbox } from "./Checkbox";
 export type { CheckboxProps } from "./Checkbox";
 export {

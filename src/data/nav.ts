@@ -353,15 +353,6 @@ export const footerColumns = [
     ],
   },
   {
-    title: "Salony",
-    links: [
-      { label: "Warszawa", href: "#salon-warszawa" },
-      { label: "Kraków", href: "#salon-krakow" },
-      { label: "Poznań", href: "#salon-poznan" },
-      { label: "Wszystkie lokalizacje", href: "#salony", trailing: "→" },
-    ],
-  },
-  {
     title: "Informacje",
     links: [
       { label: "Polityka prywatności", href: "#polityka-prywatnosci" },
@@ -379,6 +370,57 @@ export const footerNewsletterCopy = {
     "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji działań promocyjno-marketingowych, w tym przesyłania ofert handlowych przez Grupę HBH za pośrednictwem wskazanego powyżej adresu e-mail.",
   privacyLabel: "Polityka prywatności",
   privacyHref: "#polityka-prywatnosci",
+} as const;
+
+/** Pre-footer presence strip - stats + salon city finder (no socials). */
+export const presenceStats = [
+  {
+    value: 19,
+    label: "salonów w całej Polsce",
+    format: (n: number) => Math.round(n).toLocaleString("pl-PL"),
+  },
+  {
+    value: 10,
+    label: "lat na rynku",
+    format: (n: number) => Math.round(n).toLocaleString("pl-PL"),
+  },
+  {
+    value: 10_000,
+    label: "ekspozycji na żywo",
+    format: (n: number) => `${Math.round(n).toLocaleString("pl-PL")} m²`,
+  },
+  {
+    value: 40_000,
+    label: "produktów w ofercie",
+    format: (n: number) => `${Math.round(n).toLocaleString("pl-PL")}+`,
+  },
+] as const;
+
+export const presenceSalonCities = [
+  { label: "Warszawa", href: "#salon-warszawa" },
+  { label: "Kraków", href: "#salon-krakow" },
+  { label: "Poznań", href: "#salon-poznan" },
+  { label: "Wrocław", href: "#salon-wroclaw" },
+  { label: "Gdańsk", href: "#salon-gdansk" },
+  { label: "Łódź", href: "#salon-lodz" },
+  { label: "Szczecin", href: "#salon-szczecin" },
+  { label: "Bydgoszcz", href: "#salon-bydgoszcz" },
+  { label: "Toruń", href: "#salon-torun" },
+  { label: "Kielce", href: "#salon-kielce" },
+  { label: "Rzeszów", href: "#salon-rzeszow" },
+  { label: "Opole", href: "#salon-opole" },
+  { label: "Gliwice", href: "#salon-gliwice1" },
+  { label: "Jelenia Góra", href: "#salon-jgora" },
+  { label: "Kłodzko", href: "#salon-klodzko" },
+  { label: "Koszalin", href: "#salon-koszalin1" },
+] as const;
+
+export const presenceSalonsCopy = {
+  title: "Salony Elements w całej Polsce",
+  description: "Wybierz miasto i sprawdź adres, godziny i dostępność ekspozycji.",
+  allSalonsLabel: "Wszystkie salony",
+  allSalonsHref: "#salony",
+  mapPlaceholder: "Miejsce na mapę Polski z zaznaczonymi lokalizacjami salonów",
 } as const;
 
 export const footerSocialLinks = [
