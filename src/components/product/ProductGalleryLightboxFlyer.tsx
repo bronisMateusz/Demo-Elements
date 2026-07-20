@@ -20,8 +20,8 @@ type ProductGalleryLightboxFlyerProps = {
   origin: LightboxOpenOrigin;
   mode: "enter" | "exit";
   fadingOut?: boolean;
-  /** Live size of the lightbox container - the box the slide fills. */
-  getViewport: () => { width: number; height: number };
+  /** Live size/offset of the image stage - the box the slide fills. */
+  getViewport: () => { width: number; height: number; left?: number; top?: number };
   onPositionComplete: () => void;
   onFadeComplete?: () => void;
 };
@@ -68,7 +68,10 @@ export function ProductGalleryLightboxFlyer({
       if (cancelled) return;
       const viewport = getViewport();
       setTargetRect(
-        computeLightboxTargetRect(viewport.width, viewport.height, aspectRatio),
+        computeLightboxTargetRect(viewport.width, viewport.height, aspectRatio, {
+          left: viewport.left,
+          top: viewport.top,
+        }),
       );
     });
 
@@ -148,7 +151,7 @@ export function ProductGalleryLightboxFlyer({
       <motion.img
         src={image.src}
         alt=""
-        className="relative z-[1] block h-full w-full object-cover"
+        className="relative z-[1] block h-full w-full object-contain"
         initial={{ objectPosition: positionFrom }}
         animate={{ objectPosition: positionTo }}
         transition={{ duration: FLYER_DURATION_S, ease: EASE_OUT }}

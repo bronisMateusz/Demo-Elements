@@ -254,15 +254,18 @@ export const montebianco80: Product = {
     {
       src: assetUrl("products/montebianco/02-detail.jpg"),
       alt: "Szafka Montebianco - detal szuflad i wnętrza",
+      fit: "cover",
       focalPoint: { x: 0, y: 48 },
     },
     {
       src: assetUrl("products/montebianco/03-room.jpg"),
       alt: "Szafka Montebianco w aranżacji łazienki",
+      fit: "cover",
     },
     {
       src: assetUrl("products/montebianco/04-angle.jpg"),
       alt: "Szafka Montebianco - aranżacja z umywalką i lustrem",
+      fit: "cover",
       focalPoint: { x: 58, y: 60 },
     },
   ],

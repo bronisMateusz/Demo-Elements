@@ -3,7 +3,7 @@ import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
-import { productImageObjectPosition } from "../../lib/productImageStyle";
+import { productImageFitClassName, productImageObjectPosition } from "../../lib/productImageStyle";
 import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
 import { IconButton } from "../ui/IconButton";
@@ -49,7 +49,7 @@ function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnai
               <img
                 src={image.src}
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-contain"
                 style={{ objectPosition: productImageObjectPosition(image) }}
                 loading="lazy"
                 draggable={false}
@@ -77,11 +77,12 @@ function GalleryControls({ activeIndex, count, onPrev, onNext, onZoom }: Gallery
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
       <div className="pointer-events-auto flex gap-1">
+        {/* Zoom is redundant on mobile - tap the image opens the lightbox. */}
         <IconButton
           label="Powiększ zdjęcie"
           iconClass="ph ph-magnifying-glass-plus"
           variant="elevated"
-          className="shadow-subtle"
+          className="hidden shadow-subtle md:inline-flex"
           onClick={onZoom}
         />
         <IconButton
@@ -134,7 +135,7 @@ function GallerySlideContent({
         className={cn(
           "relative w-full cursor-crosshair overflow-hidden bg-neutral-50",
           fillViewport
-            ? "flex h-full min-h-[min(60vh,640px)] lg:min-h-0"
+            ? "flex aspect-[4/5] w-full items-center justify-center md:aspect-auto md:h-full md:min-h-0"
             : "block aspect-[4/5]",
         )}
         onClick={handleOpen}
@@ -144,7 +145,11 @@ function GallerySlideContent({
           ref={(node) => registerImage(index, node)}
           src={image.src}
           alt={image.alt}
-          className={cn("h-full w-full object-cover", isHidden && "opacity-0")}
+          className={cn(
+            "h-full w-full",
+            productImageFitClassName(image),
+            isHidden && "opacity-0",
+          )}
           style={{ objectPosition: productImageObjectPosition(image) }}
           loading={index === 0 ? "eager" : "lazy"}
           draggable={false}
@@ -249,8 +254,16 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     const image = images[0];
 
     return (
-      <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col gap-6 pb-6 lg:gap-8 lg:pb-8")}>
-        <div aria-label="Galeria produktu" className={fillViewport ? "h-full min-h-0" : undefined}>
+      <div
+        className={cn(
+          "min-w-0",
+          fillViewport && "flex flex-col gap-3 pb-2 md:h-full md:min-h-0 md:gap-6 md:pb-6 lg:gap-8 lg:pb-8",
+        )}
+      >
+        <div
+          aria-label="Galeria produktu"
+          className={fillViewport ? "md:h-full md:min-h-0" : undefined}
+        >
           <GallerySlideContent
             image={image}
             index={0}
@@ -277,11 +290,16 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   }
 
   return (
-    <div className={cn("min-w-0", fillViewport && "flex h-full min-h-0 flex-col gap-6 pb-6 lg:gap-8 lg:pb-8")}>
+    <div
+      className={cn(
+        "min-w-0",
+        fillViewport && "flex flex-col gap-3 pb-2 md:h-full md:min-h-0 md:gap-6 md:pb-6 lg:gap-8 lg:pb-8",
+      )}
+    >
       <div
         className={cn(
           "flex gap-4 lg:gap-6",
-          fillViewport && "min-h-0 flex-1",
+          fillViewport && "md:min-h-0 md:flex-1",
         )}
         aria-label="Galeria produktu"
       >
@@ -294,15 +312,19 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         <div
           className={cn(
             "relative min-w-0 flex-1",
-            fillViewport && "flex h-full min-h-0 flex-col",
+            fillViewport && "md:flex md:h-full md:min-h-0 md:flex-col",
           )}
         >
           <Swiper
             className={cn(
-              "min-w-0 w-full [&_.swiper-slide]:h-auto",
+              "min-w-0 w-full",
               fillViewport
-                ? "h-full min-h-0 flex-1 [&_.swiper-slide]:flex [&_.swiper-slide]:h-full [&_.swiper-slide]:items-center"
-                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)]",
+                ? cn(
+                    "aspect-[4/5] [&_.swiper-slide]:h-full",
+                    "md:aspect-auto md:h-full md:min-h-0 md:flex-1",
+                    "md:[&_.swiper-slide]:flex md:[&_.swiper-slide]:h-full md:[&_.swiper-slide]:items-center",
+                  )
+                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] [&_.swiper-slide]:h-auto",
             )}
             direction="vertical"
             slidesPerView={1}
@@ -353,7 +375,9 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
       <p
         className={cn(
           "text-sm text-neutral-500",
-          fillViewport ? "shrink-0 lg:block" : "mt-3 hidden lg:block",
+          fillViewport
+            ? "hidden shrink-0 md:block"
+            : "mt-3 hidden lg:block",
         )}
         aria-live="polite"
       >

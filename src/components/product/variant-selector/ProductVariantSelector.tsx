@@ -13,7 +13,7 @@ export function ProductVariantSelector({
   onSelect,
 }: ProductVariantSelectorProps) {
   return (
-    <div className="mb-8 flex flex-col gap-12">
+    <div className="mb-5 flex flex-col gap-6 md:mb-8 md:gap-12">
       {variants.axes.map((axis) => (
         <VariantAxisField
           key={axis.id}

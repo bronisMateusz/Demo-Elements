@@ -29,13 +29,13 @@ export function ProductVisualizationCTA({
   return (
     <section
       aria-labelledby="viz-cta-title"
-      className="py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)]"
+      className="py-8 md:py-[var(--spacing-section-sm)] lg:py-[var(--spacing-section)]"
     >
       <Container>
         <div className="relative overflow-hidden rounded-xs">
           <LiquidCtaGlow />
 
-          <div className="relative z-10 mx-auto flex min-h-[460px] max-w-5xl flex-col items-center justify-center px-6 py-14 text-center md:min-h-[560px] md:px-10 md:py-18">
+          <div className="relative z-10 mx-auto flex min-h-[380px] max-w-5xl flex-col items-center justify-center px-6 py-10 text-center md:min-h-[560px] md:px-10 md:py-18">
             <TextRevealLead
               id="viz-cta-title"
               revealUnit="word"
@@ -48,7 +48,7 @@ export function ProductVisualizationCTA({
             </TextRevealLead>
 
             <motion.div
-              className="mt-8 flex flex-wrap items-center justify-center gap-3"
+              className="mt-6 flex flex-wrap items-center justify-center gap-3 md:mt-8"
               initial={reducedMotion ? false : { opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}

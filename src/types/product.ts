@@ -15,6 +15,12 @@ export type ProductImage = {
   alt: string;
   /** Optional focus point - maps 1:1 to Drupal 11 media focal point. */
   focalPoint?: ProductImageFocalPoint;
+  /**
+   * How the image fills gallery frames.
+   * `contain` (default) = packshot, no crop.
+   * `cover` = lifestyle / scene - fills the frame (mobile gallery).
+   */
+  fit?: "contain" | "cover";
 };
 
 export type ProductPrice = {

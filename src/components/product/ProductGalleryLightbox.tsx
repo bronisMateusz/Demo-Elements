@@ -41,6 +41,7 @@ export function ProductGalleryLightbox({
 }: ProductGalleryLightboxProps) {
   const swiperRef = useRef<SwiperInstance | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useMotionReduced();
   const [isZoomed, setIsZoomed] = useState(false);
   const [phase, setPhase] = useState<LightboxPhase>(() => (reducedMotion ? "open" : "enter"));
@@ -124,14 +125,24 @@ export function ProductGalleryLightbox({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [requestClose]);
 
-  // Measure the actual container so the flyer target matches the slide box
-  // (window globals can differ by scrollbar / preview chrome).
+  // Measure the image stage (between chrome + thumbs) so the flyer lands on
+  // the same box the slide uses - not the full viewport with letterboxing.
   const getViewport = useCallback(() => {
+    const stage = stageRef.current;
+    if (stage) {
+      const rect = stage.getBoundingClientRect();
+      return {
+        width: stage.clientWidth,
+        height: stage.clientHeight,
+        left: rect.left,
+        top: rect.top,
+      };
+    }
     const el = containerRef.current;
     if (!el) {
-      return { width: window.innerWidth, height: window.innerHeight };
+      return { width: window.innerWidth, height: window.innerHeight, left: 0, top: 0 };
     }
-    return { width: el.clientWidth, height: el.clientHeight };
+    return { width: el.clientWidth, height: el.clientHeight, left: 0, top: 0 };
   }, []);
 
   const toggleZoom = useCallback(() => {
@@ -197,67 +208,96 @@ export function ProductGalleryLightbox({
         />
       ) : null}
 
+      {/* Stage geometry always mounted so the flyer can measure before content fades in. */}
+      <div className="pointer-events-none absolute inset-0 z-0 flex flex-col">
+        {/* Top chrome: IconButton h-12 + gutter */}
+        <div className="h-[calc(var(--spacing-gutter)+3rem)] shrink-0" aria-hidden />
+        <div ref={stageRef} className="relative min-h-0 w-full flex-1" aria-hidden />
+        <div
+          className={
+            hasMultiple
+              ? "h-[calc(var(--spacing-gutter)+3.5rem)] shrink-0 md:h-[calc(var(--spacing-gutter)+4rem)]"
+              : "h-gutter shrink-0"
+          }
+          aria-hidden
+        />
+      </div>
+
       {phase === "open" || contentVisible ? (
         <motion.div
-          className="absolute inset-0"
+          className="absolute inset-0 z-10 flex flex-col"
           initial={false}
           animate={{ opacity: contentVisible ? 1 : 0 }}
           transition={{ duration: LIGHTBOX_MOTION.contentFadeDuration, ease: EASE_OUT }}
           style={{ pointerEvents: contentVisible ? "auto" : "none" }}
         >
-          <Swiper
-            className="absolute inset-0 z-10 h-full w-full [&_.swiper-slide]:box-border [&_.swiper-wrapper]:h-full"
-            loop={hasMultiple}
-            initialSlide={index}
-            slidesPerView={1}
-            speed={LIGHTBOX_SWIPER_SPEED_MS}
-            resistanceRatio={0.85}
-            modules={[Keyboard, Mousewheel, A11y, Zoom]}
-            keyboard={{ enabled: true }}
-            zoom={{ maxRatio: 3, toggle: false }}
-            mousewheel={{
-              forceToAxis: true,
-              releaseOnEdges: true,
-              sensitivity: 0.9,
-            }}
-            a11y={{
-              prevSlideMessage: "Poprzednie zdjęcie",
-              nextSlideMessage: "Następne zdjęcie",
-            }}
-            onClick={(swiper, event) => {
-              swiper.zoom?.toggle(event);
-            }}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
-            onTouchStart={handleFlyerFadeComplete}
-            onSlideChangeTransitionStart={handleFlyerFadeComplete}
-            onSlideChange={(swiper) => {
-              onIndexChange(hasMultiple ? swiper.realIndex : swiper.activeIndex);
-              setIsZoomed(false);
-            }}
-            onZoomChange={(swiper, scale) => {
-              setIsZoomed(scale > 1);
-              if (scale > 1) {
-                swiper.mousewheel.disable();
-                return;
-              }
-              swiper.mousewheel.enable();
-            }}
-          >
-            {images.map((image) => (
-              <SwiperSlide key={image.src} className="!flex !h-full items-start justify-center">
-                <div className="swiper-zoom-container flex h-full w-full items-start justify-center">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="block h-full w-full object-contain object-top"
-                    draggable={false}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <div className="h-[calc(var(--spacing-gutter)+3rem)] shrink-0" aria-hidden />
+          <div className="relative min-h-0 w-full flex-1">
+            <Swiper
+              className="h-full w-full [&_.swiper-slide]:box-border [&_.swiper-wrapper]:h-full"
+              loop={hasMultiple}
+              initialSlide={index}
+              slidesPerView={1}
+              speed={LIGHTBOX_SWIPER_SPEED_MS}
+              resistanceRatio={0.85}
+              modules={[Keyboard, Mousewheel, A11y, Zoom]}
+              keyboard={{ enabled: true }}
+              zoom={{ maxRatio: 3, toggle: false }}
+              mousewheel={{
+                forceToAxis: true,
+                releaseOnEdges: true,
+                sensitivity: 0.9,
+              }}
+              a11y={{
+                prevSlideMessage: "Poprzednie zdjęcie",
+                nextSlideMessage: "Następne zdjęcie",
+              }}
+              onClick={(swiper, event) => {
+                swiper.zoom?.toggle(event);
+              }}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              onTouchStart={handleFlyerFadeComplete}
+              onSlideChangeTransitionStart={handleFlyerFadeComplete}
+              onSlideChange={(swiper) => {
+                onIndexChange(hasMultiple ? swiper.realIndex : swiper.activeIndex);
+                setIsZoomed(false);
+              }}
+              onZoomChange={(swiper, scale) => {
+                setIsZoomed(scale > 1);
+                if (scale > 1) {
+                  swiper.mousewheel.disable();
+                  return;
+                }
+                swiper.mousewheel.enable();
+              }}
+            >
+              {images.map((image) => (
+                <SwiperSlide
+                  key={image.src}
+                  className="!flex !h-full items-center justify-center"
+                >
+                  <div className="swiper-zoom-container flex h-full w-full items-center justify-center">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="block max-h-full max-w-full object-contain"
+                      draggable={false}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          <div
+            className={
+              hasMultiple
+                ? "h-[calc(var(--spacing-gutter)+3.5rem)] shrink-0 md:h-[calc(var(--spacing-gutter)+4rem)]"
+                : "h-gutter shrink-0"
+            }
+            aria-hidden
+          />
         </motion.div>
       ) : null}
 
@@ -336,7 +376,8 @@ function LightboxControls({
 
       {hasMultiple ? (
         <>
-          <div className="absolute top-1/2 left-gutter -translate-y-1/2">
+          {/* Arrows sit in the image stage band (desktop). Mobile: swipe + thumbs. */}
+          <div className="pointer-events-none absolute top-[calc(var(--spacing-gutter)+3rem)] bottom-[calc(var(--spacing-gutter)+4rem)] left-gutter hidden items-center md:flex">
             <IconButton
               label="Poprzednie zdjęcie"
               iconClass="ph ph-caret-left"
@@ -345,7 +386,7 @@ function LightboxControls({
               onClick={onPrev}
             />
           </div>
-          <div className="absolute top-1/2 right-gutter -translate-y-1/2">
+          <div className="pointer-events-none absolute top-[calc(var(--spacing-gutter)+3rem)] bottom-[calc(var(--spacing-gutter)+4rem)] right-gutter hidden items-center md:flex">
             <IconButton
               label="Następne zdjęcie"
               iconClass="ph ph-caret-right"
@@ -354,7 +395,7 @@ function LightboxControls({
               onClick={onNext}
             />
           </div>
-          <div className="absolute bottom-gutter left-gutter flex max-w-[min(100%-2*var(--spacing-gutter),36rem)] gap-2 overflow-x-auto">
+          <div className="absolute bottom-gutter inset-x-gutter flex justify-center gap-2 overflow-x-auto md:justify-start md:max-w-[min(100%-2*var(--spacing-gutter),36rem)] md:inset-x-auto md:left-gutter">
             {images.map((image, thumbIndex) => {
               const isActive = thumbIndex === index;
               return (

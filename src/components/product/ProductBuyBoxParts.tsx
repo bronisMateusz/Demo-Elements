@@ -35,7 +35,7 @@ export function ProductBadges({
     (brand ? `#marka-${brand.toLowerCase().replace(/\s+/g, "-")}` : undefined);
 
   return (
-    <div className={cn("mb-4 flex flex-wrap items-center gap-x-3 gap-y-2", className)}>
+    <div className={cn("mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 md:mb-4", className)}>
       {brand && href ? (
         <a
           href={href}
@@ -71,9 +71,9 @@ type ProductPriceBlockProps = {
 
 export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
   return (
-    <div className="pt-8">
+    <div className="pt-5 md:pt-8">
       <div className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50">
-        <div className="space-y-4 px-5 py-5">
+        <div className="space-y-3 px-4 py-4 md:space-y-4 md:px-5 md:py-5">
           {price.note ? (
             <Eyebrow variant="gold" className="mb-0 text-promo">
               {price.note}
@@ -98,7 +98,7 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
             </div>
 
             {price.previous || price.lowestPrice30Days ? (
-              <dl className="mt-4 space-y-1.5 font-body text-sm text-neutral-600">
+              <dl className="mt-3 space-y-1.5 font-body text-sm text-neutral-600 md:mt-4">
                 {price.previous ? (
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                     <dt className="text-neutral-500">Cena przed obniżką</dt>
@@ -127,7 +127,7 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
         </div>
 
         {askCta ? (
-          <div className="border-t border-neutral-200 bg-neutral-0 px-5 py-5">
+          <div className="border-t border-neutral-200 bg-neutral-0 px-4 py-4 md:px-5 md:py-5">
             <ProductAskRow
               embedded
               href={askCta.href}

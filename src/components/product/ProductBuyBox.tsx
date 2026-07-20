@@ -52,7 +52,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
         />
       </div>
 
-      <p className="mb-8 text-sm text-neutral-500">{displaySku}</p>
+      <p className="mb-5 text-sm text-neutral-500 md:mb-8">{displaySku}</p>
 
       {product.variants ? (
         <ProductVariantSelector
@@ -82,7 +82,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
       />
 
       {product.salonCard ? (
-        <ProductSalonCard className="mt-10" {...product.salonCard} onAskOpen={onAskOpen} />
+        <ProductSalonCard className="mt-8 md:mt-10" {...product.salonCard} onAskOpen={onAskOpen} />
       ) : null}
 
       <ProductPairWith title={product.seriesTitle} products={product.seriesProducts} />

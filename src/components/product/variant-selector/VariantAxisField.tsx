@@ -21,7 +21,7 @@ export function VariantAxisField({ axis, selection, onSelect, labelId }: Variant
 
   return (
     <div role="group" aria-labelledby={labelId}>
-      <p id={labelId} className="mb-3 block text-sm text-neutral-900">
+      <p id={labelId} className="mb-2 block text-sm text-neutral-900 md:mb-3">
         <span className="text-neutral-600">{axis.label}:</span>{" "}
         {selectedOption ? <span>{selectedOption.label}</span> : null}
       </p>

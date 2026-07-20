@@ -5,6 +5,14 @@ export type LightboxRect = {
   height: number;
 };
 
+export type LightboxViewport = {
+  width: number;
+  height: number;
+  /** Offset of the image stage within the window (for fixed flyer positioning). */
+  left?: number;
+  top?: number;
+};
+
 export function rectFromDomRect(rect: DOMRectReadOnly): LightboxRect {
   return {
     left: rect.left,
@@ -15,27 +23,30 @@ export function rectFromDomRect(rect: DOMRectReadOnly): LightboxRect {
 }
 
 /**
- * Lightbox image frame - image contained within the viewport, top-aligned,
- * centered horizontally. Mirrors the slide's `object-contain object-top` so the
- * fly-in handoff lands on the exact same rect (no scale/position jump).
+ * Lightbox image frame - image contained within the stage, centered on both axes.
+ * Mirrors the slide's `object-contain` so the fly-in handoff lands on the same rect.
  */
 export function computeLightboxTargetRect(
   viewportWidth: number,
   viewportHeight: number,
   aspectRatio: number,
+  offset: { left?: number; top?: number } = {},
 ): LightboxRect {
   let height = viewportHeight;
   let width = height * aspectRatio;
 
-  // Wider than the viewport → constrain by width and letterbox vertically.
+  // Wider than the stage → constrain by width and letterbox vertically.
   if (width > viewportWidth) {
     width = viewportWidth;
     height = width / aspectRatio;
   }
 
+  const offsetLeft = offset.left ?? 0;
+  const offsetTop = offset.top ?? 0;
+
   return {
-    left: (viewportWidth - width) / 2,
-    top: 0,
+    left: offsetLeft + (viewportWidth - width) / 2,
+    top: offsetTop + (viewportHeight - height) / 2,
     width,
     height,
   };
