@@ -36,22 +36,21 @@ export const breadcrumbsModule: LibraryModule = {
         <Breadcrumbs
           items={[
             { label: "Strona główna", to: "/" },
-            { label: "Montebianco 80 cm", current: true },
+            { label: "Łazienka", to: "#" },
           ]}
         />
       ),
     },
     {
-      id: "four-levels",
-      label: "4 poziomy",
-      description: "Pełna ścieżka kategorii produktu.",
+      id: "three-levels",
+      label: "3 poziomy",
+      description: "Ścieżka kategorii bez powielania nazwy produktu.",
       render: () => (
         <Breadcrumbs
           items={[
             { label: "Strona główna", to: "/" },
             { label: "Łazienka", to: "#" },
             { label: "Meble łazienkowe", to: "#" },
-            { label: "Montebianco 80 cm", current: true },
           ]}
         />
       ),
@@ -68,7 +67,6 @@ export const breadcrumbsModule: LibraryModule = {
               { label: "Strona główna", to: "/" },
               { label: "Łazienka", to: "#" },
               { label: "Meble łazienkowe", to: "#" },
-              { label: "Montebianco 80 cm", current: true },
             ]}
           />
           <p className="t-body-lg max-w-prose text-neutral-600">

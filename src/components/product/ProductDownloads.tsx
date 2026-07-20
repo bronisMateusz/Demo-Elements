@@ -11,7 +11,7 @@ export function ProductDownloads({ downloads }: ProductDownloadsProps) {
   return (
     <section aria-labelledby="downloads-title">
       <Container size="content">
-        <SectionHeader title="Pliki do pobrania" titleId="downloads-title" align="center" />
+        <SectionHeader title="Pliki do pobrania" titleId="downloads-title" />
         <div className="border-t border-neutral-200">
           <SharedLayoutBg
             className="grid w-full lg:grid-cols-2"

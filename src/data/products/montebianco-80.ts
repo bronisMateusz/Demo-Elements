@@ -518,6 +518,5 @@ export const montebianco80: Product = {
     { label: "Strona główna", to: "/" },
     { label: "Łazienka", to: "#" },
     { label: "Meble łazienkowe", to: "#" },
-    { label: "Montebianco 80 cm" },
   ],
 };

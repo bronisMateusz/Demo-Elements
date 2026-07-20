@@ -12,6 +12,7 @@ const twMerge = extendTailwindMerge({
         "text-h4",
         "text-ui",
       ],
+      "max-w": ["max-w-content", "max-w-wide", "max-w-drawer"],
     },
   },
 });

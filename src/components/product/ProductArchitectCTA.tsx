@@ -33,7 +33,7 @@ export function ProductArchitectCTA({
       aria-labelledby="architect-cta-title"
       className="py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)]"
     >
-      <div className="w-full">
+      <div className="mx-auto w-full max-w-wide">
         <div className="grid overflow-hidden md:grid-cols-2">
           <div className="relative min-h-[280px] md:min-h-[min(420px,38vw)]">
             {showVideo ? (

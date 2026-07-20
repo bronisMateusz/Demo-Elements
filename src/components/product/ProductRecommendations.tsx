@@ -11,7 +11,7 @@ type ProductRecommendationsProps = {
 export function ProductRecommendations({ similarProducts }: ProductRecommendationsProps) {
   return (
     <section aria-labelledby="similar-title">
-      <Container>
+      <Container size="content">
         <SectionHeader title="Produkty podobne" titleId="similar-title" />
       </Container>
       <div className={productCarouselBleedWrapperClassName}>

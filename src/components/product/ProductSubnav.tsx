@@ -28,7 +28,7 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
         )}
         aria-label="Sekcje strony produktu"
       >
-        <div className="container overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="container mx-auto max-w-content overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           <LayoutGroup id="pdp-subnav-active">
             <SharedLayoutUnderline
               className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"

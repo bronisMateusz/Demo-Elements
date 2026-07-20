@@ -71,7 +71,7 @@ type ProductPriceBlockProps = {
 
 export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
   return (
-    <div className="pt-5 lg:pt-8">
+    <div className="pt-5 lg:pt-0">
       <div className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50">
         <div className="space-y-3 px-4 py-4 lg:space-y-4 lg:px-5 lg:py-5">
           {price.note ? (

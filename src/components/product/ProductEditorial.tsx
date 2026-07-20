@@ -47,7 +47,7 @@ export function ProductEditorial({
 }: ProductEditorialProps) {
   return (
     <section aria-labelledby="editorial-title">
-      <Container>
+      <Container size="content">
         {breadcrumbs ? (
           <div className="hidden lg:block">
             <Breadcrumbs items={breadcrumbs} variant="section" />

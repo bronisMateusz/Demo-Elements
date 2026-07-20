@@ -25,7 +25,7 @@ export function VariantThumbnail({
         unavailable && "pointer-events-none cursor-not-allowed opacity-45",
       )}
     >
-      <span className="flex aspect-square w-[5.5rem] items-center justify-center bg-transparent">
+      <span className="flex aspect-square w-20 items-center justify-center bg-transparent">
         <img
           src={image.src}
           alt=""

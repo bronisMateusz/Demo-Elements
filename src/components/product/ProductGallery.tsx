@@ -25,7 +25,7 @@ type GalleryThumbnailRailProps = {
 
 function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnailRailProps) {
   return (
-    <div className="hidden h-full w-14 shrink-0 flex-col lg:flex" aria-label="Miniatury galerii">
+    <div className="hidden h-full w-14 shrink-0 flex-col xl:flex" aria-label="Miniatury galerii">
       <div className="mx-auto min-h-4 w-px flex-1 bg-neutral-200" aria-hidden="true" />
 
       <div className="flex flex-col justify-end gap-2">
@@ -68,45 +68,26 @@ type GalleryControlsProps = {
   onPrev: () => void;
   onNext: () => void;
   onZoom: () => void;
-  onSelect: (index: number) => void;
 };
 
 function GalleryPagination({
   activeIndex,
   count,
-  onSelect,
 }: {
   activeIndex: number;
   count: number;
-  onSelect: (index: number) => void;
 }) {
   if (count <= 1) return null;
 
   return (
-    <div
-      className="pointer-events-none absolute bottom-4 left-4 z-[2] flex items-center gap-1.5 lg:hidden"
-      role="tablist"
-      aria-label="Zdjęcia produktu"
-    >
-      {Array.from({ length: count }, (_, index) => {
-        const isActive = index === activeIndex;
-        return (
-          <button
-            key={index}
-            type="button"
-            role="tab"
-            aria-selected={isActive}
-            aria-label={`Zdjęcie ${index + 1} z ${count}`}
-            className={cn(
-              "pointer-events-auto h-1.5 rounded-full transition-[width,background-color] duration-fast ease-out",
-              isActive
-                ? "w-6 bg-neutral-900"
-                : "w-1.5 bg-neutral-900/35 hover:bg-neutral-900/55",
-            )}
-            onClick={() => onSelect(index)}
-          />
-        );
-      })}
+    <div className="pointer-events-none absolute bottom-4 left-4 z-[2] xl:hidden">
+      <p
+        className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-wide text-neutral-800 shadow-subtle"
+        aria-live="polite"
+      >
+        {activeIndex + 1}
+        <span className="text-neutral-400"> / {count}</span>
+      </p>
     </div>
   );
 }
@@ -117,14 +98,13 @@ function GalleryControls({
   onPrev,
   onNext,
   onZoom,
-  onSelect,
 }: GalleryControlsProps) {
   const atStart = activeIndex <= 0;
   const atEnd = activeIndex >= count - 1;
 
   return (
     <>
-      <GalleryPagination activeIndex={activeIndex} count={count} onSelect={onSelect} />
+      <GalleryPagination activeIndex={activeIndex} count={count} />
 
       <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
         <div className="pointer-events-auto flex gap-1">
@@ -138,14 +118,14 @@ function GalleryControls({
           />
           <IconButton
             label="Poprzednie zdjęcie"
-            iconClass="ph ph-caret-up"
+            iconClass="ph ph-caret-left"
             variant="elevated"
             className={cn("shadow-subtle", atStart && "pointer-events-none opacity-35")}
             onClick={atStart ? undefined : onPrev}
           />
           <IconButton
             label="Następne zdjęcie"
-            iconClass="ph ph-caret-down"
+            iconClass="ph ph-caret-right"
             variant="elevated"
             className={cn("shadow-subtle", atEnd && "pointer-events-none opacity-35")}
             onClick={atEnd ? undefined : onNext}
@@ -368,13 +348,15 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
 
         <div
           className={cn(
-            "relative min-w-0 flex-1",
+            "relative min-w-0 flex-1 overflow-x-clip",
             fillViewport && "lg:flex lg:h-full lg:min-h-0 lg:flex-col",
           )}
         >
           <Swiper
             className={cn(
-              "min-w-0 w-full",
+              "min-w-0 w-full overflow-x-clip",
+              /* Isolate the transform layer so a 1px compositing fringe does not show beside the stage. */
+              "[&_.swiper-slide]:backface-hidden",
               fillViewport
                 ? cn(
                     "h-[min(56svh,28rem)] [&_.swiper-slide]:h-full",
@@ -384,10 +366,12 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
                   )
                 : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] [&_.swiper-slide]:h-auto",
             )}
-            direction="vertical"
+            direction="horizontal"
             slidesPerView={1}
-            spaceBetween={fillViewport ? 0 : 8}
+            spaceBetween={0}
             speed={480}
+            roundLengths
+            resistanceRatio={0}
             modules={[Mousewheel, Keyboard, A11y]}
             mousewheel={{
               forceToAxis: true,
@@ -420,13 +404,18 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
             ))}
           </Swiper>
 
+          {/* Cover GPU/subpixel hairline on the stage’s right edge (not the next slide). */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-px bg-neutral-50"
+            aria-hidden
+          />
+
           <GalleryControls
             activeIndex={activeIndex}
             count={images.length}
             onPrev={goToPrev}
             onNext={goToNext}
             onZoom={openZoom}
-            onSelect={goToSlide}
           />
         </div>
       </div>
@@ -435,8 +424,8 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         className={cn(
           "text-sm text-neutral-500",
           fillViewport
-            ? "mt-3 hidden shrink-0 lg:mt-0 lg:block"
-            : "mt-3 hidden lg:block",
+            ? "mt-3 hidden shrink-0 xl:mt-0 xl:block"
+            : "mt-3 hidden xl:block",
         )}
         aria-live="polite"
       >

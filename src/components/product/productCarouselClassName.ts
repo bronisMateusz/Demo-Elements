@@ -13,7 +13,7 @@ export function productCarouselRootClassName({
 }) {
   return cn(
     "relative w-full",
-    layout === "inline-bleed" && "overflow-visible",
+    layout === "inline-bleed" && "overflow-x-visible overflow-y-visible",
     className,
   );
 }

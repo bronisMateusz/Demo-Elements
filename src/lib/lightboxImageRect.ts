@@ -24,7 +24,7 @@ export function rectFromDomRect(rect: DOMRectReadOnly): LightboxRect {
 
 /**
  * Lightbox image frame - image contained within the stage, centered on both axes.
- * Mirrors the slide's `object-contain` so the fly-in handoff lands on the same rect.
+ * Shares the image aspect ratio so cover and contain look identical at handoff.
  */
 export function computeLightboxTargetRect(
   viewportWidth: number,
