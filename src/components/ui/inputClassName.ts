@@ -5,5 +5,6 @@ export const inputClassName = cn(
   "h-12 w-full rounded-xs border border-neutral-200 bg-neutral-50 px-4",
   "font-body text-ui text-neutral-900 placeholder:text-neutral-400",
   "outline-none transition-[border-color,background-color] duration-fast ease-out",
+  "hover:border-neutral-600",
   "focus:border-neutral-800 focus:bg-neutral-0",
 );

@@ -13,15 +13,6 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
   const images = product.images?.length ? product.images : [product.image];
   const hasMultipleImages = images.length > 1;
 
-  const variantMeta = [
-    product.colorCount ? `+${product.colorCount} kolory` : null,
-    product.sizeCount
-      ? `+${product.sizeCount} ${product.sizeCount === 1 ? "rozmiar" : "rozmiary"}`
-      : null,
-  ]
-    .filter(Boolean)
-    .join(" | ");
-
   return (
     <article
       className={cn("group/card relative flex h-full cursor-pointer flex-col bg-neutral-0", className)}
@@ -107,7 +98,7 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
         </h3>
 
         {product.subtitle ? (
-          <p className="mt-1.5 mb-0 font-body text-sm text-neutral-500">{product.subtitle}</p>
+          <p className="mt-1.5 mb-0 font-body text-sm text-neutral-600">{product.subtitle}</p>
         ) : null}
 
         {product.price ? (
@@ -121,25 +112,9 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
               {product.price}
             </p>
             {product.pricePrevious ? (
-              <p className="mb-0 font-body text-sm tabular-nums text-neutral-500 line-through decoration-neutral-400">
+              <p className="mb-0 font-body text-sm tabular-nums text-neutral-600 line-through decoration-neutral-400">
                 {product.pricePrevious}
               </p>
-            ) : null}
-          </div>
-        ) : null}
-
-        {product.swatch || variantMeta ? (
-          <div className="mt-auto flex items-center gap-2.5 pt-4">
-            {product.swatch ? (
-              <img
-                src={product.swatch.src}
-                alt={product.swatch.alt || "Próbka koloru"}
-                className="h-6 w-6 shrink-0 bg-transparent object-contain"
-                loading="lazy"
-              />
-            ) : null}
-            {variantMeta ? (
-              <span className="font-body text-sm text-neutral-500">{variantMeta}</span>
             ) : null}
           </div>
         ) : null}
@@ -147,3 +122,4 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
     </article>
   );
 }
+

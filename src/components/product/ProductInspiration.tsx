@@ -1,24 +1,40 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { Swiper as SwiperInstance } from "swiper";
+import { A11y, Mousewheel } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { assetUrl } from "../../app/assets";
+import { useGutterPx } from "../../hooks/useGutterPx";
 import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { InspirationArrangement } from "../../types/product";
 import { Container } from "../ui/Container";
+import { Eyebrow } from "../ui/Eyebrow";
 import { IconButton } from "../ui/IconButton";
-import { SectionHeader } from "../structural/SectionHeader";
+import { iconButtonClassName } from "../ui/iconButtonClassName";
+import { TextRevealLead } from "../motion/TextRevealLead";
 import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "./ProductGalleryLightboxFlyer";
+import "swiper/css";
 
 type ProductInspirationProps = {
   arrangements: InspirationArrangement[];
 };
 
+function formatIndex(index: number, total: number) {
+  return `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+}
+
 export function ProductInspiration({ arrangements }: ProductInspirationProps) {
+  const gutterPx = useGutterPx();
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxOrigin, setLightboxOrigin] = useState<LightboxOpenOrigin | null>(null);
   const [lightboxClosing, setLightboxClosing] = useState(false);
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
   const imageRefs = useRef<Map<number, HTMLImageElement>>(new Map());
 
   const registerImage = useCallback((index: number, node: HTMLImageElement | null) => {
@@ -41,6 +57,12 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
   useEffect(() => {
     return () => liftHeaderAboveLightbox(false);
   }, []);
+
+  const syncEdges = (instance: SwiperInstance) => {
+    setActiveIndex(instance.realIndex);
+    setAtStart(instance.isBeginning);
+    setAtEnd(instance.isEnd);
+  };
 
   const openLightbox = (index: number, origin: LightboxOpenOrigin) => {
     setLightboxIndex(index);
@@ -78,88 +100,157 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
   }));
 
   return (
-    <section aria-labelledby="inspiration-title">
+    <section aria-labelledby="inspiration-title" className="overflow-x-clip">
       <Container>
-        <SectionHeader
-          eyebrow="Produkt w aranżacji"
-          title="Inspiracje producenta"
-          titleId="inspiration-title"
-        />
-        <div className="flex flex-col gap-16 md:gap-20">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
+          <div className="min-w-0 max-w-2xl">
+            <Eyebrow className="mb-3">Produkt w aranżacji</Eyebrow>
+            <TextRevealLead
+              id="inspiration-title"
+              revealUnit="word"
+              className="max-w-none"
+              typographyClassName="font-heading text-h2 leading-heading tracking-tight"
+              mutedClassName="text-neutral-900/20"
+              fillClassName="text-neutral-900"
+            >
+              Inspiracje producenta
+            </TextRevealLead>
+          </div>
+
+          {arrangements.length > 1 ? (
+            <div className="flex items-center gap-4">
+              <p className="m-0 font-body text-sm tabular-nums tracking-wide text-neutral-600">
+                {formatIndex(activeIndex, arrangements.length)}
+              </p>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  className={iconButtonClassName({
+                    variant: "elevated",
+                    className: cn("shadow-subtle", atStart && "pointer-events-none opacity-35"),
+                  })}
+                  aria-label="Poprzednia aranżacja"
+                  disabled={atStart}
+                  onClick={() => swiper?.slidePrev()}
+                >
+                  <i className="ph ph-caret-left" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  className={iconButtonClassName({
+                    variant: "elevated",
+                    className: cn("shadow-subtle", atEnd && "pointer-events-none opacity-35"),
+                  })}
+                  aria-label="Następna aranżacja"
+                  disabled={atEnd}
+                  onClick={() => swiper?.slideNext()}
+                >
+                  <i className="ph ph-caret-right" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </Container>
+
+      <div className="relative">
+        <Swiper
+          key={`inspiration-${gutterPx}`}
+          className={cn(
+            "w-full touch-pan-y [touch-action:pan-y_pinch-zoom]",
+            "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[min(96vw,72rem)] [&_.swiper-slide]:shrink-0",
+          )}
+          modules={[A11y, Mousewheel]}
+          slidesPerView="auto"
+          spaceBetween={12}
+          slidesOffsetBefore={gutterPx}
+          slidesOffsetAfter={gutterPx}
+          watchOverflow
+          mousewheel={{ forceToAxis: true, releaseOnEdges: true, sensitivity: 0.85 }}
+          onSwiper={(instance) => {
+            setSwiper(instance);
+            syncEdges(instance);
+          }}
+          onSlideChange={syncEdges}
+          onResize={syncEdges}
+          a11y={{
+            prevSlideMessage: "Poprzednia aranżacja",
+            nextSlideMessage: "Następna aranżacja",
+          }}
+        >
           {arrangements.map((arrangement, index) => {
-            const imageLast = index % 2 === 1;
             const image = arrangement.image;
             const alt = image.alt || arrangement.title;
 
             return (
-              <article
-                key={arrangement.id}
-                className="grid items-start gap-8 md:grid-cols-2 md:gap-12 lg:gap-16"
-              >
-                <div
-                  className={cn(
-                    "relative overflow-hidden bg-neutral-50",
-                    imageLast && "md:order-2",
-                  )}
-                >
-                  <button
-                    type="button"
-                    className="relative block w-full cursor-crosshair"
-                    onClick={() => openAt(index)}
-                    aria-label={`Powiększ: ${alt}`}
-                  >
-                    <img
-                      ref={(node) => registerImage(index, node)}
-                      src={image.src}
-                      alt={alt}
-                      className={cn(
-                        "aspect-[4/3] w-full object-cover",
-                        lightboxClosing && lightboxIndex === index && "opacity-0",
-                      )}
-                      style={{ objectPosition: productImageObjectPosition(image) }}
-                      loading="lazy"
-                      draggable={false}
-                    />
-                  </button>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
-                    <IconButton
-                      label="Powiększ zdjęcie"
-                      iconClass="ph ph-magnifying-glass-plus"
-                      variant="elevated"
-                      className="pointer-events-auto shadow-subtle"
+              <SwiperSlide key={arrangement.id}>
+                <article className="grid overflow-hidden bg-neutral-100 md:grid-cols-[minmax(0,1.4fr)_minmax(18rem,0.85fr)]">
+                  <div className="relative min-h-[240px] bg-neutral-200 md:min-h-[min(28rem,52vh)]">
+                    <button
+                      type="button"
+                      className="absolute inset-0 block cursor-crosshair"
                       onClick={() => openAt(index)}
-                    />
+                      aria-label={`Powiększ: ${alt}`}
+                    >
+                      <img
+                        ref={(node) => registerImage(index, node)}
+                        src={image.src}
+                        alt={alt}
+                        className={cn(
+                          "absolute inset-0 size-full object-cover",
+                          lightboxClosing && lightboxIndex === index && "opacity-0",
+                        )}
+                        style={{ objectPosition: productImageObjectPosition(image) }}
+                        loading="lazy"
+                        draggable={false}
+                      />
+                    </button>
+                    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+                      <IconButton
+                        label="Powiększ zdjęcie"
+                        iconClass="ph ph-magnifying-glass-plus"
+                        variant="elevated"
+                        className="pointer-events-auto shadow-subtle"
+                        onClick={() => openAt(index)}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div
-                  className={cn(
-                    "md:sticky md:top-[calc(var(--spacing-header-offset)+58px+1rem)] md:self-start",
-                    imageLast && "md:order-1",
-                  )}
-                >
-                  <h3 className="t-h3 mb-6 md:mb-8">{arrangement.title}</h3>
-                  <ul className="m-0 flex list-none flex-col gap-3 p-0">
-                    {arrangement.items.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-ui leading-body text-neutral-700">
-                        <img
-                          src={assetUrl("sygnet.svg")}
-                          alt=""
-                          aria-hidden="true"
-                          className="mt-1 size-3.5 shrink-0"
-                          width={14}
-                          height={14}
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+                  <div className="relative flex flex-col justify-center border-t border-neutral-200/80 px-6 py-8 md:border-t-0 md:border-l md:px-8 md:py-10 lg:px-10">
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(184,151,90,0.14),transparent_55%)]"
+                      aria-hidden="true"
+                    />
+                    <div className="relative">
+                      <h3 className="t-h3 mb-6 max-w-[16ch] text-balance md:mb-8">
+                        {arrangement.title}
+                      </h3>
+                      <ul className="m-0 flex list-none flex-col gap-3 p-0">
+                        {arrangement.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 text-ui leading-body text-neutral-700"
+                          >
+                            <img
+                              src={assetUrl("sygnet.svg")}
+                              alt=""
+                              aria-hidden="true"
+                              className="mt-1 size-3.5 shrink-0 opacity-70"
+                              width={14}
+                              height={14}
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              </SwiperSlide>
             );
           })}
-        </div>
-      </Container>
+        </Swiper>
+      </div>
 
       {lightboxOpen && lightboxOrigin ? (
         <ProductGalleryLightbox

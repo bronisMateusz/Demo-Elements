@@ -5,6 +5,7 @@ import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { DrawerHeader, DrawerShell } from "../layout/DrawerShell";
+import { Checkbox } from "../motion/Checkbox";
 import { inputClassName } from "../ui/inputClassName";
 
 type AskDrawerProps = {
@@ -45,9 +46,11 @@ export function AskDrawer({
     buildAskMessage(productTitle, productSku),
   );
   const [submitted, setSubmitted] = useState(false);
+  const [consent, setConsent] = useState(false);
 
   const handleClose = useCallback(() => {
     setSubmitted(false);
+    setConsent(false);
     setMessage(buildAskMessage(productTitle, productSku));
     onClose();
   }, [onClose, productTitle, productSku]);
@@ -187,32 +190,31 @@ export function AskDrawer({
               />
             </div>
 
-            <label className="flex gap-3 text-sm leading-relaxed text-neutral-600" htmlFor={consentId}>
-              <input
-                id={consentId}
-                name="consent"
-                type="checkbox"
-                required
-                aria-required="true"
-                className="mt-0.5 size-4 shrink-0 rounded-xs border-neutral-300 accent-neutral-900"
-              />
-              <span>
-                {askDrawerCopy.consent}{" "}
-                <a
-                  href={askDrawerCopy.privacyHref}
-                  className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
-                >
-                  {askDrawerCopy.privacyLabel}
-                </a>
-                .{" "}
-                <a
-                  href={askDrawerCopy.marketingHref}
-                  className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
-                >
-                  {askDrawerCopy.marketingLabel} ›
-                </a>
-              </span>
-            </label>
+            <Checkbox
+              id={consentId}
+              name="consent"
+              required
+              checked={consent}
+              onCheckedChange={setConsent}
+              className="text-sm leading-relaxed text-neutral-600"
+            >
+              {askDrawerCopy.consent}{" "}
+              <a
+                href={askDrawerCopy.privacyHref}
+                className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
+                onClick={(event) => event.stopPropagation()}
+              >
+                {askDrawerCopy.privacyLabel}
+              </a>
+              .{" "}
+              <a
+                href={askDrawerCopy.marketingHref}
+                className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
+                onClick={(event) => event.stopPropagation()}
+              >
+                {askDrawerCopy.marketingLabel} ›
+              </a>
+            </Checkbox>
 
             <Button as="button" type="submit" variant="primary" size="lg" full>
               {askDrawerCopy.submitLabel}

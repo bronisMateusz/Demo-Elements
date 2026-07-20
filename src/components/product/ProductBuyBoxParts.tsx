@@ -1,6 +1,5 @@
 import { Badge } from "../ui/Badge";
 import { Eyebrow } from "../ui/Eyebrow";
-import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 import type { ProductBadge, ProductPrice } from "../../types/product";
 import { ProductAskRow } from "./ProductAskRow";
@@ -9,45 +8,45 @@ type ProductBadgesProps = {
   badges: ProductBadge[];
   price?: ProductPrice;
   brand?: string;
+  brandHref?: string;
   className?: string;
 };
 
 const PROMO_BADGE: ProductBadge = { label: "Promocja", variant: "promo" };
 
-const BRAND_LOGOS: Record<string, string> = {
-  oristo: "brands/oristo.svg",
-};
-
-function brandLogoPath(brand: string) {
-  return BRAND_LOGOS[brand.toLowerCase().replace(/\s+/g, "")];
-}
-
 function isPromoPrice(price?: ProductPrice) {
   return Boolean(price?.previous || price?.discount);
 }
 
-export function ProductBadges({ badges, price, brand, className }: ProductBadgesProps) {
+export function ProductBadges({
+  badges,
+  price,
+  brand,
+  brandHref,
+  className,
+}: ProductBadgesProps) {
   const hasPromoBadge = badges.some(
     (badge) => badge.variant === "promo" || badge.label.toLowerCase() === "promocja",
   );
   const displayBadges =
     isPromoPrice(price) && !hasPromoBadge ? [PROMO_BADGE, ...badges] : badges;
-  const logoPath = brand ? brandLogoPath(brand) : undefined;
+  const href =
+    brandHref ??
+    (brand ? `#marka-${brand.toLowerCase().replace(/\s+/g, "-")}` : undefined);
 
   return (
     <div className={cn("mb-4 flex flex-wrap items-center gap-x-3 gap-y-2", className)}>
-      {brand ? (
-        logoPath ? (
-          <img
-            src={assetUrl(logoPath)}
-            alt={brand}
-            className="h-3.5 w-auto md:h-4"
-            width={120}
-            height={21}
-          />
-        ) : (
-          <p className="m-0 font-body text-xs uppercase tracking-wide text-neutral-500">{brand}</p>
-        )
+      {brand && href ? (
+        <a
+          href={href}
+          className={cn(
+            "m-0 font-body text-xs uppercase tracking-wide text-neutral-600 no-underline",
+            "transition-colors duration-fast ease-out hover:text-neutral-900",
+            "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+          )}
+        >
+          {brand}
+        </a>
       ) : null}
       <div className="flex flex-wrap gap-2">
         {displayBadges.map((badge) => (

@@ -6,13 +6,19 @@ import {
   footerBrand,
   footerColumns,
   footerLegal,
+  footerNewsletterCopy,
   footerSocialLinks,
 } from "../../../data/nav";
 import { FooterSmartbeesCredit } from "./FooterSmartbeesCredit";
 import { FooterSpotlightRoot, FooterWordmark } from "./FooterWordmark";
 import { inputClassName } from "../../ui/inputClassName";
+import { Checkbox } from "../../motion/Checkbox";
+import { useId, useState } from "react";
 
 export function FooterNewsletter() {
+  const consentId = useId();
+  const [consent, setConsent] = useState(false);
+
   return (
     <div className="relative pb-0">
       <Container>
@@ -53,30 +59,51 @@ export function FooterNewsletter() {
               </div>
 
               <form
-                className={cn(
-                  "w-full max-w-md shrink-0 rounded-xs border border-neutral-0/35",
-                  "bg-neutral-0/20 p-2.5 shadow-2 backdrop-blur-md",
-                  "sm:flex sm:items-center",
-                )}
+                className="w-full max-w-md shrink-0 rounded-xs bg-neutral-0 p-4 shadow-2"
                 onSubmit={(event) => event.preventDefault()}
               >
-                <label className="sr-only" htmlFor="footer-email">
-                  Adres e-mail
-                </label>
-                <input
-                  id="footer-email"
-                  type="email"
-                  placeholder="Twój adres e-mail"
-                  className={cn(inputClassName, "mb-2 sm:mb-0 sm:flex-1 sm:rounded-r-none")}
-                />
-                <Button
-                  as="button"
-                  type="submit"
-                  variant="primary"
-                  className="w-full rounded-xs sm:w-auto sm:rounded-l-none"
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-0">
+                  <label className="sr-only" htmlFor="footer-email">
+                    Adres e-mail
+                  </label>
+                  <input
+                    id="footer-email"
+                    type="email"
+                    required
+                    placeholder="Twój adres e-mail"
+                    className={cn(
+                      inputClassName,
+                      "sm:flex-1 sm:rounded-r-none sm:border-r-0",
+                    )}
+                  />
+                  <Button
+                    as="button"
+                    type="submit"
+                    variant="primary"
+                    className="w-full rounded-xs sm:w-auto sm:rounded-l-none"
+                  >
+                    Zapisz się
+                  </Button>
+                </div>
+
+                <Checkbox
+                  id={consentId}
+                  name="consent"
+                  required
+                  checked={consent}
+                  onCheckedChange={setConsent}
+                  className="mt-3 text-xs leading-relaxed text-neutral-600"
                 >
-                  Zapisz się
-                </Button>
+                  {footerNewsletterCopy.consent}{" "}
+                  <a
+                    href={footerNewsletterCopy.privacyHref}
+                    className="text-neutral-900 underline underline-offset-2 hover:text-gold-500"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    {footerNewsletterCopy.privacyLabel}
+                  </a>
+                  .
+                </Checkbox>
               </form>
             </div>
           </div>

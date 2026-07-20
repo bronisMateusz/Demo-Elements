@@ -374,6 +374,13 @@ export const footerLegal = {
   copyright: "Elements Show / Grupa HBH",
 } as const;
 
+export const footerNewsletterCopy = {
+  consent:
+    "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji działań promocyjno-marketingowych, w tym przesyłania ofert handlowych przez Grupę HBH za pośrednictwem wskazanego powyżej adresu e-mail.",
+  privacyLabel: "Polityka prywatności",
+  privacyHref: "#polityka-prywatnosci",
+} as const;
+
 export const footerSocialLinks = [
   { label: "Facebook", href: "https://facebook.com", iconClass: "ph ph-facebook-logo" },
   { label: "Instagram", href: "https://instagram.com", iconClass: "ph ph-instagram-logo" },

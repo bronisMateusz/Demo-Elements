@@ -44,7 +44,12 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
 
       <div className="mb-3 flex items-start justify-between gap-4">
         <h1 className="t-h2 min-w-0 flex-1">{displayTitle}</h1>
-        <ProductFavoriteButton sku={product.id} variant="bordered" className="mt-1 shrink-0" />
+        <ProductFavoriteButton
+          sku={product.id}
+          variant="bordered"
+          showTooltip
+          className="mt-1 shrink-0"
+        />
       </div>
 
       <p className="mb-8 text-sm text-neutral-500">{displaySku}</p>
