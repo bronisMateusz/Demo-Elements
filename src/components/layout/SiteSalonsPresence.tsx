@@ -29,7 +29,10 @@ export function SiteSalonsPresence() {
       aria-labelledby="presence-salons-title"
       className="relative overflow-hidden bg-neutral-900 text-neutral-0"
     >
-      <Container className="relative z-10 pt-[var(--spacing-section-sm)] pb-8 md:pt-[var(--spacing-section)] md:pb-10">
+      <Container
+        size="content"
+        className="relative z-10 pt-[var(--spacing-section-sm)] pb-8 md:pt-[var(--spacing-section)] md:pb-10"
+      >
         <ul
           className={cn(
             "m-0 grid list-none grid-cols-2 gap-x-6 gap-y-8 p-0",
