@@ -12,7 +12,7 @@ export function NotFoundPage() {
       </Helmet>
       <PageShell>
         <Container className="flex min-h-[50vh] flex-col items-center justify-center py-24 text-center">
-          <p className="mb-4 font-body text-xs uppercase tracking-wide text-neutral-500">404</p>
+          <p className="mb-4 font-body text-xs uppercase tracking-[0.12em] text-neutral-500">404</p>
           <h1 className="t-h1 mb-4">Strona nie została znaleziona</h1>
           <p className="t-body mb-8 max-w-md">
             Szukana strona nie istnieje lub została przeniesiona.

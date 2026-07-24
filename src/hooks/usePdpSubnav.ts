@@ -1,25 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { isMotionPaused } from "../lib/a11yPreferences";
 import type { PdpSubnavItem } from "../constants/pdpSubnav";
-import { PDP_HEADER_HEIGHT_PX, PDP_SUBNAV_HEIGHT_PX } from "../constants/pdpSubnav";
+import { PDP_SUBNAV_HEIGHT_PX } from "../constants/pdpSubnav";
+import { readHeaderHeightPx, readHeaderOffsetPx } from "../lib/layoutTokens";
 
 const SUBNAV_GAP_PX = 8;
-
-function readHeaderHeightPx() {
-  const raw = getComputedStyle(document.documentElement)
-    .getPropertyValue("--spacing-header-h")
-    .trim();
-  const value = Number.parseFloat(raw);
-  return Number.isFinite(value) ? value : PDP_HEADER_HEIGHT_PX;
-}
-
-function readHeaderOffsetPx() {
-  const raw = getComputedStyle(document.documentElement)
-    .getPropertyValue("--spacing-header-offset")
-    .trim();
-  const value = Number.parseFloat(raw);
-  return Number.isFinite(value) ? value : PDP_HEADER_HEIGHT_PX;
-}
 
 function readSubnavScrollOffsetPx() {
   return readHeaderOffsetPx() + PDP_SUBNAV_HEIGHT_PX + SUBNAV_GAP_PX;
@@ -35,7 +20,7 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
-    // Fixed to the *current* full header height - must NOT follow --spacing-header-offset,
+    // Fixed to the *current* full header height - must NOT follow concealed offset,
     // or concealing the header flips stuck on/off and the chrome flickers.
     const observe = () => {
       const headerH = readHeaderHeightPx();

@@ -169,7 +169,7 @@ export function ProductCarousel({
         <div
           className={cn(
             "flex flex-wrap items-end justify-between gap-6",
-            isBleed ? "mx-auto mb-8 w-full max-w-content px-gutter md:mb-10" : "mb-4",
+            isBleed ? "mx-auto mb-8 w-full max-w-[96rem] px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10" : "mb-4",
           )}
         >
           {isBleed && !isInline ? (
@@ -177,7 +177,7 @@ export function ProductCarousel({
               id={header.titleId}
               revealUnit="word"
               className="min-w-0 max-w-2xl"
-              typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+              typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
               mutedClassName="text-neutral-900/20"
               fillClassName="text-neutral-900"
             >

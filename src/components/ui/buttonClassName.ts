@@ -20,7 +20,7 @@ type ButtonClassNameOptions = {
 const animatedVariants = new Set<ButtonVariant>(["primary", "secondary", "gold"]);
 
 const buttonBase = cn(
-  "inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xs border font-body font-medium text-ui leading-none tracking-normal no-underline whitespace-nowrap cursor-pointer active:translate-y-px disabled:opacity-50 disabled:pointer-events-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)]",
+  "inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xs border font-body font-medium text-ui leading-none tracking-normal no-underline whitespace-nowrap cursor-pointer active:translate-y-px disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset)",
   phosphorIconInFlexClassName,
   "[&>span]:leading-none [&_i]:text-[1.125em]",
 );
@@ -28,7 +28,7 @@ const buttonBase = cn(
 const buttonBasePlain = cn(
   buttonBase,
   "transition-[background-color,border-color,color,transform,opacity] duration-fast ease-out",
-  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)]",
+  "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset)",
 );
 
 const buttonBaseAnimated = cn(
@@ -40,7 +40,7 @@ const buttonBaseAnimated = cn(
 const buttonSizes: Record<ButtonSize, string> = {
   sm: "h-12 px-5 text-sm",
   md: "",
-  lg: "h-[52px] px-10",
+  lg: "h-13 px-10",
 };
 
 const buttonVariants: Record<ButtonVariant, string> = {

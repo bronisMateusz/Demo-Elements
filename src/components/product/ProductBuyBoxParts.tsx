@@ -40,9 +40,9 @@ export function ProductBadges({
         <a
           href={href}
           className={cn(
-            "m-0 font-body text-xs uppercase tracking-wide text-neutral-600 no-underline",
+            "m-0 font-body text-xs uppercase tracking-[0.12em] text-neutral-600 no-underline",
             "transition-colors duration-fast ease-out hover:text-neutral-900",
-            "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+            "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
           )}
         >
           {brand}
@@ -84,7 +84,7 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
             <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
               <p
                 className={cn(
-                  "font-heading text-[clamp(36px,3.6vw,48px)] leading-none tracking-tight",
+                  "font-heading text-[clamp(2.25rem,3.6vw,3rem)] leading-none tracking-tight",
                   price.discount ? "text-promo" : "text-neutral-900",
                 )}
               >

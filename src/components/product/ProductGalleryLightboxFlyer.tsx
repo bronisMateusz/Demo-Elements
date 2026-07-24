@@ -99,7 +99,7 @@ export function ProductGalleryLightboxFlyer({
 
   return (
     <motion.div
-      className="pointer-events-none fixed z-[402] overflow-hidden"
+      className="pointer-events-none fixed z-402 overflow-hidden"
       initial={{
         left: frameFrom.left,
         top: frameFrom.top,
@@ -154,7 +154,7 @@ export function ProductGalleryLightboxFlyer({
       <motion.img
         src={image.src}
         alt=""
-        className={cn("relative z-[1] block h-full w-full", productImageFitClassName(image))}
+        className={cn("relative z-1 block size-full", productImageFitClassName(image))}
         initial={{ objectPosition: positionFrom }}
         animate={{ objectPosition: positionTo }}
         transition={{ duration: FLYER_DURATION_S, ease: EASE_OUT }}

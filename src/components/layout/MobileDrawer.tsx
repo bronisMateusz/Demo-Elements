@@ -31,7 +31,7 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
       className="lg:hidden"
     >
         <DrawerHeader title="Menu" closeLabel="Zamknij menu" onClose={handleClose} compact />
-        <nav className="flex-1 overflow-y-auto px-gutter py-8" aria-label="Menu mobilne">
+        <nav className="flex-1 overflow-y-auto px-[clamp(1.25rem,2.222vw,2.5rem)] py-8" aria-label="Menu mobilne">
           <ul className="flex list-none flex-col gap-1">
             {mainNavItems.map((item) => {
               if (item.hasMenu) {
@@ -39,7 +39,7 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
                   <li key={item.href}>
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between gap-2 py-3 text-left font-body text-lg text-neutral-900 transition-colors hover:text-gold-500"
+                      className="flex w-full items-center justify-between gap-2 py-3 text-start font-body text-lg text-neutral-900 transition-colors hover:text-gold-500"
                       aria-expanded={productsExpanded}
                       onClick={() => setProductsExpanded((value) => !value)}
                     >
@@ -53,7 +53,7 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
                       />
                     </button>
                     {productsExpanded ? (
-                      <ul className="mb-3 ml-1 flex list-none flex-col gap-5 border-l border-neutral-200 pl-4">
+                      <ul className="mb-3 ms-1 flex list-none flex-col gap-5 border-s border-neutral-200 ps-4">
                         {productsMegaMenu.flatMap((column) =>
                           column.groups.map((group) => (
                             <li key={group.href}>
@@ -104,7 +104,7 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
           <div className="mt-8 flex flex-col gap-4 border-t border-neutral-200 pt-8">
             <button
               type="button"
-              className="flex w-full items-center gap-2.5 text-left"
+              className="flex w-full items-center gap-2.5 text-start"
               onClick={() => {
                 handleClose();
                 onSalonOpen?.();
@@ -141,7 +141,7 @@ export function MobileDrawer({ open, onClose, onSalonOpen }: MobileDrawerProps) 
             </a>
           </div>
         </nav>
-        <div className="border-t border-neutral-200 px-gutter py-8">
+        <div className="border-t border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] py-8">
           <Link
             to="/biblioteka"
             className="text-ui text-neutral-600 no-underline hover:text-neutral-900"

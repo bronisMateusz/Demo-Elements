@@ -38,17 +38,17 @@ export function ProductArchitectCTA({
     <section
       ref={targetRef}
       aria-labelledby="architect-cta-title"
-      className="py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)]"
+      className="py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"
         style={{ marginLeft: sideInset, marginRight: sideInset }}
       >
         <div className="grid md:grid-cols-2">
-          <div className="relative min-h-[280px] overflow-hidden md:min-h-[min(420px,38vw)]">
+          <div className="relative min-h-70 overflow-hidden md:min-h-[min(26.25rem,38vw)]">
             {showVideo ? (
               <video
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 size-full object-cover"
                 autoPlay
                 loop
                 muted
@@ -61,7 +61,7 @@ export function ProductArchitectCTA({
               <img
                 src={image.src}
                 alt={image.alt}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 size-full object-cover"
                 style={{ objectPosition: productImageObjectPosition(image) }}
                 loading="lazy"
                 draggable={false}
@@ -86,11 +86,11 @@ export function ProductArchitectCTA({
             <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
               <BrandMotif
                 name="dots-grid"
-                className="absolute top-6 right-4 h-32 w-8 opacity-30 max-md:hidden md:top-8 md:right-6 md:h-40 md:w-9"
+                className="absolute top-6 inset-e-4 h-32 w-8 opacity-30 max-md:hidden md:top-8 md:inset-e-6 md:h-40 md:w-9"
               />
               <BrandMotif
                 name="arc-dark"
-                className="absolute -right-14 -bottom-20 size-52 opacity-25 max-md:hidden"
+                className="absolute -inset-e-14 -bottom-20 size-52 opacity-25 max-md:hidden"
               />
             </div>
 
@@ -104,7 +104,7 @@ export function ProductArchitectCTA({
                   id="architect-cta-title"
                   revealUnit="word"
                   className="max-w-none"
-                  typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+                  typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
                   mutedClassName="text-neutral-900/20"
                   fillClassName="text-neutral-900"
                 >

@@ -22,13 +22,13 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
       <nav
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-header-h z-[99] border-b border-transparent bg-neutral-0/95 backdrop-blur-sm transition-[border-color,background-color,transform] duration-base ease-luxury",
+          "pdp-subnav sticky top-18 lg:top-29 z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm transition-[border-color,background-color,transform] duration-base ease-luxury",
           stuck &&
-            "is-stuck border-neutral-200 [background:color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
+            "is-stuck border-neutral-200 bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
         aria-label="Sekcje strony produktu"
       >
-        <div className="container mx-auto max-w-content overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="container mx-auto max-w-[96rem] overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           <LayoutGroup id="pdp-subnav-active">
             <SharedLayoutUnderline
               className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"
@@ -43,9 +43,9 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
                     key={item.id}
                     href={`#${item.id}`}
                     className={cn(
-                      "relative inline-flex min-h-[58px] items-center px-3 py-3 font-body text-ui leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out",
+                      "relative inline-flex min-h-14.5 items-center px-3 py-3 font-body text-ui leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out",
                       "hover:text-neutral-900",
-                      "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+                      "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
                       "md:px-4",
                       isActive && "text-neutral-900",
                     )}

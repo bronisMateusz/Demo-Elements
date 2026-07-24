@@ -18,7 +18,7 @@ export function SiteNewsletter() {
     <section aria-label="Newsletter" className="relative z-10">
       <div ref={targetRef} className="relative pb-0">
         <motion.div
-          className="relative min-h-footer-newsletter overflow-hidden rounded-xs shadow-2 md:min-h-footer-newsletter-md"
+          className="relative min-h-70 overflow-hidden rounded-xs shadow-2 md:min-h-80"
           style={{ marginLeft: sideInset, marginRight: sideInset }}
         >
           <img
@@ -34,10 +34,10 @@ export function SiteNewsletter() {
             aria-hidden="true"
           />
 
-          <div className="relative flex min-h-footer-newsletter items-center justify-center p-8 md:min-h-footer-newsletter-md md:p-10 lg:p-12">
+          <div className="relative flex min-h-70 items-center justify-center p-8 md:min-h-80 md:p-10 lg:p-12">
             <div className="flex w-full max-w-5xl flex-col justify-between gap-8 lg:flex-row lg:items-center lg:gap-10">
               <div className="max-w-lg">
-                <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-wide text-neutral-0/70">
+                <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-[0.12em] text-neutral-0/70">
                   <img
                     src={assetUrl("sygnet.svg")}
                     alt=""
@@ -48,7 +48,7 @@ export function SiteNewsletter() {
                   />
                   Newsletter
                 </p>
-                <h2 className="m-0 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-heading font-normal text-neutral-0">
+                <h2 className="m-0 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] font-normal text-neutral-0">
                   Inspiracje prosto na Twój adres e-mail
                 </h2>
                 <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-0/80 md:text-ui">
@@ -69,13 +69,13 @@ export function SiteNewsletter() {
                     type="email"
                     required
                     placeholder="Twój adres e-mail"
-                    className={cn(inputClassName, "sm:flex-1 sm:rounded-r-none sm:border-r-0")}
+                    className={cn(inputClassName, "sm:flex-1 sm:rounded-e-none sm:border-e-0")}
                   />
                   <Button
                     as="button"
                     type="submit"
                     variant="primary"
-                    className="w-full rounded-xs sm:w-auto sm:rounded-l-none"
+                    className="w-full rounded-xs sm:w-auto sm:rounded-s-none"
                   >
                     Zapisz się
                   </Button>

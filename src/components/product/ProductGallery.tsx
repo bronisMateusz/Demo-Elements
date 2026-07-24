@@ -49,7 +49,7 @@ function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnai
               <img
                 src={image.src}
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 size-full object-cover"
                 style={{ objectPosition: productImageObjectPosition(image) }}
                 loading="lazy"
                 draggable={false}
@@ -80,9 +80,9 @@ function GalleryPagination({
   if (count <= 1) return null;
 
   return (
-    <div className="pointer-events-none absolute bottom-4 left-4 z-[2] xl:hidden">
+    <div className="pointer-events-none absolute bottom-4 inset-s-4 z-2 xl:hidden">
       <p
-        className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-wide text-neutral-800 shadow-subtle"
+        className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
         aria-live="polite"
       >
         {activeIndex + 1}
@@ -106,7 +106,7 @@ function GalleryControls({
     <>
       <GalleryPagination activeIndex={activeIndex} count={count} />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex justify-end px-4">
         <div className="pointer-events-auto flex gap-1">
           {/* Zoom is redundant on mobile - tap the image opens the lightbox. */}
           <IconButton
@@ -161,7 +161,7 @@ function GallerySlideContent({
   };
 
   return (
-    <figure className="m-0 h-full w-full">
+    <figure className="m-0 size-full">
       <button
         type="button"
         className={cn(
@@ -173,7 +173,7 @@ function GallerySlideContent({
                 "md:h-[min(52svh,32rem)]",
                 "lg:aspect-auto lg:h-full lg:min-h-0",
               )
-            : "block aspect-[4/5] lg:aspect-[3/4] lg:max-h-[min(36rem,70svh)]",
+            : "block aspect-4/5 lg:aspect-3/4 lg:max-h-[min(36rem,70svh)]",
         )}
         onClick={handleOpen}
         aria-label={`Powiększ zdjęcie ${index + 1}`}
@@ -183,7 +183,7 @@ function GallerySlideContent({
           src={image.src}
           alt={image.alt}
           className={cn(
-            "h-full w-full",
+            "size-full",
             productImageFitClassName(image),
             isHidden && "opacity-0",
           )}
@@ -364,7 +364,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
                     "lg:h-full lg:min-h-0 lg:flex-1",
                     "lg:[&_.swiper-slide]:flex lg:[&_.swiper-slide]:h-full lg:[&_.swiper-slide]:items-center",
                   )
-                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
+                : "max-h-[calc(100svh-4.5rem-3rem)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
             )}
             direction="horizontal"
             slidesPerView={1}
@@ -406,7 +406,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
 
           {/* Cover GPU/subpixel hairline on the stage’s right edge (not the next slide). */}
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-px bg-neutral-50"
+            className="pointer-events-none absolute inset-y-0 inset-e-0 z-1 w-px bg-neutral-50"
             aria-hidden
           />
 

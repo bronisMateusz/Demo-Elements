@@ -31,7 +31,7 @@ export function ProductVisualizationCTA({
     <section
       ref={targetRef}
       aria-labelledby="viz-cta-title"
-      className="py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)]"
+      className="py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"
@@ -39,12 +39,12 @@ export function ProductVisualizationCTA({
       >
         <LiquidCtaGlow />
 
-        <div className="relative z-10 mx-auto flex min-h-[380px] max-w-5xl flex-col items-center justify-center px-6 py-10 text-center md:min-h-[560px] md:px-10 md:py-18">
+        <div className="relative z-10 mx-auto flex min-h-95 max-w-5xl flex-col items-center justify-center px-6 py-10 text-center md:min-h-140 md:px-10 md:py-18">
           <TextRevealLead
             id="viz-cta-title"
             revealUnit="word"
             className="mx-auto max-w-none text-balance"
-            typographyClassName="font-heading text-[clamp(34px,4.1vw,62px)] leading-[1.12] tracking-tight font-medium"
+            typographyClassName="font-heading text-[clamp(2.125rem,4.1vw,3.875rem)] leading-[1.12] tracking-tight font-medium"
             mutedClassName="text-neutral-0/30"
             fillClassName="text-neutral-0"
           >

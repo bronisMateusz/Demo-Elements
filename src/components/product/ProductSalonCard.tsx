@@ -27,7 +27,7 @@ function SalonCardBackdrop() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-[radial-gradient(circle_at_100%_50%,rgba(240,232,214,0.07),transparent_70%)]"
+        className="pointer-events-none absolute inset-y-0 inset-e-0 w-1/3 bg-[radial-gradient(circle_at_100%_50%,rgba(240,232,214,0.07),transparent_70%)]"
         aria-hidden="true"
       />
     </>
@@ -72,7 +72,7 @@ export function ProductSalonCard({
               className={cn(
                 "shrink-0 font-body text-sm text-neutral-300 underline underline-offset-2",
                 "transition-colors duration-fast ease-out hover:text-gold-400",
-                "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
+                "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
               )}
             >
               {salonCardCopy.changeLabel}
@@ -81,7 +81,7 @@ export function ProductSalonCard({
 
           <p
             id={`${id}-title`}
-            className="mb-0 font-heading text-[clamp(18px,1.75vw,22px)] leading-heading text-neutral-0"
+            className="mb-0 font-heading text-[clamp(1.125rem,1.75vw,1.375rem)] leading-[1.1] text-neutral-0"
           >
             {salon.name}
           </p>
@@ -94,9 +94,9 @@ export function ProductSalonCard({
             <button
               type="button"
               className={cn(
-                "flex w-full items-center justify-between gap-3 py-3.5 text-left",
+                "flex w-full items-center justify-between gap-3 py-3.5 text-start",
                 "font-body text-sm font-medium text-neutral-0",
-                "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
+                "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
               )}
               aria-expanded={hoursOpen}
               aria-controls={hoursId}
@@ -144,7 +144,7 @@ export function ProductSalonCard({
                 className={cn(
                   "inline-flex items-center gap-2 font-body text-sm font-medium text-gold-400",
                   "transition-colors duration-fast ease-out hover:text-gold-100",
-                  "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
+                  "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
                 )}
               >
                 <i className="ph ph-chat-circle text-base leading-none" aria-hidden="true" />
@@ -200,7 +200,7 @@ export function ProductSalonCard({
         </Eyebrow>
         <p
           id={`${id}-title`}
-          className="mb-0 font-heading text-[clamp(18px,1.75vw,22px)] leading-heading text-neutral-0"
+          className="mb-0 font-heading text-[clamp(1.125rem,1.75vw,1.375rem)] leading-[1.1] text-neutral-0"
         >
           {description}
         </p>
@@ -209,11 +209,11 @@ export function ProductSalonCard({
           type="button"
           onClick={requestSalonDrawer}
           className={cn(
-            "mt-6 flex w-full items-center justify-between gap-4 border-t border-neutral-0/10 pt-5 text-left",
+            "mt-6 flex w-full items-center justify-between gap-4 border-t border-neutral-0/10 pt-5 text-start",
             "font-body text-sm font-medium text-gold-400",
             "transition-[color,border-color] duration-base ease-luxury",
             "hover:border-neutral-0/20 hover:text-neutral-0 focus-visible:text-neutral-0",
-            "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
+            "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
             "group-hover/salon:text-gold-100",
           )}
         >

@@ -13,7 +13,7 @@ const badgeVariants: Record<BadgeVariant, string> = {
 };
 
 const badgeSizes: Record<BadgeSize, string> = {
-  sm: "px-2.5 py-1.5 text-[10px] leading-none",
+  sm: "px-2.5 py-1.5 text-2.5 leading-none",
   md: "px-2.5 py-1 text-xs leading-none",
 };
 
@@ -29,7 +29,7 @@ export function badgeClassName({
   className,
 }: BadgeClassNameOptions = {}) {
   return cn(
-    "inline-flex items-center font-body font-medium uppercase tracking-wide",
+    "inline-flex items-center font-body font-medium uppercase tracking-[0.12em]",
     badgeSizes[size],
     badgeVariants[variant],
     className,

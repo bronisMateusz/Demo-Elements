@@ -10,7 +10,7 @@ function MegaCategoryLink({ group }: { group: MegaMenuGroup }) {
   return (
     <a
       href={group.href}
-      className="group/cat mb-4 flex w-full items-center gap-2 font-heading text-xl leading-compact text-neutral-900 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
+      className="group/cat mb-4 flex w-full items-center gap-2 font-heading text-xl leading-[1.4] text-neutral-900 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
     >
       {group.title}
       <i
@@ -29,7 +29,7 @@ export function ProductsMegaMenu({ open, id = "products-mega-menu" }: ProductsMe
       aria-label="Produkty - menu rozwinięte"
       hidden={!open}
       className={cn(
-        "absolute inset-x-0 top-full z-[110] border-t border-neutral-200 bg-neutral-0 shadow-2",
+        "absolute inset-x-0 top-full z-110 border-t border-neutral-200 bg-neutral-0 shadow-2",
         !open && "pointer-events-none",
       )}
     >
@@ -47,7 +47,7 @@ export function ProductsMegaMenu({ open, id = "products-mega-menu" }: ProductsMe
                     <li key={link.href}>
                       <a
                         href={link.href}
-                        className="block w-full py-1.5 text-ui leading-compact text-neutral-700 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
+                        className="block w-full py-1.5 text-ui leading-[1.4] text-neutral-700 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
                       >
                         {link.label}
                       </a>

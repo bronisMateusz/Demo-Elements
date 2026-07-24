@@ -68,7 +68,7 @@ export function ProductFavoriteButton({
         side="bottom"
         align="end"
         sideOffset={8}
-        className="w-64 bg-neutral-900 px-5 py-4 text-left"
+        className="w-64 bg-neutral-900 px-5 py-4 text-start"
       >
         <p className="m-0 mb-2.5 font-body text-sm font-medium text-neutral-0">
           {favoritesTooltipCopy.title}

@@ -30,9 +30,9 @@ export type SharedLayoutBgProps = {
 };
 
 const variants: Variants = {
-  initial: { opacity: 0, filter: "blur(6px)" },
-  animate: { opacity: 1, filter: "blur(0px)" },
-  exit: (isActive: boolean) => (!isActive ? { opacity: 0, filter: "blur(6px)" } : {}),
+  initial: { opacity: 0, filter: "blur(0.375rem)" },
+  animate: { opacity: 1, filter: "blur(0)" },
+  exit: (isActive: boolean) => (!isActive ? { opacity: 0, filter: "blur(0.375rem)" } : {}),
 };
 
 const reducedVariants: Variants = {

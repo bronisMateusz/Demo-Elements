@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
-import { PDP_HEADER_HEIGHT_PX } from "../../constants/pdpSubnav";
+import { readHeaderHeightPx } from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
 import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
 import { HeaderBar } from "./header/HeaderBar";
@@ -16,10 +16,7 @@ function canConcealHeader(): boolean {
   const subnav = document.getElementById("pdpSubnav");
   if (!subnav) return true;
   if (!document.documentElement.classList.contains("pdp-subnav-stuck")) return false;
-  const headerH = Number.parseFloat(
-    getComputedStyle(document.documentElement).getPropertyValue("--spacing-header-h"),
-  );
-  const offset = Number.isFinite(headerH) ? headerH : PDP_HEADER_HEIGHT_PX;
+  const offset = readHeaderHeightPx();
   return subnav.getBoundingClientRect().top <= offset + 2;
 }
 
@@ -73,7 +70,7 @@ export function Header() {
       {/* Split sticky layers so utility → bar → subnav can stagger on show/hide. */}
       <div
         id="siteHeaderUtility"
-        className="site-header-layer sticky top-0 z-[102] hidden lg:block"
+        className="site-header-layer sticky top-0 z-102 hidden lg:block"
       >
         <HeaderUtility />
       </div>
@@ -81,10 +78,10 @@ export function Header() {
       <div
         id="siteHeaderBar"
         className={cn(
-          "site-header-layer sticky top-0 z-[101] border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm lg:top-header-utility-h",
+          "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm lg:top-11",
           "transition-[border-color,background-color,transform] duration-base ease-luxury",
           isScrolled &&
-            "[background:color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
+            "bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
       >
         <header id="siteHeader">

@@ -29,7 +29,7 @@ export function Section({
       id={id}
       aria-labelledby={ariaLabelledby}
       className={cn(
-        "py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)]",
+        "py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]",
         sectionTones[tone],
         className,
       )}

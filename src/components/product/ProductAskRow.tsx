@@ -27,7 +27,7 @@ export function ProductAskRow({
         className,
       )}
     >
-      <p className="m-0 font-heading text-[18px] leading-[1.35] text-neutral-900">{lead}</p>
+      <p className="m-0 font-heading text-lg leading-[1.35] text-neutral-900">{lead}</p>
       {onAskOpen ? (
         <Button
           as="button"

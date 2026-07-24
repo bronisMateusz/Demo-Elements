@@ -31,7 +31,7 @@ export function Breadcrumbs({
       <ol
         className={cn(
           "flex flex-nowrap items-center gap-x-2 overflow-x-auto text-neutral-500",
-          "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          "scrollbar-none [&::-webkit-scrollbar]:hidden",
           isSection
             ? "text-xs leading-[1.4] tracking-normal normal-case"
             : "container text-sm",
@@ -40,7 +40,7 @@ export function Breadcrumbs({
         {items.map((item, index) => (
           <li
             key={`${item.label}-${index}`}
-            className="flex shrink-0 items-center gap-2 [&:not(:first-child)]:before:content-['/'] [&:not(:first-child)]:before:text-neutral-300"
+            className="flex shrink-0 items-center gap-2 not-first:before:content-['/'] not-first:before:text-neutral-300"
             aria-current={item.current ? "page" : undefined}
           >
             {item.to && !item.current ? (
@@ -56,7 +56,7 @@ export function Breadcrumbs({
             ) : (
               <span
                 className={cn(
-                  item.current && "max-w-[14rem] truncate text-neutral-900 sm:max-w-[20rem]",
+                  item.current && "max-w-56 truncate text-neutral-900 sm:max-w-80",
                 )}
               >
                 {item.label}

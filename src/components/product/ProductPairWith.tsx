@@ -17,7 +17,7 @@ export function ProductPairWith({ title, products }: ProductPairWithProps) {
     <section aria-labelledby="pair-with-title" className="relative overflow-x-clip">
       <BrandMotif
         name="dots-grid"
-        className="absolute top-0 right-[max(0px,calc((100%-var(--max-width-content))/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+        className="absolute top-0 inset-e-[max(0,calc((100%-96rem)/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
       />
 
       <div className={cn(productCarouselBleedWrapperClassName, "relative z-10")}>

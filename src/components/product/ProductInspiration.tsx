@@ -107,7 +107,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
     >
       <BrandMotif
         name="dots-grid"
-        className="absolute top-0 right-[max(0px,calc((100%-var(--max-width-content))/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+        className="absolute top-0 inset-e-[max(0,calc((100%-96rem)/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
       />
 
       <Container size="content" className="relative z-10">
@@ -118,7 +118,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
               id="inspiration-title"
               revealUnit="word"
               className="max-w-none"
-              typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+              typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
               mutedClassName="text-neutral-900/20"
               fillClassName="text-neutral-900"
             >
@@ -128,7 +128,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
 
           {arrangements.length > 1 ? (
             <div className="flex items-center gap-4">
-              <p className="m-0 font-body text-sm tabular-nums tracking-wide text-neutral-600">
+              <p className="m-0 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
                 {formatIndex(activeIndex, arrangements.length)}
               </p>
               <div className="flex items-center gap-1">
@@ -169,9 +169,9 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
         <Swiper
           key={`inspiration-${gutterPx}`}
           className={cn(
-            "w-full touch-pan-y [touch-action:pan-y_pinch-zoom]",
+            "w-full touch-pan-y touch-[pan-y_pinch-zoom]",
             // Start at page gutter; peek past the right edge on ultrawide.
-            "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[min(calc(100vw-var(--inspiration-inset)*2-2rem),72rem)] [&_.swiper-slide]:shrink-0",
+            "[&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-[min(calc(100vw-var(--inspiration-inset)*2-2rem),72rem)]! [&_.swiper-slide]:shrink-0",
           )}
           modules={[A11y, Mousewheel]}
           slidesPerView="auto"
@@ -198,7 +198,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
             return (
               <SwiperSlide key={arrangement.id}>
                 <article className="grid overflow-hidden bg-neutral-100 md:grid-cols-[minmax(0,1.4fr)_minmax(18rem,0.85fr)]">
-                  <div className="relative min-h-[240px] bg-neutral-200 md:min-h-[min(28rem,52vh)]">
+                  <div className="relative min-h-60 bg-neutral-200 md:min-h-[min(28rem,52vh)]">
                     <button
                       type="button"
                       className="absolute inset-0 block cursor-crosshair"
@@ -218,7 +218,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
                         draggable={false}
                       />
                     </button>
-                    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+                    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex justify-end px-4">
                       <IconButton
                         label="Powiększ zdjęcie"
                         iconClass="ph ph-magnifying-glass-plus"
@@ -229,7 +229,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
                     </div>
                   </div>
 
-                  <div className="relative flex flex-col justify-center border-t border-neutral-200/80 px-6 py-8 md:border-t-0 md:border-l md:px-8 md:py-10 lg:px-10">
+                  <div className="relative flex flex-col justify-center border-t border-neutral-200/80 px-6 py-8 md:border-t-0 md:border-s md:px-8 md:py-10 lg:px-10">
                     <div
                       className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(184,151,90,0.14),transparent_55%)]"
                       aria-hidden="true"
@@ -242,7 +242,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
                         {arrangement.items.map((item) => (
                           <li
                             key={item}
-                            className="flex items-start gap-3 text-ui leading-body text-neutral-700"
+                            className="flex items-start gap-3 text-ui leading-[1.75] text-neutral-700"
                           >
                             <img
                               src={assetUrl("sygnet.svg")}

@@ -28,7 +28,7 @@ function LibraryDevToggle() {
         onChange={(event) => setDevMode(event.target.checked)}
       />
       <span
-        className="relative inline-block h-5 w-9 rounded-full bg-neutral-200 transition-colors duration-fast ease-out after:absolute after:left-0.5 after:top-0.5 after:size-4 after:rounded-full after:bg-neutral-0 after:transition-transform after:duration-fast after:ease-out after:content-[''] peer-checked:bg-neutral-800 peer-checked:after:translate-x-4"
+        className="relative inline-block h-5 w-9 rounded-full bg-neutral-200 transition-colors duration-fast ease-out after:absolute after:inset-s-0.5 after:top-0.5 after:size-4 after:rounded-full after:bg-neutral-0 after:transition-transform after:duration-fast after:ease-out peer-checked:bg-neutral-800 peer-checked:after:translate-x-4"
         aria-hidden="true"
       />
     </label>

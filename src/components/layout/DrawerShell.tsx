@@ -50,7 +50,7 @@ export function DrawerShell({
   return (
     <AnimatePresence>
       {open ? (
-        <div className={cn("fixed inset-0 z-[200]", className)} role="presentation">
+        <div className={cn("fixed inset-0 z-200", className)} role="presentation">
           <motion.button
             type="button"
             className="absolute inset-0 bg-black/50"
@@ -70,7 +70,7 @@ export function DrawerShell({
             aria-modal="true"
             aria-label={label}
             tabIndex={-1}
-            className="absolute right-0 top-0 flex h-full w-[95vw] max-w-drawer flex-col bg-neutral-0 shadow-2 will-change-transform"
+            className="absolute inset-e-0 top-0 flex h-full w-[95vw] max-w-125 flex-col bg-neutral-0 shadow-2 will-change-transform"
             initial={reduce ? false : { x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -105,7 +105,7 @@ export function DrawerHeader({
 }: DrawerHeaderProps) {
   if (compact) {
     return (
-      <div className="flex h-header-bar-h shrink-0 items-center justify-between border-b border-neutral-200 px-gutter">
+      <div className="flex h-18 shrink-0 items-center justify-between border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]">
         <span className="font-heading text-xl leading-none text-neutral-900">{title}</span>
         <IconButton label={closeLabel} iconClass="ph ph-x" onClick={onClose} />
       </div>
@@ -113,8 +113,8 @@ export function DrawerHeader({
   }
 
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-gutter pt-8 pb-8">
-      <div className="min-w-0 pr-2">
+    <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] pt-8 pb-8">
+      <div className="min-w-0 pe-2">
         <p className="m-0 font-body text-xl font-medium text-neutral-900">{title}</p>
         {description ? (
           <p className="mt-2 mb-0 text-sm leading-relaxed text-neutral-500">{description}</p>
@@ -124,7 +124,7 @@ export function DrawerHeader({
         label={closeLabel}
         iconClass="ph ph-x"
         onClick={onClose}
-        className="-mt-2 -mr-2"
+        className="-mt-2 -me-2"
       />
     </div>
   );

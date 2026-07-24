@@ -30,7 +30,7 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
               className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-200 py-4"
             >
               <dt className="text-ui text-neutral-600">{spec.label}</dt>
-              <dd className="text-ui text-neutral-900 text-right">{spec.value}</dd>
+              <dd className="text-ui text-neutral-900 text-end">{spec.value}</dd>
             </div>
           ))}
         </dl>

@@ -46,7 +46,7 @@ export function LoopingWord({
     <span
       className={cn(
         "relative inline-block overflow-hidden align-baseline leading-none",
-        isEnd ? "text-right" : "text-left",
+        isEnd ? "text-end" : "text-start",
         className,
       )}
       style={{

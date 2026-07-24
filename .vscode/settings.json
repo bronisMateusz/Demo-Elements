@@ -4,5 +4,24 @@
   },
   "css.customData": [".vscode/tailwind.css-data.json"],
   "css.lint.unknownAtRules": "ignore",
-  "tailwindCSS.experimental.configFile": "src/styles/app.css"
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.experimental.configFile": "src/styles/app.css",
+  "tailwindCSS.classFunctions": ["cn", "clsx"],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    ".*[Cc]lass[Nn]ame",
+    ".*[Ss]izes",
+    ".*[Vv]ariants",
+    ".*[Tt]ones"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    ["[Cc]lass[Nn]ame\\s*(?::\\s*[^=]+)?\\s*=\\s*([^;]*);", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["[Cc]lass[Nn]ame\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\n\\}", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["(?:Sizes|Variants|Tones)\\s*:\\s*Record<[^>]+>\\s*=\\s*\\{([\\s\\S]*?)\\n\\};", "[\"'`]([^\"'`]*)[\"'`]"]
+  ]
 }

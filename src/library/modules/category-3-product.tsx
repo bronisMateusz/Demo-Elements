@@ -88,7 +88,7 @@ export const productCardModule: LibraryModule = {
       description:
         "Faux-link, badge, ulubione, zmiana zdjęcia na hover i meta wariantów.",
       render: () => (
-        <Container className="max-w-[424px] py-8">
+        <Container className="max-w-106 py-8">
           <ProductCard product={montebianco80.seriesProducts[0]} layout="carousel" />
         </Container>
       ),

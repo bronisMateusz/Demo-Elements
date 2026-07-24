@@ -115,7 +115,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "sizes",
       label: "Rozmiary",
-      description: "Large (52px), Default (48px), Small (40px) - na przykładzie Primary.",
+      description: "Large (3.25rem), Default (3rem), Small (2.5rem) - na przykładzie Primary.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonSizesDemo />

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
+import { CONTENT_MAX, CONTENT_MAX_FALLBACK_PX } from "../lib/layoutTokens";
 import { useGutterPx } from "./useGutterPx";
-
-const CONTENT_MAX_FALLBACK_PX = 1536; // 96rem at 16px root
 
 /**
  * Left inset that aligns bleed tracks with the content rail's text edge
@@ -14,8 +13,7 @@ export function useContentInsetPx(fallbackGutter = 40) {
   useEffect(() => {
     const measure = () => {
       const probe = document.createElement("div");
-      probe.style.cssText =
-        "position:absolute;visibility:hidden;width:var(--max-width-content);pointer-events:none;";
+      probe.style.cssText = `position:absolute;visibility:hidden;width:${CONTENT_MAX};pointer-events:none;`;
       document.body.appendChild(probe);
       const contentMax = probe.getBoundingClientRect().width || CONTENT_MAX_FALLBACK_PX;
       probe.remove();

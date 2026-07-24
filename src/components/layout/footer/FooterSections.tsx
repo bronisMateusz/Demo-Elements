@@ -26,12 +26,12 @@ export function FooterMain() {
                 <img
                   src={assetUrl("logo-elements.svg")}
                   alt={footerBrand.title}
-                  className="mb-3 h-[clamp(32px,4vw,44px)] w-auto"
+                  className="mb-3 h-[clamp(2rem,4vw,2.75rem)] w-auto"
                   width={108}
                   height={106}
                   draggable={false}
                 />
-                <p className="mb-0 max-w-[18rem] text-sm leading-relaxed text-neutral-500 italic">
+                <p className="mb-0 max-w-72 text-sm leading-relaxed text-neutral-500 italic">
                   {footerBrand.descriptionParts.map((part, index) =>
                     typeof part === "string" ? (
                       <span key={index}>{part}</span>
@@ -79,7 +79,7 @@ export function FooterLegal() {
         "flex flex-col items-center justify-between gap-4 border-t border-neutral-200 py-8 sm:flex-row",
       )}
     >
-      <p className="m-0 text-center text-sm text-neutral-500 sm:text-left">
+      <p className="m-0 text-center text-sm text-neutral-500 sm:text-start">
         © {new Date().getFullYear()} {footerLegal.copyright}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end">

@@ -222,7 +222,7 @@ export function MorphPopoverContent({
 
   const posClass = cn(
     side === "bottom" ? "top-full" : "bottom-full",
-    align === "end" ? "right-0" : "left-0",
+    align === "end" ? "inset-e-0" : "inset-s-0",
   );
   const marginStyle =
     side === "bottom" ? { marginTop: sideOffset } : { marginBottom: sideOffset };
@@ -256,7 +256,7 @@ export function MorphPopoverContent({
           transition={reduce ? { duration: 0.12 } : undefined}
           style={{ transformOrigin: originFor(side, align), ...marginStyle }}
           className={cn(
-            "absolute z-30 [filter:drop-shadow(0_8px_24px_rgba(26,24,21,0.18))]",
+            "absolute z-30 filter-[drop-shadow(0_0.5rem_1.5rem_rgba(26,24,21,0.18))]",
             posClass,
           )}
         >

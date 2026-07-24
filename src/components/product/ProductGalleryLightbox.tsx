@@ -158,7 +158,7 @@ export function ProductGalleryLightbox({
     <div
       ref={containerRef}
       className={cn(
-        "fixed inset-0 z-[400] h-svh max-h-svh w-full overflow-hidden overscroll-none",
+        "fixed inset-0 z-400 h-svh max-h-svh w-full overflow-hidden overscroll-none",
         "[&_.swiper-slide-zoomed_.swiper-zoom-container]:cursor-grab [&_.swiper-slide:not(.swiper-slide-zoomed)_.swiper-zoom-container]:cursor-zoom-in",
       )}
       role="dialog"
@@ -219,7 +219,7 @@ export function ProductGalleryLightbox({
           style={{ pointerEvents: contentVisible ? "auto" : "none" }}
         >
           <Swiper
-            className="h-full w-full [&_.swiper-slide]:box-border [&_.swiper-wrapper]:h-full"
+            className="size-full [&_.swiper-slide]:box-border [&_.swiper-wrapper]:h-full"
             loop={hasMultiple}
             initialSlide={index}
             slidesPerView={1}
@@ -261,13 +261,13 @@ export function ProductGalleryLightbox({
             {images.map((image) => (
               <SwiperSlide
                 key={image.src}
-                className="!flex !h-full items-center justify-center"
+                className="flex! h-full! items-center justify-center"
               >
-                <div className="swiper-zoom-container flex h-full w-full items-center justify-center">
+                <div className="swiper-zoom-container flex size-full items-center justify-center">
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="block max-h-full max-w-full object-contain"
+                    className="block max-size-full object-contain"
                     draggable={false}
                   />
                 </div>
@@ -309,7 +309,7 @@ type LightboxControlsProps = {
   onSelect: (index: number) => void;
 };
 
-/** Controls layer - kept above the flyer (z-[410]) so it never gets covered. */
+/** Controls layer - kept above the flyer (z-410) so it never gets covered. */
 function LightboxControls({
   images,
   index,
@@ -325,12 +325,12 @@ function LightboxControls({
 }: LightboxControlsProps) {
   return (
     <motion.div
-      className="pointer-events-none absolute inset-0 z-[410]"
+      className="pointer-events-none absolute inset-0 z-410"
       initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: LIGHTBOX_MOTION.chromeFadeDuration, ease: EASE_OUT }}
     >
-      <div className="absolute top-gutter left-gutter">
+      <div className="absolute top-[clamp(1.25rem,2.222vw,2.5rem)] inset-s-[clamp(1.25rem,2.222vw,2.5rem)]">
         <IconButton
           label={isZoomed ? "Pomniejsz" : "Powiększ"}
           iconClass={isZoomed ? "ph ph-magnifying-glass-minus" : "ph ph-magnifying-glass-plus"}
@@ -340,7 +340,7 @@ function LightboxControls({
         />
       </div>
 
-      <div className="absolute top-gutter right-gutter">
+      <div className="absolute top-[clamp(1.25rem,2.222vw,2.5rem)] inset-e-[clamp(1.25rem,2.222vw,2.5rem)]">
         <IconButton
           label="Zamknij"
           iconClass="ph ph-x"
@@ -353,7 +353,7 @@ function LightboxControls({
       {hasMultiple ? (
         <>
           {/* Arrows float over the image (desktop). Mobile: swipe + thumbs. */}
-          <div className="pointer-events-none absolute inset-y-0 left-gutter hidden items-center md:flex">
+          <div className="pointer-events-none absolute inset-y-0 inset-s-[clamp(1.25rem,2.222vw,2.5rem)] hidden items-center md:flex">
             <IconButton
               label="Poprzednie zdjęcie"
               iconClass="ph ph-caret-left"
@@ -362,7 +362,7 @@ function LightboxControls({
               onClick={onPrev}
             />
           </div>
-          <div className="pointer-events-none absolute inset-y-0 right-gutter hidden items-center md:flex">
+          <div className="pointer-events-none absolute inset-y-0 inset-e-[clamp(1.25rem,2.222vw,2.5rem)] hidden items-center md:flex">
             <IconButton
               label="Następne zdjęcie"
               iconClass="ph ph-caret-right"
@@ -371,7 +371,7 @@ function LightboxControls({
               onClick={onNext}
             />
           </div>
-          <div className="absolute bottom-gutter inset-x-gutter flex justify-center gap-2 overflow-x-auto md:justify-start md:max-w-[min(100%-2*var(--spacing-gutter),36rem)] md:inset-x-auto md:left-gutter">
+          <div className="absolute bottom-[clamp(1.25rem,2.222vw,2.5rem)] inset-x-[clamp(1.25rem,2.222vw,2.5rem)] flex justify-center gap-2 overflow-x-auto md:justify-start md:max-w-[min(100%-2*clamp(1.25rem,2.222vw,2.5rem),36rem)] md:inset-x-auto md:inset-s-[clamp(1.25rem,2.222vw,2.5rem)]">
             {images.map((image, thumbIndex) => {
               const isActive = thumbIndex === index;
               return (
@@ -379,7 +379,7 @@ function LightboxControls({
                   key={image.src}
                   type="button"
                   className={cn(
-                    "pointer-events-auto h-14 w-14 shrink-0 overflow-hidden border bg-neutral-50 transition-[border-color,opacity] duration-fast ease-out md:h-16 md:w-16",
+                    "pointer-events-auto size-14 shrink-0 overflow-hidden border bg-neutral-50 transition-[border-color,opacity] duration-fast ease-out md:size-16",
                     isActive
                       ? "border-neutral-900 opacity-100"
                       : "border-transparent opacity-70 hover:opacity-100",
@@ -391,7 +391,7 @@ function LightboxControls({
                   <img
                     src={image.src}
                     alt=""
-                    className="h-full w-full object-cover"
+                    className="size-full object-cover"
                     style={{ objectPosition: productImageObjectPosition(image) }}
                     draggable={false}
                   />

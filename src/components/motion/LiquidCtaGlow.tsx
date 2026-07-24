@@ -22,7 +22,7 @@ export function LiquidCtaGlow({ className }: LiquidCtaGlowProps) {
       )}
       aria-hidden="true"
     >
-      <svg className="absolute h-0 w-0" aria-hidden="true">
+      <svg className="absolute size-0" aria-hidden="true">
         <defs>
           <filter
             id={filterId}
@@ -63,10 +63,10 @@ export function LiquidCtaGlow({ className }: LiquidCtaGlowProps) {
         className="absolute inset-[-35%] opacity-95 motion-reduce:opacity-80"
         style={{ filter: `url(#${filterId})` }}
       >
-        <div className="liquid-cta-blob absolute left-[-5%] top-[5%] h-[70%] w-[55%] rounded-full bg-gold-400/90 blur-2xl" />
-        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute right-[-10%] top-[-5%] h-[65%] w-[50%] rounded-full bg-gold-400/70 blur-2xl [animation-delay:-6s]" />
-        <div className="liquid-cta-blob absolute bottom-[-15%] left-[20%] h-[60%] w-[55%] rounded-full bg-gold-500/85 blur-2xl [animation-delay:-12s]" />
-        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute bottom-[5%] right-[15%] h-[50%] w-[45%] rounded-full bg-gold-500/75 blur-2xl [animation-delay:-18s]" />
+        <div className="liquid-cta-blob absolute inset-s-[-5%] top-[5%] h-[70%] w-[55%] rounded-full bg-gold-400/90 blur-2xl" />
+        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute inset-e-[-10%] top-[-5%] h-[65%] w-[50%] rounded-full bg-gold-400/70 blur-2xl [animation-delay:-6s]" />
+        <div className="liquid-cta-blob absolute bottom-[-15%] inset-s-[20%] h-[60%] w-[55%] rounded-full bg-gold-500/85 blur-2xl [animation-delay:-12s]" />
+        <div className="liquid-cta-blob liquid-cta-blob-swirl absolute bottom-[5%] inset-e-[15%] h-[50%] w-[45%] rounded-full bg-gold-500/75 blur-2xl [animation-delay:-18s]" />
       </div>
 
       <div className="absolute inset-0 bg-neutral-900/12" />

@@ -14,17 +14,32 @@ Write classes in canonical Tailwind v4 form. After edits: `npm run lint`.
 - No conflicting classes on the same element (e.g. `block flex`).
 - No duplicate classes.
 - No redundant variants (e.g. `flex hover:flex`).
+- **Outline**: never pair bare `outline` with `outline-*` width (cssConflict). Use `outline-2` (plus color / offset) - not `outline outline-2` / `focus-visible:outline focus-visible:outline-2`.
 
 ## Canonical form (Tailwind v4)
 
 Prefer **named utilities** from theme over `[...]` when Tailwind / `suggestCanonicalClasses` offers them:
 
 - `grow` not `flex-grow`; `bg-linear-to-r` not `bg-gradient-to-r`.
-- `m-0` not `-m-0`; `size-full` not `w-full h-full`.
+- `m-0` not `-m-0`; **`size-*` when width and height match** - `size-12` not `h-12 w-12`, `size-full` not `h-full w-full`, `min-size-12` not `min-h-12 min-w-12`, `max-size-full` not `max-h-full max-w-full` (same for variants: `md:size-16`).
 - `gap-8` not `gap-x-8 gap-y-8` when values are equal.
 - `rotate-18` not `rotate-[18deg]`; `-rotate-18` not `rotate-[-18deg]`.
-- Negative arbitrary (when no named utility): `top-[-5px]` not `-top-[5px]`.
+- **Spacing scale over arbitrary lengths** (default `--spacing` = 0.25rem): use `h-<number>` / `max-w-<number>` / `w-<number>` etc. - never `h-[52px]`, never `max-w-[26.5rem]` when `max-w-106` works (`rem × 4` = scale step; `suggestCanonicalClasses`). Fractions OK: `min-h-14.5`, `max-w-162.5`. Keep `[…]` only for real expressions (`min-h-[min(26.25rem,38vw)]`, `w-[clamp(13.75rem,…,20rem)]`).
+- **`rem` not `px` when an arbitrary length is unavoidable** - `w-[clamp(13.75rem,…,20rem)]` not `w-[clamp(220px,…,320px)]`. Prefer named type utilities when they match (`text-lg` not `text-[18px]` / `text-[1.125rem]`). OK to keep `px` only for true hairlines (`1px` stroke, `translate-y-px`, box-shadow blur in `@theme` tokens).
+- Negative arbitrary (when no named utility): prefer scale (`-top-1.25`) over `top-[-0.3125rem]`.
 - Important as **suffix**: `flex!`, `hover:text-white!` - not `!flex`.
+- Prefer a named utility / variant when it exists (`not-first:` not `[&:not(:first-child)]:`, `scale-120` not `[transform:scale(…)]`, `scrollbar-none` not `[scrollbar-width:…]`).
+- **Aspect ratio**: `aspect-16/10`, `aspect-4/3` - not `aspect-[16/10]` / `aspect-[4/3]` (`suggestCanonicalClasses`).
+- **Motion tokens**: `ease-luxury` not `ease-[cubic-bezier(0.25,0.1,0.25,1)]`; `duration-fast` / `duration-base` / `duration-slow` not raw `duration-500` when the brand token matches (see `@theme` in `app.css`).
+- **Property arbitrary → utility arbitrary** (`suggestCanonicalClasses`): `filter-[drop-shadow(…)]` not `[filter:drop-shadow(…)]`; `bg-[color-mix(…)]` not `[background:color-mix(…)]`; `touch-[pan-y_pinch-zoom]` not `[touch-action:…]`. Prefer a named utility when it exists (`scale-120` / `scale-100` not `[transform:scale(…)]`; `scrollbar-none` / `scrollbar-thin` not `[scrollbar-width:…]`). Keep `[prop:value]` only for custom properties (`[--lib-header-h:10rem]`) or vendor-only props (`[-webkit-text-stroke:…]`, `[-ms-overflow-style:none]`).
+- **z-index**: `z-2`, `z-100`, `z-400` - never `z-[2]` / `z-[100]` (see [z-index docs](https://tailwindcss.com/docs/z-index)). Same for variants: `before:-z-10`, not `before:z-[-10]`.
+- **`before:` / `after:`**: Tailwind already sets empty `content` when other `before:*` / `after:*` utilities are present. Do **not** add `before:content-['']` or `after:content-['']`. Keep `content-[...]` only when the value is real (e.g. `before:content-['/']`).
+- **CSS variables**: never `[var(--token)]`. Use the `(--token)` form for theme props that remain (e.g. focus ring):
+  - `outline-offset-(--spacing-focus-ring-offset)` not `outline-offset-[var(--spacing-focus-ring-offset)]`
+  - Do **not** invent layout/leading theme tokens (`spacing-gutter`, `leading-heading`, `max-width-content`) - use scale or arbitrary (`px-[clamp(1.25rem,2.222vw,2.5rem)]`, `leading-[1.1]`, `max-w-[96rem]`).
+  - Keep `[...]` only for real expressions.
+- Brand tracking that used to override `tracking-wide`: use `tracking-[0.12em]` (Tailwind's `tracking-wide` is `0.025em`).
+- Sticky under concealed header: `header-concealed:` variant (see `app.css`).
 
 Before saving a class with `[...]`, check IDE suggestions / whether a bracket-free shortcut exists.
 
@@ -41,8 +56,12 @@ Prefer logical inline properties in Tailwind v4 canonical form:
 
 - `inset-s-*` / `inset-e-*` - not `start-*`, `end-*`, `left-*`, `right-*` for inline axis
   - e.g. `focus:inset-s-4`, `inset-s-5`, `inset-s-1/2`
-- `inset-x-*` when both inline sides share the same value - e.g. `inset-x-0`
+- **Same value on both inline sides → `inset-x-*`** (never write `left-4 right-4`, `inset-s-0 inset-e-0`, `px` already covers padding):
+  - `inset-x-0` not `left-0 right-0` / `inset-s-0 inset-e-0`
 - `ms-*` / `me-*` / `ps-*` / `pe-*` instead of `ml-*` / `mr-*` / `pl-*` / `pr-*`
+- `border-s-*` / `border-e-*` instead of `border-l-*` / `border-r-*` (e.g. `border-s-2 border-s-gold-500`)
+- `rounded-s-*` / `rounded-e-*` / `rounded-ss|se|es|ee-*` instead of `rounded-l|r|tl|tr|bl|br-*`
+- `text-start` / `text-end` instead of `text-left` / `text-right`
 - `origin-start` instead of `origin-left`
 
 ## Complexity limits
@@ -54,8 +73,8 @@ Prefer logical inline properties in Tailwind v4 canonical form:
 
 ```tsx
 // ✗
-<div className="absolute left-0 right-0 rotate-[18deg] focus:start-4 h-[100px] bg-[#2c2c2c]" />
+<div className="absolute left-0 right-0 z-[2] rotate-[18deg] focus:start-4 h-[100px] bg-[#2c2c2c] outline-offset-[var(--spacing-focus-ring-offset)] before:absolute before:inset-0 before:content-['']" />
 
 // ✓
-<div className="absolute inset-x-0 rotate-18 focus:inset-s-4 h-25 bg-neutral-800" />
+<div className="absolute inset-x-0 z-2 rotate-18 focus:inset-s-4 h-25 bg-neutral-800 outline-offset-(--spacing-focus-ring-offset) before:absolute before:inset-0" />
 ```

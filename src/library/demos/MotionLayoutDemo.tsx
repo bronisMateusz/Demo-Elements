@@ -7,7 +7,7 @@ const tabClassName =
   "relative z-10 inline-flex min-h-11 items-center justify-center rounded-xs px-4 py-2 text-sm font-medium leading-none text-neutral-900 transition-colors";
 
 const thumbClassName =
-  "relative z-10 flex aspect-square w-[5.5rem] items-center justify-center rounded-xs text-sm text-neutral-900 transition-colors";
+  "relative z-10 flex aspect-square w-22 items-center justify-center rounded-xs text-sm text-neutral-900 transition-colors";
 
 function DemoTab({ label }: { label: string }) {
   return <div className={tabClassName}>{label}</div>;

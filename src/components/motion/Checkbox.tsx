@@ -86,7 +86,7 @@ export function Checkbox({
         className={cn(
           "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-xs border-2 outline-none",
           "transition-colors duration-fast ease-out",
-          "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+          "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
           "disabled:cursor-not-allowed disabled:opacity-60",
           showMark
             ? "border-neutral-900 bg-neutral-900 text-neutral-0"
@@ -110,7 +110,7 @@ export function Checkbox({
               exit={
                 reduce
                   ? { opacity: 0 }
-                  : { opacity: 0, scale: 0.5, filter: "blur(4px)" }
+                  : { opacity: 0, scale: 0.5, filter: "blur(0.25rem)" }
               }
               transition={reduce ? { duration: 0 } : { duration: 0.16, ease: EASE_OUT }}
               aria-hidden

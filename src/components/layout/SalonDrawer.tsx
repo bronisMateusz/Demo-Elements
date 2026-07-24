@@ -106,12 +106,12 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
           onClose={onClose}
         />
 
-        <div className="flex flex-col gap-4 border-b border-neutral-200 px-gutter py-8">
+        <div className="flex flex-col gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] py-8">
           <div className="flex items-center gap-2">
             <label className="relative min-w-0 flex-1" htmlFor={searchId}>
               <span className="sr-only">{salonDrawerCopy.searchPlaceholder}</span>
               <i
-                className="ph ph-magnifying-glass pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-lg text-neutral-400"
+                className="ph ph-magnifying-glass pointer-events-none absolute top-1/2 inset-s-3 -translate-y-1/2 text-lg text-neutral-400"
                 aria-hidden="true"
               />
               <input
@@ -121,7 +121,7 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={salonDrawerCopy.searchPlaceholder}
                 autoComplete="off"
-                className={cn(inputClassName, "bg-neutral-0 py-2 pr-3 pl-10")}
+                className={cn(inputClassName, "bg-neutral-0 py-2 pe-3 ps-10")}
               />
             </label>
             <button
@@ -133,9 +133,9 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
                 locateBusy ? salonDrawerCopy.locatingLabel : salonDrawerCopy.locateLabel
               }
               className={cn(
-                "inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xs bg-neutral-900 text-neutral-0",
+                "inline-flex size-12 shrink-0 items-center justify-center rounded-xs bg-neutral-900 text-neutral-0",
                 "transition-colors duration-fast ease-out hover:bg-neutral-800",
-                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+                "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
                 "disabled:cursor-wait disabled:opacity-70",
               )}
             >
@@ -169,8 +169,8 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
           ) : null}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-gutter py-8">
-          <p className="m-0 mb-4 text-xs font-medium tracking-wide text-neutral-500 uppercase">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(1.25rem,2.222vw,2.5rem)] py-8">
+          <p className="m-0 mb-4 text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
             {salonDrawerCopy.resultsHeading}
           </p>
 

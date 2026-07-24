@@ -103,7 +103,7 @@ export function AskFab({
             <img
               src={image.src}
               alt=""
-              className="h-full w-full object-cover"
+              className="size-full object-cover"
               style={{ objectPosition: productImageObjectPosition(image) }}
               width={48}
               height={48}
@@ -112,7 +112,7 @@ export function AskFab({
           </div>
 
           <div className="hidden min-w-0 flex-1 lg:block">
-            <p className="m-0 truncate font-heading text-[18px] leading-tight text-neutral-900">
+            <p className="m-0 truncate font-heading text-lg leading-tight text-neutral-900">
               {title}
             </p>
             <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">{price}</p>

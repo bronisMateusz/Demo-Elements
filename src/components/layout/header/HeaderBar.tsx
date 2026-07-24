@@ -37,9 +37,9 @@ function HeaderSalonButton({
       aria-haspopup="dialog"
       aria-expanded={open}
       className={cn(
-        "group/salon hidden min-w-0 items-center gap-2.5 self-stretch rounded-xs px-3 text-left transition-colors duration-fast ease-out lg:flex",
+        "group/salon hidden min-w-0 items-center gap-2.5 self-stretch rounded-xs px-3 text-start transition-colors duration-fast ease-out lg:flex",
         "hover:bg-neutral-100",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+        "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
       )}
     >
       <i
@@ -47,10 +47,10 @@ function HeaderSalonButton({
         aria-hidden="true"
       />
       <span className="min-w-0">
-        <span className="block truncate font-body text-ui leading-compact text-neutral-800 transition-colors duration-fast ease-out group-hover/salon:text-gold-500">
+        <span className="block truncate font-body text-ui leading-[1.4] text-neutral-800 transition-colors duration-fast ease-out group-hover/salon:text-gold-500">
           {label}
         </span>
-        <span className="mt-0.5 block truncate text-xs leading-compact text-neutral-500 transition-colors duration-fast ease-out group-hover/salon:text-neutral-700">
+        <span className="mt-0.5 block truncate text-xs leading-[1.4] text-neutral-500 transition-colors duration-fast ease-out group-hover/salon:text-neutral-700">
           {note}
         </span>
       </span>
@@ -71,9 +71,9 @@ function HeaderFavoritesLink() {
     <a
       href={favoritesNav.href}
       className={cn(
-        "icon-btn relative inline-flex h-12 w-12 min-h-12 min-w-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800 transition-[background-color,color,border-color] duration-fast ease-out",
+        "icon-btn relative inline-flex size-12 min-size-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800 transition-[background-color,color,border-color] duration-fast ease-out",
         "hover:bg-neutral-100 hover:text-neutral-900",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+        "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
         "[&_i]:text-xl",
       )}
       aria-label={label}
@@ -82,7 +82,7 @@ function HeaderFavoritesLink() {
         className={count > 0 ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
         aria-hidden="true"
       />
-      <span className="absolute top-1.5 right-1.5 flex size-4 items-center justify-center rounded-full bg-neutral-900 text-[10px] leading-none font-medium text-neutral-0">
+      <span className="absolute top-1.5 inset-e-1.5 flex size-4 items-center justify-center rounded-full bg-neutral-900 text-2.5 leading-none font-medium text-neutral-0">
         {count > 9 ? "9+" : count}
       </span>
     </a>
@@ -147,7 +147,7 @@ export function HeaderBar({
       className="relative"
       onMouseLeave={scheduleCloseProducts}
     >
-      <div className="container flex h-header-bar-h items-center gap-4 xl:gap-6">
+      <div className="container flex h-18 items-center gap-4 xl:gap-6">
         <Link
           to="/"
           className="inline-flex shrink-0 items-center no-underline"
@@ -158,7 +158,7 @@ export function HeaderBar({
             alt=""
             width={108}
             height={106}
-            className="h-[clamp(32px,4vw,44px)] w-auto"
+            className="h-[clamp(2rem,4vw,2.75rem)] w-auto"
           />
         </Link>
 
@@ -218,7 +218,7 @@ export function HeaderBar({
           </ul>
         </nav>
 
-        <div className="ml-auto flex h-full shrink-0 items-center gap-1 border-l border-neutral-200 pl-3 lg:ml-0 lg:pl-4">
+        <div className="ms-auto flex h-full shrink-0 items-center gap-1 border-s border-neutral-200 ps-3 lg:ms-0 lg:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton label="Szukaj" iconClass="ph ph-magnifying-glass" variant="default" />
           <HeaderFavoritesLink />

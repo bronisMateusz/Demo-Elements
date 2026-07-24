@@ -8,7 +8,7 @@ export function SalonDrawerDemo() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col items-start gap-4 p-gutter md:p-8">
+    <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
         Drawer wyboru salonu - wyszukiwanie, geolokalizacja i zapis wyboru (localStorage).
         Ten sam komponent otwierany z headera, karty salonu na PDP i menu mobilnego.
@@ -26,7 +26,7 @@ export function AskDrawerDemo() {
   const image = montebianco80.images[0];
 
   return (
-    <div className="flex flex-col items-start gap-4 p-gutter md:p-8">
+    <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
         Formularz pytania o produkt - karta produktu, pola wymagane i wiadomość
         z prefillem. Wspólny DrawerShell z SalonDrawer i MobileDrawer.

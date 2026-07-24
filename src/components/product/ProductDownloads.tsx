@@ -21,10 +21,10 @@ export function ProductDownloads({ downloads }: ProductDownloadsProps) {
               <a
                 key={file.title}
                 href={file.href}
-                className="relative flex items-center justify-between gap-4 border-b border-neutral-200 px-4 py-5 no-underline lg:odd:border-r"
+                className="relative flex items-center justify-between gap-4 border-b border-neutral-200 px-4 py-5 no-underline lg:odd:border-e"
               >
                 <div className="relative z-10 flex min-w-0 items-center gap-4">
-                  <span className="font-body text-xs uppercase tracking-wide text-neutral-500">
+                  <span className="font-body text-xs uppercase tracking-[0.12em] text-neutral-500">
                     {file.format}
                   </span>
                   <div className="min-w-0">

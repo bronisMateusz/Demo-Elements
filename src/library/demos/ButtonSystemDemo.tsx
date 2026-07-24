@@ -279,7 +279,7 @@ export function ButtonQuickAddDemo() {
         className={libButtonPreviewClassName({
           variant: "primary",
           full: true,
-          className: "uppercase tracking-wide",
+          className: "uppercase tracking-[0.12em]",
         })}
       >
         <i className="ph ph-shopping-bag" aria-hidden="true" />
@@ -305,7 +305,7 @@ export function ButtonAskFabDemo() {
               <div className="flex items-center gap-3 border border-neutral-200 bg-neutral-0 px-4 py-3 shadow-2">
                 <div className="hidden size-12 shrink-0 bg-neutral-200 sm:block" />
                 <div className="hidden min-w-0 flex-1 sm:block">
-                  <p className="m-0 truncate font-heading text-[18px] leading-tight">Montebianco 80 cm</p>
+                  <p className="m-0 truncate font-heading text-lg leading-tight">Montebianco 80 cm</p>
                   <p className="mt-1 mb-0 text-ui tabular-nums">1 990 zł</p>
                 </div>
                 <div className="flex w-full gap-2 sm:w-auto">
