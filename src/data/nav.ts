@@ -432,6 +432,7 @@ export const presenceSalonsCopy = {
   description: "Wybierz miasto i sprawdź adres, godziny i dostępność ekspozycji.",
   allSalonsLabel: "Wszystkie salony",
   allSalonsHref: "#salony",
+  socialLabel: "Znajdź nas w sieci",
   mapPlaceholder: "Miejsce na mapę Polski z zaznaczonymi lokalizacjami salonów",
 } as const;
 
