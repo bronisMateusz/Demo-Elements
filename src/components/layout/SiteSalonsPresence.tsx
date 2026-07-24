@@ -6,6 +6,7 @@ import { AnimatedNumber } from "../motion/AnimatedNumber";
 import { PolandSalonsMap } from "./PolandSalonsMap";
 import { cn } from "../../lib/cn";
 import {
+  footerSocialLinks,
   presenceSalonCities,
   presenceSalonsCopy,
   presenceStats,
@@ -14,7 +15,7 @@ import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 
 /**
- * Dark pre-footer: full-bleed stats rail + content-width salon finder.
+ * Dark pre-footer: stats strip, then salon finder with socials above the map.
  */
 export function SiteSalonsPresence() {
   const voivGroups = useMemo(
@@ -28,11 +29,11 @@ export function SiteSalonsPresence() {
       aria-labelledby="presence-salons-title"
       className="relative overflow-hidden bg-neutral-900 text-neutral-0"
     >
-      <Container className="relative z-10 pt-[var(--spacing-section-sm)] md:pt-[var(--spacing-section)]">
+      <Container className="relative z-10 pt-[var(--spacing-section-sm)] pb-8 md:pt-[var(--spacing-section)] md:pb-10">
         <ul
           className={cn(
-            "m-0 grid list-none grid-cols-2 gap-8 p-0",
-            "md:grid-cols-4 md:gap-6 lg:gap-10",
+            "m-0 grid list-none grid-cols-2 gap-x-6 gap-y-8 p-0",
+            "md:grid-cols-4 md:gap-x-8 lg:gap-x-10",
           )}
         >
           {presenceStats.map((stat, index) => (
@@ -40,13 +41,13 @@ export function SiteSalonsPresence() {
               key={stat.label}
               className={cn(
                 "min-w-0",
-                index > 0 && "md:border-l md:border-neutral-700 md:pl-6 lg:pl-10",
+                index > 0 && "md:border-l md:border-neutral-700 md:pl-6 lg:pl-8",
               )}
             >
-              <p className="m-0 font-heading text-[clamp(2.25rem,4vw,3.25rem)] leading-none font-medium tracking-tight text-neutral-0">
+              <p className="m-0 font-heading text-[clamp(2rem,3.5vw,2.75rem)] leading-none font-medium tracking-tight text-neutral-0">
                 <AnimatedNumber value={stat.value} format={stat.format} />
               </p>
-              <p className="mt-3 mb-0 max-w-[12rem] font-body text-sm leading-relaxed text-neutral-400">
+              <p className="mt-2.5 mb-0 max-w-[11rem] font-body text-sm leading-relaxed text-neutral-400">
                 {stat.label}
               </p>
             </li>
@@ -54,13 +55,13 @@ export function SiteSalonsPresence() {
         </ul>
       </Container>
 
-      <div className="relative z-10 mt-12 border-t border-neutral-800 md:mt-16" aria-hidden="true" />
+      <div className="relative z-10 border-t border-neutral-800" aria-hidden="true" />
 
       <Container
         size="content"
-        className="relative z-10 pt-12 pb-[var(--spacing-section-sm)] md:pt-16 md:pb-[var(--spacing-section)]"
+        className="relative z-10 pt-8 pb-[var(--spacing-section-sm)] md:pt-10 md:pb-[var(--spacing-section)]"
       >
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] xl:gap-16">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] xl:gap-16">
           <div className="min-w-0">
             <h2
               id="presence-salons-title"
@@ -108,7 +109,7 @@ export function SiteSalonsPresence() {
                 as="button"
                 type="button"
                 variant="gold"
-                className="rounded-xs"
+                className="w-fit rounded-xs"
                 onClick={requestSalonDrawer}
               >
                 {presenceSalonsCopy.allSalonsLabel}
@@ -117,7 +118,34 @@ export function SiteSalonsPresence() {
             </div>
           </div>
 
-          <PolandSalonsMap />
+          <div className="flex min-w-0 flex-col gap-4">
+            <ul
+              className="m-0 flex list-none items-center justify-end gap-0.5 p-0"
+              aria-label="Social media"
+            >
+              {footerSocialLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className={cn(
+                      "inline-flex size-10 items-center justify-center text-neutral-400",
+                      "transition-colors duration-fast ease-out hover:text-gold-400",
+                      "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
+                    )}
+                    aria-label={link.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i
+                      className={cn(link.iconClass, "text-xl leading-none")}
+                      aria-hidden="true"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <PolandSalonsMap />
+          </div>
         </div>
       </Container>
     </section>

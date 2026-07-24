@@ -49,7 +49,7 @@ function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnai
               <img
                 src={image.src}
                 alt=""
-                className="absolute inset-0 h-full w-full object-contain"
+                className="absolute inset-0 h-full w-full object-cover"
                 style={{ objectPosition: productImageObjectPosition(image) }}
                 loading="lazy"
                 draggable={false}

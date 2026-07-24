@@ -334,35 +334,47 @@ export const footerBrand = {
   ],
 } as const;
 
+/** Untitled link columns — matches Elements footer IA (categories / discovery / services). */
 export const footerColumns = [
   {
-    title: "Na skróty",
     links: [
-      { label: "Produkty", href: "#produkty" },
-      { label: "Inspiracje", href: "#inspiracje" },
-      { label: "Znajdź salon", href: "#salony" },
-      { label: "Dla Architekta", href: "#strefa-architekta" },
+      { label: "Łazienka", href: "#lazienka" },
+      { label: "Kuchnia", href: "#kuchnia" },
+      { label: "Ogrzewanie", href: "#ogrzewanie" },
+      { label: "Płytki - rodzaje", href: "#plytki-rodzaje" },
+      { label: "Płytki - imitacje", href: "#plytki-imitacje" },
+      { label: "Konfigurator kabin", href: "#konfigurator-kabin" },
     ],
   },
   {
-    title: "Pomoc",
     links: [
-      { label: "Kontakt", href: "#kontakt" },
-      { label: "Do pobrania", href: "#do-pobrania" },
+      { label: "Inspiracje", href: "#inspiracje" },
+      { label: "Nowości", href: "#nowosci" },
+      { label: "Outlet", href: "#outlet" },
+      { label: "Bestsellery", href: "#bestsellery" },
       { label: "Producenci", href: "#producenci" },
     ],
   },
   {
-    title: "Informacje",
     links: [
-      { label: "Polityka prywatności", href: "#polityka-prywatnosci" },
-      { label: "Regulamin", href: "#regulamin" },
+      { label: "Strefa architekta", href: "#strefa-architekta" },
+      { label: "Strefa instalatora", href: "#strefa-instalatora" },
+      { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
+      { label: "Konfigurator kabin", href: "#konfigurator-kabin" },
+      { label: "Blog", href: "#blog" },
+      { label: "Salony i kontakt", href: "#salony" },
+      { label: "Usługa projektowa", href: "#usluga-projektowa" },
+      { label: "Kontakt", href: "#kontakt" },
     ],
   },
 ] as const;
 
 export const footerLegal = {
   copyright: "Elements Show / Grupa HBH",
+  links: [
+    { label: "Polityka prywatności", href: "#polityka-prywatnosci" },
+    { label: "Regulamin", href: "#regulamin" },
+  ],
 } as const;
 
 export const footerNewsletterCopy = {
@@ -372,7 +384,7 @@ export const footerNewsletterCopy = {
   privacyHref: "#polityka-prywatnosci",
 } as const;
 
-/** Pre-footer presence strip - stats + salon city finder (no socials). */
+/** Pre-footer presence strip — stats + salon city finder (socials above the map). */
 export const presenceStats = [
   {
     value: 19,
