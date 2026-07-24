@@ -122,31 +122,36 @@ export function SiteSalonsPresence() {
           </div>
 
           <div className="flex min-w-0 flex-col gap-4">
-            <ul
-              className="m-0 flex list-none items-center justify-end gap-0.5 p-0"
-              aria-label="Social media"
-            >
-              {footerSocialLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className={cn(
-                      "inline-flex size-10 items-center justify-center text-neutral-400",
-                      "transition-colors duration-fast ease-out hover:text-gold-400",
-                      "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
-                    )}
-                    aria-label={link.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i
-                      className={cn(link.iconClass, "text-xl leading-none")}
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
+              <p className="m-0 font-body text-sm text-neutral-400">
+                {presenceSalonsCopy.socialLabel}
+              </p>
+              <ul
+                className="m-0 flex list-none items-center gap-0.5 p-0"
+                aria-label={presenceSalonsCopy.socialLabel}
+              >
+                {footerSocialLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className={cn(
+                        "inline-flex size-10 items-center justify-center text-neutral-400",
+                        "transition-colors duration-fast ease-out hover:text-gold-400",
+                        "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-0",
+                      )}
+                      aria-label={link.label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i
+                        className={cn(link.iconClass, "text-xl leading-none")}
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <PolandSalonsMap />
           </div>
         </div>
