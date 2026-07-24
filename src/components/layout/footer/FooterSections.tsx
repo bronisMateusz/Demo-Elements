@@ -5,7 +5,6 @@ import {
   footerBrand,
   footerColumns,
   footerLegal,
-  footerSocialLinks,
 } from "../../../data/nav";
 import { FooterSmartbeesCredit } from "./FooterSmartbeesCredit";
 import { FooterSpotlightRoot } from "./FooterWordmark";
@@ -45,14 +44,11 @@ export function FooterMain() {
                 </p>
               </div>
 
-              {footerColumns.map((column) => (
-                <div key={column.title}>
-                  <h3 className="mb-4 font-body text-sm font-semibold text-neutral-900">
-                    {column.title}
-                  </h3>
+              {footerColumns.map((column, columnIndex) => (
+                <div key={column.links[0]?.label ?? columnIndex}>
                   <ul className="m-0 flex list-none flex-col gap-2 p-0">
                     {column.links.map((link) => (
-                      <li key={link.label}>
+                      <li key={`${columnIndex}-${link.label}`}>
                         <a
                           href={link.href}
                           className="block w-full text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
@@ -76,43 +72,29 @@ export function FooterMain() {
   );
 }
 
-function FooterSocialLinks({ className }: { className?: string }) {
-  return (
-    <ul className={cn("m-0 flex list-none items-center justify-center gap-1 p-0", className)}>
-      {footerSocialLinks.map((link) => (
-        <li key={link.label}>
-          <a
-            href={link.href}
-            className={cn(
-              "inline-flex size-10 items-center justify-center text-neutral-500",
-              "transition-colors duration-fast ease-out hover:text-gold-500",
-              "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
-            )}
-            aria-label={link.label}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className={cn(link.iconClass, "text-xl leading-none")} aria-hidden="true" />
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export function FooterLegal() {
   return (
     <Container
       className={cn(
-        "grid grid-cols-1 items-center gap-4 border-t border-neutral-200 py-8",
-        "sm:grid-cols-[1fr_auto_1fr]",
+        "flex flex-col items-center justify-between gap-4 border-t border-neutral-200 py-8 sm:flex-row",
       )}
     >
       <p className="m-0 text-center text-sm text-neutral-500 sm:text-left">
         © {new Date().getFullYear()} {footerLegal.copyright}
       </p>
-      <FooterSocialLinks />
-      <div className="flex justify-center sm:justify-end">
+      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end">
+        <ul className="m-0 flex list-none flex-wrap items-center justify-center gap-x-6 gap-y-2 p-0">
+          {footerLegal.links.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                className="text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
         <FooterSmartbeesCredit />
       </div>
     </Container>
