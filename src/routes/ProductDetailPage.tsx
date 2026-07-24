@@ -11,6 +11,7 @@ import { ProductDownloads } from "../components/product/ProductDownloads";
 import { ProductEditorial } from "../components/product/ProductEditorial";
 import { ProductHero } from "../components/product/ProductHero";
 import { ProductInspiration } from "../components/product/ProductInspiration";
+import { ProductPairWith } from "../components/product/ProductPairWith";
 import { ProductRecommendations } from "../components/product/ProductRecommendations";
 import { ProductSpecifications } from "../components/product/ProductSpecifications";
 import { ProductVisualizationCTA } from "../components/product/ProductVisualizationCTA";
@@ -60,6 +61,15 @@ export function ProductDetailPage() {
         <ProductHero product={product} onAskOpen={() => setAskOpen(true)} />
 
         <ProductSubnav items={subnavItems} />
+
+        <RevealSection>
+          <Section id="pdp-seria" className={pdpSectionScrollMarginClassName}>
+            <ProductPairWith
+              title={product.seriesTitle}
+              products={product.seriesProducts}
+            />
+          </Section>
+        </RevealSection>
 
         <RevealSection>
           <Section id="pdp-opis" className={pdpSectionScrollMarginClassName}>

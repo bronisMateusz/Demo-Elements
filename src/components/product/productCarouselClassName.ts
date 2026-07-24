@@ -24,7 +24,8 @@ export function productCarouselSwiperClassName(layout: ProductCarouselLayoutToke
     layout === "inline" || layout === "inline-bleed"
       ? "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(220px,calc((100%-12px)/2.05),320px)] [&_.swiper-slide]:shrink-0"
       : layout === "bleed"
-        ? "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(270px,calc((100%-15px)/3.85),440px)] [&_.swiper-slide]:shrink-0"
+        ? // ~4.2 cards + peek of the next (clone) on wide screens
+          "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(260px,calc((100%-20px)/4.2),400px)] [&_.swiper-slide]:shrink-0"
         : "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[clamp(260px,72vw,424px)] [&_.swiper-slide]:shrink-0",
   );
 }
@@ -35,7 +36,7 @@ export function productCarouselSlideClassName(layout: ProductCarouselLayoutToken
   }
 
   if (layout === "bleed") {
-    return "!h-auto !w-[clamp(270px,calc((100%-15px)/3.85),440px)] shrink-0";
+    return "!h-auto !w-[clamp(260px,calc((100%-20px)/4.2),400px)] shrink-0";
   }
 
   return "!h-auto !w-[clamp(260px,72vw,424px)] shrink-0";

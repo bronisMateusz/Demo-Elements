@@ -15,7 +15,7 @@ export function FooterMain() {
     <FooterSpotlightRoot>
       {() => (
         <>
-          <Container className="relative z-10 pt-16 pb-6 md:pt-20 md:pb-8">
+          <Container className="relative z-10 pt-8 pb-6 md:pt-10 md:pb-8">
             <div
               className={cn(
                 "grid grid-cols-2 gap-x-8 gap-y-10",

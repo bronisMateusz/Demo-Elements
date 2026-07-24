@@ -7,6 +7,7 @@ import { useBleedRightWidth } from "../../hooks/useBleedRightWidth";
 import { useContentInsetPx } from "../../hooks/useContentInsetPx";
 import { useGutterPx } from "../../hooks/useGutterPx";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
+import { TextRevealLead } from "../motion/TextRevealLead";
 import type { RelatedProduct } from "../../types/product";
 import {
   productCarouselNavClassName,
@@ -33,6 +34,8 @@ type ProductCarouselProps = {
   bleed?: boolean;
   layout?: ProductCarouselLayout;
   header?: ProductCarouselHeader;
+  /** `header` - arrows beside the title (Inspiration-style); `overlay` - on the track edges. */
+  navPlacement?: "overlay" | "header";
 };
 
 /** Clone products until we have enough slides to fill wide viewports in loop mode. */
@@ -110,11 +113,15 @@ export function ProductCarousel({
   bleed = true,
   layout,
   header,
+  navPlacement,
 }: ProductCarouselProps) {
   const resolvedLayout: ProductCarouselLayout = layout ?? (bleed ? "bleed" : "contained");
   const isInline = resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
   const isInlineBleed = resolvedLayout === "inline-bleed";
   const isBleed = resolvedLayout === "bleed";
+  const resolvedNavPlacement = navPlacement ?? (isInline ? "header" : "overlay");
+  const showHeaderNav = Boolean(header) && resolvedNavPlacement === "header";
+  const showOverlayNav = resolvedNavPlacement === "overlay" && products.length > 1;
   const gutterPx = useGutterPx();
   const contentInsetPx = useContentInsetPx();
   const bleedInsetPx = isBleed ? contentInsetPx : gutterPx;
@@ -125,9 +132,11 @@ export function ProductCarousel({
   const [atEnd, setAtEnd] = useState(false);
 
   const enableLoop = !isInline && products.length > 1;
+  // Ultrawide needs enough duplicates so a clone always peeks past the right edge.
+  const minLoopSlides = isBleed ? 20 : 12;
   const slides = useMemo(
-    () => (enableLoop ? withClonedSlides(products, isInline ? 8 : 12) : products),
-    [products, enableLoop, isInline],
+    () => (enableLoop ? withClonedSlides(products, minLoopSlides) : products),
+    [products, enableLoop, minLoopSlides],
   );
 
   const syncEdges = (instance: SwiperInstance) => {
@@ -142,7 +151,6 @@ export function ProductCarousel({
 
   const slidePrev = () => swiper?.slidePrev();
   const slideNext = () => swiper?.slideNext();
-  const headerNav = isInline && header;
   const swiperKey = isBleed
     ? `bleed-${bleedInsetPx}-${slides.length}`
     : isInlineBleed
@@ -158,17 +166,35 @@ export function ProductCarousel({
       aria-labelledby={labelledBy ?? header?.titleId}
     >
       {header ? (
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2
-            id={header.titleId}
-            className={cn(
-              "m-0 min-w-0 font-heading text-neutral-900",
-              isInline ? "t-h3" : "t-h2",
-            )}
-          >
-            {header.title}
-          </h2>
-          {headerNav ? (
+        <div
+          className={cn(
+            "flex flex-wrap items-end justify-between gap-6",
+            isBleed ? "mx-auto mb-8 w-full max-w-content px-gutter md:mb-10" : "mb-4",
+          )}
+        >
+          {isBleed && !isInline ? (
+            <TextRevealLead
+              id={header.titleId}
+              revealUnit="word"
+              className="min-w-0 max-w-2xl"
+              typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+              mutedClassName="text-neutral-900/20"
+              fillClassName="text-neutral-900"
+            >
+              {header.title}
+            </TextRevealLead>
+          ) : (
+            <h2
+              id={header.titleId}
+              className={cn(
+                "m-0 min-w-0 font-heading text-neutral-900",
+                isInline ? "t-h3" : "t-h2",
+              )}
+            >
+              {header.title}
+            </h2>
+          )}
+          {showHeaderNav ? (
             <CarouselNavButtons
               atStart={atStart}
               atEnd={atEnd}
@@ -196,11 +222,12 @@ export function ProductCarousel({
           modules={[A11y, Mousewheel]}
           watchOverflow={!enableLoop}
           loop={enableLoop}
-          loopAdditionalSlides={enableLoop ? products.length : 0}
+          loopAdditionalSlides={enableLoop ? Math.max(products.length, 4) : 0}
           slidesPerView="auto"
           spaceBetween={isInline ? 12 : 5}
           slidesOffsetBefore={isBleed ? bleedInsetPx : undefined}
-          slidesOffsetAfter={isBleed ? bleedInsetPx : undefined}
+          // Peek clones past the right edge on ultrawide (left stays content-aligned).
+          slidesOffsetAfter={isBleed ? gutterPx : undefined}
           mousewheel={{
             forceToAxis: true,
             releaseOnEdges: !enableLoop,
@@ -234,7 +261,7 @@ export function ProductCarousel({
         </Swiper>
       </div>
 
-      {!headerNav ? (
+      {showOverlayNav ? (
         <>
           <button
             type="button"

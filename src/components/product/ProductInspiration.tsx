@@ -8,6 +8,7 @@ import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSite
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { InspirationArrangement } from "../../types/product";
+import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
 import { IconButton } from "../ui/IconButton";
@@ -100,8 +101,16 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
   }));
 
   return (
-    <section aria-labelledby="inspiration-title" className="overflow-x-clip">
-      <Container size="content">
+    <section
+      aria-labelledby="inspiration-title"
+      className="relative overflow-x-clip"
+    >
+      <BrandMotif
+        name="dots-grid"
+        className="absolute top-0 right-[max(0px,calc((100%-var(--max-width-content))/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+      />
+
+      <Container size="content" className="relative z-10">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
           <div className="min-w-0 max-w-2xl">
             <Eyebrow className="mb-3">Produkt w aranżacji</Eyebrow>
@@ -109,7 +118,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
               id="inspiration-title"
               revealUnit="word"
               className="max-w-none"
-              typographyClassName="font-heading text-h2 leading-heading tracking-tight"
+              typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
               mutedClassName="text-neutral-900/20"
               fillClassName="text-neutral-900"
             >

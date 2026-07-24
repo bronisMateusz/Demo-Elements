@@ -13,7 +13,7 @@ import "swiper/css";
 
 type ProductGalleryProps = {
   images: ProductImage[];
-  /** On PDP hero - fills the sticky desktop column (100svh − header) from lg. */
+  /** On PDP hero - fills the sticky desktop column from lg (viewport − header − peek). */
   layout?: "default" | "viewport";
 };
 
@@ -173,7 +173,7 @@ function GallerySlideContent({
                 "md:h-[min(52svh,32rem)]",
                 "lg:aspect-auto lg:h-full lg:min-h-0",
               )
-            : "block aspect-[4/5]",
+            : "block aspect-[4/5] lg:aspect-[3/4] lg:max-h-[min(36rem,70svh)]",
         )}
         onClick={handleOpen}
         aria-label={`Powiększ zdjęcie ${index + 1}`}
@@ -364,7 +364,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
                     "lg:h-full lg:min-h-0 lg:flex-1",
                     "lg:[&_.swiper-slide]:flex lg:[&_.swiper-slide]:h-full lg:[&_.swiper-slide]:items-center",
                   )
-                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] [&_.swiper-slide]:h-auto",
+                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
             )}
             direction="horizontal"
             slidesPerView={1}

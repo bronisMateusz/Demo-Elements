@@ -1,4 +1,5 @@
 import { useId, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import { distanceKm, formatDistanceKm } from "../../lib/geo";
 import { salonDrawerCopy, salonOptions } from "../../data/nav";
@@ -202,12 +203,12 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
                       {salon.address}
                     </p>
                     <div className="mt-5 flex items-center justify-between gap-4">
-                      <a
-                        href={salon.href}
+                      <Link
+                        to={salon.href}
                         className="text-sm text-neutral-700 underline underline-offset-2 transition-colors duration-fast ease-out hover:text-gold-500"
                       >
                         {salonDrawerCopy.learnMoreLabel}
-                      </a>
+                      </Link>
                       <Button
                         as="button"
                         type="button"

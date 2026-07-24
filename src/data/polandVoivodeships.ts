@@ -17,22 +17,22 @@ export type PolandVoivodeship = {
 
 /** City salon href → voivodeship id (ISO 3166-2:PL). */
 export const CITY_TO_VOIV: Record<string, string> = {
-  "#salon-warszawa": "PL-MZ",
-  "#salon-krakow": "PL-MA",
-  "#salon-poznan": "PL-WP",
-  "#salon-wroclaw": "PL-DS",
-  "#salon-gdansk": "PL-PM",
-  "#salon-lodz": "PL-LD",
-  "#salon-szczecin": "PL-ZP",
-  "#salon-bydgoszcz": "PL-KP",
-  "#salon-torun": "PL-KP",
-  "#salon-kielce": "PL-SK",
-  "#salon-rzeszow": "PL-PK",
-  "#salon-opole": "PL-OP",
-  "#salon-gliwice1": "PL-SL",
-  "#salon-jgora": "PL-DS",
-  "#salon-klodzko": "PL-DS",
-  "#salon-koszalin1": "PL-ZP",
+  "/salony/warszawa": "PL-MZ",
+  "/salony/krakow": "PL-MA",
+  "/salony/poznan": "PL-WP",
+  "/salony/wroclaw": "PL-DS",
+  "/salony/gdansk": "PL-PM",
+  "/salony/lodz": "PL-LD",
+  "/salony/szczecin": "PL-ZP",
+  "/salony/bydgoszcz": "PL-KP",
+  "/salony/torun": "PL-KP",
+  "/salony/kielce": "PL-SK",
+  "/salony/rzeszow": "PL-PK",
+  "/salony/opole": "PL-OP",
+  "/salony/gliwice1": "PL-SL",
+  "/salony/jgora": "PL-DS",
+  "/salony/klodzko": "PL-DS",
+  "/salony/koszalin1": "PL-ZP",
 };
 
 export type SalonCityLink = {
