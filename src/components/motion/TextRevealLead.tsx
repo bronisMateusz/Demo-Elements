@@ -5,7 +5,7 @@ import { useScrollRevealProgress } from "../../hooks/useScrollRevealProgress";
 import { getLineRevealProgress, useTextLineSplit } from "../../hooks/useTextLineSplit";
 
 export const textRevealLeadTypographyClassName =
-  "font-heading text-[clamp(26px,2.8vw,38px)] leading-[1.3] tracking-tight text-neutral-900";
+  "font-heading text-[clamp(26px,2.8vw,38px)] leading-[1.3] tracking-tight font-medium text-neutral-900";
 
 type TextRevealLeadProps = {
   children: string;

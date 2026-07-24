@@ -2,7 +2,6 @@ import { useProductVariants } from "../../hooks/useProductVariants";
 import type { Product } from "../../types/product";
 import { ProductBadges, ProductPriceBlock } from "./ProductBuyBoxParts";
 import { ProductFavoriteButton } from "./ProductFavoriteButton";
-import { ProductPairWith } from "./ProductPairWith";
 import { ProductSalonCard } from "./ProductSalonCard";
 import { ProductVariantSelector } from "./variant-selector";
 
@@ -18,8 +17,6 @@ type ProductBuyBoxProps = {
     | "price"
     | "cta"
     | "salonCard"
-    | "seriesTitle"
-    | "seriesProducts"
   >;
   onAskOpen?: () => void;
 };
@@ -52,7 +49,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
         />
       </div>
 
-      <p className="mb-5 text-sm text-neutral-500 lg:mb-8">{displaySku}</p>
+      <p className="mb-5 text-sm text-neutral-500 lg:mb-6">{displaySku}</p>
 
       {product.variants ? (
         <ProductVariantSelector
@@ -82,10 +79,8 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
       />
 
       {product.salonCard ? (
-        <ProductSalonCard className="mt-8 lg:mt-10" {...product.salonCard} onAskOpen={onAskOpen} />
+        <ProductSalonCard className="mt-6 lg:mt-8" {...product.salonCard} onAskOpen={onAskOpen} />
       ) : null}
-
-      <ProductPairWith title={product.seriesTitle} products={product.seriesProducts} />
     </div>
   );
 }

@@ -16,8 +16,6 @@ type ProductHeroProps = {
     | "price"
     | "cta"
     | "salonCard"
-    | "seriesTitle"
-    | "seriesProducts"
   >;
   onAskOpen?: () => void;
 };

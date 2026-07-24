@@ -11,6 +11,7 @@ export const PDP_SUBNAV_SCROLL_OFFSET_PX = PDP_HEADER_HEIGHT_PX + PDP_SUBNAV_HEI
 
 export function buildPdpSubnavItems(): PdpSubnavItem[] {
   return [
+    { id: "pdp-seria", label: "Z tej serii" },
     { id: "pdp-opis", label: "Opis" },
     { id: "pdp-specyfikacja", label: "Specyfikacja" },
     { id: "pdp-pliki", label: "Pliki do pobrania" },

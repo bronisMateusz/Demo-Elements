@@ -1,5 +1,5 @@
+import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
-import { TextRevealLead } from "../motion/TextRevealLead";
 import { Breadcrumbs, type BreadcrumbItem } from "../orientation/Breadcrumbs";
 import { SectionHeader } from "../structural/SectionHeader";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
@@ -16,9 +16,9 @@ type ProductEditorialProps = {
 
 function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
   return (
-    <li className="flex flex-col gap-4">
+    <li className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
       {feature.image ? (
-        <div className="aspect-[4/3] overflow-hidden bg-neutral-100">
+        <div className="aspect-[16/10] w-full shrink-0 overflow-hidden bg-neutral-100 sm:aspect-[4/3] sm:w-36 md:w-40">
           <img
             src={feature.image.src}
             alt={feature.image.alt}
@@ -29,9 +29,11 @@ function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
           />
         </div>
       ) : null}
-      <div>
-        <h3 className="t-h4 mb-2">{feature.title}</h3>
-        <p className="t-body">{feature.description}</p>
+      <div className="min-w-0">
+        <h3 className="mb-1 font-body text-base leading-snug font-medium text-neutral-900">
+          {feature.title}
+        </h3>
+        <p className="t-small m-0 text-neutral-600">{feature.description}</p>
       </div>
     </li>
   );
@@ -46,8 +48,20 @@ export function ProductEditorial({
   breadcrumbs,
 }: ProductEditorialProps) {
   return (
-    <section aria-labelledby="editorial-title">
-      <Container size="content">
+    <section
+      aria-labelledby="editorial-title"
+      className="relative overflow-visible"
+    >
+      <BrandMotif
+        name="circle-beige"
+        className="absolute -top-24 -right-20 size-[min(70vw,28rem)] opacity-40 max-md:hidden"
+      />
+      <BrandMotif
+        name="arc-light"
+        className="absolute -bottom-8 -left-16 size-[min(50vw,18rem)] opacity-50 max-md:hidden"
+      />
+
+      <Container size="content" className="relative z-10">
         {breadcrumbs ? (
           <div className="hidden lg:block">
             <Breadcrumbs items={breadcrumbs} variant="section" />
@@ -58,7 +72,9 @@ export function ProductEditorial({
           <div className="min-w-0 lg:sticky lg:top-[calc(var(--spacing-header-offset)+58px+1rem)] lg:self-start">
             <SectionHeader eyebrow={eyebrow} title={title} titleId="editorial-title" className="mb-8" />
             <div className="space-y-6">
-              <TextRevealLead>{lead}</TextRevealLead>
+              <p className="m-0 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
+                {lead}
+              </p>
               {paragraphs.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)} className="t-body-lg max-w-prose">
                   {paragraph}
@@ -66,7 +82,7 @@ export function ProductEditorial({
               ))}
             </div>
           </div>
-          <ul className="flex list-none flex-col gap-10 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
+          <ul className="flex list-none flex-col gap-6 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
             {features.map((feature) => (
               <ProductFeatureItem key={feature.title} feature={feature} />
             ))}

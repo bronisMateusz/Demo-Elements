@@ -31,7 +31,7 @@ export function ProductVisualizationCTA({
     <section
       ref={targetRef}
       aria-labelledby="viz-cta-title"
-      className="py-8 md:py-[var(--spacing-section-sm)] lg:py-[var(--spacing-section)]"
+      className="py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)]"
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"
@@ -44,7 +44,7 @@ export function ProductVisualizationCTA({
             id="viz-cta-title"
             revealUnit="word"
             className="mx-auto max-w-none text-balance"
-            typographyClassName="font-heading text-[clamp(34px,4.1vw,62px)] leading-[1.12] tracking-tight"
+            typographyClassName="font-heading text-[clamp(34px,4.1vw,62px)] leading-[1.12] tracking-tight font-medium"
             mutedClassName="text-neutral-0/30"
             fillClassName="text-neutral-0"
           >

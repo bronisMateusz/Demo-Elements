@@ -2,6 +2,7 @@ import { PropsWithChildren, useEffect } from "react";
 import { skipLinkClassName } from "../../lib/skipLinkClassName";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { SiteNewsletter } from "./SiteNewsletter";
 
 type PageShellProps = PropsWithChildren<{
   breadcrumbs?: React.ReactNode;
@@ -64,6 +65,7 @@ export function PageShell({ children, breadcrumbs }: PageShellProps) {
         {breadcrumbs}
         {children}
       </main>
+      <SiteNewsletter />
       <Footer />
     </>
   );

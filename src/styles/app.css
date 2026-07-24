@@ -2,34 +2,35 @@
 
 /* ---------- Elements design tokens → Tailwind theme ---------------- */
 @theme {
-  /* Neutral warm scale */
+  /* Neutral scale — client Elements palette */
   --color-neutral-0: #ffffff;
-  --color-neutral-50: #faf9f7;
-  --color-neutral-100: #f5f3ef;
-  --color-neutral-200: #e8e4df;
-  --color-neutral-300: #d4cfc8;
-  --color-neutral-400: #b8b2aa;
-  --color-neutral-500: #706b66;
-  --color-neutral-600: #6b6560;
-  --color-neutral-700: #3d3a37;
-  --color-neutral-800: #2c2c2c;
-  --color-neutral-900: #1a1a1a;
+  --color-neutral-50: #fafbfc;
+  --color-neutral-100: #faf6f6;
+  --color-neutral-200: #efece9;
+  --color-neutral-300: #d9d7d4;
+  --color-neutral-400: #b4b3b2;
+  --color-neutral-500: #867e7a;
+  --color-neutral-600: #5c4e49;
+  --color-neutral-700: #2f2d2a;
+  --color-neutral-800: #23201d;
+  --color-neutral-900: #1a1815;
 
-  /* Gold accent */
-  --color-gold-50: #faf7f0;
-  --color-gold-100: #f0e8d6;
-  --color-gold-400: #d4c4a0;
-  --color-gold-500: #b8975a;
-  --color-gold-600: #9a7d45;
+  /* Gold accent — client Elements palette */
+  --color-gold-50: #e2dccc;
+  --color-gold-100: #dcc4a7;
+  --color-gold-400: #cab792;
+  --color-gold-500: #b39965;
+  --color-gold-600: #925522;
 
-  /* Product badges */
-  --color-badge-brand: #3d5249;
-  --color-promo: #a54840;
-  --color-promo-muted: #faf3f2;
+  /* Product badges — client Elements palette */
+  --color-badge-brand: #293431;
+  --color-promo: #c65438;
+  --color-promo-muted: #faf6f6;
 
-  /* Typography */
+  /* Typography — single family (General Sans); no licensed brand fonts */
   --font-heading:
-    "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+    "General Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
   --font-body:
     "General Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     sans-serif;
@@ -49,8 +50,8 @@
   --tracking-wide: 0.12em;
 
   /* Layout - outside Tailwind's default spacing scale */
-  --spacing-section-sm: clamp(48px, 8vw, 72px);
-  --spacing-section: clamp(64px, 10vw, 96px);
+  --spacing-section-sm: clamp(32px, 5vw, 48px);
+  --spacing-section: clamp(40px, 6vw, 64px);
   --spacing-gutter: clamp(20px, 2.222vw, 40px);
   /* Content rail + wide shell - ultrawide balance (bleed peeks past content). */
   --max-width-content: 96rem;
@@ -69,10 +70,10 @@
   /* Sticky/scroll offset - collapses to 0 while the site header is auto-hidden. */
   --spacing-header-offset: 116px;
 
-  /* Shadows - brand-specific; no 1:1 map to shadow-sm/md/lg */
-  --shadow-subtle: 0 1px 3px rgba(26, 26, 26, 0.04);
-  --shadow-1: 0 2px 8px rgba(26, 26, 26, 0.06);
-  --shadow-2: 0 8px 32px rgba(26, 26, 26, 0.08);
+  /* Shadows — tinted to neutral-900 (#1a1815) */
+  --shadow-subtle: 0 1px 3px rgba(26, 24, 21, 0.04);
+  --shadow-1: 0 2px 8px rgba(26, 24, 21, 0.06);
+  --shadow-2: 0 8px 32px rgba(26, 24, 21, 0.08);
 
   /* Motion - outside Tailwind's default duration/ease scale */
   --ease-luxury: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -165,19 +166,19 @@
 }
 
 @utility t-display {
-  @apply font-heading text-display-xl leading-display tracking-tight text-neutral-900 font-normal;
+  @apply font-heading text-display-xl leading-display tracking-tight text-neutral-900 font-medium;
 }
 
 @utility t-h1 {
-  @apply font-heading text-h1 leading-heading tracking-tight text-neutral-900 font-normal;
+  @apply font-heading text-h1 leading-heading tracking-tight text-neutral-900 font-medium;
 }
 
 @utility t-h2 {
-  @apply font-heading text-h2 leading-heading tracking-tight text-neutral-900 font-normal;
+  @apply font-heading text-h2 leading-heading tracking-tight text-neutral-900 font-medium;
 }
 
 @utility t-h3 {
-  @apply font-heading text-h3 leading-heading text-neutral-900 font-normal;
+  @apply font-heading text-h3 leading-heading text-neutral-900 font-medium;
 }
 
 @utility t-h4 {

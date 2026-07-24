@@ -256,7 +256,7 @@ export function MorphPopoverContent({
           transition={reduce ? { duration: 0.12 } : undefined}
           style={{ transformOrigin: originFor(side, align), ...marginStyle }}
           className={cn(
-            "absolute z-30 [filter:drop-shadow(0_8px_24px_rgba(26,26,26,0.18))]",
+            "absolute z-30 [filter:drop-shadow(0_8px_24px_rgba(26,24,21,0.18))]",
             posClass,
           )}
         >
