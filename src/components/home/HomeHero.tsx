@@ -145,86 +145,88 @@ export function HomeHero() {
       </div>
 
       <div className="relative z-20 border-t border-neutral-200 bg-neutral-50 text-neutral-900">
-        <div className="flex items-stretch">
-          <button
-            type="button"
-            className={iconButtonClassName({
-              variant: "default",
-              className: "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
-            })}
-            aria-label="Poprzedni baner"
-            onClick={goPrev}
-          >
-            <i className="ph ph-caret-left" aria-hidden="true" />
-          </button>
+        <Container size="content">
+          <div className="flex items-stretch">
+            <button
+              type="button"
+              className={iconButtonClassName({
+                variant: "default",
+                className: "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
+              })}
+              aria-label="Poprzedni baner"
+              onClick={goPrev}
+            >
+              <i className="ph ph-caret-left" aria-hidden="true" />
+            </button>
 
-          <div
-            role="tablist"
-            aria-label="Wybór banera"
-            className="grid min-w-0 flex-1 grid-cols-2 md:grid-cols-4"
-          >
-            {homeHeroSlides.map((slide, index) => {
-              const selected = index === activeIndex;
-              return (
-                <button
-                  key={slide.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  aria-controls="home-hero-panel"
-                  id={`home-hero-tab-${slide.id}`}
-                  className={cn(
-                    "relative min-h-14 px-3 py-3 text-start transition-colors duration-fast",
-                    "focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
-                    selected
-                      ? "bg-neutral-0 text-neutral-900"
-                      : "text-neutral-500 hover:bg-neutral-0/70 hover:text-neutral-800",
-                    index > 0 && "border-s border-neutral-200",
-                  )}
-                  onClick={() => goTo(index)}
-                >
-                  <span className="line-clamp-2 font-body text-[11px] leading-snug md:text-xs">
-                    {slide.hint}
-                  </span>
-                  {selected ? (
-                    <span
-                      className="absolute inset-x-0 bottom-0 h-0.5 overflow-hidden bg-neutral-200"
-                      aria-hidden="true"
-                    >
-                      <span
-                        key={activeIndex}
-                        className={cn(
-                          "home-hero-progress block h-full origin-left bg-gold-500",
-                          !reducedMotion && "animate-[home-hero-progress_var(--home-hero-autoplay)_linear_forwards]",
-                          reducedMotion && "scale-x-100",
-                        )}
-                        style={
-                          {
-                            "--home-hero-autoplay": `${HOME_HERO_AUTOPLAY_MS}ms`,
-                            animationPlayState: paused ? "paused" : "running",
-                          } as CSSProperties
-                        }
-                        onAnimationEnd={onProgressEnd}
-                      />
+            <div
+              role="tablist"
+              aria-label="Wybór banera"
+              className="grid min-w-0 flex-1 grid-cols-2 md:grid-cols-4"
+            >
+              {homeHeroSlides.map((slide, index) => {
+                const selected = index === activeIndex;
+                return (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    aria-controls="home-hero-panel"
+                    id={`home-hero-tab-${slide.id}`}
+                    className={cn(
+                      "relative min-h-14 px-3 py-3 text-start transition-colors duration-fast",
+                      "focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
+                      selected
+                        ? "bg-neutral-0 text-neutral-900"
+                        : "text-neutral-500 hover:bg-neutral-0/70 hover:text-neutral-800",
+                      index > 0 && "border-s border-neutral-200",
+                    )}
+                    onClick={() => goTo(index)}
+                  >
+                    <span className="line-clamp-2 font-body text-[11px] leading-snug md:text-xs">
+                      {slide.hint}
                     </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </div>
+                    {selected ? (
+                      <span
+                        className="absolute inset-x-0 bottom-0 h-0.5 overflow-hidden bg-neutral-200"
+                        aria-hidden="true"
+                      >
+                        <span
+                          key={activeIndex}
+                          className={cn(
+                            "home-hero-progress block h-full origin-left bg-gold-500",
+                            !reducedMotion && "animate-[home-hero-progress_var(--home-hero-autoplay)_linear_forwards]",
+                            reducedMotion && "scale-x-100",
+                          )}
+                          style={
+                            {
+                              "--home-hero-autoplay": `${HOME_HERO_AUTOPLAY_MS}ms`,
+                              animationPlayState: paused ? "paused" : "running",
+                            } as CSSProperties
+                          }
+                          onAnimationEnd={onProgressEnd}
+                        />
+                      </span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
 
-          <button
-            type="button"
-            className={iconButtonClassName({
-              variant: "default",
-              className: "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
-            })}
-            aria-label="Następny baner"
-            onClick={goNext}
-          >
-            <i className="ph ph-caret-right" aria-hidden="true" />
-          </button>
-        </div>
+            <button
+              type="button"
+              className={iconButtonClassName({
+                variant: "default",
+                className: "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
+              })}
+              aria-label="Następny baner"
+              onClick={goNext}
+            >
+              <i className="ph ph-caret-right" aria-hidden="true" />
+            </button>
+          </div>
+        </Container>
       </div>
 
       <div id="home-hero-panel" className="sr-only" aria-live="polite">
