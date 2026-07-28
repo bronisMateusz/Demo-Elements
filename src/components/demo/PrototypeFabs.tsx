@@ -9,7 +9,7 @@ import { cn } from "../../lib/cn";
 import { buttonClassName } from "../ui/buttonClassName";
 
 const menuItemClass =
-  "flex items-center gap-3 rounded-xs px-3 py-3 text-sm font-medium leading-compact text-neutral-800 no-underline transition-[background-color] duration-fast ease-out hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800";
+  "flex items-center gap-3 rounded-xs px-3 py-3 text-sm font-medium leading-compact text-neutral-800 no-underline transition-[background-color] duration-fast ease-out hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";
 
 const sectionTitleClassName =
   "m-0 px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-neutral-500";
@@ -86,7 +86,7 @@ export function PrototypeFabs() {
 
   return (
     <div
-      className="fixed bottom-4 left-1/2 z-[300] -translate-x-1/2 max-lg:bottom-3"
+      className="fixed top-1/2 inset-s-4 z-300 -translate-y-1/2 max-lg:inset-s-3"
       ref={rootRef}
     >
       <div className="relative overflow-visible">
@@ -94,27 +94,24 @@ export function PrototypeFabs() {
           type="button"
           className={buttonClassName({
             variant: "primary",
-            className: "gap-2 shadow-1",
+            className: cn("size-12 px-0 shadow-1", open && "bg-neutral-800"),
           })}
+          aria-label="Zasoby"
           aria-haspopup="menu"
           aria-expanded={open}
           aria-controls={menuId}
           onClick={() => setOpen((current) => !current)}
         >
           <i className="ph ph-squares-four" aria-hidden="true" />
-          <span className="max-[479px]:sr-only">Zasoby</span>
-          <i
-            className={cn(
-              "ph ph-caret-up text-sm transition-transform duration-fast ease-out",
-              open && "rotate-180",
-            )}
-            aria-hidden="true"
-          />
         </button>
 
         {open ? (
           <div
-            className="absolute bottom-full left-1/2 z-10 mb-2 max-h-[min(70vh,28rem)] min-w-[min(360px,calc(100vw-2*var(--spacing-gutter)))] -translate-x-1/2 overflow-auto rounded-xs border border-neutral-200 bg-neutral-0 shadow-2"
+            className={cn(
+              "absolute top-1/2 inset-s-full z-10 ms-2 -translate-y-1/2 overflow-auto rounded-xs",
+              "w-[min(22rem,calc(100vw-4.5rem))] max-h-[min(70vh,28rem)]",
+              "border border-neutral-200 bg-neutral-0 shadow-2",
+            )}
             id={menuId}
             role="menu"
             aria-label="Skróty prototypu"

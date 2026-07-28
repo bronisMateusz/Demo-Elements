@@ -170,7 +170,7 @@ function related(
     title,
     image,
     images: options.images,
-    href: "#",
+    href: "/produkt",
     hasStorage: options.hasStorage ?? true,
     price: options.price,
     pricePrevious: options.pricePrevious,

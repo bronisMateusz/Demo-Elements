@@ -95,7 +95,7 @@ export function SiteSalonsPresence() {
                           className={cn(
                             "block py-0.5 font-body text-sm text-neutral-300 no-underline",
                             "transition-colors duration-base ease-out hover:text-gold-400",
-                            "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
+                            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
                           )}
                         >
                           {city.label}
@@ -137,7 +137,7 @@ export function SiteSalonsPresence() {
                       className={cn(
                         "inline-flex size-10 items-center justify-center text-neutral-400",
                         "transition-colors duration-fast ease-out hover:text-gold-400",
-                        "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
+                        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
                       )}
                       aria-label={link.label}
                       target="_blank"

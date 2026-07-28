@@ -23,7 +23,7 @@
   --color-gold-600: #925522;
 
   /* Product badges — client Elements palette */
-  --color-badge-brand: #293431;
+  --color-badge-brand: #5c7a6e;
   --color-promo: #c65438;
   --color-promo-muted: #faf6f6;
 
@@ -52,10 +52,6 @@
   --transition-duration-fast: 180ms;
   --transition-duration-base: 280ms;
   --transition-duration-slow: 480ms;
-
-  /* Focus */
-  --spacing-focus-ring-width: 2px;
-  --spacing-focus-ring-offset: 3px;
 }
 
 /* Sticky/scroll-mt when site chrome is concealed (no CSS layout vars). */
@@ -69,8 +65,7 @@
   }
 
   html {
-    @apply overflow-x-clip;
-    -webkit-text-size-adjust: 100%;
+    @apply overflow-x-clip [-webkit-text-size-adjust:100%];
   }
 
   html:focus-within {
@@ -84,8 +79,7 @@
   }
 
   body {
-    @apply m-0 overflow-x-clip bg-neutral-0 font-body text-base leading-[1.75] text-neutral-600 antialiased;
-    text-rendering: optimizeLegibility;
+    @apply m-0 overflow-x-clip bg-neutral-0 font-body text-base leading-[1.75] text-neutral-600 antialiased [text-rendering:optimizeLegibility];
   }
 
   img,
@@ -99,11 +93,7 @@
   }
 
   i.ph {
-    @apply inline-grid shrink-0 place-items-center not-italic leading-none;
-  }
-
-  i.ph::before {
-    @apply block leading-none;
+    @apply inline-grid shrink-0 place-items-center not-italic leading-none before:block before:leading-none;
   }
 
   a {
@@ -124,7 +114,7 @@
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-(--spacing-focus-ring-offset) outline-neutral-800;
+    @apply outline-2 outline-offset-2 outline-neutral-800;
   }
 }
 
@@ -173,6 +163,7 @@
   @apply sr-only;
 }
 
+/* Near-zero duration (not animation:none) so animationend still fires where listeners expect it. */
 html.elements-pause-motion *,
 html.elements-pause-motion *::before,
 html.elements-pause-motion *::after {
@@ -196,41 +187,38 @@ html.lightbox-closing #siteHeaderBar {
   @apply z-420;
 }
 
-/* Menu layers share timing; delays create level-by-level reveal / conceal. */
+/* Menu layers share timing; delays create level-by-level reveal / conceal.
+   Conceal uses translate-* (CSS `translate`), not transform - transition must list `translate`. */
 .site-header-layer {
-  transition:
-    transform var(--transition-duration-base) var(--ease-luxury),
-    border-color var(--transition-duration-base) var(--ease-luxury),
-    background-color var(--transition-duration-base) var(--ease-luxury);
+  @apply transition-[translate,border-color,background-color] duration-base ease-luxury;
 }
 
 #siteHeaderUtility {
-  transition: transform var(--transition-duration-base) var(--ease-luxury);
+  @apply transition-[translate] duration-base ease-luxury;
 }
 
 /* Reveal (scroll up): utility first, then bar + section menu together (no overlap). */
 html:not(.site-header-concealed) #siteHeaderUtility {
-  transition-delay: 0ms;
+  @apply delay-0;
 }
 html:not(.site-header-concealed) #siteHeaderBar {
-  transition-delay: 100ms;
+  @apply delay-100;
 }
 html:not(.site-header-concealed) #pdpSubnav {
-  transition-delay: 100ms;
+  @apply delay-100;
 }
 
 /* Conceal (scroll down): all chrome layers move together - avoids gaps between levels. */
 html.site-header-concealed #siteHeaderUtility,
 html.site-header-concealed #siteHeaderBar,
 html.site-header-concealed #pdpSubnav {
-  @apply -translate-y-18 lg:-translate-y-29;
-  transition-delay: 0ms;
+  @apply -translate-y-18 lg:-translate-y-29 delay-0;
 }
 
 html.elements-pause-motion .site-header-layer,
 html.elements-pause-motion #pdpSubnav,
 html.elements-pause-motion #siteHeaderUtility {
-  transition: none !important;
+  @apply transition-none!;
 }
 
 html.elements-pause-motion .motion-fill-surface::before {
@@ -257,7 +245,7 @@ html.elements-pause-motion .motion-fill-chevron {
 }
 
 .liquid-cta-blob {
-  animation: liquid-cta-drift 18s var(--ease-luxury) infinite;
+  @apply animate-[liquid-cta-drift_18s_var(--ease-luxury)_infinite];
 }
 
 @keyframes liquid-cta-swirl {
@@ -272,13 +260,27 @@ html.elements-pause-motion .motion-fill-chevron {
 }
 
 .liquid-cta-blob-swirl {
-  animation: liquid-cta-swirl 22s var(--ease-luxury) infinite;
+  @apply animate-[liquid-cta-swirl_22s_var(--ease-luxury)_infinite];
 }
 
 html.elements-pause-motion .liquid-cta-blob {
-  animation: none;
+  @apply animate-none;
 }
 
 html.elements-pause-motion .liquid-cta-blob-swirl {
-  animation: none;
+  @apply animate-none;
+}
+
+@keyframes home-hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+html.elements-pause-motion .home-hero-progress {
+  @apply animate-none scale-x-100;
 }

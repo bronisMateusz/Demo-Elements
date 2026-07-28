@@ -70,8 +70,8 @@ export function LiquidCtaGlow({ className }: LiquidCtaGlowProps) {
       </div>
 
       <div className="absolute inset-0 bg-neutral-900/12" />
-      <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/25 via-gold-600/20 to-neutral-900/35" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(26,24,21,0.42),transparent_55%)]" />
+      <div className="absolute inset-0 bg-linear-to-br from-neutral-900/25 via-gold-600/20 to-neutral-900/35" />
+      <div className="absolute inset-0 bg-radial-[at_50%_120%] from-neutral-900/42 to-transparent to-55%" />
     </div>
   );
 }

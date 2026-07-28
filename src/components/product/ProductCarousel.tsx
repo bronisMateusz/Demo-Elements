@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,6 +26,14 @@ type ProductCarouselHeader = {
   titleId?: string;
 };
 
+export type ProductCarouselControls = {
+  slidePrev: () => void;
+  slideNext: () => void;
+  atStart: boolean;
+  atEnd: boolean;
+  loop: boolean;
+};
+
 type ProductCarouselProps = {
   products: RelatedProduct[];
   labelledBy?: string;
@@ -34,8 +42,10 @@ type ProductCarouselProps = {
   bleed?: boolean;
   layout?: ProductCarouselLayout;
   header?: ProductCarouselHeader;
-  /** `header` - arrows beside the title (Inspiration-style); `overlay` - on the track edges. */
-  navPlacement?: "overlay" | "header";
+  /** `header` - arrows beside the title; `overlay` - on the track edges; `none` - parent owns nav. */
+  navPlacement?: "overlay" | "header" | "none";
+  /** Sync nav state for external header arrows (`navPlacement="none"`). */
+  onControlsChange?: (controls: ProductCarouselControls) => void;
 };
 
 /** Clone products until we have enough slides to fill wide viewports in loop mode. */
@@ -48,7 +58,7 @@ function withClonedSlides(products: RelatedProduct[], minSlides: number): Relate
   return slides;
 }
 
-function CarouselNavButtons({
+export function ProductCarouselNavButtons({
   atStart,
   atEnd,
   layout,
@@ -114,6 +124,7 @@ export function ProductCarousel({
   layout,
   header,
   navPlacement,
+  onControlsChange,
 }: ProductCarouselProps) {
   const resolvedLayout: ProductCarouselLayout = layout ?? (bleed ? "bleed" : "contained");
   const isInline = resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
@@ -149,8 +160,28 @@ export function ProductCarousel({
     setAtEnd(instance.isEnd);
   };
 
-  const slidePrev = () => swiper?.slidePrev();
-  const slideNext = () => swiper?.slideNext();
+  const slidePrev = useCallback(() => {
+    swiper?.slidePrev();
+  }, [swiper]);
+  const slideNext = useCallback(() => {
+    swiper?.slideNext();
+  }, [swiper]);
+
+  const onControlsChangeRef = useRef(onControlsChange);
+  useEffect(() => {
+    onControlsChangeRef.current = onControlsChange;
+  }, [onControlsChange]);
+
+  useEffect(() => {
+    onControlsChangeRef.current?.({
+      slidePrev,
+      slideNext,
+      atStart,
+      atEnd,
+      loop: enableLoop,
+    });
+  }, [slidePrev, slideNext, atStart, atEnd, enableLoop]);
+
   const swiperKey = isBleed
     ? `bleed-${bleedInsetPx}-${slides.length}`
     : isInlineBleed
@@ -169,7 +200,7 @@ export function ProductCarousel({
         <div
           className={cn(
             "flex flex-wrap items-end justify-between gap-6",
-            isBleed ? "mx-auto mb-8 w-full max-w-[96rem] px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10" : "mb-4",
+            isBleed ? "mx-auto mb-8 w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10" : "mb-4",
           )}
         >
           {isBleed && !isInline ? (
@@ -195,7 +226,7 @@ export function ProductCarousel({
             </h2>
           )}
           {showHeaderNav ? (
-            <CarouselNavButtons
+            <ProductCarouselNavButtons
               atStart={atStart}
               atEnd={atEnd}
               layout={resolvedLayout}

@@ -135,7 +135,7 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
               className={cn(
                 "inline-flex size-12 shrink-0 items-center justify-center rounded-xs bg-neutral-900 text-neutral-0",
                 "transition-colors duration-fast ease-out hover:bg-neutral-800",
-                "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
                 "disabled:cursor-wait disabled:opacity-70",
               )}
             >

@@ -79,7 +79,7 @@ export function Header() {
         id="siteHeaderBar"
         className={cn(
           "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm lg:top-11",
-          "transition-[border-color,background-color,transform] duration-base ease-luxury",
+          "transition-[border-color,background-color,translate] duration-base ease-luxury",
           isScrolled &&
             "bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}

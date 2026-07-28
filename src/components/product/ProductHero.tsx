@@ -36,7 +36,7 @@ export function ProductHero({ product, onAskOpen }: ProductHeroProps) {
           </div>
 
           <div className="min-w-0 overflow-visible lg:pt-10">
-            <div className="w-full overflow-visible lg:sticky lg:top-[calc(7.25rem+2.5rem)] xl:max-w-162.5">
+            <div className="w-full overflow-visible lg:sticky lg:top-39 xl:max-w-162.5">
               <ProductBuyBox product={product} onAskOpen={onAskOpen} />
             </div>
           </div>

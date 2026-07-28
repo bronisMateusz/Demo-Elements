@@ -30,7 +30,7 @@ export function SiteNewsletter() {
             draggable={false}
           />
           <div
-            className="absolute inset-0 bg-gradient-to-r from-neutral-900/75 via-neutral-900/45 to-neutral-900/25"
+            className="absolute inset-0 bg-linear-to-r from-neutral-900/75 via-neutral-900/45 to-neutral-900/25"
             aria-hidden="true"
           />
 

@@ -39,7 +39,7 @@ Allowed when **no** named utility exists in theme / spacing scale:
 - one-off typography: `tracking-[0.06em]`, `text-[10px]` on carousel badges
 - `color-mix(...)` referencing a token, not a raw hex
 
-Prefer spacing scale / rem: `h-13` not `h-[52px]`, `max-w-106` not `max-w-[26.5rem]` (`rem × 4` = scale; heed `suggestCanonicalClasses`). Expressions stay arbitrary: `w-[clamp(13.75rem,…)]`.
+Prefer spacing scale / rem: `h-13` not `h-[52px]`, `max-w-106` not `max-w-[26.5rem]`, `max-w-384` not `max-w-[96rem]` (`rem × 4` = scale; heed `suggestCanonicalClasses`). Expressions stay arbitrary: `w-[clamp(13.75rem,…)]`, `w-[min(…,96rem)]`.
 
 Before adding `[...]`, check `suggestCanonicalClasses` - e.g. `text-lg` instead of `text-[18px]`.
 

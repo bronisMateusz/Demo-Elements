@@ -1,12 +1,31 @@
 ---
 description: Tailwind class quality (canonical form, sort order, logical properties)
-globs: src/**/*.{tsx,ts}
-alwaysApply: false
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: true
 ---
 
 # Class quality
 
 Write classes in canonical Tailwind v4 form. After edits: `npm run lint`.
+
+## Before finishing UI edits
+
+Treat IDE `suggestCanonicalClasses` hints as mandatory - apply the suggested form in the same change.
+
+Scan new/changed `className` strings for these slips:
+
+- `z-[300]` / `z-[2]` → `z-300` / `z-2` (integer z-index never uses brackets)
+- `left-*` / `right-*` / `ml-*` / `mr-*` → `inset-s-*` / `inset-e-*` / `ms-*` / `me-*`
+- `start-*` / `end-*` (position) → `inset-s-*` / `inset-e-*` (e.g. `focus:start-4` → `focus:inset-s-4`)
+- `text-left` / `text-right` → `text-start` / `text-end`
+- Focus ring: `outline-2 outline-offset-2` (no custom `--spacing-focus-ring-*` tokens)
+- Animating `translate-*` / `-translate-y-*`: transition `translate`, not `transform` (Tailwind v4 separate CSS property)
+- Named-scale negatives: `outline-offset-[-2px]` / `z-[-10]` → `-outline-offset-2` / `-z-10` (leading `-`)
+- Arbitrary negatives: `-inset-[35%]` / `-top-[5%]` → `inset-[-35%]` / `top-[-5%]` (minus **inside** `[…]`, never leading `-` on arbitrary)
+- `h-[100px]` / `rotate-[18deg]` / `bg-gradient-to-*` → `h-25` / `rotate-18` / `bg-linear-to-*`
+- Content rails: `max-w-[96rem]` / `max-w-[112rem]` → `max-w-384` / `max-w-448` (`rem × 4` = scale step)
+- Summed rem calcs that resolve to a scale step: `top-[calc(3.625rem+1rem)]` → `top-18.5` (keep `calc()` only when mixed units, e.g. `100svh-7.25rem`)
+- Radial overlays: `bg-[radial-gradient(circle_at_…)]` → `bg-radial-[at_…] from-* to-transparent to-<%>` ([background-image](https://tailwindcss.com/docs/background-image)); prefer brand colors (`from-neutral-900/42`) over raw `rgba(…)`
 
 ## Correctness
 
@@ -24,9 +43,11 @@ Prefer **named utilities** from theme over `[...]` when Tailwind / `suggestCanon
 - `m-0` not `-m-0`; **`size-*` when width and height match** - `size-12` not `h-12 w-12`, `size-full` not `h-full w-full`, `min-size-12` not `min-h-12 min-w-12`, `max-size-full` not `max-h-full max-w-full` (same for variants: `md:size-16`).
 - `gap-8` not `gap-x-8 gap-y-8` when values are equal.
 - `rotate-18` not `rotate-[18deg]`; `-rotate-18` not `rotate-[-18deg]`.
-- **Spacing scale over arbitrary lengths** (default `--spacing` = 0.25rem): use `h-<number>` / `max-w-<number>` / `w-<number>` etc. - never `h-[52px]`, never `max-w-[26.5rem]` when `max-w-106` works (`rem × 4` = scale step; `suggestCanonicalClasses`). Fractions OK: `min-h-14.5`, `max-w-162.5`. Keep `[…]` only for real expressions (`min-h-[min(26.25rem,38vw)]`, `w-[clamp(13.75rem,…,20rem)]`).
+- **Spacing scale over arbitrary lengths** (default `--spacing` = 0.25rem): use `h-<number>` / `max-w-<number>` / `w-<number>` / `top-<number>` etc. - never `h-[52px]`, never `max-w-[26.5rem]` when `max-w-106` works, never `max-w-[96rem]` when `max-w-384` works, never `top-[calc(3.625rem+1rem)]` when `top-18.5` works (`rem × 4` = scale step; `suggestCanonicalClasses`). Fractions OK: `min-h-14.5`, `max-w-162.5`, `top-18.5`. Keep `[…]` only for real expressions with mixed units or functions (`min-h-[min(26.25rem,38vw)]`, `w-[clamp(13.75rem,…,20rem)]`, `h-[calc(100svh-7.25rem)]`, `w-[min(…,96rem)]`).
 - **`rem` not `px` when an arbitrary length is unavoidable** - `w-[clamp(13.75rem,…,20rem)]` not `w-[clamp(220px,…,320px)]`. Prefer named type utilities when they match (`text-lg` not `text-[18px]` / `text-[1.125rem]`). OK to keep `px` only for true hairlines (`1px` stroke, `translate-y-px`, box-shadow blur in `@theme` tokens).
-- Negative arbitrary (when no named utility): prefer scale (`-top-1.25`) over `top-[-0.3125rem]`.
+- **Negatives** (`suggestCanonicalClasses`):
+  - **Named scale** → leading `-`: `-outline-offset-2` not `outline-offset-[-2px]`; `-rotate-18` not `rotate-[-18deg]`; `-z-10` not `z-[-10]`; `-top-1.25` not `top-[-0.3125rem]`.
+  - **Arbitrary `[…]`** → minus inside brackets: `inset-[-35%]` / `top-[-5%]` not `-inset-[35%]` / `-top-[5%]` (IntelliSense flags the leading-`-` form on arbitrary values).
 - Important as **suffix**: `flex!`, `hover:text-white!` - not `!flex`.
 - Prefer a named utility / variant when it exists (`not-first:` not `[&:not(:first-child)]:`, `scale-120` not `[transform:scale(…)]`, `scrollbar-none` not `[scrollbar-width:…]`).
 - **Aspect ratio**: `aspect-16/10`, `aspect-4/3` - not `aspect-[16/10]` / `aspect-[4/3]` (`suggestCanonicalClasses`).
@@ -34,9 +55,9 @@ Prefer **named utilities** from theme over `[...]` when Tailwind / `suggestCanon
 - **Property arbitrary → utility arbitrary** (`suggestCanonicalClasses`): `filter-[drop-shadow(…)]` not `[filter:drop-shadow(…)]`; `bg-[color-mix(…)]` not `[background:color-mix(…)]`; `touch-[pan-y_pinch-zoom]` not `[touch-action:…]`. Prefer a named utility when it exists (`scale-120` / `scale-100` not `[transform:scale(…)]`; `scrollbar-none` / `scrollbar-thin` not `[scrollbar-width:…]`). Keep `[prop:value]` only for custom properties (`[--lib-header-h:10rem]`) or vendor-only props (`[-webkit-text-stroke:…]`, `[-ms-overflow-style:none]`).
 - **z-index**: `z-2`, `z-100`, `z-400` - never `z-[2]` / `z-[100]` (see [z-index docs](https://tailwindcss.com/docs/z-index)). Same for variants: `before:-z-10`, not `before:z-[-10]`.
 - **`before:` / `after:`**: Tailwind already sets empty `content` when other `before:*` / `after:*` utilities are present. Do **not** add `before:content-['']` or `after:content-['']`. Keep `content-[...]` only when the value is real (e.g. `before:content-['/']`).
-- **CSS variables**: never `[var(--token)]`. Use the `(--token)` form for theme props that remain (e.g. focus ring):
-  - `outline-offset-(--spacing-focus-ring-offset)` not `outline-offset-[var(--spacing-focus-ring-offset)]`
-  - Do **not** invent layout/leading theme tokens (`spacing-gutter`, `leading-heading`, `max-width-content`) - use scale or arbitrary (`px-[clamp(1.25rem,2.222vw,2.5rem)]`, `leading-[1.1]`, `max-w-[96rem]`).
+- **CSS variables**: never `[var(--token)]` when a theme prop remains - use `(--token)` (e.g. rare remaining tokens). Prefer named utilities over custom focus/spacing aliases:
+  - Focus: `outline-2 outline-offset-2` - do **not** invent `--spacing-focus-ring-*`
+  - Do **not** invent layout/leading theme tokens (`spacing-gutter`, `leading-heading`, `max-width-content`) - use spacing scale or clamp expressions (`px-[clamp(1.25rem,2.222vw,2.5rem)]`, `leading-[1.1]`, `max-w-384`). Shared clamp strings for JS probes live in `src/lib/layoutTokens.ts`.
   - Keep `[...]` only for real expressions.
 - Brand tracking that used to override `tracking-wide`: use `tracking-[0.12em]` (Tailwind's `tracking-wide` is `0.025em`).
 - Sticky under concealed header: `header-concealed:` variant (see `app.css`).
@@ -71,10 +92,25 @@ Prefer logical inline properties in Tailwind v4 canonical form:
 
 ## Examples
 
-```tsx
-// ✗
-<div className="absolute left-0 right-0 z-[2] rotate-[18deg] focus:start-4 h-[100px] bg-[#2c2c2c] outline-offset-[var(--spacing-focus-ring-offset)] before:absolute before:inset-0 before:content-['']" />
+Do **not** paste anti-patterns into a `className="..."` fence in this file - Tailwind IntelliSense will flag them. List slips as prose pairs; show only the canonical form in code:
 
-// ✓
-<div className="absolute inset-x-0 z-2 rotate-18 focus:inset-s-4 h-25 bg-neutral-800 outline-offset-(--spacing-focus-ring-offset) before:absolute before:inset-0" />
+| Slip | Canonical |
+| --- | --- |
+| `left-0 right-0` | `inset-x-0` |
+| `z-[2]` | `z-2` |
+| `rotate-[18deg]` | `rotate-18` |
+| `focus:start-4` | `focus:inset-s-4` |
+| `h-[100px]` | `h-25` |
+| `max-w-[96rem]` / `max-w-[112rem]` | `max-w-384` / `max-w-448` |
+| `top-[calc(3.625rem+1rem)]` | `top-18.5` |
+| `bg-[#2c2c2c]` | `bg-neutral-800` |
+| `outline-offset-[var(--spacing-focus-ring-offset)]` | `outline-offset-2` |
+| `before:content-['']` | omit (auto when other `before:*` exist) |
+| `bg-gradient-to-r` | `bg-linear-to-r` |
+| `bg-[radial-gradient(circle_at_50%_120%,…)]` | `bg-radial-[at_50%_120%] from-neutral-900/42 to-transparent to-55%` |
+| `-inset-[35%]` / `-top-[5%]` | `inset-[-35%]` / `top-[-5%]` |
+| `outline-offset-[-2px]` | `-outline-offset-2` |
+
+```tsx
+<div className="absolute inset-x-0 z-2 rotate-18 focus:inset-s-4 h-25 bg-neutral-800 outline-2 outline-offset-2 before:absolute before:inset-0" />
 ```

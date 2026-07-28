@@ -20,7 +20,7 @@ export function VariantThumbnail({
       className={cn(
         "group relative z-10 flex flex-col items-stretch rounded-xs bg-transparent",
         "transition-[opacity] duration-base ease-out",
-        "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
         selected ? "bg-neutral-50" : "bg-transparent",
         unavailable && "pointer-events-none cursor-not-allowed opacity-45",
       )}

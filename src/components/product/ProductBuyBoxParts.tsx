@@ -42,7 +42,7 @@ export function ProductBadges({
           className={cn(
             "m-0 font-body text-xs uppercase tracking-[0.12em] text-neutral-600 no-underline",
             "transition-colors duration-fast ease-out hover:text-neutral-900",
-            "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
           )}
         >
           {brand}

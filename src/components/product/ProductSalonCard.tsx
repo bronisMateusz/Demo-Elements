@@ -23,11 +23,11 @@ function SalonCardBackdrop() {
   return (
     <>
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(184,151,90,0.22),transparent_58%)]"
+        className="pointer-events-none absolute inset-0 bg-radial-[at_0%_0%] from-gold-500/22 to-transparent to-58%"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-y-0 inset-e-0 w-1/3 bg-[radial-gradient(circle_at_100%_50%,rgba(240,232,214,0.07),transparent_70%)]"
+        className="pointer-events-none absolute inset-y-0 inset-e-0 w-1/3 bg-radial-[at_100%_50%] from-gold-50/7 to-transparent to-70%"
         aria-hidden="true"
       />
     </>
@@ -72,7 +72,7 @@ export function ProductSalonCard({
               className={cn(
                 "shrink-0 font-body text-sm text-neutral-300 underline underline-offset-2",
                 "transition-colors duration-fast ease-out hover:text-gold-400",
-                "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
               )}
             >
               {salonCardCopy.changeLabel}
@@ -96,7 +96,7 @@ export function ProductSalonCard({
               className={cn(
                 "flex w-full items-center justify-between gap-3 py-3.5 text-start",
                 "font-body text-sm font-medium text-neutral-0",
-                "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
               )}
               aria-expanded={hoursOpen}
               aria-controls={hoursId}
@@ -144,7 +144,7 @@ export function ProductSalonCard({
                 className={cn(
                   "inline-flex items-center gap-2 font-body text-sm font-medium text-gold-400",
                   "transition-colors duration-fast ease-out hover:text-gold-100",
-                  "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
                 )}
               >
                 <i className="ph ph-chat-circle text-base leading-none" aria-hidden="true" />
@@ -213,7 +213,7 @@ export function ProductSalonCard({
             "font-body text-sm font-medium text-gold-400",
             "transition-[color,border-color] duration-base ease-luxury",
             "hover:border-neutral-0/20 hover:text-neutral-0 focus-visible:text-neutral-0",
-            "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-0",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
             "group-hover/salon:text-gold-100",
           )}
         >

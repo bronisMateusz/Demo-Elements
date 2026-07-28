@@ -42,7 +42,7 @@ export function libCatNavLinkClassName({ active = false }: { active?: boolean } 
   return cn(
     "inline-flex min-h-11 items-center whitespace-nowrap rounded-xs border border-neutral-200 bg-neutral-0 px-4 text-ui font-medium text-neutral-600 no-underline transition-[color,border-color,background-color] duration-fast ease-out",
     "hover:border-neutral-800 hover:text-neutral-900",
-    "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
     active && "border-neutral-900 bg-neutral-50 text-neutral-900",
   );
 }
@@ -117,10 +117,10 @@ export const libBtnDarkSurfaceClassName =
 export type LibButtonPreviewState = "default" | "hover" | "focus" | "active" | "disabled";
 
 const focusRingClassName =
-  "outline-2 outline-offset-(--spacing-focus-ring-offset) outline-neutral-800";
+  "outline-2 outline-offset-2 outline-neutral-800";
 
 const focusRingOnContrastClassName =
-  "outline-2 outline-offset-(--spacing-focus-ring-offset) outline-neutral-0";
+  "outline-2 outline-offset-2 outline-neutral-0";
 
 const disabledClassName = "pointer-events-none cursor-not-allowed opacity-50";
 

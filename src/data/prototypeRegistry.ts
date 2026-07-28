@@ -10,16 +10,16 @@ export type PrototypeSection = {
 };
 
 export const prototypeHomeItem: PrototypeMenuItem = {
-  label: "Product Detail Page",
+  label: "Strona główna",
   to: "/",
-  iconClass: "ph ph-armchair",
+  iconClass: "ph ph-house",
 };
 
 export const prototypeSections: PrototypeSection[] = [
   {
     title: "Strony",
     items: [
-      { label: "Product Detail Page", to: "/", iconClass: "ph ph-armchair" },
+      { label: "Product Detail Page", to: "/produkt", iconClass: "ph ph-armchair" },
       { label: "404 - Strona nie znaleziona", to: "/404", iconClass: "ph ph-warning-circle" },
     ],
   },

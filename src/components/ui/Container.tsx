@@ -4,10 +4,10 @@ import { cn } from "../../lib/cn";
 export const containerClassName = "container";
 
 /** Content rail - text/list sections on ultrawide. */
-export const containerContentClassName = "max-w-[96rem]";
+export const containerContentClassName = "max-w-384";
 
 /** Wide shell - hero / large CTAs. */
-export const containerWideClassName = "max-w-[112rem]";
+export const containerWideClassName = "max-w-448";
 
 /** Shared box model without `container`'s `max-w-none` (avoids fighting size caps). */
 const containerRailClassName = "mx-auto w-full px-[clamp(1.25rem,2.222vw,2.5rem)]";

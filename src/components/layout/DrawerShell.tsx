@@ -94,6 +94,9 @@ type DrawerHeaderProps = {
   onClose: () => void;
   /** Compact header without description (e.g. mobile menu). */
   compact?: boolean;
+  /** Optional back control (drill-down panels). */
+  onBack?: () => void;
+  backLabel?: string;
 };
 
 export function DrawerHeader({
@@ -102,11 +105,18 @@ export function DrawerHeader({
   closeLabel,
   onClose,
   compact = false,
+  onBack,
+  backLabel = "Wróć",
 }: DrawerHeaderProps) {
   if (compact) {
     return (
-      <div className="flex h-18 shrink-0 items-center justify-between border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]">
-        <span className="font-heading text-xl leading-none text-neutral-900">{title}</span>
+      <div className="flex h-18 shrink-0 items-center gap-1 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]">
+        {onBack ? (
+          <IconButton label={backLabel} iconClass="ph ph-caret-left" onClick={onBack} />
+        ) : null}
+        <span className="min-w-0 flex-1 truncate font-heading text-xl leading-none text-neutral-900">
+          {title}
+        </span>
         <IconButton label={closeLabel} iconClass="ph ph-x" onClick={onClose} />
       </div>
     );

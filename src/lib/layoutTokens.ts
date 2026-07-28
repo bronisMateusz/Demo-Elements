@@ -35,8 +35,8 @@ export const mdPySectionClassName = "md:py-[clamp(2.5rem,6vw,4rem)]";
 export const mdPtSectionClassName = "md:pt-[clamp(2.5rem,6vw,4rem)]";
 export const mdPbSectionClassName = "md:pb-[clamp(2.5rem,6vw,4rem)]";
 
-export const maxWContentClassName = "max-w-[96rem]";
-export const maxWWideClassName = "max-w-[112rem]";
+export const maxWContentClassName = "max-w-384";
+export const maxWWideClassName = "max-w-448";
 
 export function readHeaderHeightPx(): number {
   return window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches

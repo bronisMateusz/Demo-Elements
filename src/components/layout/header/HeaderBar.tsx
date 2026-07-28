@@ -2,10 +2,10 @@ import { useEffect, useId, useRef } from "react";
 import { Link } from "react-router-dom";
 import { assetUrl } from "../../../app/assets";
 import { cn } from "../../../lib/cn";
-import { favoritesNav, mainNavItems, salonNav } from "../../../data/nav";
-import { useProductFavoritesCount } from "../../../hooks/useProductFavorites";
+import { mainNavItems, salonNav } from "../../../data/nav";
 import { useSelectedSalon } from "../../../hooks/useSelectedSalon";
 import { IconButton } from "../../ui/IconButton";
+import { iconButtonClassName } from "../../ui/iconButtonClassName";
 import { ProductsMegaMenu } from "./ProductsMegaMenu";
 
 type HeaderBarProps = {
@@ -39,7 +39,7 @@ function HeaderSalonButton({
       className={cn(
         "group/salon hidden min-w-0 items-center gap-2.5 self-stretch rounded-xs px-3 text-start transition-colors duration-fast ease-out lg:flex",
         "hover:bg-neutral-100",
-        "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
       )}
     >
       <i
@@ -62,30 +62,28 @@ function HeaderSalonButton({
   );
 }
 
-function HeaderFavoritesLink() {
-  const count = useProductFavoritesCount();
-  const label =
-    count > 0 ? `${favoritesNav.label} (${count})` : favoritesNav.label;
+/** Compact location control for viewports where the labeled salon button is hidden. */
+function HeaderSalonIconButton({
+  onClick,
+  open = false,
+}: {
+  onClick: () => void;
+  open?: boolean;
+}) {
+  const { salon } = useSelectedSalon();
+  const label = salon?.name ?? salonNav.label;
 
   return (
-    <a
-      href={favoritesNav.href}
-      className={cn(
-        "icon-btn relative inline-flex size-12 min-size-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800 transition-[background-color,color,border-color] duration-fast ease-out",
-        "hover:bg-neutral-100 hover:text-neutral-900",
-        "focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800",
-        "[&_i]:text-xl",
-      )}
+    <button
+      type="button"
+      onClick={onClick}
+      aria-haspopup="dialog"
+      aria-expanded={open}
       aria-label={label}
+      className={cn(iconButtonClassName({ variant: "default" }), "lg:hidden")}
     >
-      <i
-        className={count > 0 ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
-        aria-hidden="true"
-      />
-      <span className="absolute top-1.5 inset-e-1.5 flex size-4 items-center justify-center rounded-full bg-neutral-900 text-2.5 leading-none font-medium text-neutral-0">
-        {count > 9 ? "9+" : count}
-      </span>
-    </a>
+      <i className="ph ph-map-pin" aria-hidden="true" />
+    </button>
   );
 }
 
@@ -221,7 +219,7 @@ export function HeaderBar({
         <div className="ms-auto flex h-full shrink-0 items-center gap-1 border-s border-neutral-200 ps-3 lg:ms-0 lg:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton label="Szukaj" iconClass="ph ph-magnifying-glass" variant="default" />
-          <HeaderFavoritesLink />
+          <HeaderSalonIconButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton
             label="Otwórz menu"
             iconClass="ph ph-list"

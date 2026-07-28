@@ -20,13 +20,19 @@ import "swiper/css";
 
 type ProductInspirationProps = {
   arrangements: InspirationArrangement[];
+  eyebrow?: string;
+  title?: string;
 };
 
 function formatIndex(index: number, total: number) {
   return `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 }
 
-export function ProductInspiration({ arrangements }: ProductInspirationProps) {
+export function ProductInspiration({
+  arrangements,
+  eyebrow = "Produkt w aranżacji",
+  title = "Inspiracje producenta",
+}: ProductInspirationProps) {
   const gutterPx = useGutterPx();
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -107,13 +113,17 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
     >
       <BrandMotif
         name="dots-grid"
-        className="absolute top-0 inset-e-[max(0,calc((100%-96rem)/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+        className={cn(
+          "pointer-events-none absolute top-0 hidden h-52 w-12 opacity-30",
+          // Only in the side gutter outside max-w-content — avoids overlapping the title.
+          "inset-s-[max(0px,calc((100%-96rem)/2-3rem))] min-[110rem]:block",
+        )}
       />
 
       <Container size="content" className="relative z-10">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
           <div className="min-w-0 max-w-2xl">
-            <Eyebrow className="mb-3">Produkt w aranżacji</Eyebrow>
+            <Eyebrow className="mb-3">{eyebrow}</Eyebrow>
             <TextRevealLead
               id="inspiration-title"
               revealUnit="word"
@@ -122,7 +132,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
               mutedClassName="text-neutral-900/20"
               fillClassName="text-neutral-900"
             >
-              Inspiracje producenta
+              {title}
             </TextRevealLead>
           </div>
 
@@ -231,7 +241,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
 
                   <div className="relative flex flex-col justify-center border-t border-neutral-200/80 px-6 py-8 md:border-t-0 md:border-s md:px-8 md:py-10 lg:px-10">
                     <div
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(184,151,90,0.14),transparent_55%)]"
+                      className="pointer-events-none absolute inset-0 bg-radial-[at_100%_0%] from-gold-500/14 to-transparent to-55%"
                       aria-hidden="true"
                     />
                     <div className="relative">

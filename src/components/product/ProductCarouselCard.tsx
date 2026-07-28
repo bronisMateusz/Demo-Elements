@@ -19,7 +19,7 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
     >
       <a
         href={product.href}
-        className="absolute inset-0 z-1 no-underline focus-visible:outline-2 focus-visible:outline-offset-(--spacing-focus-ring-offset) focus-visible:outline-neutral-800"
+        className="absolute inset-0 z-1 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800"
         aria-label={`Przejdź do: ${product.title}`}
       >
         <span className="sr-only">Przejdź do: {product.title}</span>
@@ -63,10 +63,9 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
           );
         })}
 
-        {product.badge && product.badge.variant !== "brand" ? (
+        {product.badge ? (
           <Badge
             variant={product.badge.variant ?? "default"}
-            size="sm"
             className="absolute inset-s-3 top-3 z-2"
           >
             {product.badge.label}
