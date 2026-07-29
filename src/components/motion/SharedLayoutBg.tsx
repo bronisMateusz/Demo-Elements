@@ -4,6 +4,7 @@ import {
   AnimatePresence,
   LayoutGroup,
   motion,
+  type HTMLMotionProps,
   type Variants,
 } from "motion/react";
 import {
@@ -12,7 +13,6 @@ import {
   isValidElement,
   useId,
   useState,
-  type HTMLAttributes,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
@@ -28,7 +28,7 @@ export type SharedLayoutBgProps = {
   pillClassName?: string;
   /** Horizontal inset of the pill relative to each item (px). Default 0. */
   inset?: number;
-} & Omit<HTMLAttributes<HTMLDivElement>, "children" | "className">;
+} & Omit<HTMLMotionProps<"div">, "children" | "className">;
 
 const variants: Variants = {
   initial: { opacity: 0, filter: "blur(0.375rem)" },

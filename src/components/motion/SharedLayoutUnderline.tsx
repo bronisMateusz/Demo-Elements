@@ -1,13 +1,12 @@
 // beui.dev/components/motion/shared-layout-underline
 
-import { LayoutGroup, motion } from "motion/react";
+import { LayoutGroup, motion, type HTMLMotionProps } from "motion/react";
 import {
   Children,
   cloneElement,
   isValidElement,
   useId,
   useState,
-  type HTMLAttributes,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
@@ -25,7 +24,7 @@ export type SharedLayoutUnderlineProps = {
   insetX?: number;
   /** Distance from the bottom of each item (px). Default 0. */
   bottom?: number;
-} & Omit<HTMLAttributes<HTMLDivElement>, "children" | "className">;
+} & Omit<HTMLMotionProps<"div">, "children" | "className">;
 
 export function SharedLayoutUnderline({
   children,
