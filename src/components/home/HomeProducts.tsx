@@ -68,11 +68,11 @@ export function HomeProducts() {
         <div
           role="tablist"
           aria-label="Kategorie produktów"
-          className="mt-6 min-w-0"
+          className="mt-6 min-w-0 overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
           <LayoutGroup id="home-product-tabs-active">
             <SharedLayoutUnderline
-              className="flex-wrap gap-2 border-b border-neutral-200"
+              className="w-max min-w-full flex-nowrap gap-2 border-b border-neutral-200"
               lineClassName="h-0.5 bg-gold-500/45"
               insetX={12}
               bottom={0}
@@ -89,7 +89,7 @@ export function HomeProducts() {
                     aria-controls={`home-product-panel-${entry.id}`}
                     tabIndex={selected ? 0 : -1}
                     className={cn(
-                      "px-3 py-2.5 font-body text-sm font-medium transition-colors duration-fast",
+                      "shrink-0 px-3 py-2.5 font-body text-sm font-medium transition-colors duration-fast",
                       selected
                         ? "text-neutral-900"
                         : "text-neutral-500 hover:text-neutral-800",
