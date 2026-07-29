@@ -18,7 +18,7 @@ function MegaCategoryLink({ group }: { group: MegaMenuGroup }) {
           aria-hidden="true"
         />
       ) : null}
-      <span className="min-w-0 flex-1">{group.title}</span>
+      <span className="min-w-0">{group.title}</span>
       <i
         className="ph ph-arrow-right text-sm text-neutral-400 transition-colors duration-fast ease-out group-hover/cat:text-gold-500"
         aria-hidden="true"
