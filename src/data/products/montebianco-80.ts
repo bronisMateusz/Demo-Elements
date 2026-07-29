@@ -291,11 +291,11 @@ export const montebianco80: Product = {
   seriesTitle: "Inne produkty z tej serii",
   seriesProducts: homeCatalogProducts(
     "series",
-    ["omnires-ottawa", "trinnity-m16", "grespania-halley", "florim-tundra"],
+    ["omnires-ottawa", "trinnity-m16", "montebianco-80", "florim-tundra"],
     {
       "omnires-ottawa": { label: "Promocja", variant: "promo" },
       "trinnity-m16": { label: "Bestseller", variant: "gold" },
-      "grespania-halley": { label: "Promocja", variant: "promo" },
+      "montebianco-80": { label: "Promocja", variant: "promo" },
       "florim-tundra": { label: "Nowość", variant: "brand" },
     },
   ),
@@ -434,12 +434,12 @@ export const montebianco80: Product = {
   },
   similarProducts: homeCatalogProducts(
     "similar",
-    ["florim-tundra", "omnires-ottawa", "trinnity-m16", "grespania-halley"],
+    ["florim-tundra", "omnires-ottawa", "trinnity-m16", "montebianco-80"],
     {
       "florim-tundra": { label: "Nowość", variant: "brand" },
       "omnires-ottawa": { label: "Promocja", variant: "promo" },
       "trinnity-m16": { label: "Bestseller", variant: "gold" },
-      "grespania-halley": { label: "Promocja", variant: "promo" },
+      "montebianco-80": { label: "Promocja", variant: "promo" },
     },
   ),
   recentlyViewedProducts: montebiancoRecentlyViewed,

@@ -163,6 +163,16 @@ export function ProductInspiration({
     liftHeaderAboveLightbox(false);
   };
 
+  // Keep the background slider in sync while the lightbox is open, so the
+  // closing fly-back targets the slide the user is actually leaving from.
+  const handleLightboxIndexChange = (index: number) => {
+    setLightboxIndex(index);
+    swiper?.slideTo(index, 0);
+    setActiveIndex(index);
+    setAtStart(index <= 0);
+    setAtEnd(index >= lastIndex);
+  };
+
   const openAt = (index: number) => {
     const image = arrangements[index]?.image;
     if (!image) return;
@@ -458,7 +468,7 @@ export function ProductInspiration({
           getSlideRect={getSlideRect}
           onClosingStart={startClosing}
           onClose={closeLightbox}
-          onIndexChange={setLightboxIndex}
+          onIndexChange={handleLightboxIndexChange}
         />
       ) : null}
     </section>
