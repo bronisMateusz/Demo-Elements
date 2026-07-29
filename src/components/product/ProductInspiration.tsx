@@ -401,7 +401,7 @@ export function ProductInspiration({
             className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
             aria-live="polite"
           >
-            {formatIndex(activeIndex, arrangements.length)}
+            {formatSlideIndex(activeIndex, arrangements.length)}
           </p>
           <button
             type="button"
