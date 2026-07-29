@@ -7,7 +7,9 @@ import {
 } from "../../components/product/variant-selector";
 
 const chipAxis = montebiancoVariants.axes.find((axis) => axis.type === "chip")!;
-const thumbnailAxis = montebiancoVariants.axes.find((axis) => axis.type === "thumbnail")!;
+const thumbnailAxis = montebiancoVariants.axes.find(
+  (axis) => axis.type === "thumbnail",
+)!;
 
 function useAxisSelection(defaultId: string) {
   const [selectedId, setSelectedId] = useState(defaultId);
@@ -41,7 +43,9 @@ export function VariantThumbnailGroupDemo() {
 }
 
 export function ProductVariantSelectorDemo() {
-  const [selection, setSelection] = useState(montebiancoVariants.defaultSelection);
+  const [selection, setSelection] = useState(
+    montebiancoVariants.defaultSelection,
+  );
 
   return (
     <ProductVariantSelector

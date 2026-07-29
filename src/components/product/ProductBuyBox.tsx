@@ -22,7 +22,9 @@ type ProductBuyBoxProps = {
 };
 
 export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
-  const { selection, resolved, selectOption } = useProductVariants(product.variants);
+  const { selection, resolved, selectOption } = useProductVariants(
+    product.variants,
+  );
 
   const displayTitle = resolved?.title ?? product.title;
   const displaySku = resolved?.sku ?? product.sku;
@@ -37,7 +39,11 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
 
   return (
     <div className="overflow-x-visible">
-      <ProductBadges brand={product.brand} badges={product.badges} price={displayPrice} />
+      <ProductBadges
+        brand={product.brand}
+        badges={product.badges}
+        price={displayPrice}
+      />
 
       <div className="mb-3 flex items-start justify-between gap-4">
         <h1 className="t-h2 min-w-0 flex-1">{displayTitle}</h1>
@@ -79,7 +85,11 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
       />
 
       {product.salonCard ? (
-        <ProductSalonCard className="mt-6 lg:mt-8" {...product.salonCard} onAskOpen={onAskOpen} />
+        <ProductSalonCard
+          className="mt-6 lg:mt-8"
+          {...product.salonCard}
+          onAskOpen={onAskOpen}
+        />
       ) : null}
     </div>
   );

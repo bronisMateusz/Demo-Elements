@@ -1,8 +1,10 @@
 import { cn } from "../../lib/cn";
 
-export type ProductCarouselLayoutToken = "bleed" | "contained" | "inline" | "inline-bleed";
+export type ProductCarouselLayoutToken =
+  "bleed" | "contained" | "inline" | "inline-bleed";
 
-export const productCarouselBleedWrapperClassName = "box-border w-screen ms-[calc(50%-50vw)]";
+export const productCarouselBleedWrapperClassName =
+  "box-border w-screen ms-[calc(50%-50vw)]";
 
 export function productCarouselRootClassName({
   layout,
@@ -18,7 +20,9 @@ export function productCarouselRootClassName({
   );
 }
 
-export function productCarouselSwiperClassName(layout: ProductCarouselLayoutToken) {
+export function productCarouselSwiperClassName(
+  layout: ProductCarouselLayoutToken,
+) {
   return cn(
     "w-full touch-pan-y overflow-hidden touch-[pan-y_pinch-zoom]",
     layout === "inline" || layout === "inline-bleed"
@@ -30,7 +34,9 @@ export function productCarouselSwiperClassName(layout: ProductCarouselLayoutToke
   );
 }
 
-export function productCarouselSlideClassName(layout: ProductCarouselLayoutToken) {
+export function productCarouselSlideClassName(
+  layout: ProductCarouselLayoutToken,
+) {
   if (layout === "inline" || layout === "inline-bleed") {
     return "h-auto! w-[clamp(13.75rem,calc((100%-0.75rem)/2.05),20rem)]! shrink-0";
   }
@@ -58,8 +64,12 @@ export function productCarouselNavClassName({
       ? "static inline-flex translate-none shadow-subtle"
       : cn(
           "absolute top-[36%] z-2 hidden -translate-y-1/2 shadow-subtle md:inline-flex",
-          placement === "prev" && (isBleed ? "inset-s-[clamp(1.25rem,2.222vw,2.5rem)]" : "-inset-s-2 md:-inset-s-4"),
-          placement === "next" && (isBleed ? "inset-e-[clamp(1.25rem,2.222vw,2.5rem)]" : "inset-e-4"),
+          placement === "prev" &&
+            (isBleed
+              ? "inset-s-[clamp(1.25rem,2.222vw,2.5rem)]"
+              : "-inset-s-2 md:-inset-s-4"),
+          placement === "next" &&
+            (isBleed ? "inset-e-[clamp(1.25rem,2.222vw,2.5rem)]" : "inset-e-4"),
         ),
     disabled && "pointer-events-none opacity-35",
   );

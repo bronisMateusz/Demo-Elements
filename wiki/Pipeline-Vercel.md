@@ -4,13 +4,13 @@ Hosting: **Vercel** (frontend statyczny + serverless API). **GitHub Pages wyłą
 
 ## Model branchy
 
-| | **Zespół** | **Klient** |
-|---|---|---|
-| Branch Git | `main` | `release` |
-| Vercel environment | **Preview** | **Production** |
-| URL (przykład) | `https://elements-dev.vercel.app` | domena production / alias `release` |
-| Agentation | włączone | wyłączone |
-| Auto-issue GitHub | tak | nie |
+|                    | **Zespół**                        | **Klient**                          |
+| ------------------ | --------------------------------- | ----------------------------------- |
+| Branch Git         | `main`                            | `release`                           |
+| Vercel environment | **Preview**                       | **Production**                      |
+| URL (przykład)     | `https://elements-dev.vercel.app` | domena production / alias `release` |
+| Agentation         | włączone                          | wyłączone                           |
+| Auto-issue GitHub  | tak                               | nie                                 |
 
 ### Uwaga o UI Vercel
 
@@ -31,11 +31,11 @@ Hosting: **Vercel** (frontend statyczny + serverless API). **GitHub Pages wyłą
 
 ### 2. Build and Output Settings
 
-| Pole | Wartość |
-|------|---------|
-| Build Command | `npm run build:vercel` |
-| Output Directory | `dist` |
-| Install Command | `npm install` (domyślnie) |
+| Pole             | Wartość                   |
+| ---------------- | ------------------------- |
+| Build Command    | `npm run build:vercel`    |
+| Output Directory | `dist`                    |
+| Install Command  | `npm install` (domyślnie) |
 
 Wartości są też w `vercel.json` - override w panelu **nie jest wymagany**.
 
@@ -54,11 +54,11 @@ git push -u origin release
 
 Import z folderu `env/` w repo (**Settings → Environment Variables → Import .env**):
 
-| Plik | Scope w Vercel |
-|------|----------------|
-| `env/vercel.shared.env` | **Production and Preview** |
-| `env/vercel.production.env` | **Production** |
-| `env/vercel.preview.env` | **Preview** |
+| Plik                        | Scope w Vercel             |
+| --------------------------- | -------------------------- |
+| `env/vercel.shared.env`     | **Production and Preview** |
+| `env/vercel.production.env` | **Production**             |
+| `env/vercel.preview.env`    | **Preview**                |
 
 Po imporcie:
 
@@ -79,25 +79,25 @@ Repo → **Settings → Pages → Source: None**.
 
 ### Wspólne (Production and Preview) - server API
 
-| Zmienna | Opis |
-|---------|------|
-| `GITHUB_TOKEN` | PAT z uprawnieniami **Issues (write)** i opcjonalnie **Contents (write)** |
-| `GITHUB_REPO` | `bronisMateusz/Demo-Elements` |
-| `ALLOWED_ORIGINS` | Dozwolone originy CORS dla `POST /api/agentation-feedback` |
+| Zmienna           | Opis                                                                      |
+| ----------------- | ------------------------------------------------------------------------- |
+| `GITHUB_TOKEN`    | PAT z uprawnieniami **Issues (write)** i opcjonalnie **Contents (write)** |
+| `GITHUB_REPO`     | `bronisMateusz/Demo-Elements`                                             |
+| `ALLOWED_ORIGINS` | Dozwolone originy CORS dla `POST /api/agentation-feedback`                |
 
 ### Production (klient)
 
-| Zmienna | Wartość |
-|---------|---------|
-| `VITE_DEPLOY_TARGET` | `client` |
-| `VITE_AGENTATION_ENABLED` | `false` |
+| Zmienna                   | Wartość  |
+| ------------------------- | -------- |
+| `VITE_DEPLOY_TARGET`      | `client` |
+| `VITE_AGENTATION_ENABLED` | `false`  |
 
 ### Preview (zespół)
 
-| Zmienna | Wartość |
-|---------|---------|
-| `VITE_DEPLOY_TARGET` | `team` |
-| `VITE_AGENTATION_ENABLED` | `true` |
+| Zmienna                       | Wartość                    |
+| ----------------------------- | -------------------------- |
+| `VITE_DEPLOY_TARGET`          | `team`                     |
+| `VITE_AGENTATION_ENABLED`     | `true`                     |
 | `VITE_AGENTATION_WEBHOOK_URL` | `/api/agentation-feedback` |
 
 ---

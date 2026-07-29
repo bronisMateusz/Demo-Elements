@@ -33,7 +33,10 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
 
     // Keep vertical page scroll untouched - only nudge the horizontal track.
     const linkCenter =
-      linkRect.left - scrollerRect.left + scroller.scrollLeft + linkRect.width / 2;
+      linkRect.left -
+      scrollerRect.left +
+      scroller.scrollLeft +
+      linkRect.width / 2;
     const nextLeft = linkCenter - scroller.clientWidth / 2;
     scroller.scrollTo({
       left: Math.max(0, nextLeft),
@@ -45,7 +48,12 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
 
   return (
     <>
-      <div ref={sentinelRef} id="pdp-subnav-sentinel" className="h-px" aria-hidden="true" />
+      <div
+        ref={sentinelRef}
+        id="pdp-subnav-sentinel"
+        className="h-px"
+        aria-hidden="true"
+      />
       <nav
         id="pdpSubnav"
         className={cn(

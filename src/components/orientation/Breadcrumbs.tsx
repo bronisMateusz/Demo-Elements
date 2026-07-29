@@ -56,7 +56,8 @@ export function Breadcrumbs({
             ) : (
               <span
                 className={cn(
-                  item.current && "max-w-56 truncate text-neutral-900 sm:max-w-80",
+                  item.current &&
+                    "max-w-56 truncate text-neutral-900 sm:max-w-80",
                 )}
               >
                 {item.label}

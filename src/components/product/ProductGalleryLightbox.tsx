@@ -6,7 +6,10 @@ import { A11y, Mousewheel, Zoom } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
 import { EASE_LUXURY, EASE_OUT } from "../../lib/motionEase";
-import { LIGHTBOX_MOTION, LIGHTBOX_SWIPER_SPEED_MS } from "../../lib/lightboxMotion";
+import {
+  LIGHTBOX_MOTION,
+  LIGHTBOX_SWIPER_SPEED_MS,
+} from "../../lib/lightboxMotion";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import {
   computeLightboxTargetRect,
@@ -54,7 +57,9 @@ export function ProductGalleryLightbox({
   const swiperRef = useRef<SwiperInstance | null>(null);
   const reducedMotion = useMotionReduced();
   const [isZoomed, setIsZoomed] = useState(false);
-  const [phase, setPhase] = useState<LightboxPhase>(() => (reducedMotion ? "open" : "enter"));
+  const [phase, setPhase] = useState<LightboxPhase>(() =>
+    reducedMotion ? "open" : "enter",
+  );
   const [exitOrigin, setExitOrigin] = useState<LightboxOpenOrigin | null>(null);
   const [showFlyer, setShowFlyer] = useState(!reducedMotion);
   const [flyerFadingOut, setFlyerFadingOut] = useState(false);
@@ -99,7 +104,14 @@ export function ProductGalleryLightbox({
 
   // Drop the flyer only after the pinned slide has painted.
   useEffect(() => {
-    if (reducedMotion || !contentVisible || !stageReady || !showFlyer || !activeFrame) return;
+    if (
+      reducedMotion ||
+      !contentVisible ||
+      !stageReady ||
+      !showFlyer ||
+      !activeFrame
+    )
+      return;
     let inner = 0;
     const outer = window.requestAnimationFrame(() => {
       inner = window.requestAnimationFrame(() => {
@@ -151,7 +163,15 @@ export function ProductGalleryLightbox({
     setFlyerFadingOut(false);
     onClosingStart();
     setPhase("exit");
-  }, [activeImage, getSlideRect, index, isZoomed, onClose, onClosingStart, reducedMotion]);
+  }, [
+    activeImage,
+    getSlideRect,
+    index,
+    isZoomed,
+    onClose,
+    onClosingStart,
+    reducedMotion,
+  ]);
 
   // Sync the swiper when the index is driven from outside (thumbnails/rail).
   useEffect(() => {
@@ -180,7 +200,8 @@ export function ProductGalleryLightbox({
         return;
       }
 
-      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
+        return;
       if (!hasMultiple || isZoomed || phase === "exit") return;
       if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
 
@@ -287,7 +308,9 @@ export function ProductGalleryLightbox({
           initial={false}
           animate={{ opacity: contentVisible && stageReady ? 1 : 0 }}
           transition={{ duration: 0 }}
-          style={{ pointerEvents: contentVisible && stageReady ? "auto" : "none" }}
+          style={{
+            pointerEvents: contentVisible && stageReady ? "auto" : "none",
+          }}
         >
           <Swiper
             className="size-full [&_.swiper-slide]:box-border [&_.swiper-wrapper]:h-full"
@@ -316,7 +339,9 @@ export function ProductGalleryLightbox({
             onTouchStart={handleFlyerFadeComplete}
             onSlideChangeTransitionStart={handleFlyerFadeComplete}
             onSlideChange={(swiper) => {
-              onIndexChange(hasMultiple ? swiper.realIndex : swiper.activeIndex);
+              onIndexChange(
+                hasMultiple ? swiper.realIndex : swiper.activeIndex,
+              );
               setIsZoomed(false);
             }}
             onZoomChange={(swiper, scale) => {
@@ -361,7 +386,8 @@ export function ProductGalleryLightbox({
                       }}
                       ref={(node) => {
                         if (imageIndex !== index || !node) return;
-                        if (node.complete && node.naturalWidth > 0) setStageReady(true);
+                        if (node.complete && node.naturalWidth > 0)
+                          setStageReady(true);
                       }}
                     />
                   </div>
@@ -423,12 +449,19 @@ function LightboxControls({
       className="pointer-events-none absolute inset-0 z-410"
       initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ duration: LIGHTBOX_MOTION.chromeFadeDuration, ease: EASE_OUT }}
+      transition={{
+        duration: LIGHTBOX_MOTION.chromeFadeDuration,
+        ease: EASE_OUT,
+      }}
     >
       <div className="absolute top-[clamp(1.25rem,2.222vw,2.5rem)] inset-s-[clamp(1.25rem,2.222vw,2.5rem)]">
         <IconButton
           label={isZoomed ? "Pomniejsz" : "Powiększ"}
-          iconClass={isZoomed ? "ph ph-magnifying-glass-minus" : "ph ph-magnifying-glass-plus"}
+          iconClass={
+            isZoomed
+              ? "ph ph-magnifying-glass-minus"
+              : "ph ph-magnifying-glass-plus"
+          }
           variant="elevated"
           className="pointer-events-auto shadow-subtle"
           onClick={onToggleZoom}
@@ -487,7 +520,9 @@ function LightboxControls({
                     src={image.src}
                     alt=""
                     className="size-full object-cover"
-                    style={{ objectPosition: productImageObjectPosition(image) }}
+                    style={{
+                      objectPosition: productImageObjectPosition(image),
+                    }}
                     draggable={false}
                   />
                 </button>

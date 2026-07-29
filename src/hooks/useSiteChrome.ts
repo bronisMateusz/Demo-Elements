@@ -2,7 +2,10 @@ import { useEffect } from "react";
 
 const SCROLLBAR_COMPENSATION_VAR = "--scrollbar-compensation";
 
-function applyScrollLock(className: "has-drawer-open" | "has-lightbox-open", locked: boolean) {
+function applyScrollLock(
+  className: "has-drawer-open" | "has-lightbox-open",
+  locked: boolean,
+) {
   const root = document.documentElement;
   const isLocked = root.classList.contains(className);
   if (locked === isLocked) return;

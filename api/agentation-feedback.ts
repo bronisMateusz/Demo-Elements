@@ -56,7 +56,11 @@ function buildTitle(output: string, pageUrl?: string): string {
   return `[UI Review] ${path} - ${summary}`;
 }
 
-function buildBody(output: string, pageUrl?: string, timestamp?: number): string {
+function buildBody(
+  output: string,
+  pageUrl?: string,
+  timestamp?: number,
+): string {
   const lines = [
     "### Feedback z Agentation",
     "",
@@ -83,7 +87,10 @@ async function createIssue(
 ): Promise<{ number: number; html_url: string }> {
   const { owner, repo } = parseRepo(repoSlug);
   const url = `${GITHUB_API}/repos/${owner}/${repo}/issues`;
-  const headers = { ...githubHeaders(token), "Content-Type": "application/json" };
+  const headers = {
+    ...githubHeaders(token),
+    "Content-Type": "application/json",
+  };
 
   let res = await fetch(url, {
     method: "POST",
@@ -121,7 +128,8 @@ function readBody(rawBody: unknown): WebhookBody {
 }
 
 export default async function handler(req: any, res: any) {
-  const origin = typeof req.headers?.origin === "string" ? req.headers.origin : undefined;
+  const origin =
+    typeof req.headers?.origin === "string" ? req.headers.origin : undefined;
 
   try {
     const allowed = (process.env.ALLOWED_ORIGINS ?? "")
@@ -149,7 +157,9 @@ export default async function handler(req: any, res: any) {
 
     const token = process.env.GITHUB_TOKEN;
     if (!token) {
-      res.status(500).json({ error: "Brak konfiguracji serwera (GITHUB_TOKEN)." });
+      res
+        .status(500)
+        .json({ error: "Brak konfiguracji serwera (GITHUB_TOKEN)." });
       return;
     }
 
@@ -171,7 +181,9 @@ export default async function handler(req: any, res: any) {
     const title = buildTitle(output, pageUrl);
     const issueBody = buildBody(output, pageUrl, body.timestamp);
 
-    const issue = await createIssue(token, repoSlug, title, issueBody, ["ui-review"]);
+    const issue = await createIssue(token, repoSlug, title, issueBody, [
+      "ui-review",
+    ]);
 
     res.status(200).json({
       ok: true,

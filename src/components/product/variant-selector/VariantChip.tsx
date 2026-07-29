@@ -1,7 +1,12 @@
 import { cn } from "../../../lib/cn";
 import type { VariantChipProps } from "./types";
 
-export function VariantChip({ label, selected, unavailable, onClick }: VariantChipProps) {
+export function VariantChip({
+  label,
+  selected,
+  unavailable,
+  onClick,
+}: VariantChipProps) {
   return (
     <button
       type="button"

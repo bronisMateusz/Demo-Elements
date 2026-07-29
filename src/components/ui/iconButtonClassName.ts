@@ -47,7 +47,10 @@ const iconButtonVariants: Record<IconButtonVariant, string> = {
   "on-dark": "text-neutral-0 hover:bg-white/10",
 };
 
-const animatedIconVariants = new Set<IconButtonVariant>(["bordered", "elevated"]);
+const animatedIconVariants = new Set<IconButtonVariant>([
+  "bordered",
+  "elevated",
+]);
 
 export function iconButtonClassName({
   variant = "default",

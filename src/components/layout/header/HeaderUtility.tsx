@@ -26,7 +26,10 @@ export function HeaderUtility() {
                   className="inline-flex h-full items-center gap-1.5 px-2.5 text-xs leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
                 >
                   {"iconClass" in item && item.iconClass ? (
-                    <i className={cn(item.iconClass, "text-sm leading-none")} aria-hidden="true" />
+                    <i
+                      className={cn(item.iconClass, "text-sm leading-none")}
+                      aria-hidden="true"
+                    />
                   ) : null}
                   {item.label}
                 </a>

@@ -20,10 +20,10 @@ Alternatywnie: edycja bezpośrednio w przeglądarce na GitHub → Wiki.
 
 ## Strony
 
-| Plik | Tytuł wiki |
-|------|------------|
-| `Home.md` | Home |
-| `Pipeline-Vercel.md` | Pipeline Vercel |
+| Plik                              | Tytuł wiki                   |
+| --------------------------------- | ---------------------------- |
+| `Home.md`                         | Home                         |
+| `Pipeline-Vercel.md`              | Pipeline Vercel              |
 | `Agentation-i-feedback-GitHub.md` | Agentation i feedback GitHub |
 | `Konfiguracja-nowego-projektu.md` | Konfiguracja nowego projektu |
-| `Rozwiazywanie-problemow.md` | Rozwiązywanie problemów |
+| `Rozwiazywanie-problemow.md`      | Rozwiązywanie problemów      |

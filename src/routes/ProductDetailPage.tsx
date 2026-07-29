@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
-import { buildPdpSubnavItems, pdpSectionScrollMarginClassName } from "../constants/pdpSubnav";
+import {
+  buildPdpSubnavItems,
+  pdpSectionScrollMarginClassName,
+} from "../constants/pdpSubnav";
 import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { AskFab } from "../components/product/AskFab";
@@ -85,7 +88,11 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section id="pdp-specyfikacja" tone="warm" className={pdpSectionScrollMarginClassName}>
+          <Section
+            id="pdp-specyfikacja"
+            tone="warm"
+            className={pdpSectionScrollMarginClassName}
+          >
             <ProductSpecifications specs={product.specifications} />
           </Section>
         </RevealSection>
@@ -101,7 +108,10 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section id="pdp-aranzacja" className={pdpSectionScrollMarginClassName}>
+          <Section
+            id="pdp-aranzacja"
+            className={pdpSectionScrollMarginClassName}
+          >
             <ProductInspiration arrangements={product.inspirations} />
           </Section>
         </RevealSection>

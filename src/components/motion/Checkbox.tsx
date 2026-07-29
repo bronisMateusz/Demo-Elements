@@ -112,7 +112,9 @@ export function Checkbox({
                   ? { opacity: 0 }
                   : { opacity: 0, scale: 0.5, filter: "blur(0.25rem)" }
               }
-              transition={reduce ? { duration: 0 } : { duration: 0.16, ease: EASE_OUT }}
+              transition={
+                reduce ? { duration: 0 } : { duration: 0.16, ease: EASE_OUT }
+              }
               aria-hidden
             >
               <motion.path

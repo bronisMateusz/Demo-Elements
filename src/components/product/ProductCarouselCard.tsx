@@ -9,13 +9,20 @@ type ProductCarouselCardProps = {
   compact?: boolean;
 };
 
-export function ProductCarouselCard({ product, className, compact = false }: ProductCarouselCardProps) {
+export function ProductCarouselCard({
+  product,
+  className,
+  compact = false,
+}: ProductCarouselCardProps) {
   const images = product.images?.length ? product.images : [product.image];
   const hasMultipleImages = images.length > 1;
 
   return (
     <article
-      className={cn("group/card relative flex h-full cursor-pointer flex-col bg-neutral-0", className)}
+      className={cn(
+        "group/card relative flex h-full cursor-pointer flex-col bg-neutral-0",
+        className,
+      )}
     >
       <a
         href={product.href}
@@ -96,14 +103,18 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
         <h3
           className={cn(
             "m-0 font-heading text-neutral-900",
-            compact ? "text-sm leading-[1.4]" : "text-base leading-[1.35] md:text-lg",
+            compact
+              ? "text-sm leading-[1.4]"
+              : "text-base leading-[1.35] md:text-lg",
           )}
         >
           {product.title}
         </h3>
 
         {product.subtitle ? (
-          <p className="mt-1.5 mb-0 font-body text-sm text-neutral-600">{product.subtitle}</p>
+          <p className="mt-1.5 mb-0 font-body text-sm text-neutral-600">
+            {product.subtitle}
+          </p>
         ) : null}
 
         {product.price ? (

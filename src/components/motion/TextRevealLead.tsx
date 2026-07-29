@@ -2,7 +2,10 @@ import { useMemo, useRef } from "react";
 import { cn } from "../../lib/cn";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { useScrollRevealProgress } from "../../hooks/useScrollRevealProgress";
-import { getLineRevealProgress, useTextLineSplit } from "../../hooks/useTextLineSplit";
+import {
+  getLineRevealProgress,
+  useTextLineSplit,
+} from "../../hooks/useTextLineSplit";
 
 export const textRevealLeadTypographyClassName =
   "font-heading text-[clamp(1.625rem,2.8vw,2.375rem)] leading-[1.3] tracking-tight font-medium text-neutral-900";
@@ -94,25 +97,43 @@ export function TextRevealLead({
 }: TextRevealLeadProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduce = useMotionReduced();
-  const words = useMemo(() => children.split(/\s+/).filter(Boolean), [children]);
+  const words = useMemo(
+    () => children.split(/\s+/).filter(Boolean),
+    [children],
+  );
   const lines = useTextLineSplit(children, containerRef, typographyClassName);
-  const segmentCount = revealUnit === "word" ? words.length : (lines?.length ?? 1);
+  const segmentCount =
+    revealUnit === "word" ? words.length : (lines?.length ?? 1);
   // Start above the sticky product bar; finish before editorial sticky freezes rect.top.
   const progress = useScrollRevealProgress(containerRef, {
     start: 0.8,
-    end: Math.max(0.4, 0.55 - segmentCount * (revealUnit === "word" ? 0.01 : 0.014)),
+    end: Math.max(
+      0.4,
+      0.55 - segmentCount * (revealUnit === "word" ? 0.01 : 0.014),
+    ),
   });
 
   if (reduce) {
     return (
-      <p id={id} className={cn(typographyClassName, fillClassName, "max-w-prose", className)}>
+      <p
+        id={id}
+        className={cn(
+          typographyClassName,
+          fillClassName,
+          "max-w-prose",
+          className,
+        )}
+      >
         {children}
       </p>
     );
   }
 
   return (
-    <div ref={containerRef} className={cn("text-reveal relative max-w-prose", className)}>
+    <div
+      ref={containerRef}
+      className={cn("text-reveal relative max-w-prose", className)}
+    >
       <p id={id} className="sr-only">
         {children}
       </p>
@@ -144,7 +165,10 @@ export function TextRevealLead({
           ))}
         </div>
       ) : (
-        <p className={cn(typographyClassName, mutedClassName)} aria-hidden="true">
+        <p
+          className={cn(typographyClassName, mutedClassName)}
+          aria-hidden="true"
+        >
           {children}
         </p>
       )}

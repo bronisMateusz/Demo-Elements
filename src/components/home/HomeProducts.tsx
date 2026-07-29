@@ -26,13 +26,15 @@ const PANEL_TRANSITION = { duration: 0.3, ease: EASE_LUXURY } as const;
 
 export function HomeProducts() {
   const [activeTab, setActiveTab] = useState<HomeProductTabId>("promocje");
-  const [controls, setControls] = useState<(ProductCarouselControls & { tabId: HomeProductTabId }) | null>(
-    null,
-  );
+  const [controls, setControls] = useState<
+    (ProductCarouselControls & { tabId: HomeProductTabId }) | null
+  >(null);
   const [panelMinHeight, setPanelMinHeight] = useState<number>();
   const panelRef = useRef<HTMLDivElement>(null);
   const activeTabRef = useRef(activeTab);
-  const tab = homeProductTabs.find((entry) => entry.id === activeTab) ?? homeProductTabs[0];
+  const tab =
+    homeProductTabs.find((entry) => entry.id === activeTab) ??
+    homeProductTabs[0];
   const reduce = useMotionReduced();
   const navLive = controls?.tabId === activeTab;
   const navPending = controls !== null && !navLive;
@@ -63,7 +65,11 @@ export function HomeProducts() {
           {homeProductsSection.title}
         </TextRevealLead>
 
-        <div role="tablist" aria-label="Kategorie produktów" className="mt-6 min-w-0">
+        <div
+          role="tablist"
+          aria-label="Kategorie produktów"
+          className="mt-6 min-w-0"
+        >
           <LayoutGroup id="home-product-tabs-active">
             <SharedLayoutUnderline
               className="flex-wrap gap-2 border-b border-neutral-200"
@@ -123,7 +129,9 @@ export function HomeProducts() {
             exit={reduce ? undefined : { opacity: 0, y: -10 }}
             transition={reduce ? { duration: 0 } : PANEL_TRANSITION}
           >
-            <div className={cn(productCarouselBleedWrapperClassName, "relative")}>
+            <div
+              className={cn(productCarouselBleedWrapperClassName, "relative")}
+            >
               <ProductCarousel
                 products={tab.products}
                 layout="bleed"
@@ -162,7 +170,10 @@ export function HomeProducts() {
                 ),
               })}
               aria-label="Poprzednie produkty"
-              disabled={!navLive || (!(controls?.loop ?? true) && Boolean(controls?.atStart))}
+              disabled={
+                !navLive ||
+                (!(controls?.loop ?? true) && Boolean(controls?.atStart))
+              }
               onClick={() => {
                 if (!navLive || !controls) return;
                 controls.slidePrev();
@@ -177,7 +188,9 @@ export function HomeProducts() {
             >
               {formatSlideIndex(
                 navLive ? (controls?.activeIndex ?? 0) : 0,
-                navLive ? (controls?.count ?? tab.products.length) : tab.products.length,
+                navLive
+                  ? (controls?.count ?? tab.products.length)
+                  : tab.products.length,
               )}
             </p>
 
@@ -193,7 +206,10 @@ export function HomeProducts() {
                 ),
               })}
               aria-label="Następne produkty"
-              disabled={!navLive || (!(controls?.loop ?? true) && Boolean(controls?.atEnd))}
+              disabled={
+                !navLive ||
+                (!(controls?.loop ?? true) && Boolean(controls?.atEnd))
+              }
               onClick={() => {
                 if (!navLive || !controls) return;
                 controls.slideNext();

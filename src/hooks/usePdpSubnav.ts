@@ -80,7 +80,10 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
     if (!element) return;
 
     const top =
-      element.getBoundingClientRect().top + window.scrollY - readSubnavScrollOffsetPx() + 1;
+      element.getBoundingClientRect().top +
+      window.scrollY -
+      readSubnavScrollOffsetPx() +
+      1;
 
     window.scrollTo({
       top,

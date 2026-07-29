@@ -46,14 +46,19 @@ export function ProductFavoriteButton({
       className={iconButtonClassName({
         variant,
         active: isFavorite,
-        className: cn(isFavorite && "text-gold-500 hover:text-gold-500", className),
+        className: cn(
+          isFavorite && "text-gold-500 hover:text-gold-500",
+          className,
+        ),
       })}
       aria-label={label}
       aria-pressed={isFavorite}
       onClick={handleClick}
     >
       <i
-        className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+        className={
+          isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"
+        }
         aria-hidden="true"
       />
     </button>

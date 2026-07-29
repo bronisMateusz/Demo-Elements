@@ -13,7 +13,9 @@ const DEFAULT_SHOW_AFTER_SCROLL_PX = 320;
 
 /** Prefer showing after the PDP hero leaves view - falls back to a fixed offset. */
 function getShowAfterScrollPx(fallback: number): number {
-  const hero = document.querySelector<HTMLElement>('[aria-label="Prezentacja produktu"]');
+  const hero = document.querySelector<HTMLElement>(
+    '[aria-label="Prezentacja produktu"]',
+  );
   if (!hero) return fallback;
   return Math.max(fallback, hero.offsetTop + hero.offsetHeight - 160);
 }
@@ -115,7 +117,9 @@ export function AskFab({
             <p className="m-0 truncate font-heading text-lg leading-tight text-neutral-900">
               {title}
             </p>
-            <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">{price}</p>
+            <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">
+              {price}
+            </p>
           </div>
 
           <div className="flex w-full gap-2 lg:w-auto lg:shrink-0">
@@ -126,17 +130,24 @@ export function AskFab({
               size="lg"
               className={cn(
                 "min-w-0 flex-1 lg:flex-none",
-                isFavorite && "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
+                isFavorite &&
+                  "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
               )}
               ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
               ariaPressed={isFavorite}
               onClick={toggle}
             >
               <i
-                className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+                className={
+                  isFavorite
+                    ? "ph-fill ph-bookmark-simple"
+                    : "ph ph-bookmark-simple"
+                }
                 aria-hidden="true"
               />
-              <span className="truncate">{isFavorite ? "W schowku" : "Dodaj do schowka"}</span>
+              <span className="truncate">
+                {isFavorite ? "W schowku" : "Dodaj do schowka"}
+              </span>
             </Button>
 
             <Button

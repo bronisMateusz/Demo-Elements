@@ -23,7 +23,9 @@ function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
             src={feature.image.src}
             alt={feature.image.alt}
             className="size-full object-cover"
-            style={{ objectPosition: productImageObjectPosition(feature.image) }}
+            style={{
+              objectPosition: productImageObjectPosition(feature.image),
+            }}
             loading="lazy"
             decoding="async"
           />
@@ -70,13 +72,21 @@ export function ProductEditorial({
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
           <div className="min-w-0 lg:sticky lg:top-47.5 header-concealed:lg:top-36.5 lg:self-start">
-            <SectionHeader eyebrow={eyebrow} title={title} titleId="editorial-title" className="mb-8" />
+            <SectionHeader
+              eyebrow={eyebrow}
+              title={title}
+              titleId="editorial-title"
+              className="mb-8"
+            />
             <div className="space-y-6">
               <p className="mb-3 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
                 {lead}
               </p>
               {paragraphs.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)} className="t-body-lg max-w-prose">
+                <p
+                  key={paragraph.slice(0, 32)}
+                  className="t-body-lg max-w-prose"
+                >
                   {paragraph}
                 </p>
               ))}

@@ -8,19 +8,19 @@ Wzorowane na: **Demo-Elements**, API ze **Smartbees-Exporter**.
 
 ## 1. Pliki do skopiowania / zaadaptowania
 
-| Z źródła (Demo-Elements) | Co zmienić |
-|--------------------------|------------|
-| `vercel.json` | ewentualnie `buildCommand` |
-| `api/agentation-feedback.ts` | `DEFAULT_REPO`, `User-Agent` |
-| `assets/agentation-entry.jsx` | webhook path, branding toastów |
-| `vite.agentation.config.mjs` | `__AGENTATION_WEBHOOK_URL__` |
-| `scripts/build-vercel.mjs` | bez zmian |
-| `scripts/copy-runtime-assets.mjs` | lista assetów do kopiowania |
-| `src/components/layout/PageShell.tsx` | logika `shouldLoadAgentation()` |
-| `src/env.d.ts` | typy `VITE_*` |
-| `env/*.env` | URL-e, nazwa repo |
-| `.github/workflows/ci.yml` | matrix env |
-| `.github/ISSUE_TEMPLATE/ui-review-feedback.yml` | URL preview |
+| Z źródła (Demo-Elements)                        | Co zmienić                      |
+| ----------------------------------------------- | ------------------------------- |
+| `vercel.json`                                   | ewentualnie `buildCommand`      |
+| `api/agentation-feedback.ts`                    | `DEFAULT_REPO`, `User-Agent`    |
+| `assets/agentation-entry.jsx`                   | webhook path, branding toastów  |
+| `vite.agentation.config.mjs`                    | `__AGENTATION_WEBHOOK_URL__`    |
+| `scripts/build-vercel.mjs`                      | bez zmian                       |
+| `scripts/copy-runtime-assets.mjs`               | lista assetów do kopiowania     |
+| `src/components/layout/PageShell.tsx`           | logika `shouldLoadAgentation()` |
+| `src/env.d.ts`                                  | typy `VITE_*`                   |
+| `env/*.env`                                     | URL-e, nazwa repo               |
+| `.github/workflows/ci.yml`                      | matrix env                      |
+| `.github/ISSUE_TEMPLATE/ui-review-feedback.yml` | URL preview                     |
 
 ---
 
@@ -122,10 +122,10 @@ Skopiuj `.github/ISSUE_TEMPLATE/ui-review-feedback.yml` z URL preview nowego pro
 
 ## 9. Różnice vs stary model (GitHub Pages + ręczne issue)
 
-| Stary (AKF) | Nowy (Elements) |
-|-------------|-----------------|
-| GitHub Pages | Vercel |
-| Copy → ręczne issue | Send → auto-issue |
+| Stary (AKF)          | Nowy (Elements)                    |
+| -------------------- | ---------------------------------- |
+| GitHub Pages         | Vercel                             |
+| Copy → ręczne issue  | Send → auto-issue                  |
 | `?review=1` na Pages | Preview branch zawsze z Agentation |
-| Brak API | `api/agentation-feedback.ts` |
-| Subpath `/Demo-AKF/` | Base `/` na Vercel |
+| Brak API             | `api/agentation-feedback.ts`       |
+| Subpath `/Demo-AKF/` | Base `/` na Vercel                 |

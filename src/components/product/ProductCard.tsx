@@ -9,9 +9,20 @@ type ProductCardProps = {
   compact?: boolean;
 };
 
-export function ProductCard({ product, className, layout = "default", compact = false }: ProductCardProps) {
+export function ProductCard({
+  product,
+  className,
+  layout = "default",
+  compact = false,
+}: ProductCardProps) {
   if (layout === "carousel") {
-    return <ProductCarouselCard product={product} className={className} compact={compact} />;
+    return (
+      <ProductCarouselCard
+        product={product}
+        className={className}
+        compact={compact}
+      />
+    );
   }
 
   return (

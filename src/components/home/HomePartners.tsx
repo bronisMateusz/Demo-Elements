@@ -36,7 +36,9 @@ export function HomePartners() {
                     src={card.image.src}
                     alt={card.image.alt}
                     className="absolute inset-0 size-full object-cover"
-                    style={{ objectPosition: productImageObjectPosition(card.image) }}
+                    style={{
+                      objectPosition: productImageObjectPosition(card.image),
+                    }}
                     loading="lazy"
                     draggable={false}
                   />
@@ -44,7 +46,10 @@ export function HomePartners() {
                 <div className="flex flex-1 flex-col p-6 md:p-8">
                   <h3 className="m-0 flex items-center gap-3 font-heading text-h3 leading-heading font-medium text-neutral-900">
                     <i
-                      className={cn(card.iconClass, "text-[1.15em] leading-none text-gold-500")}
+                      className={cn(
+                        card.iconClass,
+                        "text-[1.15em] leading-none text-gold-500",
+                      )}
                       aria-hidden="true"
                     />
                     {card.title}

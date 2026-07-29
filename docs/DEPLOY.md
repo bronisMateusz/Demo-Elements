@@ -6,10 +6,10 @@ Hosting: **Vercel** (frontend + API). GitHub Pages jest wyłączone - deploy rob
 
 ## Model
 
-| Środowisko | Branch Vercel | Env w panelu | Agentation | Auto-issue GitHub |
-|------------|---------------|--------------|------------|-------------------|
-| **Klient** | `release` → Production | Production | wyłączone | - |
-| **Zespół** | `main` → Preview | Preview | zawsze włączone | Send → `/api/agentation-feedback` |
+| Środowisko | Branch Vercel          | Env w panelu | Agentation      | Auto-issue GitHub                 |
+| ---------- | ---------------------- | ------------ | --------------- | --------------------------------- |
+| **Klient** | `release` → Production | Production   | wyłączone       | -                                 |
+| **Zespół** | `main` → Preview       | Preview      | zawsze włączone | Send → `/api/agentation-feedback` |
 
 Klient widuje stabilny kod z `release`. Zespół pracuje na `main` z pełnym review (pinezki + automatyczne issue).
 
@@ -19,11 +19,11 @@ Klient widuje stabilny kod z `release`. Zespół pracuje na `main` z pełnym rev
 2. **Settings → Git → Production Branch** → ustaw na `release` (nie `main`).
 3. **Settings → Environment Variables → Import .env** - importuj pliki z folderu [`env/`](../env/README.md):
 
-| Plik | Scope przy imporcie |
-|------|---------------------|
-| `env/vercel.shared.env` | Production and Preview |
-| `env/vercel.production.env` | Production |
-| `env/vercel.preview.env` | Preview |
+| Plik                        | Scope przy imporcie    |
+| --------------------------- | ---------------------- |
+| `env/vercel.shared.env`     | Production and Preview |
+| `env/vercel.production.env` | Production             |
+| `env/vercel.preview.env`    | Preview                |
 
 Po imporcie `vercel.shared.env` podmień `GITHUB_TOKEN` na prawdziwy PAT. Po pierwszym deployu `main` zaktualizuj `ALLOWED_ORIGINS` na URL preview z Vercel.
 
@@ -31,25 +31,25 @@ Alternatywnie - ręcznie w panelu:
 
 ### Wspólne (Production + Preview)
 
-| Zmienna | Wartość |
-|---------|---------|
-| `GITHUB_TOKEN` | PAT: Issues + Contents (write) |
-| `GITHUB_REPO` | `bronisMateusz/Demo-Elements` |
+| Zmienna           | Wartość                                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------- |
+| `GITHUB_TOKEN`    | PAT: Issues + Contents (write)                                                                    |
+| `GITHUB_REPO`     | `bronisMateusz/Demo-Elements`                                                                     |
 | `ALLOWED_ORIGINS` | URL preview zespołu + localhost, np. `https://demo-elements-xxx.vercel.app,http://localhost:5173` |
 
 ### Production (klient - branch `release`)
 
-| Zmienna | Wartość |
-|---------|---------|
-| `VITE_DEPLOY_TARGET` | `client` |
-| `VITE_AGENTATION_ENABLED` | `false` |
+| Zmienna                   | Wartość  |
+| ------------------------- | -------- |
+| `VITE_DEPLOY_TARGET`      | `client` |
+| `VITE_AGENTATION_ENABLED` | `false`  |
 
 ### Preview (zespół - branch `main` i inne)
 
-| Zmienna | Wartość |
-|---------|---------|
-| `VITE_DEPLOY_TARGET` | `team` |
-| `VITE_AGENTATION_ENABLED` | `true` |
+| Zmienna                       | Wartość                    |
+| ----------------------------- | -------------------------- |
+| `VITE_DEPLOY_TARGET`          | `team`                     |
+| `VITE_AGENTATION_ENABLED`     | `true`                     |
 | `VITE_AGENTATION_WEBHOOK_URL` | `/api/agentation-feedback` |
 
 1. **Domains** (opcjonalnie):

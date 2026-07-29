@@ -22,7 +22,12 @@ function PrototypeMenuLink({
   onNavigate: () => void;
 }) {
   return (
-    <Link className={menuItemClass} to={item.to} role="menuitem" onClick={onNavigate}>
+    <Link
+      className={menuItemClass}
+      to={item.to}
+      role="menuitem"
+      onClick={onNavigate}
+    >
       <i className={item.iconClass} aria-hidden="true" />
       <span>{item.label}</span>
     </Link>
@@ -41,7 +46,11 @@ function PrototypeMenuSection({
   return (
     <>
       <li role="none">
-        <div className="mx-3 my-2 h-px bg-neutral-200" role="separator" aria-hidden="true" />
+        <div
+          className="mx-3 my-2 h-px bg-neutral-200"
+          role="separator"
+          aria-hidden="true"
+        />
         <p className={sectionTitleClassName}>{title}</p>
       </li>
       {items.map((item) => (

@@ -15,7 +15,8 @@ export function useContentInsetPx(fallbackGutter = 40) {
       const probe = document.createElement("div");
       probe.style.cssText = `position:absolute;visibility:hidden;width:${CONTENT_MAX};pointer-events:none;`;
       document.body.appendChild(probe);
-      const contentMax = probe.getBoundingClientRect().width || CONTENT_MAX_FALLBACK_PX;
+      const contentMax =
+        probe.getBoundingClientRect().width || CONTENT_MAX_FALLBACK_PX;
       probe.remove();
 
       const viewport = window.innerWidth;

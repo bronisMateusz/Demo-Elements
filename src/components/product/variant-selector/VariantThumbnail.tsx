@@ -42,7 +42,10 @@ export function VariantThumbnail({
         />
       </span>
       <span
-        className={cn("block h-px w-full", selected ? "bg-neutral-900" : "bg-transparent")}
+        className={cn(
+          "block h-px w-full",
+          selected ? "bg-neutral-900" : "bg-transparent",
+        )}
         aria-hidden="true"
       />
       <span className="sr-only">{label}</span>

@@ -8,9 +8,14 @@ type ProductRecommendationsProps = {
   similarProducts: RelatedProduct[];
 };
 
-export function ProductRecommendations({ similarProducts }: ProductRecommendationsProps) {
+export function ProductRecommendations({
+  similarProducts,
+}: ProductRecommendationsProps) {
   return (
-    <section aria-labelledby="similar-title" className="relative overflow-x-clip">
+    <section
+      aria-labelledby="similar-title"
+      className="relative overflow-x-clip"
+    >
       <BrandMotif
         name="dots-grid"
         className={cn(
@@ -19,7 +24,9 @@ export function ProductRecommendations({ similarProducts }: ProductRecommendatio
         )}
       />
 
-      <div className={cn(productCarouselBleedWrapperClassName, "relative z-10")}>
+      <div
+        className={cn(productCarouselBleedWrapperClassName, "relative z-10")}
+      >
         <ProductCarousel
           products={similarProducts}
           labelledBy="similar-title"

@@ -89,9 +89,13 @@ function BrandCycleCell({
           <motion.span
             key={brand.label}
             className="text-center font-heading text-base font-medium tracking-tight text-neutral-500 transition-colors duration-fast ease-out group-hover:text-neutral-900 md:text-lg"
-            initial={reduce ? false : { opacity: 0, y: 10, filter: "blur(6px)" }}
+            initial={
+              reduce ? false : { opacity: 0, y: 10, filter: "blur(6px)" }
+            }
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={reduce ? undefined : { opacity: 0, y: -8, filter: "blur(6px)" }}
+            exit={
+              reduce ? undefined : { opacity: 0, y: -8, filter: "blur(6px)" }
+            }
             transition={{ duration: 0.45, ease: EASE_OUT }}
           >
             {brand.label}
@@ -138,7 +142,11 @@ export function HomeBrands() {
         </SharedLayoutBg>
 
         <div className="mt-8 flex justify-center md:mt-10">
-          <Button href={homeBrands.seeAllHref} variant="secondary" className="w-fit">
+          <Button
+            href={homeBrands.seeAllHref}
+            variant="secondary"
+            className="w-fit"
+          >
             {homeBrands.seeAllLabel}
             <i className="ph ph-arrow-right" aria-hidden="true" />
           </Button>

@@ -52,7 +52,8 @@ export function SiteNewsletter() {
                   Inspiracje prosto na Twój adres e-mail
                 </h2>
                 <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-0/80 md:text-ui">
-                  Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na wydarzenia Elements.
+                  Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na
+                  wydarzenia Elements.
                 </p>
               </div>
 
@@ -69,7 +70,10 @@ export function SiteNewsletter() {
                     type="email"
                     required
                     placeholder="Twój adres e-mail"
-                    className={cn(inputClassName, "sm:flex-1 sm:rounded-e-none sm:border-e-0")}
+                    className={cn(
+                      inputClassName,
+                      "sm:flex-1 sm:rounded-e-none sm:border-e-0",
+                    )}
                   />
                   <Button
                     as="button"

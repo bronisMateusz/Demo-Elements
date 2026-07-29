@@ -17,7 +17,10 @@ export const headerModule: LibraryModule = {
       description:
         "Pełny chrome - utility, nav, Wybierz salon / Zmień salon, szukaj i schowek z badge.",
       render: () => (
-        <div className={libPreviewFullBleedWrapperClassName} data-lib-full-bleed>
+        <div
+          className={libPreviewFullBleedWrapperClassName}
+          data-lib-full-bleed
+        >
           <Header />
           <div className="grid min-h-32 place-items-center border-b border-dashed border-neutral-200 bg-neutral-50 text-sm text-neutral-500">
             Treść strony
@@ -38,9 +41,13 @@ export const footerModule: LibraryModule = {
     {
       id: "default",
       label: "Domyślny",
-      description: "Pełna stopka marki Elements - salony, kolumny, wordmark, social.",
+      description:
+        "Pełna stopka marki Elements - salony, kolumny, wordmark, social.",
       render: () => (
-        <div className={libPreviewFullBleedWrapperClassName} data-lib-full-bleed>
+        <div
+          className={libPreviewFullBleedWrapperClassName}
+          data-lib-full-bleed
+        >
           <Footer />
         </div>
       ),

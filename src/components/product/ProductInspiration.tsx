@@ -1,10 +1,19 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { assetUrl } from "../../app/assets";
 import { useGutterPx } from "../../hooks/useGutterPx";
-import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
+import {
+  liftHeaderAboveLightbox,
+  lockLightboxScroll,
+} from "../../hooks/useSiteChrome";
 import { cn } from "../../lib/cn";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
@@ -48,7 +57,8 @@ export function ProductInspiration({
   const gutterPx = useGutterPx();
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxOrigin, setLightboxOrigin] = useState<LightboxOpenOrigin | null>(null);
+  const [lightboxOrigin, setLightboxOrigin] =
+    useState<LightboxOpenOrigin | null>(null);
   const [lightboxClosing, setLightboxClosing] = useState(false);
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -59,21 +69,27 @@ export function ProductInspiration({
   const showHeaderNav = navPlacement === "header" && arrangements.length > 1;
   const showFooterNav = navPlacement === "footer" && arrangements.length > 1;
 
-  const registerImage = useCallback((index: number, node: HTMLImageElement | null) => {
-    if (node) {
-      imageRefs.current.set(index, node);
-      return;
-    }
-    imageRefs.current.delete(index);
-  }, []);
+  const registerImage = useCallback(
+    (index: number, node: HTMLImageElement | null) => {
+      if (node) {
+        imageRefs.current.set(index, node);
+        return;
+      }
+      imageRefs.current.delete(index);
+    },
+    [],
+  );
 
-  const registerFrame = useCallback((index: number, node: HTMLElement | null) => {
-    if (node) {
-      frameRefs.current.set(index, node);
-      return;
-    }
-    frameRefs.current.delete(index);
-  }, []);
+  const registerFrame = useCallback(
+    (index: number, node: HTMLElement | null) => {
+      if (node) {
+        frameRefs.current.set(index, node);
+        return;
+      }
+      frameRefs.current.delete(index);
+    },
+    [],
+  );
 
   const getSlideRect = useCallback((index: number) => {
     // Prefer the unscaled media frame so hover zoom does not skew the FLIP origin.
@@ -161,7 +177,7 @@ export function ProductInspiration({
         const aspectRatio =
           node && node.naturalWidth > 0 && node.naturalHeight > 0
             ? node.naturalWidth / node.naturalHeight
-            : peekImageAspectRatio(image.src) ?? undefined;
+            : (peekImageAspectRatio(image.src) ?? undefined);
         openLightbox(index, {
           rect,
           objectPosition: productImageObjectPosition(image),
@@ -222,7 +238,10 @@ export function ProductInspiration({
                   type="button"
                   className={iconButtonClassName({
                     variant: "elevated",
-                    className: cn("shadow-subtle", atStart && "pointer-events-none opacity-35"),
+                    className: cn(
+                      "shadow-subtle",
+                      atStart && "pointer-events-none opacity-35",
+                    ),
                   })}
                   aria-label="Poprzednia aranżacja"
                   disabled={atStart}
@@ -234,7 +253,10 @@ export function ProductInspiration({
                   type="button"
                   className={iconButtonClassName({
                     variant: "elevated",
-                    className: cn("shadow-subtle", atEnd && "pointer-events-none opacity-35"),
+                    className: cn(
+                      "shadow-subtle",
+                      atEnd && "pointer-events-none opacity-35",
+                    ),
                   })}
                   aria-label="Następna aranżacja"
                   disabled={atEnd}
@@ -325,9 +347,13 @@ export function ProductInspiration({
                           alt={alt}
                           className={cn(
                             "pointer-events-none absolute inset-0 size-full object-cover",
-                            lightboxClosing && lightboxIndex === index && "opacity-0",
+                            lightboxClosing &&
+                              lightboxIndex === index &&
+                              "opacity-0",
                           )}
-                          style={{ objectPosition: productImageObjectPosition(image) }}
+                          style={{
+                            objectPosition: productImageObjectPosition(image),
+                          }}
                           loading="lazy"
                           draggable={false}
                         />
@@ -389,7 +415,10 @@ export function ProductInspiration({
             type="button"
             className={iconButtonClassName({
               variant: "elevated",
-              className: cn("shadow-subtle", atStart && "pointer-events-none opacity-35"),
+              className: cn(
+                "shadow-subtle",
+                atStart && "pointer-events-none opacity-35",
+              ),
             })}
             aria-label="Poprzednia aranżacja"
             disabled={atStart}
@@ -407,7 +436,10 @@ export function ProductInspiration({
             type="button"
             className={iconButtonClassName({
               variant: "elevated",
-              className: cn("shadow-subtle", atEnd && "pointer-events-none opacity-35"),
+              className: cn(
+                "shadow-subtle",
+                atEnd && "pointer-events-none opacity-35",
+              ),
             })}
             aria-label="Następna aranżacja"
             disabled={atEnd}

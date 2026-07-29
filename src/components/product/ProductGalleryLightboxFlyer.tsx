@@ -113,7 +113,8 @@ export function ProductGalleryLightboxFlyer({
         top: frameTo.top,
         width: frameTo.width,
         height: frameTo.height,
-        boxShadow: handoffActive || positionDone ? "0 0 #0000" : "var(--shadow-subtle)",
+        boxShadow:
+          handoffActive || positionDone ? "0 0 #0000" : "var(--shadow-subtle)",
       }}
       transition={{
         left: { duration: FLYER_DURATION_S, ease: EASE_OUT },

@@ -1,7 +1,12 @@
 import { cn } from "../../../lib/cn";
 import type { VariantSwatchProps } from "./types";
 
-export function VariantSwatch({ label, swatch, selected, onClick }: VariantSwatchProps) {
+export function VariantSwatch({
+  label,
+  swatch,
+  selected,
+  onClick,
+}: VariantSwatchProps) {
   return (
     <button
       type="button"

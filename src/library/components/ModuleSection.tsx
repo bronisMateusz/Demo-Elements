@@ -29,10 +29,15 @@ export function ModuleSection({ module }: ModuleSectionProps) {
         <Eyebrow className={libModuleEyebrowClassName} variant="muted">
           Moduł {module.id}
         </Eyebrow>
-        <h2 className={`t-h2 ${libModuleTitleClassName}`} id={`${module.slug}-title`}>
+        <h2
+          className={`t-h2 ${libModuleTitleClassName}`}
+          id={`${module.slug}-title`}
+        >
           {module.title}
         </h2>
-        <p className={`t-body ${libModuleDescClassName}`}>{module.description}</p>
+        <p className={`t-body ${libModuleDescClassName}`}>
+          {module.description}
+        </p>
       </header>
 
       <div className={libModuleVariantsClassName}>

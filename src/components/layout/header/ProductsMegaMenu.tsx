@@ -27,7 +27,10 @@ function MegaCategoryLink({ group }: { group: MegaMenuGroup }) {
   );
 }
 
-export function ProductsMegaMenu({ open, id = "products-mega-menu" }: ProductsMegaMenuProps) {
+export function ProductsMegaMenu({
+  open,
+  id = "products-mega-menu",
+}: ProductsMegaMenuProps) {
   return (
     <div
       id={id}
@@ -43,10 +46,7 @@ export function ProductsMegaMenu({ open, id = "products-mega-menu" }: ProductsMe
         {productsMegaMenu.map((column, columnIndex) => (
           <div key={column.groups[0]?.title ?? columnIndex} className="min-w-0">
             {column.groups.map((group, groupIndex) => (
-              <div
-                key={group.href}
-                className={cn(groupIndex > 0 && "mt-8")}
-              >
+              <div key={group.href} className={cn(groupIndex > 0 && "mt-8")}>
                 <MegaCategoryLink group={group} />
                 <ul className="m-0 flex list-none flex-col gap-0 p-0">
                   {group.links.map((link) => (

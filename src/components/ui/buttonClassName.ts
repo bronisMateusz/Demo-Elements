@@ -12,7 +12,8 @@ import {
   btnAnimatedSecondaryOnDarkClassName,
 } from "./btnAnimatedClassName";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "gold" | "tertiary";
+export type ButtonVariant =
+  "primary" | "secondary" | "ghost" | "gold" | "tertiary";
 export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonTone = "default" | "onDark";
 
@@ -24,7 +25,11 @@ type ButtonClassNameOptions = {
   className?: string;
 };
 
-const animatedVariants = new Set<ButtonVariant>(["primary", "secondary", "gold"]);
+const animatedVariants = new Set<ButtonVariant>([
+  "primary",
+  "secondary",
+  "gold",
+]);
 
 const buttonBase = cn(
   "inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xs border font-body font-medium text-ui leading-none tracking-normal no-underline whitespace-nowrap cursor-pointer active:translate-y-px disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2",

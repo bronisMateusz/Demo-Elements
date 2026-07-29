@@ -20,15 +20,8 @@ export function HomeMagazine() {
   const reducedMotion = useReducedMotion();
   const [stackHovered, setStackHovered] = useState(false);
   const { targetRef, sideInset } = useScrollExpandInset<HTMLElement>();
-  const {
-    id,
-    eyebrow,
-    title,
-    description,
-    image,
-    primaryCta,
-    secondaryCta,
-  } = homeMagazine;
+  const { id, eyebrow, title, description, image, primaryCta, secondaryCta } =
+    homeMagazine;
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -53,12 +46,18 @@ export function HomeMagazine() {
     animate(hoverFan, hovered ? 1 : 0, { duration: 0.45, ease: EASE_LUXURY });
   };
 
-  const pageBackXLive = useTransform([pageBackX, hoverFan], ([x, h]) => Number(x) + Number(h) * 14);
+  const pageBackXLive = useTransform(
+    [pageBackX, hoverFan],
+    ([x, h]) => Number(x) + Number(h) * 14,
+  );
   const pageBackRotateLive = useTransform(
     [pageBackRotate, hoverFan],
     ([r, h]) => Number(r) + Number(h) * 5,
   );
-  const pageMidXLive = useTransform([pageMidX, hoverFan], ([x, h]) => Number(x) + Number(h) * 8);
+  const pageMidXLive = useTransform(
+    [pageMidX, hoverFan],
+    ([x, h]) => Number(x) + Number(h) * 8,
+  );
   const pageMidRotateLive = useTransform(
     [pageMidRotate, hoverFan],
     ([r, h]) => Number(r) + Number(h) * 2.5,
@@ -143,7 +142,11 @@ export function HomeMagazine() {
             onMouseLeave={() => setHovered(false)}
             onFocusCapture={() => setHovered(true)}
             onBlurCapture={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+              if (
+                !event.currentTarget.contains(
+                  event.relatedTarget as Node | null,
+                )
+              ) {
                 setHovered(false);
               }
             }}
@@ -152,7 +155,10 @@ export function HomeMagazine() {
               className="pointer-events-none absolute inset-x-0 inset-y-2 rounded-xs border border-neutral-200 bg-neutral-0 shadow-2 lg:inset-y-0"
               style={
                 reducedMotion
-                  ? { x: 14 + (stackHovered ? 14 : 0), rotate: 3 + (stackHovered ? 5 : 0) }
+                  ? {
+                      x: 14 + (stackHovered ? 14 : 0),
+                      rotate: 3 + (stackHovered ? 5 : 0),
+                    }
                   : { x: pageBackXLive, rotate: pageBackRotateLive }
               }
               aria-hidden="true"
@@ -161,7 +167,10 @@ export function HomeMagazine() {
               className="pointer-events-none absolute inset-x-0 inset-y-2 rounded-xs border border-neutral-200/70 bg-neutral-0 shadow-1 lg:inset-y-0"
               style={
                 reducedMotion
-                  ? { x: 6 + (stackHovered ? 8 : 0), rotate: 1 + (stackHovered ? 2.5 : 0) }
+                  ? {
+                      x: 6 + (stackHovered ? 8 : 0),
+                      rotate: 1 + (stackHovered ? 2.5 : 0),
+                    }
                   : { x: pageMidXLive, rotate: pageMidRotateLive }
               }
               aria-hidden="true"

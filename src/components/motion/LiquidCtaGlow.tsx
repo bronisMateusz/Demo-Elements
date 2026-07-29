@@ -1,6 +1,9 @@
 import { useEffect, useId, useState } from "react";
 import { cn } from "../../lib/cn";
-import { isMotionPaused, subscribeMotionPreference } from "../../lib/a11yPreferences";
+import {
+  isMotionPaused,
+  subscribeMotionPreference,
+} from "../../lib/a11yPreferences";
 
 type LiquidCtaGlowProps = {
   className?: string;

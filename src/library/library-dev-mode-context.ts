@@ -5,4 +5,5 @@ export type LibraryDevModeContextValue = {
   setDevMode: (enabled: boolean) => void;
 };
 
-export const LibraryDevModeContext = createContext<LibraryDevModeContextValue | null>(null);
+export const LibraryDevModeContext =
+  createContext<LibraryDevModeContextValue | null>(null);

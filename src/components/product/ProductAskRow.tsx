@@ -23,11 +23,14 @@ export function ProductAskRow({
     <div
       className={cn(
         "flex flex-col gap-4",
-        !embedded && "rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-5",
+        !embedded &&
+          "rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-5",
         className,
       )}
     >
-      <p className="m-0 font-heading text-lg leading-[1.35] text-neutral-900">{lead}</p>
+      <p className="m-0 font-heading text-lg leading-[1.35] text-neutral-900">
+        {lead}
+      </p>
       {onAskOpen ? (
         <Button
           as="button"
@@ -42,7 +45,13 @@ export function ProductAskRow({
           {actionLabel}
         </Button>
       ) : (
-        <Button href={href} variant="secondary" size="lg" full ariaLabel={`${lead} ${actionLabel}`}>
+        <Button
+          href={href}
+          variant="secondary"
+          size="lg"
+          full
+          ariaLabel={`${lead} ${actionLabel}`}
+        >
           <i className="ph ph-chat-circle" aria-hidden="true" />
           {actionLabel}
         </Button>

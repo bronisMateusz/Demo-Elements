@@ -6,14 +6,22 @@ import { SharedLayoutBg } from "../../motion/SharedLayoutBg";
 import { VariantChip } from "./VariantChip";
 import type { VariantAxisGroupProps } from "./types";
 
-export function VariantChipGroup({ options, selectedId, axisLabel, onSelect }: VariantAxisGroupProps) {
+export function VariantChipGroup({
+  options,
+  selectedId,
+  axisLabel,
+  onSelect,
+}: VariantAxisGroupProps) {
   const selectedLayoutId = useId();
 
   return (
     <div role="group" aria-label={axisLabel}>
       <LayoutGroup id={`variant-chip-${selectedLayoutId}`}>
         <MotionFieldGroup>
-          <SharedLayoutBg className="inline-flex gap-1" pillClassName="rounded-xs bg-neutral-100">
+          <SharedLayoutBg
+            className="inline-flex gap-1"
+            pillClassName="rounded-xs bg-neutral-100"
+          >
             {options.map((option) => {
               const selected = selectedId === option.id;
 
@@ -23,7 +31,9 @@ export function VariantChipGroup({ options, selectedId, axisLabel, onSelect }: V
                   data-hoverable={option.unavailable ? false : undefined}
                   className={cn(
                     "group relative shrink-0 rounded-xs border bg-neutral-0 transition-[border-color] duration-base ease-out",
-                    selected ? "border-transparent" : "border-neutral-800 hover:border-neutral-900",
+                    selected
+                      ? "border-transparent"
+                      : "border-neutral-800 hover:border-neutral-900",
                     option.unavailable && "cursor-not-allowed",
                   )}
                 >

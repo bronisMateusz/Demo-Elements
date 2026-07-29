@@ -71,7 +71,8 @@ export const breadcrumbsModule: LibraryModule = {
             ]}
           />
           <p className="t-body-lg max-w-prose text-neutral-600">
-            Kolekcja Montebianco zaprasza do aranżowania stylowej łazienki w dobrym guście…
+            Kolekcja Montebianco zaprasza do aranżowania stylowej łazienki w
+            dobrym guście…
           </p>
         </div>
       ),
@@ -117,7 +118,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "sizes",
       label: "Rozmiary",
-      description: "Large (3.25rem), Default (3rem), Small (2.5rem) - na przykładzie Primary.",
+      description:
+        "Large (3.25rem), Default (3rem), Small (2.5rem) - na przykładzie Primary.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonSizesDemo />
@@ -138,7 +140,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "secondary-states",
       label: "Stany · Secondary",
-      description: "Białe tło + border = kolor tekstu (neutral-800); czarne wypełnienie na hover.",
+      description:
+        "Białe tło + border = kolor tekstu (neutral-800); czarne wypełnienie na hover.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonSecondaryStatesDemo />
@@ -148,7 +151,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "gold-states",
       label: "Stany · Gold",
-      description: "Złota obwódka - czarne wypełnienie na hover (nie solid primary).",
+      description:
+        "Złota obwódka - czarne wypełnienie na hover (nie solid primary).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonGoldStatesDemo />
@@ -158,7 +162,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "ghost-states",
       label: "Stany · Ghost",
-      description: "Przezroczyste tło - hover z delikatnym wypełnieniem bg-muted.",
+      description:
+        "Przezroczyste tło - hover z delikatnym wypełnieniem bg-muted.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonGhostStatesDemo />
@@ -178,7 +183,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "icons",
       label: "Z ikonami",
-      description: "Ikony w przyciskach tekstowych oraz IconButton (default, bordered, elevated, on-dark).",
+      description:
+        "Ikony w przyciskach tekstowych oraz IconButton (default, bordered, elevated, on-dark).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonIconsDemo />
@@ -198,7 +204,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "live-hover",
       label: "Animacja hover (interaktywna)",
-      description: "Najedź kursorem - wypełnienie wjeżdża od dołu: czarne na jasnym, białe przy onDark.",
+      description:
+        "Najedź kursorem - wypełnienie wjeżdża od dołu: czarne na jasnym, białe przy onDark.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonLiveHoverDemo />
@@ -219,7 +226,8 @@ export const buttonModule: LibraryModule = {
     {
       id: "ask-row",
       label: "Ask row (PDP)",
-      description: "Lead jako tekst + osobny przycisk CTA (secondary · lg) pod ceną.",
+      description:
+        "Lead jako tekst + osobny przycisk CTA (secondary · lg) pod ceną.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonAskRowDemo />
@@ -250,4 +258,7 @@ export const buttonModule: LibraryModule = {
   ],
 };
 
-export const category2Modules: LibraryModule[] = [breadcrumbsModule, buttonModule];
+export const category2Modules: LibraryModule[] = [
+  breadcrumbsModule,
+  buttonModule,
+];

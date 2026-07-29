@@ -1,8 +1,11 @@
-const bundledAssets = import.meta.glob("../../assets/**/*.{png,jpg,jpeg,webp,svg,gif,mp4}", {
-  eager: true,
-  query: "?url",
-  import: "default",
-}) as Record<string, string>;
+const bundledAssets = import.meta.glob(
+  "../../assets/**/*.{png,jpg,jpeg,webp,svg,gif,mp4}",
+  {
+    eager: true,
+    query: "?url",
+    import: "default",
+  },
+) as Record<string, string>;
 
 export function assetUrl(path: string) {
   const key = `../../assets/${path}`;

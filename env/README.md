@@ -4,11 +4,11 @@ Szablony **bez prawdziwych sekretów** - commitowane w repo. Import w panelu:
 
 **Vercel → Project → Settings → Environment Variables → Import .env**
 
-| Plik | Scope przy imporcie |
-|------|---------------------|
-| `vercel.shared.env` | **Production and Preview** |
-| `vercel.production.env` | **Production** |
-| `vercel.preview.env` | **Preview** |
+| Plik                     | Scope przy imporcie           |
+| ------------------------ | ----------------------------- |
+| `vercel.shared.env`      | **Production and Preview**    |
+| `vercel.production.env`  | **Production**                |
+| `vercel.preview.env`     | **Preview**                   |
 | `vercel.development.env` | **Development** (opcjonalnie) |
 
 ## Kolejność importu

@@ -44,7 +44,10 @@ export function HomeAbout() {
                   typeof part === "string" ? (
                     <span key={index}>{part}</span>
                   ) : (
-                    <strong key={index} className="font-semibold text-neutral-800">
+                    <strong
+                      key={index}
+                      className="font-semibold text-neutral-800"
+                    >
                       {part.bold}
                     </strong>
                   ),

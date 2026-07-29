@@ -10,8 +10,15 @@ type VariantAxisFieldProps = {
   labelId: string;
 };
 
-export function VariantAxisField({ axis, selection, onSelect, labelId }: VariantAxisFieldProps) {
-  const selectedOption = axis.options.find((option) => option.id === selection[axis.id]);
+export function VariantAxisField({
+  axis,
+  selection,
+  onSelect,
+  labelId,
+}: VariantAxisFieldProps) {
+  const selectedOption = axis.options.find(
+    (option) => option.id === selection[axis.id],
+  );
   const groupProps = {
     options: axis.options,
     selectedId: selection[axis.id],
@@ -27,11 +34,15 @@ export function VariantAxisField({ axis, selection, onSelect, labelId }: Variant
       </p>
 
       {axis.type === "chip" ? <VariantChipGroup {...groupProps} /> : null}
-      {axis.type === "thumbnail" ? <VariantThumbnailGroup {...groupProps} /> : null}
+      {axis.type === "thumbnail" ? (
+        <VariantThumbnailGroup {...groupProps} />
+      ) : null}
       {axis.type === "swatch" ? <VariantSwatchGroup {...groupProps} /> : null}
 
       {selectedOption?.unavailableNote ? (
-        <p className="mt-2 text-sm text-neutral-500">{selectedOption.unavailableNote}</p>
+        <p className="mt-2 text-sm text-neutral-500">
+          {selectedOption.unavailableNote}
+        </p>
       ) : null}
     </div>
   );

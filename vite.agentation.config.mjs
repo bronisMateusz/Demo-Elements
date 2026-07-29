@@ -10,7 +10,9 @@ export default defineConfig({
   define: {
     "process.env.NODE_ENV": JSON.stringify("development"),
     __AGENTATION_WEBHOOK_URL__: JSON.stringify(webhookUrl),
-    __AGENTATION_ENABLED__: JSON.stringify(process.env.VITE_AGENTATION_ENABLED === "true"),
+    __AGENTATION_ENABLED__: JSON.stringify(
+      process.env.VITE_AGENTATION_ENABLED === "true",
+    ),
   },
   build: {
     outDir: "assets",

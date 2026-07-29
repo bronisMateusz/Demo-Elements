@@ -10,7 +10,8 @@ export const containerContentClassName = "max-w-384";
 export const containerWideClassName = "max-w-448";
 
 /** Shared box model without `container`'s `max-w-none` (avoids fighting size caps). */
-const containerRailClassName = "mx-auto w-full px-[clamp(1.25rem,2.222vw,2.5rem)]";
+const containerRailClassName =
+  "mx-auto w-full px-[clamp(1.25rem,2.222vw,2.5rem)]";
 
 type ContainerSize = "full" | "content" | "wide";
 

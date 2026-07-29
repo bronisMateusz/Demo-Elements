@@ -44,7 +44,13 @@ export function Button(props: ButtonProps) {
   const size = props.size ?? "md";
   const tone = props.tone ?? "default";
   const full = props.full ?? false;
-  const classes = buttonClassName({ variant, size, tone, full, className: props.className });
+  const classes = buttonClassName({
+    variant,
+    size,
+    tone,
+    full,
+    className: props.className,
+  });
 
   if (props.as === "button") {
     return (

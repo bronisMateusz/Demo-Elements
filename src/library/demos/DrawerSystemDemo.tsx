@@ -10,10 +10,16 @@ export function SalonDrawerDemo() {
   return (
     <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Drawer wyboru salonu - wyszukiwanie, geolokalizacja i zapis wyboru (localStorage).
-        Ten sam komponent otwierany z headera, karty salonu na PDP i menu mobilnego.
+        Drawer wyboru salonu - wyszukiwanie, geolokalizacja i zapis wyboru
+        (localStorage). Ten sam komponent otwierany z headera, karty salonu na
+        PDP i menu mobilnego.
       </p>
-      <Button as="button" type="button" variant="secondary" onClick={() => setOpen(true)}>
+      <Button
+        as="button"
+        type="button"
+        variant="secondary"
+        onClick={() => setOpen(true)}
+      >
         Otwórz wybór salonu
       </Button>
       <SalonDrawer open={open} onClose={() => setOpen(false)} />
@@ -31,7 +37,12 @@ export function AskDrawerDemo() {
         Formularz pytania o produkt - karta produktu, pola wymagane i wiadomość
         z prefillem. Wspólny DrawerShell z SalonDrawer i MobileDrawer.
       </p>
-      <Button as="button" type="button" variant="primary" onClick={() => setOpen(true)}>
+      <Button
+        as="button"
+        type="button"
+        variant="primary"
+        onClick={() => setOpen(true)}
+      >
         Zadaj pytanie
       </Button>
       <AskDrawer

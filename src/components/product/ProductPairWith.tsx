@@ -14,7 +14,10 @@ export function ProductPairWith({ title, products }: ProductPairWithProps) {
   if (products.length === 0) return null;
 
   return (
-    <section aria-labelledby="pair-with-title" className="relative overflow-x-clip">
+    <section
+      aria-labelledby="pair-with-title"
+      className="relative overflow-x-clip"
+    >
       <BrandMotif
         name="dots-grid"
         className={cn(
@@ -23,7 +26,9 @@ export function ProductPairWith({ title, products }: ProductPairWithProps) {
         )}
       />
 
-      <div className={cn(productCarouselBleedWrapperClassName, "relative z-10")}>
+      <div
+        className={cn(productCarouselBleedWrapperClassName, "relative z-10")}
+      >
         <ProductCarousel
           products={products}
           labelledBy="pair-with-title"

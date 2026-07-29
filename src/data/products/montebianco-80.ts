@@ -1,6 +1,10 @@
 import { assetUrl } from "../../app/assets";
 import { homeCatalogProducts } from "../home";
-import type { Product, ProductVariants, RelatedProduct } from "../../types/product";
+import type {
+  Product,
+  ProductVariants,
+  RelatedProduct,
+} from "../../types/product";
 
 const montebiancoFrontImage = {
   src: assetUrl("products/montebianco/01-front.png"),
@@ -187,27 +191,46 @@ const montebiancoRecentlyViewed: RelatedProduct[] = [
     colorCount: 2,
     sizeCount: 1,
   }),
-  related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie", {
-    subtitle: "Wykończenie ręczne",
-    price: "1 290 zł",
-    badge: { label: "Bestseller", variant: "gold" },
-    image: { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco" },
-    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-    colorCount: 2,
-    sizeCount: 1,
-  }),
-  related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat", {
-    subtitle: "System modułowy",
-    price: "1 690 zł",
-    image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna Montebianco" },
-    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-    colorCount: 3,
-    sizeCount: 1,
-  }),
+  related(
+    "montebianco-mirror",
+    "Montebianco",
+    "Lustro Montebianco 80 cm w ramie",
+    {
+      subtitle: "Wykończenie ręczne",
+      price: "1 290 zł",
+      badge: { label: "Bestseller", variant: "gold" },
+      image: {
+        src: assetUrl("products/montebianco/04-angle.jpg"),
+        alt: "Lustro Montebianco",
+      },
+      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+      colorCount: 2,
+      sizeCount: 1,
+    },
+  ),
+  related(
+    "montebianco-side",
+    "Montebianco",
+    "Szafka boczna Montebianco, biały mat",
+    {
+      subtitle: "System modułowy",
+      price: "1 690 zł",
+      image: {
+        src: assetUrl("products/montebianco/02-detail.jpg"),
+        alt: "Szafka boczna Montebianco",
+      },
+      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+      colorCount: 3,
+      sizeCount: 1,
+    },
+  ),
   related("mellow", "Elita", "Szafka Mellow 80 cm fume mat, dwie szuflady", {
     subtitle: "Front MDF wilgocioodporny",
     price: "1 790 zł",
-    image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka Mellow 80 cm" },
+    image: {
+      src: assetUrl("products/montebianco/02-detail.jpg"),
+      alt: "Szafka Mellow 80 cm",
+    },
     swatch: { src: montebiancoFrontImage.src, alt: "Fume mat" },
     colorCount: 2,
     sizeCount: 1,

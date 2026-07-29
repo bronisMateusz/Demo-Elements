@@ -15,7 +15,7 @@
     "build:client": "VITE_DEPLOY_TARGET=client VITE_AGENTATION_ENABLED=false node scripts/build-vercel.mjs",
     "preview": "vite preview",
     "lint": "eslint src vite.config.ts eslint.config.js",
-    "format": "prettier --check ."
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",

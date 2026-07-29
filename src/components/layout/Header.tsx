@@ -71,8 +71,12 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("site-header-concealed", concealUtility);
-    return () => document.documentElement.classList.remove("site-header-concealed");
+    document.documentElement.classList.toggle(
+      "site-header-concealed",
+      concealUtility,
+    );
+    return () =>
+      document.documentElement.classList.remove("site-header-concealed");
   }, [concealUtility]);
 
   return (

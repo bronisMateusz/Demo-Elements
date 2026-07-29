@@ -45,7 +45,12 @@ export function HomeAdvisorCta() {
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.7, delay: 0.12, ease: EASE_OUT }}
           >
-            <Button href={primaryCta.href} variant="primary" tone="onDark" size="lg">
+            <Button
+              href={primaryCta.href}
+              variant="primary"
+              tone="onDark"
+              size="lg"
+            >
               {primaryCta.label}
             </Button>
             <Button

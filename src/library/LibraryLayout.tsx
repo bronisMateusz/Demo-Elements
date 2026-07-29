@@ -37,7 +37,11 @@ function LibraryDevToggle() {
 
 function LibrarySiteHeader() {
   return (
-    <header className={libHeaderClassName} data-lib-header id="librarySiteHeader">
+    <header
+      className={libHeaderClassName}
+      data-lib-header
+      id="librarySiteHeader"
+    >
       <div className="container flex h-16 items-center justify-between">
         <Link
           to="/"
@@ -47,7 +51,9 @@ function LibrarySiteHeader() {
           Elements
         </Link>
         <div className="flex items-center gap-4">
-          <span className="hidden text-sm text-neutral-500 sm:inline">Biblioteka komponentów</span>
+          <span className="hidden text-sm text-neutral-500 sm:inline">
+            Biblioteka komponentów
+          </span>
           <LibraryDevToggle />
         </div>
       </div>
@@ -60,7 +66,9 @@ function LibrarySiteHeader() {
               <li key={category.id}>
                 <NavLink
                   to={`/biblioteka/${category.slug}`}
-                  className={({ isActive }) => libCatNavLinkClassName({ active: isActive })}
+                  className={({ isActive }) =>
+                    libCatNavLinkClassName({ active: isActive })
+                  }
                 >
                   {category.number}. {category.title}
                 </NavLink>

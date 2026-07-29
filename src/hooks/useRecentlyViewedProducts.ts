@@ -40,15 +40,17 @@ function resolveRecentlyViewedProducts(
   currentProductId: string,
   seedProducts: RelatedProduct[],
 ): RelatedProduct[] {
-  const stored = readRecentlyViewed().filter((item) => item.id !== currentProductId);
+  const stored = readRecentlyViewed().filter(
+    (item) => item.id !== currentProductId,
+  );
   return stored.length ? stored : seedProducts;
 }
 
 export function recordRecentlyViewedProduct(entry: RelatedProduct) {
-  const next = [entry, ...readRecentlyViewed().filter((item) => item.id !== entry.id)].slice(
-    0,
-    MAX_ITEMS,
-  );
+  const next = [
+    entry,
+    ...readRecentlyViewed().filter((item) => item.id !== entry.id),
+  ].slice(0, MAX_ITEMS);
   writeRecentlyViewed(next);
   window.dispatchEvent(new CustomEvent(RECENTLY_VIEWED_EVENT));
 }
@@ -62,7 +64,8 @@ export function useRecentlyViewedProducts(
   );
 
   useEffect(() => {
-    const sync = () => setItems(resolveRecentlyViewedProducts(currentProductId, seedProducts));
+    const sync = () =>
+      setItems(resolveRecentlyViewedProducts(currentProductId, seedProducts));
 
     window.addEventListener(RECENTLY_VIEWED_EVENT, sync);
     return () => window.removeEventListener(RECENTLY_VIEWED_EVENT, sync);

@@ -8,7 +8,12 @@ export type NavItem = {
 };
 
 export const mainNavItems: NavItem[] = [
-  { label: "Produkty", href: "#produkty", hasMenu: true, iconClass: "ph ph-squares-four" },
+  {
+    label: "Produkty",
+    href: "#produkty",
+    hasMenu: true,
+    iconClass: "ph ph-squares-four",
+  },
   { label: "Inspiracje", href: "#inspiracje", iconClass: "ph ph-images" },
   { label: "Nowości", href: "#nowosci", iconClass: "ph ph-sparkle" },
   { label: "Outlet", href: "#outlet", iconClass: "ph ph-tag" },
@@ -129,7 +134,8 @@ export const salonDrawerCopy = {
   locateLabel: "Użyj mojej lokalizacji",
   locatingLabel: "Pobieranie lokalizacji…",
   locateUnsupported: "Ta przeglądarka nie obsługuje geolokalizacji.",
-  locateDenied: "Brak dostępu do lokalizacji. Zezwól w ustawieniach przeglądarki.",
+  locateDenied:
+    "Brak dostępu do lokalizacji. Zezwól w ustawieniach przeglądarki.",
   locateUnavailable: "Nie udało się pobrać lokalizacji. Spróbuj ponownie.",
   nearestHint: "Posortowano od najbliższego salonu",
   resultsHeading: "Salony w pobliżu",
@@ -322,8 +328,17 @@ export const favoritesNav = {
 export const utilityTagline = "Od pomysłu do gotowej łazienki";
 
 export const utilityNavItems = [
-  { label: "Strefa architekta", href: "#strefa-architekta", iconClass: "ph ph-cube" },
-  { label: "Strefa instalatora", href: "#strefa-instalatora", iconClass: "ph ph-wrench", dividerAfter: true },
+  {
+    label: "Strefa architekta",
+    href: "#strefa-architekta",
+    iconClass: "ph ph-cube",
+  },
+  {
+    label: "Strefa instalatora",
+    href: "#strefa-instalatora",
+    iconClass: "ph ph-wrench",
+    dividerAfter: true,
+  },
   { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
   { label: "Konfigurator kabin", href: "#konfigurator-kabin" },
   { label: "Blog", href: "#blog" },
@@ -438,7 +453,8 @@ export const presenceSalonCities = [
 
 export const presenceSalonsCopy = {
   title: "Salony Elements w całej Polsce",
-  description: "Wybierz miasto i sprawdź adres, godziny i dostępność ekspozycji.",
+  description:
+    "Wybierz miasto i sprawdź adres, godziny i dostępność ekspozycji.",
   allSalonsLabel: "Wszystkie salony",
   allSalonsHref: "#salony",
   socialLabel: "Znajdź nas w sieci",
@@ -446,7 +462,19 @@ export const presenceSalonsCopy = {
 } as const;
 
 export const footerSocialLinks = [
-  { label: "Facebook", href: "https://facebook.com", iconClass: "ph ph-facebook-logo" },
-  { label: "Instagram", href: "https://instagram.com", iconClass: "ph ph-instagram-logo" },
-  { label: "Pinterest", href: "https://pinterest.com", iconClass: "ph ph-pinterest-logo" },
+  {
+    label: "Facebook",
+    href: "https://facebook.com",
+    iconClass: "ph ph-facebook-logo",
+  },
+  {
+    label: "Instagram",
+    href: "https://instagram.com",
+    iconClass: "ph ph-instagram-logo",
+  },
+  {
+    label: "Pinterest",
+    href: "https://pinterest.com",
+    iconClass: "ph ph-pinterest-logo",
+  },
 ] as const;

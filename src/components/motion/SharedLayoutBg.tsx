@@ -33,7 +33,8 @@ export type SharedLayoutBgProps = {
 const variants: Variants = {
   initial: { opacity: 0, filter: "blur(0.375rem)" },
   animate: { opacity: 1, filter: "blur(0)" },
-  exit: (isActive: boolean) => (!isActive ? { opacity: 0, filter: "blur(0.375rem)" } : {}),
+  exit: (isActive: boolean) =>
+    !isActive ? { opacity: 0, filter: "blur(0.375rem)" } : {},
 };
 
 const reducedVariants: Variants = {
@@ -65,57 +66,57 @@ export function SharedLayoutBg({
         }}
         className={cn("flex", className)}
       >
-      {Children.toArray(children)
-        .filter(isValidElement)
-        .map((child, index) => {
-          const el = child as ReactElement<{
-            className?: string;
-            onMouseEnter?: (event: MouseEvent<HTMLElement>) => void;
-            "data-hoverable"?: boolean;
-            children?: ReactNode;
-          }>;
-          const childKey = el.key ? String(el.key) : `item-${index}`;
-          const hoverable = el.props["data-hoverable"] !== false;
+        {Children.toArray(children)
+          .filter(isValidElement)
+          .map((child, index) => {
+            const el = child as ReactElement<{
+              className?: string;
+              onMouseEnter?: (event: MouseEvent<HTMLElement>) => void;
+              "data-hoverable"?: boolean;
+              children?: ReactNode;
+            }>;
+            const childKey = el.key ? String(el.key) : `item-${index}`;
+            const hoverable = el.props["data-hoverable"] !== false;
 
-          return cloneElement(
-            el,
-            {
-              key: childKey,
-              className: cn("relative", el.props.className),
-              onMouseEnter: (event: MouseEvent<HTMLElement>) => {
-                el.props.onMouseEnter?.(event);
-                setActiveId(hoverable ? childKey : null);
+            return cloneElement(
+              el,
+              {
+                key: childKey,
+                className: cn("relative", el.props.className),
+                onMouseEnter: (event: MouseEvent<HTMLElement>) => {
+                  el.props.onMouseEnter?.(event);
+                  setActiveId(hoverable ? childKey : null);
+                },
               },
-            },
-            <>
-              <AnimatePresence initial={false}>
-                {activeId !== null ? (
-                  <motion.div
-                    variants={reduce ? reducedVariants : variants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    custom={activeId !== null}
-                    className="pointer-events-none absolute inset-y-0 z-0"
-                    style={{ left: -inset, right: -inset }}
-                  >
-                    {activeId === childKey ? (
-                      <motion.div
-                        layoutId={`shared-bg-${uid}`}
-                        transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
-                        className={cn(
-                          "pointer-events-none size-full rounded-xs bg-neutral-900/[0.06]",
-                          pillClassName,
-                        )}
-                      />
-                    ) : null}
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
-              {el.props.children}
-            </>,
-          );
-        })}
+              <>
+                <AnimatePresence initial={false}>
+                  {activeId !== null ? (
+                    <motion.div
+                      variants={reduce ? reducedVariants : variants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      custom={activeId !== null}
+                      className="pointer-events-none absolute inset-y-0 z-0"
+                      style={{ left: -inset, right: -inset }}
+                    >
+                      {activeId === childKey ? (
+                        <motion.div
+                          layoutId={`shared-bg-${uid}`}
+                          transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
+                          className={cn(
+                            "pointer-events-none size-full rounded-xs bg-neutral-900/[0.06]",
+                            pillClassName,
+                          )}
+                        />
+                      ) : null}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+                {el.props.children}
+              </>,
+            );
+          })}
       </motion.div>
     </LayoutGroup>
   );

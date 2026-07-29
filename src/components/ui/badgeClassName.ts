@@ -1,6 +1,7 @@
 import { cn } from "../../lib/cn";
 
-export type BadgeVariant = "default" | "gold" | "brand" | "outline" | "promo" | "neutral";
+export type BadgeVariant =
+  "default" | "gold" | "brand" | "outline" | "promo" | "neutral";
 export type BadgeSize = "sm" | "md";
 
 /**
@@ -8,7 +9,8 @@ export type BadgeSize = "sm" | "md";
  * promo = Promocja · gold = Bestseller · brand = Nowość · neutral = outlet / ekspozycja / etc.
  */
 const badgeVariants: Record<BadgeVariant, string> = {
-  default: "border border-neutral-200 bg-neutral-0 text-neutral-700 shadow-subtle",
+  default:
+    "border border-neutral-200 bg-neutral-0 text-neutral-700 shadow-subtle",
   gold: "border-0 bg-gold-500 text-neutral-0",
   brand: "border-0 bg-badge-brand text-neutral-0",
   promo: "border-0 bg-promo text-neutral-0",

@@ -19,9 +19,11 @@ export const askDrawerCopy = {
   marketingLabel: "Zgody marketingowe (opcjonalne)",
   marketingHref: "#zgody-marketingowe",
   submitLabel: "Wyślij zapytanie",
-  footerNote: "Na podstawie kodu pocztowego skierujemy zapytanie do najbliższego salonu.",
+  footerNote:
+    "Na podstawie kodu pocztowego skierujemy zapytanie do najbliższego salonu.",
   successTitle: "Dziękujemy",
-  successMessage: "Twoja wiadomość została przyjęta. Skontaktujemy się wkrótce.",
+  successMessage:
+    "Twoja wiadomość została przyjęta. Skontaktujemy się wkrótce.",
   closeLabel: "Zamknij",
 } as const;
 

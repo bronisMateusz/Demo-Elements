@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "../../lib/cn";
-import { isMotionPaused, subscribeMotionPreference } from "../../lib/a11yPreferences";
+import {
+  isMotionPaused,
+  subscribeMotionPreference,
+} from "../../lib/a11yPreferences";
 
 type LoopingWordProps = {
   words: readonly string[];
@@ -19,7 +22,11 @@ export function LoopingWord({
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(() => isMotionPaused());
   const longestWord = useMemo(
-    () => words.reduce((longest, word) => (word.length > longest.length ? word : longest), words[0] ?? ""),
+    () =>
+      words.reduce(
+        (longest, word) => (word.length > longest.length ? word : longest),
+        words[0] ?? "",
+      ),
     [words],
   );
 
@@ -61,7 +68,10 @@ export function LoopingWord({
         style={{ transform: `translateY(-${offset}%)` }}
       >
         {words.map((word) => (
-          <span key={word} className="block h-[1em] leading-none whitespace-nowrap">
+          <span
+            key={word}
+            className="block h-[1em] leading-none whitespace-nowrap"
+          >
             {word}
           </span>
         ))}

@@ -1,5 +1,9 @@
 import { assetUrl } from "../app/assets";
-import type { InspirationArrangement, ProductImage, RelatedProduct } from "../types/product";
+import type {
+  InspirationArrangement,
+  ProductImage,
+  RelatedProduct,
+} from "../types/product";
 
 export const HOME_HERO_AUTOPLAY_MS = 6000;
 
@@ -93,18 +97,29 @@ export const homeHeroSlides: HomeHeroSlide[] = [
   },
 ];
 
-
 export const homeCategories = {
   title: "Czego dziś szukasz do swojej łazienki?",
   items: [
-    { label: "Płytki", href: "#plytki-rodzaje", iconClass: "ph ph-squares-four" },
-    { label: "Domowe SPA", href: "#domowe-spa", iconClass: "ph ph-flower-lotus" },
+    {
+      label: "Płytki",
+      href: "#plytki-rodzaje",
+      iconClass: "ph ph-squares-four",
+    },
+    {
+      label: "Domowe SPA",
+      href: "#domowe-spa",
+      iconClass: "ph ph-flower-lotus",
+    },
     { label: "Wanny", href: "#wanny", iconClass: "ph ph-bathtub" },
     { label: "Armatura", href: "#armatura", iconClass: "ph ph-drop" },
     { label: "Umywalki", href: "#umywalki", iconClass: "ph ph-circle" },
     { label: "Meble", href: "#meble", iconClass: "ph ph-stack" },
     { label: "Prysznic", href: "#prysznic", iconClass: "ph ph-shower" },
-    { label: "Kabiny", href: "#konfigurator-kabin", iconClass: "ph ph-corners-out" },
+    {
+      label: "Kabiny",
+      href: "#konfigurator-kabin",
+      iconClass: "ph ph-corners-out",
+    },
     {
       label: "Płytki imitujące drewno",
       href: "#imitujace-drewno",
@@ -137,7 +152,8 @@ function product(
   };
 }
 
-export type HomeProductTabId = "promocje" | "nowosci" | "bestsellery" | "outlet";
+export type HomeProductTabId =
+  "promocje" | "nowosci" | "bestsellery" | "outlet";
 
 type HomeProductCatalogItem = {
   key: string;
@@ -369,7 +385,11 @@ export const homeInspiration = {
         fit: "cover" as const,
         focalPoint: { x: 50, y: 75 },
       },
-      items: ["Płytki wielkoformatowe", "Minimalistyczna armatura", "Dużo światła"],
+      items: [
+        "Płytki wielkoformatowe",
+        "Minimalistyczna armatura",
+        "Dużo światła",
+      ],
     },
     {
       id: "insp-3",
@@ -391,7 +411,11 @@ export const homeInspiration = {
         fit: "cover" as const,
         focalPoint: { x: 50, y: 55 },
       },
-      items: ["Szafka wisząca", "Lustro z podświetleniem LED", "WC podwieszane"],
+      items: [
+        "Szafka wisząca",
+        "Lustro z podświetleniem LED",
+        "WC podwieszane",
+      ],
     },
     {
       id: "insp-5",
@@ -435,14 +459,16 @@ export const homeMagazine = {
     alt: "Okładka magazynu TOP TRENDY 2026",
     fit: "cover" as const,
   },
-  primaryCta: { label: "Zobacz magazyn online", href: HOME_MAGAZINE_FLIPBOOK_HREF },
+  primaryCta: {
+    label: "Zobacz magazyn online",
+    href: HOME_MAGAZINE_FLIPBOOK_HREF,
+  },
   secondaryCta: { label: "Pobierz PDF", href: HOME_MAGAZINE_PDF_HREF },
 } as const;
 
 export const homePartners = {
   title: "Współpracuj z Elements",
-  lead:
-    "Specjalne warunki dla architektów i instalatorów - dołącz do grona partnerów, którzy realizują projekty z najlepszymi markami.",
+  lead: "Specjalne warunki dla architektów i instalatorów - dołącz do grona partnerów, którzy realizują projekty z najlepszymi markami.",
   cards: [
     {
       id: "architects",
@@ -491,8 +517,7 @@ export const homePartners = {
 
 export const homeAbout = {
   title: "Elements - tu powstają wyjątkowe łazienki",
-  lead:
-    "Elements to sieć salonów, które powstały z myślą o spełnianiu marzeń o idealnej łazience - znajdziesz nas w 19 lokalizacjach w całej Polsce. Inspirujemy do tworzenia wnętrz, które łączą modny design, komfort i funkcjonalność. Niezależnie od tego, czy marzysz o domowej strefie SPA, eleganckim salonie kąpielowym czy przytulnej łazience, nasze salony to miejsce, w którym Twoje pomysły mogą stać się rzeczywistością.",
+  lead: "Elements to sieć salonów, które powstały z myślą o spełnianiu marzeń o idealnej łazience - znajdziesz nas w 19 lokalizacjach w całej Polsce. Inspirujemy do tworzenia wnętrz, które łączą modny design, komfort i funkcjonalność. Niezależnie od tego, czy marzysz o domowej strefie SPA, eleganckim salonie kąpielowym czy przytulnej łazience, nasze salony to miejsce, w którym Twoje pomysły mogą stać się rzeczywistością.",
   body: [
     "Każdy z ",
     { bold: "salonów łazienkowych" },

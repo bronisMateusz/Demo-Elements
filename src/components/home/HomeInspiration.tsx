@@ -11,7 +11,9 @@ import { Container } from "../ui/Container";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
 
 export function HomeInspiration() {
-  const [controls, setControls] = useState<ProductInspirationControls | null>(null);
+  const [controls, setControls] = useState<ProductInspirationControls | null>(
+    null,
+  );
   const count = homeInspiration.arrangements.length;
   const showNav = count > 1;
 
@@ -50,7 +52,10 @@ export function HomeInspiration() {
               className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
               aria-live="polite"
             >
-              {formatSlideIndex(controls?.activeIndex ?? 0, controls?.count ?? count)}
+              {formatSlideIndex(
+                controls?.activeIndex ?? 0,
+                controls?.count ?? count,
+              )}
             </p>
 
             <button
@@ -71,7 +76,11 @@ export function HomeInspiration() {
           </div>
         ) : null}
 
-        <Button href={homeInspiration.seeMoreHref} variant="secondary" className="w-fit">
+        <Button
+          href={homeInspiration.seeMoreHref}
+          variant="secondary"
+          className="w-fit"
+        >
           {homeInspiration.seeMoreLabel}
           <i className="ph ph-arrow-right" aria-hidden="true" />
         </Button>

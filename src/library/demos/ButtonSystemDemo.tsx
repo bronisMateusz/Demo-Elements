@@ -47,11 +47,25 @@ function ButtonStateRow({
 }
 
 function stateLabel(state: LibButtonPreviewState) {
-  return state === "default" ? "Default" : state.charAt(0).toUpperCase() + state.slice(1);
+  return state === "default"
+    ? "Default"
+    : state.charAt(0).toUpperCase() + state.slice(1);
 }
 
-function VariantStateDemo({ variant, label }: { variant: ButtonVariant; label: string }) {
-  const states: LibButtonPreviewState[] = ["default", "hover", "focus", "active", "disabled"];
+function VariantStateDemo({
+  variant,
+  label,
+}: {
+  variant: ButtonVariant;
+  label: string;
+}) {
+  const states: LibButtonPreviewState[] = [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+  ];
 
   return (
     <div className={libBtnStatesGridClassName}>
@@ -73,19 +87,34 @@ function VariantStateDemo({ variant, label }: { variant: ButtonVariant; label: s
 export function ButtonHierarchyDemo() {
   return (
     <div className={libBtnRowClassName}>
-      <button type="button" className={libButtonPreviewClassName({ variant: "primary" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({ variant: "primary" })}
+      >
         Umów wizytę w salonie
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "secondary" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({ variant: "secondary" })}
+      >
         Pobierz katalog
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "gold" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({ variant: "gold" })}
+      >
         Strefa architekta
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "ghost" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({ variant: "ghost" })}
+      >
         Zapisz na listę
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "tertiary" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({ variant: "tertiary" })}
+      >
         Zobacz całą kolekcję
       </button>
     </div>
@@ -95,13 +124,28 @@ export function ButtonHierarchyDemo() {
 export function ButtonSizesDemo() {
   return (
     <div className={libBtnRowClassName}>
-      <button type="button" className={libButtonPreviewClassName({ variant: "primary", size: "lg" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({
+          variant: "primary",
+          size: "lg",
+        })}
+      >
         Large
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "primary" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({ variant: "primary" })}
+      >
         Default
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "primary", size: "sm" })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({
+          variant: "primary",
+          size: "sm",
+        })}
+      >
         Small
       </button>
     </div>
@@ -131,10 +175,22 @@ export function ButtonTertiaryStatesDemo() {
 export function ButtonFullWidthDemo() {
   return (
     <div className="grid max-w-md gap-4">
-      <button type="button" className={libButtonPreviewClassName({ variant: "primary", full: true })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({
+          variant: "primary",
+          full: true,
+        })}
+      >
         Pełna szerokość - Primary
       </button>
-      <button type="button" className={libButtonPreviewClassName({ variant: "secondary", full: true })}>
+      <button
+        type="button"
+        className={libButtonPreviewClassName({
+          variant: "secondary",
+          full: true,
+        })}
+      >
         Pełna szerokość - Secondary
       </button>
     </div>
@@ -142,27 +198,46 @@ export function ButtonFullWidthDemo() {
 }
 
 export function ButtonIconsDemo() {
-  const states: LibButtonPreviewState[] = ["default", "hover", "focus", "active", "disabled"];
+  const states: LibButtonPreviewState[] = [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+  ];
 
   return (
     <div className={libBtnStatesGridClassName}>
       <div className={libBtnStateClassName}>
-        <span className={libBtnStateLabelClassName}>Primary + ikona trailing</span>
-        <button type="button" className={libButtonPreviewClassName({ variant: "primary" })}>
+        <span className={libBtnStateLabelClassName}>
+          Primary + ikona trailing
+        </span>
+        <button
+          type="button"
+          className={libButtonPreviewClassName({ variant: "primary" })}
+        >
           <span>Umów wizytę</span>
           <i className="ph ph-arrow-right" aria-hidden="true" />
         </button>
       </div>
       <div className={libBtnStateClassName}>
-        <span className={libBtnStateLabelClassName}>Secondary + ikona leading</span>
-        <button type="button" className={libButtonPreviewClassName({ variant: "secondary" })}>
+        <span className={libBtnStateLabelClassName}>
+          Secondary + ikona leading
+        </span>
+        <button
+          type="button"
+          className={libButtonPreviewClassName({ variant: "secondary" })}
+        >
           <i className="ph ph-download-simple" aria-hidden="true" />
           <span>Pobierz katalog</span>
         </button>
       </div>
       <div className={libBtnStateClassName}>
         <span className={libBtnStateLabelClassName}>Tertiary + chevron</span>
-        <button type="button" className={libButtonPreviewClassName({ variant: "tertiary" })}>
+        <button
+          type="button"
+          className={libButtonPreviewClassName({ variant: "tertiary" })}
+        >
           <span>Zobacz całą serię</span>
           <i className="ph ph-arrow-right" aria-hidden="true" />
         </button>
@@ -170,10 +245,15 @@ export function ButtonIconsDemo() {
 
       {states.map((state) => (
         <div key={`icon-default-${state}`} className={libBtnStateClassName}>
-          <span className={libBtnStateLabelClassName}>IconButton · default · {stateLabel(state)}</span>
+          <span className={libBtnStateLabelClassName}>
+            IconButton · default · {stateLabel(state)}
+          </span>
           <button
             type="button"
-            className={libIconButtonPreviewClassName({ variant: "default", state })}
+            className={libIconButtonPreviewClassName({
+              variant: "default",
+              state,
+            })}
             disabled={state === "disabled"}
             aria-label="Szukaj"
           >
@@ -184,10 +264,15 @@ export function ButtonIconsDemo() {
 
       {states.map((state) => (
         <div key={`icon-bordered-${state}`} className={libBtnStateClassName}>
-          <span className={libBtnStateLabelClassName}>IconButton · bordered · {stateLabel(state)}</span>
+          <span className={libBtnStateLabelClassName}>
+            IconButton · bordered · {stateLabel(state)}
+          </span>
           <button
             type="button"
-            className={libIconButtonPreviewClassName({ variant: "bordered", state })}
+            className={libIconButtonPreviewClassName({
+              variant: "bordered",
+              state,
+            })}
             disabled={state === "disabled"}
             aria-label="Poprzednie produkty"
           >
@@ -198,10 +283,15 @@ export function ButtonIconsDemo() {
 
       {states.map((state) => (
         <div key={`icon-elevated-${state}`} className={libBtnStateClassName}>
-          <span className={libBtnStateLabelClassName}>IconButton · elevated · {stateLabel(state)}</span>
+          <span className={libBtnStateLabelClassName}>
+            IconButton · elevated · {stateLabel(state)}
+          </span>
           <button
             type="button"
-            className={libIconButtonPreviewClassName({ variant: "elevated", state })}
+            className={libIconButtonPreviewClassName({
+              variant: "elevated",
+              state,
+            })}
             disabled={state === "disabled"}
             aria-label="Ulubione"
           >
@@ -218,7 +308,11 @@ export function ButtonIconsDemo() {
               <button
                 key={`icon-dark-${state}`}
                 type="button"
-                className={libIconButtonPreviewClassName({ variant: "on-dark", state, onDark: true })}
+                className={libIconButtonPreviewClassName({
+                  variant: "on-dark",
+                  state,
+                  onDark: true,
+                })}
                 disabled={state === "disabled"}
                 aria-label="Ulubione"
               >
@@ -236,16 +330,26 @@ export function ButtonLiveHoverDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Najedź kursorem - wypełnienie wjeżdża od dołu: czarne na jasnym tle, białe przy tone=onDark.
+        Najedź kursorem - wypełnienie wjeżdża od dołu: czarne na jasnym tle,
+        białe przy tone=onDark.
       </p>
       <div className={libBtnRowClassName}>
-        <button type="button" className={libButtonPreviewClassName({ variant: "primary" })}>
+        <button
+          type="button"
+          className={libButtonPreviewClassName({ variant: "primary" })}
+        >
           Primary
         </button>
-        <button type="button" className={libButtonPreviewClassName({ variant: "secondary" })}>
+        <button
+          type="button"
+          className={libButtonPreviewClassName({ variant: "secondary" })}
+        >
           Secondary
         </button>
-        <button type="button" className={libButtonPreviewClassName({ variant: "gold" })}>
+        <button
+          type="button"
+          className={libButtonPreviewClassName({ variant: "gold" })}
+        >
           Gold
         </button>
       </div>
@@ -257,19 +361,26 @@ export function ButtonOnDarkDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        tone=&quot;onDark&quot; - Primary (gold) i Secondary (glass); hover = biały fill.
+        tone=&quot;onDark&quot; - Primary (gold) i Secondary (glass); hover =
+        biały fill.
       </p>
       <div className={libBtnDarkSurfaceClassName}>
         <div className={libBtnRowClassName}>
           <button
             type="button"
-            className={libButtonPreviewClassName({ variant: "primary", tone: "onDark" })}
+            className={libButtonPreviewClassName({
+              variant: "primary",
+              tone: "onDark",
+            })}
           >
             Napisz do doradcy
           </button>
           <button
             type="button"
-            className={libButtonPreviewClassName({ variant: "secondary", tone: "onDark" })}
+            className={libButtonPreviewClassName({
+              variant: "secondary",
+              tone: "onDark",
+            })}
           >
             Umów spotkanie
           </button>
@@ -298,7 +409,8 @@ export function ButtonQuickAddDemo() {
   return (
     <div className="grid max-w-md gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Przycisk szybkiego dodania w karuzeli produktów - ten sam system animacji co Primary.
+        Przycisk szybkiego dodania w karuzeli produktów - ten sam system
+        animacji co Primary.
       </p>
       <button
         type="button"
@@ -331,14 +443,28 @@ export function ButtonAskFabDemo() {
               <div className="flex items-center gap-3 border border-neutral-200 bg-neutral-0 px-4 py-3 shadow-2">
                 <div className="hidden size-12 shrink-0 bg-neutral-200 sm:block" />
                 <div className="hidden min-w-0 flex-1 sm:block">
-                  <p className="m-0 truncate font-heading text-lg leading-tight">Montebianco 80 cm</p>
+                  <p className="m-0 truncate font-heading text-lg leading-tight">
+                    Montebianco 80 cm
+                  </p>
                   <p className="mt-1 mb-0 text-ui tabular-nums">1 990 zł</p>
                 </div>
                 <div className="flex w-full gap-2 sm:w-auto">
-                  <button type="button" className={libButtonPreviewClassName({ variant: "secondary", size: "lg" })}>
+                  <button
+                    type="button"
+                    className={libButtonPreviewClassName({
+                      variant: "secondary",
+                      size: "lg",
+                    })}
+                  >
                     Dodaj do schowka
                   </button>
-                  <button type="button" className={libButtonPreviewClassName({ variant: "primary", size: "lg" })}>
+                  <button
+                    type="button"
+                    className={libButtonPreviewClassName({
+                      variant: "primary",
+                      size: "lg",
+                    })}
+                  >
                     Zadaj pytanie
                   </button>
                 </div>
@@ -348,8 +474,8 @@ export function ButtonAskFabDemo() {
         </div>
       </div>
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Sticky bar na PDP (jak OKA) - tytuł/cena na desktopie, dwa CTA: schowek + pytanie. Pojawia się po scrollu,
-        znika przed stopką.
+        Sticky bar na PDP (jak OKA) - tytuł/cena na desktopie, dwa CTA: schowek
+        + pytanie. Pojawia się po scrollu, znika przed stopką.
       </p>
     </div>
   );

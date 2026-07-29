@@ -44,7 +44,8 @@ export function SiteSalonsPresence() {
               key={stat.label}
               className={cn(
                 "min-w-0",
-                index > 0 && "md:border-s md:border-neutral-700 md:ps-6 lg:ps-8",
+                index > 0 &&
+                  "md:border-s md:border-neutral-700 md:ps-6 lg:ps-8",
               )}
             >
               <p className="m-0 font-heading text-[clamp(2rem,3.5vw,2.75rem)] leading-none font-medium tracking-tight text-neutral-0">
@@ -58,7 +59,10 @@ export function SiteSalonsPresence() {
         </ul>
       </Container>
 
-      <div className="relative z-10 border-t border-neutral-800" aria-hidden="true" />
+      <div
+        className="relative z-10 border-t border-neutral-800"
+        aria-hidden="true"
+      />
 
       <Container
         size="content"

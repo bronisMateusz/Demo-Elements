@@ -13,7 +13,10 @@ export function VariantThumbnailGroup({
   return (
     <div role="group" aria-label={axisLabel}>
       <MotionFieldGroup>
-        <SharedLayoutUnderline className="inline-flex flex-wrap" lineClassName="bg-neutral-900/40">
+        <SharedLayoutUnderline
+          className="inline-flex flex-wrap"
+          lineClassName="bg-neutral-900/40"
+        >
           {options.map((option) => {
             if (!option.image) return null;
 
@@ -21,7 +24,10 @@ export function VariantThumbnailGroup({
               <div
                 key={option.id}
                 data-hoverable={option.unavailable ? false : undefined}
-                className={cn("shrink-0", option.unavailable && "cursor-not-allowed")}
+                className={cn(
+                  "shrink-0",
+                  option.unavailable && "cursor-not-allowed",
+                )}
               >
                 <VariantThumbnail
                   label={option.label}

@@ -83,7 +83,10 @@ export function ProductArchitectCTA({
           </div>
 
           <div className="relative flex flex-col justify-center bg-gold-100 px-8 py-8 md:px-10 md:py-10 lg:px-12 lg:py-12">
-            <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+            <div
+              className="pointer-events-none absolute inset-0 overflow-hidden"
+              aria-hidden="true"
+            >
               <BrandMotif
                 name="dots-grid"
                 className="absolute top-6 inset-e-4 h-32 w-8 opacity-30 max-md:hidden md:top-8 md:inset-e-6 md:h-40 md:w-9"
@@ -95,7 +98,10 @@ export function ProductArchitectCTA({
             </div>
 
             <div className="relative z-10 flex flex-col gap-5 md:gap-6">
-              <Eyebrow variant="gold" className="mb-0 text-sm tracking-widest text-gold-600">
+              <Eyebrow
+                variant="gold"
+                className="mb-0 text-sm tracking-widest text-gold-600"
+              >
                 {eyebrow}
               </Eyebrow>
 
@@ -110,7 +116,9 @@ export function ProductArchitectCTA({
                 >
                   {title}
                 </TextRevealLead>
-                <p className="t-body max-w-lg text-neutral-700">{description}</p>
+                <p className="t-body max-w-lg text-neutral-700">
+                  {description}
+                </p>
               </div>
 
               <motion.div

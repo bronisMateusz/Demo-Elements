@@ -62,7 +62,12 @@ export function ProductVisualizationCTA({
               <i className="ph ph-arrow-right" aria-hidden="true" />
             </Button>
             {secondary ? (
-              <Button href={secondary.href} variant="secondary" tone="onDark" size="lg">
+              <Button
+                href={secondary.href}
+                variant="secondary"
+                tone="onDark"
+                size="lg"
+              >
                 {secondary.label}
               </Button>
             ) : null}

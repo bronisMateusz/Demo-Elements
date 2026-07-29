@@ -53,7 +53,10 @@ type ProductCarouselProps = {
 };
 
 /** Clone products until we have enough slides to fill wide viewports in loop mode. */
-function withClonedSlides(products: RelatedProduct[], minSlides: number): RelatedProduct[] {
+function withClonedSlides(
+  products: RelatedProduct[],
+  minSlides: number,
+): RelatedProduct[] {
   if (products.length <= 1) return products;
   const slides: RelatedProduct[] = [];
   while (slides.length < minSlides) {
@@ -149,14 +152,18 @@ function ProductCarouselFooterNav({
     <div
       className={cn(
         "mt-8 flex items-center justify-center gap-3 md:mt-10",
-        isBleed && "mx-auto w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)]",
+        isBleed &&
+          "mx-auto w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)]",
       )}
     >
       <button
         type="button"
         className={iconButtonClassName({
           variant: "elevated",
-          className: cn("shadow-subtle", prevDisabled && "pointer-events-none opacity-35"),
+          className: cn(
+            "shadow-subtle",
+            prevDisabled && "pointer-events-none opacity-35",
+          ),
         })}
         aria-label="Poprzednie produkty"
         disabled={prevDisabled}
@@ -174,7 +181,10 @@ function ProductCarouselFooterNav({
         type="button"
         className={iconButtonClassName({
           variant: "elevated",
-          className: cn("shadow-subtle", nextDisabled && "pointer-events-none opacity-35"),
+          className: cn(
+            "shadow-subtle",
+            nextDisabled && "pointer-events-none opacity-35",
+          ),
         })}
         aria-label="Następne produkty"
         disabled={nextDisabled}
@@ -196,14 +206,19 @@ export function ProductCarousel({
   navPlacement,
   onControlsChange,
 }: ProductCarouselProps) {
-  const resolvedLayout: ProductCarouselLayout = layout ?? (bleed ? "bleed" : "contained");
-  const isInline = resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
+  const resolvedLayout: ProductCarouselLayout =
+    layout ?? (bleed ? "bleed" : "contained");
+  const isInline =
+    resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
   const isInlineBleed = resolvedLayout === "inline-bleed";
   const isBleed = resolvedLayout === "bleed";
-  const resolvedNavPlacement = navPlacement ?? (isInline ? "header" : "overlay");
+  const resolvedNavPlacement =
+    navPlacement ?? (isInline ? "header" : "overlay");
   const showHeaderNav = Boolean(header) && resolvedNavPlacement === "header";
-  const showFooterNav = resolvedNavPlacement === "footer" && products.length > 1;
-  const showOverlayNav = resolvedNavPlacement === "overlay" && products.length > 1;
+  const showFooterNav =
+    resolvedNavPlacement === "footer" && products.length > 1;
+  const showOverlayNav =
+    resolvedNavPlacement === "overlay" && products.length > 1;
   const gutterPx = useGutterPx();
   const contentInsetPx = useContentInsetPx();
   const bleedInsetPx = isBleed ? contentInsetPx : gutterPx;
@@ -258,7 +273,15 @@ export function ProductCarousel({
       activeIndex,
       count: productCount,
     });
-  }, [slidePrev, slideNext, atStart, atEnd, enableLoop, activeIndex, productCount]);
+  }, [
+    slidePrev,
+    slideNext,
+    atStart,
+    atEnd,
+    enableLoop,
+    activeIndex,
+    productCount,
+  ]);
 
   const swiperKey = isBleed
     ? `bleed-${bleedInsetPx}-${slides.length}`
@@ -271,14 +294,19 @@ export function ProductCarousel({
 
   return (
     <div
-      className={productCarouselRootClassName({ layout: resolvedLayout, className })}
+      className={productCarouselRootClassName({
+        layout: resolvedLayout,
+        className,
+      })}
       aria-labelledby={labelledBy ?? header?.titleId}
     >
       {header ? (
         <div
           className={cn(
             "flex flex-wrap items-end justify-between gap-6",
-            isBleed ? "mx-auto mb-8 w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10" : "mb-4",
+            isBleed
+              ? "mx-auto mb-8 w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10"
+              : "mb-4",
           )}
         >
           {isBleed && !isInline ? (

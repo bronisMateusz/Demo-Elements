@@ -1,7 +1,10 @@
 import type { Product, RelatedProduct } from "../types/product";
 
 export function productToRelatedProduct(
-  product: Pick<Product, "id" | "brand" | "title" | "slug" | "images" | "price" | "badges">,
+  product: Pick<
+    Product,
+    "id" | "brand" | "title" | "slug" | "images" | "price" | "badges"
+  >,
 ): RelatedProduct {
   return {
     id: product.id,

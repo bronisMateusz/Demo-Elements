@@ -101,7 +101,9 @@ export function AskDrawer({
                   src={productImage.src}
                   alt=""
                   className="size-full object-cover"
-                  style={{ objectPosition: productImageObjectPosition(productImage) }}
+                  style={{
+                    objectPosition: productImageObjectPosition(productImage),
+                  }}
                   width={56}
                   height={56}
                   draggable={false}
@@ -186,7 +188,10 @@ export function AskDrawer({
                 rows={4}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                className={cn(inputClassName, "h-auto min-h-28 resize-y py-3 leading-relaxed")}
+                className={cn(
+                  inputClassName,
+                  "h-auto min-h-28 resize-y py-3 leading-relaxed",
+                )}
               />
             </div>
 

@@ -1,6 +1,9 @@
 import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { isMotionPaused, subscribeMotionPreference } from "../lib/a11yPreferences";
+import {
+  isMotionPaused,
+  subscribeMotionPreference,
+} from "../lib/a11yPreferences";
 
 export function useMotionReduced() {
   const systemReduce = useReducedMotion();

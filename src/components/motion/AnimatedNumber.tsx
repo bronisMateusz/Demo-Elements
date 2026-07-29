@@ -1,6 +1,11 @@
 // beui.dev/components/motion/number — AnimatedNumber (count-up on view)
 
-import { animate, useInView, useMotionValue, useMotionValueEvent } from "motion/react";
+import {
+  animate,
+  useInView,
+  useMotionValue,
+  useMotionValueEvent,
+} from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { EASE_OUT } from "../../lib/motionEase";

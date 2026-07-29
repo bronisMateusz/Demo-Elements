@@ -1,11 +1,7 @@
 import { cn } from "../../../lib/cn";
 import { assetUrl } from "../../../app/assets";
 import { Container } from "../../ui/Container";
-import {
-  footerBrand,
-  footerColumns,
-  footerLegal,
-} from "../../../data/nav";
+import { footerBrand, footerColumns, footerLegal } from "../../../data/nav";
 import { FooterSmartbeesCredit } from "./FooterSmartbeesCredit";
 import { FooterSpotlightRoot } from "./FooterWordmark";
 
@@ -36,7 +32,10 @@ export function FooterMain() {
                     typeof part === "string" ? (
                       <span key={index}>{part}</span>
                     ) : (
-                      <strong key={index} className="font-semibold text-neutral-700">
+                      <strong
+                        key={index}
+                        className="font-semibold text-neutral-700"
+                      >
                         {part.bold}
                       </strong>
                     ),

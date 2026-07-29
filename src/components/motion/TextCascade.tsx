@@ -42,7 +42,9 @@ export function TextCascade({ text, className }: TextCascadeProps) {
   useLayoutEffect(() => {
     const nextWidth = measureRef.current?.offsetWidth;
     if (!nextWidth) return;
-    setWidth((currentWidth) => (currentWidth === nextWidth ? currentWidth : nextWidth));
+    setWidth((currentWidth) =>
+      currentWidth === nextWidth ? currentWidth : nextWidth,
+    );
   }, [text]);
 
   if (reduce) {
@@ -60,7 +62,11 @@ export function TextCascade({ text, className }: TextCascadeProps) {
         transition: `width 220ms ${EASE_OUT_CSS}`,
       }}
     >
-      <span ref={measureRef} aria-hidden className="invisible inline-block whitespace-nowrap">
+      <span
+        ref={measureRef}
+        aria-hidden
+        className="invisible inline-block whitespace-nowrap"
+      >
         {text}
       </span>
       <span className="sr-only">{text}</span>

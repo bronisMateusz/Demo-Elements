@@ -26,7 +26,8 @@ export const libraryCategories: LibraryCategory[] = [
     number: 3,
     slug: "produkt",
     title: "Produkt",
-    subtitle: "Komponenty strony produktu - galeria, buy box, warianty, karta, specyfikacja.",
+    subtitle:
+      "Komponenty strony produktu - galeria, buy box, warianty, karta, specyfikacja.",
     modules: category3Modules,
   },
 ];

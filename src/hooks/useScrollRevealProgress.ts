@@ -1,5 +1,8 @@
 import { useEffect, useState, type RefObject } from "react";
-import { isMotionPaused, subscribeMotionPreference } from "../lib/a11yPreferences";
+import {
+  isMotionPaused,
+  subscribeMotionPreference,
+} from "../lib/a11yPreferences";
 
 type UseScrollRevealProgressOptions = {
   /** Viewport ratio where reveal starts (element top). Default 0.85 */

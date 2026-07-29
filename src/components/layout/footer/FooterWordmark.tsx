@@ -54,7 +54,9 @@ export function FooterSpotlightRoot({
     <div
       className={cn("relative overflow-hidden", className)}
       onMouseMove={onMove}
-      onMouseLeave={() => setPointer((current) => ({ ...current, active: false }))}
+      onMouseLeave={() =>
+        setPointer((current) => ({ ...current, active: false }))
+      }
     >
       {children(pointer)}
     </div>

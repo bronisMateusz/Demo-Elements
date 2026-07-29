@@ -1,11 +1,23 @@
-import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+} from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
 import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
-import { productImageFitClassName, productImageObjectPosition } from "../../lib/productImageStyle";
-import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
+import {
+  productImageFitClassName,
+  productImageObjectPosition,
+} from "../../lib/productImageStyle";
+import {
+  liftHeaderAboveLightbox,
+  lockLightboxScroll,
+} from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
 import { IconButton } from "../ui/IconButton";
 import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
@@ -24,10 +36,20 @@ type GalleryThumbnailRailProps = {
   onSelect: (index: number) => void;
 };
 
-function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnailRailProps) {
+function GalleryThumbnailRail({
+  images,
+  activeIndex,
+  onSelect,
+}: GalleryThumbnailRailProps) {
   return (
-    <div className="hidden h-full w-14 shrink-0 flex-col xl:flex" aria-label="Miniatury galerii">
-      <div className="mx-auto min-h-4 w-px flex-1 bg-neutral-200" aria-hidden="true" />
+    <div
+      className="hidden h-full w-14 shrink-0 flex-col xl:flex"
+      aria-label="Miniatury galerii"
+    >
+      <div
+        className="mx-auto min-h-4 w-px flex-1 bg-neutral-200"
+        aria-hidden="true"
+      />
 
       <div className="flex flex-col justify-end gap-2">
         {images.map((image, index) => {
@@ -121,14 +143,20 @@ function GalleryControls({
             label="Poprzednie zdjęcie"
             iconClass="ph ph-caret-left"
             variant="elevated"
-            className={cn("shadow-subtle", atStart && "pointer-events-none opacity-35")}
+            className={cn(
+              "shadow-subtle",
+              atStart && "pointer-events-none opacity-35",
+            )}
             onClick={atStart ? undefined : onPrev}
           />
           <IconButton
             label="Następne zdjęcie"
             iconClass="ph ph-caret-right"
             variant="elevated"
-            className={cn("shadow-subtle", atEnd && "pointer-events-none opacity-35")}
+            className={cn(
+              "shadow-subtle",
+              atEnd && "pointer-events-none opacity-35",
+            )}
             onClick={atEnd ? undefined : onNext}
           />
         </div>
@@ -154,7 +182,9 @@ function GallerySlideContent({
 }) {
   const handleOpen = (event: MouseEvent<HTMLButtonElement>) => {
     const img = event.currentTarget.querySelector("img");
-    const rect = img?.getBoundingClientRect() ?? event.currentTarget.getBoundingClientRect();
+    const rect =
+      img?.getBoundingClientRect() ??
+      event.currentTarget.getBoundingClientRect();
     const aspectRatio =
       img && img.naturalWidth > 0 && img.naturalHeight > 0
         ? img.naturalWidth / img.naturalHeight
@@ -202,11 +232,15 @@ function GallerySlideContent({
   );
 }
 
-export function ProductGallery({ images, layout = "default" }: ProductGalleryProps) {
+export function ProductGallery({
+  images,
+  layout = "default",
+}: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxOrigin, setLightboxOrigin] = useState<LightboxOpenOrigin | null>(null);
+  const [lightboxOrigin, setLightboxOrigin] =
+    useState<LightboxOpenOrigin | null>(null);
   const [lightboxClosing, setLightboxClosing] = useState(false);
 
   const swiperRef = useRef<SwiperInstance | null>(null);
@@ -215,13 +249,16 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   const isMulti = images.length > 1;
   const fillViewport = layout === "viewport";
 
-  const registerSlideImage = useCallback((index: number, node: HTMLImageElement | null) => {
-    if (node) {
-      slideImageRefs.current.set(index, node);
-      return;
-    }
-    slideImageRefs.current.delete(index);
-  }, []);
+  const registerSlideImage = useCallback(
+    (index: number, node: HTMLImageElement | null) => {
+      if (node) {
+        slideImageRefs.current.set(index, node);
+        return;
+      }
+      slideImageRefs.current.delete(index);
+    },
+    [],
+  );
 
   const getSlideRect = useCallback((index: number) => {
     return slideImageRefs.current.get(index)?.getBoundingClientRect() ?? null;
@@ -268,8 +305,10 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
         const aspectRatio =
           node && node.naturalWidth > 0 && node.naturalHeight > 0
             ? node.naturalWidth / node.naturalHeight
-            : origin.aspectRatio ??
-              (images[index] ? peekImageAspectRatio(images[index].src) ?? undefined : undefined);
+            : (origin.aspectRatio ??
+              (images[index]
+                ? (peekImageAspectRatio(images[index].src) ?? undefined)
+                : undefined));
         openLightbox(index, {
           ...origin,
           rect,
@@ -347,7 +386,8 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
       <div
         className={cn(
           "min-w-0",
-          fillViewport && "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
+          fillViewport &&
+            "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
         )}
       >
         <div
@@ -383,7 +423,8 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     <div
       className={cn(
         "min-w-0",
-        fillViewport && "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
+        fillViewport &&
+          "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
       )}
     >
       <div

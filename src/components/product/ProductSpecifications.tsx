@@ -15,9 +15,12 @@ const VISIBLE_COUNT = 6;
 export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
   const [expanded, setExpanded] = useState(false);
   const panelId = useId();
-  const showExpandToggle = SPECIFICATIONS_EXPAND_ENABLED && specs.length > VISIBLE_COUNT;
+  const showExpandToggle =
+    SPECIFICATIONS_EXPAND_ENABLED && specs.length > VISIBLE_COUNT;
   const visibleSpecs =
-    !SPECIFICATIONS_EXPAND_ENABLED || expanded ? specs : specs.slice(0, VISIBLE_COUNT);
+    !SPECIFICATIONS_EXPAND_ENABLED || expanded
+      ? specs
+      : specs.slice(0, VISIBLE_COUNT);
 
   return (
     <section aria-labelledby="specs-title">
@@ -30,7 +33,9 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
               className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-200 py-4"
             >
               <dt className="text-ui text-neutral-600">{spec.label}</dt>
-              <dd className="text-ui text-neutral-900 text-end">{spec.value}</dd>
+              <dd className="text-ui text-neutral-900 text-end">
+                {spec.value}
+              </dd>
             </div>
           ))}
         </dl>
@@ -46,7 +51,10 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
           >
             {expanded ? "Zwiń specyfikację" : "Rozwiń specyfikację"}
             <i
-              className={cn("ph ph-caret-down transition-transform", expanded && "rotate-180")}
+              className={cn(
+                "ph ph-caret-down transition-transform",
+                expanded && "rotate-180",
+              )}
               aria-hidden="true"
             />
           </button>

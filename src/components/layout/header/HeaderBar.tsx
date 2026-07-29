@@ -113,7 +113,10 @@ export function HeaderBar({
 
   const scheduleCloseProducts = () => {
     clearCloseTimer();
-    closeTimer.current = setTimeout(() => onProductsOpenChange(false), CLOSE_DELAY_MS);
+    closeTimer.current = setTimeout(
+      () => onProductsOpenChange(false),
+      CLOSE_DELAY_MS,
+    );
   };
 
   useEffect(() => () => clearCloseTimer(), []);
@@ -160,7 +163,10 @@ export function HeaderBar({
           />
         </Link>
 
-        <nav className="hidden min-w-0 flex-1 self-stretch lg:block" aria-label="Główne menu">
+        <nav
+          className="hidden min-w-0 flex-1 self-stretch lg:block"
+          aria-label="Główne menu"
+        >
           <ul className="m-0 flex h-full list-none items-stretch gap-1 xl:gap-2">
             {mainNavItems.map((item) => {
               if (item.hasMenu) {
@@ -218,7 +224,11 @@ export function HeaderBar({
 
         <div className="ms-auto flex h-full shrink-0 items-center gap-1 border-s border-neutral-200 ps-3 lg:ms-0 lg:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
-          <IconButton label="Szukaj" iconClass="ph ph-magnifying-glass" variant="default" />
+          <IconButton
+            label="Szukaj"
+            iconClass="ph ph-magnifying-glass"
+            variant="default"
+          />
           <HeaderSalonIconButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton
             label="Otwórz menu"
@@ -229,7 +239,9 @@ export function HeaderBar({
           />
         </div>
 
-        <span className="sr-only">{isScrolled ? "Nagłówek po przewinięciu" : ""}</span>
+        <span className="sr-only">
+          {isScrolled ? "Nagłówek po przewinięciu" : ""}
+        </span>
       </div>
 
       <div className="hidden lg:block" onMouseEnter={openProducts}>

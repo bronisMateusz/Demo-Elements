@@ -36,7 +36,10 @@ export function HomeCategories() {
                 )}
               >
                 <i
-                  className={cn(item.iconClass, "text-2xl leading-none text-gold-500")}
+                  className={cn(
+                    item.iconClass,
+                    "text-2xl leading-none text-gold-500",
+                  )}
                   aria-hidden="true"
                 />
                 <span className="font-body text-sm font-medium text-neutral-900 md:text-ui">

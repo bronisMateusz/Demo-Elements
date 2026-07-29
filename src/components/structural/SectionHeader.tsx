@@ -30,7 +30,10 @@ export function SectionHeader({
       )}
     >
       {eyebrow ? (
-        <Eyebrow variant={eyebrowVariant} className={align === "center" ? "justify-center" : undefined}>
+        <Eyebrow
+          variant={eyebrowVariant}
+          className={align === "center" ? "justify-center" : undefined}
+        >
           {eyebrow}
         </Eyebrow>
       ) : null}

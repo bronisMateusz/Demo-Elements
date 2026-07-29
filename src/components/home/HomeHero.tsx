@@ -49,7 +49,12 @@ function HeroSlideContent({ slide }: { slide: HomeHeroSlide }) {
         <div className="mt-8 flex flex-wrap items-center gap-3">
           {isMain ? (
             <>
-              <Button href={slide.primaryCta.href} variant="primary" tone="onDark" size="lg">
+              <Button
+                href={slide.primaryCta.href}
+                variant="primary"
+                tone="onDark"
+                size="lg"
+              >
                 {slide.primaryCta.label}
               </Button>
               <Button
@@ -122,7 +127,11 @@ export function HomeHero() {
   };
 
   const onStagePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (dragPointerId.current !== event.pointerId || dragStartX.current === null) return;
+    if (
+      dragPointerId.current !== event.pointerId ||
+      dragStartX.current === null
+    )
+      return;
     dragDeltaX.current = event.clientX - dragStartX.current;
   };
 
@@ -208,7 +217,9 @@ export function HomeHero() {
               src={activeSlide.image.src}
               alt=""
               className="pointer-events-none absolute inset-0 size-full object-cover select-none"
-              style={{ objectPosition: productImageObjectPosition(activeSlide.image) }}
+              style={{
+                objectPosition: productImageObjectPosition(activeSlide.image),
+              }}
               fetchPriority={activeIndex === 0 ? "high" : "low"}
               draggable={false}
             />
@@ -228,7 +239,8 @@ export function HomeHero() {
               type="button"
               className={iconButtonClassName({
                 variant: "default",
-                className: "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
+                className:
+                  "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
               })}
               aria-label="Poprzedni baner"
               onClick={goPrev}
@@ -270,11 +282,17 @@ export function HomeHero() {
                         <motion.span
                           layoutId="home-hero-tab-active-line"
                           className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-0.5 overflow-hidden bg-neutral-200"
-                          transition={reducedMotion ? { duration: 0 } : SPRING_LAYOUT}
+                          transition={
+                            reducedMotion ? { duration: 0 } : SPRING_LAYOUT
+                          }
                           aria-hidden="true"
                         >
                           <span
-                            key={progressComplete ? `full-${activeIndex}` : `run-${activeIndex}`}
+                            key={
+                              progressComplete
+                                ? `full-${activeIndex}`
+                                : `run-${activeIndex}`
+                            }
                             className={cn(
                               "home-hero-progress block h-full origin-left bg-gold-500",
                               progressComplete
@@ -286,7 +304,9 @@ export function HomeHero() {
                                 ? undefined
                                 : ({
                                     "--home-hero-autoplay": `${HOME_HERO_AUTOPLAY_MS}ms`,
-                                    animationPlayState: paused ? "paused" : "running",
+                                    animationPlayState: paused
+                                      ? "paused"
+                                      : "running",
                                   } as CSSProperties)
                             }
                             onAnimationEnd={onProgressEnd}
@@ -303,7 +323,8 @@ export function HomeHero() {
               type="button"
               className={iconButtonClassName({
                 variant: "default",
-                className: "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
+                className:
+                  "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
               })}
               aria-label="Następny baner"
               onClick={goNext}

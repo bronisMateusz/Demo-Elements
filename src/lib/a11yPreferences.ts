@@ -15,14 +15,19 @@ export function setMotionPaused(paused: boolean): void {
 
 export function applyPreferences(): void {
   const motionPaused = isMotionPaused();
-  document.documentElement.classList.toggle("elements-pause-motion", motionPaused);
+  document.documentElement.classList.toggle(
+    "elements-pause-motion",
+    motionPaused,
+  );
 
   window.dispatchEvent(
     new CustomEvent(MOTION_EVENT, { detail: { paused: motionPaused } }),
   );
 }
 
-export function subscribeMotionPreference(callback: (paused: boolean) => void): () => void {
+export function subscribeMotionPreference(
+  callback: (paused: boolean) => void,
+): () => void {
   const handler = (event: Event) => {
     const custom = event as CustomEvent<{ paused: boolean }>;
     callback(custom.detail.paused);
@@ -45,9 +50,11 @@ export function initA11yPreferences(): void {
     subscribe: subscribeMotionPreference,
   };
 
-  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", () => {
-    if (localStorage.getItem(MOTION_KEY) === null) applyPreferences();
-  });
+  window
+    .matchMedia("(prefers-reduced-motion: reduce)")
+    .addEventListener("change", () => {
+      if (localStorage.getItem(MOTION_KEY) === null) applyPreferences();
+    });
 }
 
 declare global {

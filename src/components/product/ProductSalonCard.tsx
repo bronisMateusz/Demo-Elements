@@ -1,7 +1,10 @@
 import { useId, useState } from "react";
 import { cn } from "../../lib/cn";
 import { salonCardCopy } from "../../data/nav";
-import { requestSalonDrawer, useSelectedSalon } from "../../hooks/useSelectedSalon";
+import {
+  requestSalonDrawer,
+  useSelectedSalon,
+} from "../../hooks/useSelectedSalon";
 import { Eyebrow } from "../ui/Eyebrow";
 
 type ProductSalonCardProps = {
@@ -63,7 +66,11 @@ export function ProductSalonCard({
 
         <div className="relative flex flex-col">
           <div className="mb-3 flex items-start justify-between gap-4">
-            <Eyebrow variant="muted" showRule={false} className="mb-0 text-neutral-400">
+            <Eyebrow
+              variant="muted"
+              showRule={false}
+              className="mb-0 text-neutral-400"
+            >
               {salonCardCopy.selectedEyebrow}
             </Eyebrow>
             <button
@@ -147,7 +154,10 @@ export function ProductSalonCard({
                   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
                 )}
               >
-                <i className="ph ph-chat-circle text-base leading-none" aria-hidden="true" />
+                <i
+                  className="ph ph-chat-circle text-base leading-none"
+                  aria-hidden="true"
+                />
                 <span>
                   {salonCardCopy.askLabel}
                   <span aria-hidden="true"> →</span>
@@ -161,7 +171,10 @@ export function ProductSalonCard({
                   "transition-colors duration-fast ease-out hover:text-gold-100",
                 )}
               >
-                <i className="ph ph-chat-circle text-base leading-none" aria-hidden="true" />
+                <i
+                  className="ph ph-chat-circle text-base leading-none"
+                  aria-hidden="true"
+                />
                 <span>
                   {salonCardCopy.askLabel}
                   <span aria-hidden="true"> →</span>
@@ -176,7 +189,10 @@ export function ProductSalonCard({
                 "transition-colors duration-fast ease-out hover:text-gold-400",
               )}
             >
-              <i className="ph ph-phone text-base leading-none" aria-hidden="true" />
+              <i
+                className="ph ph-phone text-base leading-none"
+                aria-hidden="true"
+              />
               <span>{phone}</span>
             </a>
           </div>

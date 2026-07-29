@@ -24,7 +24,10 @@ function shouldLoadAgentation(): boolean {
     return forceEnabled;
   }
 
-  if (deployTarget === "team" || import.meta.env.VITE_AGENTATION_ENABLED === "true") {
+  if (
+    deployTarget === "team" ||
+    import.meta.env.VITE_AGENTATION_ENABLED === "true"
+  ) {
     return true;
   }
 
