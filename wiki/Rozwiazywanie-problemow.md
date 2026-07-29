@@ -80,11 +80,11 @@ Etykieta musi istnieć w repo GitHub. API retry bez labeli przy 422 - sprawdź l
 
 Scope musi się zgadzać:
 
-| Plik | Scope |
-|------|-------|
-| `vercel.shared.env` | Production **and** Preview |
-| `vercel.production.env` | Production |
-| `vercel.preview.env` | Preview |
+| Plik                    | Scope                      |
+| ----------------------- | -------------------------- |
+| `vercel.shared.env`     | Production **and** Preview |
+| `vercel.production.env` | Production                 |
+| `vercel.preview.env`    | Preview                    |
 
 ### `ALLOWED_ORIGINS`
 

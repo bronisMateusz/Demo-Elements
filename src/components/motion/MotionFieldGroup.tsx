@@ -12,6 +12,8 @@ export function MotionFieldGroup({ children }: MotionFieldGroupProps) {
   const reduce = useMotionReduced();
 
   return (
-    <MotionConfig transition={reduce ? { duration: 0 } : SPRING_LAYOUT}>{children}</MotionConfig>
+    <MotionConfig transition={reduce ? { duration: 0 } : SPRING_LAYOUT}>
+      {children}
+    </MotionConfig>
   );
 }

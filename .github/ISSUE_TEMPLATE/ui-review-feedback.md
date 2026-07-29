@@ -19,9 +19,11 @@ Wklej poniżej **cały** tekst z przycisku **Copy** w toolbarze (bez skracania):
 
 ```markdown
 ## Page Feedback: /Demo-Elements/
+
 **Viewport:** 1440×900
 
 ### 1. …
+
 **Location:** …
 **Feedback:** …
 ```

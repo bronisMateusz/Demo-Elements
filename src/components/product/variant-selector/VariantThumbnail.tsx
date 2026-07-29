@@ -20,23 +20,32 @@ export function VariantThumbnail({
       className={cn(
         "group relative z-10 flex flex-col items-stretch rounded-xs bg-transparent",
         "transition-[opacity] duration-base ease-out",
-        "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
         selected ? "bg-neutral-50" : "bg-transparent",
         unavailable && "pointer-events-none cursor-not-allowed opacity-45",
       )}
     >
-      <span className="flex aspect-square w-20 items-center justify-center bg-transparent">
+      <span className="flex aspect-square w-20 items-center justify-center overflow-hidden bg-product-stage">
         <img
           src={image.src}
           alt=""
-          className="max-h-full max-w-full object-contain"
+          className={cn(
+            "max-size-full origin-center object-contain transform-gpu backface-hidden",
+            "transition-transform duration-base ease-luxury",
+            "motion-reduce:transition-none",
+            "group-hover:scale-[1.06] group-focus-visible:scale-[1.06]",
+            "motion-reduce:group-hover:scale-100 motion-reduce:group-focus-visible:scale-100",
+          )}
           style={{ objectPosition: productImageObjectPosition(image) }}
           loading="lazy"
           draggable={false}
         />
       </span>
       <span
-        className={cn("block h-px w-full", selected ? "bg-neutral-900" : "bg-transparent")}
+        className={cn(
+          "block h-px w-full",
+          selected ? "bg-neutral-900" : "bg-transparent",
+        )}
         aria-hidden="true"
       />
       <span className="sr-only">{label}</span>

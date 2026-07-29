@@ -5,13 +5,12 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
+import { WIDE_MAX, WIDE_MAX_FALLBACK_PX } from "../lib/layoutTokens";
 import { useGutterPx } from "./useGutterPx";
 
-const WIDE_MAX_FALLBACK_PX = 1792; // 112rem at 16px root
-
 type UseScrollExpandInsetOptions = {
-  /** CSS length var for the starting max width (default: `--max-width-wide`). */
-  maxWidthVar?: string;
+  /** CSS length for the starting max width (default: wide shell). */
+  maxWidth?: string;
   fallbackMaxPx?: number;
 };
 
@@ -25,7 +24,7 @@ type UseScrollExpandInsetResult<T extends HTMLElement> = {
  * gutter as the target scrolls into view (scroll-expand panels).
  */
 export function useScrollExpandInset<T extends HTMLElement = HTMLDivElement>({
-  maxWidthVar = "--max-width-wide",
+  maxWidth = WIDE_MAX,
   fallbackMaxPx = WIDE_MAX_FALLBACK_PX,
 }: UseScrollExpandInsetOptions = {}): UseScrollExpandInsetResult<T> {
   const targetRef = useRef<T | null>(null);
@@ -36,7 +35,7 @@ export function useScrollExpandInset<T extends HTMLElement = HTMLDivElement>({
   useEffect(() => {
     const measure = () => {
       const probe = document.createElement("div");
-      probe.style.cssText = `position:absolute;visibility:hidden;width:var(${maxWidthVar});pointer-events:none;`;
+      probe.style.cssText = `position:absolute;visibility:hidden;width:${maxWidth};pointer-events:none;`;
       document.body.appendChild(probe);
       const wideMax = probe.getBoundingClientRect().width || fallbackMaxPx;
       probe.remove();
@@ -46,7 +45,7 @@ export function useScrollExpandInset<T extends HTMLElement = HTMLDivElement>({
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [fallbackMaxPx, gutterPx, maxWidthVar]);
+  }, [fallbackMaxPx, gutterPx, maxWidth]);
 
   const { scrollYProgress } = useScroll({
     target: targetRef,

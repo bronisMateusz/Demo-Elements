@@ -1,5 +1,6 @@
 export function isExternalHref(href: string): boolean {
-  if (!href || href.startsWith("mailto:") || href.startsWith("tel:")) return false;
+  if (!href || href.startsWith("mailto:") || href.startsWith("tel:"))
+    return false;
 
   try {
     const url = new URL(href, window.location.href);
@@ -24,7 +25,9 @@ function shouldOpenInNewTab(anchor: HTMLAnchorElement): boolean {
 }
 
 function applyRel(anchor: HTMLAnchorElement) {
-  const rel = new Set((anchor.getAttribute("rel") ?? "").split(/\s+/).filter(Boolean));
+  const rel = new Set(
+    (anchor.getAttribute("rel") ?? "").split(/\s+/).filter(Boolean),
+  );
   rel.add("noopener");
   rel.add("noreferrer");
   anchor.setAttribute("rel", [...rel].join(" "));

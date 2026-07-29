@@ -26,6 +26,9 @@ Project includes `.vscode/settings.json` for Tailwind v4:
 - `css.customData` - `.vscode/tailwind.css-data.json` (`@theme`, `@utility`, `@apply`, …)
 - `css.lint.unknownAtRules: ignore` - fallback when the file is validated as plain CSS
 - `tailwindCSS.experimental.configFile` → `src/styles/app.css`
+- `editor.quickSuggestions.strings: on` - completions inside string literals (needed for `.ts`)
+- `tailwindCSS.classFunctions` - `cn`, `clsx`
+- `tailwindCSS.classAttributes` / `experimental.classRegex` - `*ClassName` consts/helpers, plus `Record` maps (`*Sizes`, `*Variants`, `*Tones`)
 
 Install **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`). After changing settings: **Reload Window**.
 

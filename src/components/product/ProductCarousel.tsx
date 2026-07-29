@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
+import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { useBleedRightWidth } from "../../hooks/useBleedRightWidth";
 import { useContentInsetPx } from "../../hooks/useContentInsetPx";
 import { useGutterPx } from "../../hooks/useGutterPx";
@@ -26,6 +27,17 @@ type ProductCarouselHeader = {
   titleId?: string;
 };
 
+export type ProductCarouselControls = {
+  slidePrev: () => void;
+  slideNext: () => void;
+  atStart: boolean;
+  atEnd: boolean;
+  loop: boolean;
+  /** Index among unique `products` (not cloned loop slides). */
+  activeIndex: number;
+  count: number;
+};
+
 type ProductCarouselProps = {
   products: RelatedProduct[];
   labelledBy?: string;
@@ -34,12 +46,17 @@ type ProductCarouselProps = {
   bleed?: boolean;
   layout?: ProductCarouselLayout;
   header?: ProductCarouselHeader;
-  /** `header` - arrows beside the title (Inspiration-style); `overlay` - on the track edges. */
-  navPlacement?: "overlay" | "header";
+  /** `header` - arrows beside the title; `footer` - arrows + index under the track; `overlay` - on the track edges; `none` - parent owns nav. */
+  navPlacement?: "overlay" | "header" | "footer" | "none";
+  /** Sync nav state for external arrows (`navPlacement="none"`). */
+  onControlsChange?: (controls: ProductCarouselControls) => void;
 };
 
 /** Clone products until we have enough slides to fill wide viewports in loop mode. */
-function withClonedSlides(products: RelatedProduct[], minSlides: number): RelatedProduct[] {
+function withClonedSlides(
+  products: RelatedProduct[],
+  minSlides: number,
+): RelatedProduct[] {
   if (products.length <= 1) return products;
   const slides: RelatedProduct[] = [];
   while (slides.length < minSlides) {
@@ -48,7 +65,7 @@ function withClonedSlides(products: RelatedProduct[], minSlides: number): Relate
   return slides;
 }
 
-function CarouselNavButtons({
+export function ProductCarouselNavButtons({
   atStart,
   atEnd,
   layout,
@@ -106,6 +123,79 @@ function CarouselNavButtons({
   );
 }
 
+function ProductCarouselFooterNav({
+  activeIndex,
+  count,
+  atStart,
+  atEnd,
+  loop,
+  layout,
+  onPrev,
+  onNext,
+}: {
+  activeIndex: number;
+  count: number;
+  atStart: boolean;
+  atEnd: boolean;
+  loop: boolean;
+  layout: ProductCarouselLayout;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  if (count <= 1) return null;
+
+  const prevDisabled = !loop && atStart;
+  const nextDisabled = !loop && atEnd;
+  const isBleed = layout === "bleed";
+
+  return (
+    <div
+      className={cn(
+        "mt-8 flex items-center justify-center gap-3 md:mt-10",
+        isBleed &&
+          "mx-auto w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)]",
+      )}
+    >
+      <button
+        type="button"
+        className={iconButtonClassName({
+          variant: "elevated",
+          className: cn(
+            "shadow-subtle",
+            prevDisabled && "pointer-events-none opacity-35",
+          ),
+        })}
+        aria-label="Poprzednie produkty"
+        disabled={prevDisabled}
+        onClick={onPrev}
+      >
+        <i className="ph ph-caret-left" aria-hidden="true" />
+      </button>
+      <p
+        className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
+        aria-live="polite"
+      >
+        {formatSlideIndex(activeIndex, count)}
+      </p>
+      <button
+        type="button"
+        className={iconButtonClassName({
+          variant: "elevated",
+          className: cn(
+            "shadow-subtle",
+            nextDisabled && "pointer-events-none opacity-35",
+          ),
+        })}
+        aria-label="Następne produkty"
+        disabled={nextDisabled}
+        onClick={onNext}
+      >
+        <i className="ph ph-caret-right" aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
 export function ProductCarousel({
   products,
   labelledBy,
@@ -114,14 +204,21 @@ export function ProductCarousel({
   layout,
   header,
   navPlacement,
+  onControlsChange,
 }: ProductCarouselProps) {
-  const resolvedLayout: ProductCarouselLayout = layout ?? (bleed ? "bleed" : "contained");
-  const isInline = resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
+  const resolvedLayout: ProductCarouselLayout =
+    layout ?? (bleed ? "bleed" : "contained");
+  const isInline =
+    resolvedLayout === "inline" || resolvedLayout === "inline-bleed";
   const isInlineBleed = resolvedLayout === "inline-bleed";
   const isBleed = resolvedLayout === "bleed";
-  const resolvedNavPlacement = navPlacement ?? (isInline ? "header" : "overlay");
+  const resolvedNavPlacement =
+    navPlacement ?? (isInline ? "header" : "overlay");
   const showHeaderNav = Boolean(header) && resolvedNavPlacement === "header";
-  const showOverlayNav = resolvedNavPlacement === "overlay" && products.length > 1;
+  const showFooterNav =
+    resolvedNavPlacement === "footer" && products.length > 1;
+  const showOverlayNav =
+    resolvedNavPlacement === "overlay" && products.length > 1;
   const gutterPx = useGutterPx();
   const contentInsetPx = useContentInsetPx();
   const bleedInsetPx = isBleed ? contentInsetPx : gutterPx;
@@ -130,6 +227,7 @@ export function ProductCarousel({
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const enableLoop = !isInline && products.length > 1;
   // Ultrawide needs enough duplicates so a clone always peeks past the right edge.
@@ -138,8 +236,12 @@ export function ProductCarousel({
     () => (enableLoop ? withClonedSlides(products, minLoopSlides) : products),
     [products, enableLoop, minLoopSlides],
   );
+  const productCount = products.length;
 
   const syncEdges = (instance: SwiperInstance) => {
+    const real = instance.realIndex ?? instance.activeIndex;
+    setActiveIndex(productCount > 0 ? real % productCount : 0);
+
     if (instance.params.loop) {
       setAtStart(false);
       setAtEnd(false);
@@ -149,8 +251,38 @@ export function ProductCarousel({
     setAtEnd(instance.isEnd);
   };
 
-  const slidePrev = () => swiper?.slidePrev();
-  const slideNext = () => swiper?.slideNext();
+  const slidePrev = useCallback(() => {
+    swiper?.slidePrev();
+  }, [swiper]);
+  const slideNext = useCallback(() => {
+    swiper?.slideNext();
+  }, [swiper]);
+
+  const onControlsChangeRef = useRef(onControlsChange);
+  useEffect(() => {
+    onControlsChangeRef.current = onControlsChange;
+  }, [onControlsChange]);
+
+  useEffect(() => {
+    onControlsChangeRef.current?.({
+      slidePrev,
+      slideNext,
+      atStart,
+      atEnd,
+      loop: enableLoop,
+      activeIndex,
+      count: productCount,
+    });
+  }, [
+    slidePrev,
+    slideNext,
+    atStart,
+    atEnd,
+    enableLoop,
+    activeIndex,
+    productCount,
+  ]);
+
   const swiperKey = isBleed
     ? `bleed-${bleedInsetPx}-${slides.length}`
     : isInlineBleed
@@ -162,14 +294,19 @@ export function ProductCarousel({
 
   return (
     <div
-      className={productCarouselRootClassName({ layout: resolvedLayout, className })}
+      className={productCarouselRootClassName({
+        layout: resolvedLayout,
+        className,
+      })}
       aria-labelledby={labelledBy ?? header?.titleId}
     >
       {header ? (
         <div
           className={cn(
             "flex flex-wrap items-end justify-between gap-6",
-            isBleed ? "mx-auto mb-8 w-full max-w-content px-gutter md:mb-10" : "mb-4",
+            isBleed
+              ? "mx-auto mb-8 w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10"
+              : "mb-4",
           )}
         >
           {isBleed && !isInline ? (
@@ -177,7 +314,7 @@ export function ProductCarousel({
               id={header.titleId}
               revealUnit="word"
               className="min-w-0 max-w-2xl"
-              typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+              typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
               mutedClassName="text-neutral-900/20"
               fillClassName="text-neutral-900"
             >
@@ -195,7 +332,7 @@ export function ProductCarousel({
             </h2>
           )}
           {showHeaderNav ? (
-            <CarouselNavButtons
+            <ProductCarouselNavButtons
               atStart={atStart}
               atEnd={atEnd}
               layout={resolvedLayout}
@@ -296,6 +433,19 @@ export function ProductCarousel({
             <i className="ph ph-caret-right" aria-hidden="true" />
           </button>
         </>
+      ) : null}
+
+      {showFooterNav ? (
+        <ProductCarouselFooterNav
+          activeIndex={activeIndex}
+          count={productCount}
+          atStart={atStart}
+          atEnd={atEnd}
+          loop={enableLoop}
+          layout={resolvedLayout}
+          onPrev={slidePrev}
+          onNext={slideNext}
+        />
       ) : null}
     </div>
   );

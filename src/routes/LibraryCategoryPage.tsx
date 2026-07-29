@@ -23,7 +23,9 @@ export function LibraryCategoryPage() {
     <>
       <header className={libCategoryIntroClassName}>
         <div className="container">
-          <h1 className={`t-h1 ${libCategoryIntroTitleClassName}`}>{category.title}</h1>
+          <h1 className={`t-h1 ${libCategoryIntroTitleClassName}`}>
+            {category.title}
+          </h1>
           {category.subtitle ? (
             <p className={libCategoryIntroLedeClassName}>{category.subtitle}</p>
           ) : null}

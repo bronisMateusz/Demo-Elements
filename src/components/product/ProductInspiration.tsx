@@ -1,11 +1,22 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { assetUrl } from "../../app/assets";
 import { useGutterPx } from "../../hooks/useGutterPx";
-import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
+import {
+  liftHeaderAboveLightbox,
+  lockLightboxScroll,
+} from "../../hooks/useSiteChrome";
 import { cn } from "../../lib/cn";
+import { formatSlideIndex } from "../../lib/formatSlideIndex";
+import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { InspirationArrangement } from "../../types/product";
 import { BrandMotif } from "../brand/BrandMotif";
@@ -18,36 +29,75 @@ import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "./ProductGalleryLightboxFlyer";
 import "swiper/css";
 
-type ProductInspirationProps = {
-  arrangements: InspirationArrangement[];
+export type ProductInspirationControls = {
+  slidePrev: () => void;
+  slideNext: () => void;
+  atStart: boolean;
+  atEnd: boolean;
+  activeIndex: number;
+  count: number;
 };
 
-function formatIndex(index: number, total: number) {
-  return `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-}
+type ProductInspirationProps = {
+  arrangements: InspirationArrangement[];
+  eyebrow?: string;
+  title?: string;
+  /** `header` - beside title; `footer` - under the track (default); `none` - parent owns nav. */
+  navPlacement?: "header" | "footer" | "none";
+  onControlsChange?: (controls: ProductInspirationControls) => void;
+};
 
-export function ProductInspiration({ arrangements }: ProductInspirationProps) {
+export function ProductInspiration({
+  arrangements,
+  eyebrow = "Produkt w aranżacji",
+  title = "Inspiracje producenta",
+  navPlacement = "footer",
+  onControlsChange,
+}: ProductInspirationProps) {
   const gutterPx = useGutterPx();
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxOrigin, setLightboxOrigin] = useState<LightboxOpenOrigin | null>(null);
+  const [lightboxOrigin, setLightboxOrigin] =
+    useState<LightboxOpenOrigin | null>(null);
   const [lightboxClosing, setLightboxClosing] = useState(false);
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const imageRefs = useRef<Map<number, HTMLImageElement>>(new Map());
+  const frameRefs = useRef<Map<number, HTMLElement>>(new Map());
+  const showHeaderNav = navPlacement === "header" && arrangements.length > 1;
+  const showFooterNav = navPlacement === "footer" && arrangements.length > 1;
 
-  const registerImage = useCallback((index: number, node: HTMLImageElement | null) => {
-    if (node) {
-      imageRefs.current.set(index, node);
-      return;
-    }
-    imageRefs.current.delete(index);
-  }, []);
+  const registerImage = useCallback(
+    (index: number, node: HTMLImageElement | null) => {
+      if (node) {
+        imageRefs.current.set(index, node);
+        return;
+      }
+      imageRefs.current.delete(index);
+    },
+    [],
+  );
+
+  const registerFrame = useCallback(
+    (index: number, node: HTMLElement | null) => {
+      if (node) {
+        frameRefs.current.set(index, node);
+        return;
+      }
+      frameRefs.current.delete(index);
+    },
+    [],
+  );
 
   const getSlideRect = useCallback((index: number) => {
-    return imageRefs.current.get(index)?.getBoundingClientRect() ?? null;
+    // Prefer the unscaled media frame so hover zoom does not skew the FLIP origin.
+    return (
+      frameRefs.current.get(index)?.getBoundingClientRect() ??
+      imageRefs.current.get(index)?.getBoundingClientRect() ??
+      null
+    );
   }, []);
 
   useEffect(() => {
@@ -59,11 +109,39 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
     return () => liftHeaderAboveLightbox(false);
   }, []);
 
+  const lastIndex = arrangements.length - 1;
+
   const syncEdges = (instance: SwiperInstance) => {
-    setActiveIndex(instance.realIndex);
-    setAtStart(instance.isBeginning);
-    setAtEnd(instance.isEnd);
+    // Prefer realIndex for edges - with slidesPerView:"auto", isEnd can trip before the last slide is active.
+    const index = instance.realIndex;
+    setActiveIndex(index);
+    setAtStart(index <= 0);
+    setAtEnd(index >= lastIndex);
   };
+
+  const goPrev = useCallback(() => {
+    swiper?.slidePrev();
+  }, [swiper]);
+
+  const goNext = useCallback(() => {
+    swiper?.slideNext();
+  }, [swiper]);
+
+  const onControlsChangeRef = useRef(onControlsChange);
+  useEffect(() => {
+    onControlsChangeRef.current = onControlsChange;
+  }, [onControlsChange]);
+
+  useEffect(() => {
+    onControlsChangeRef.current?.({
+      slidePrev: goPrev,
+      slideNext: goNext,
+      atStart,
+      atEnd,
+      activeIndex,
+      count: arrangements.length,
+    });
+  }, [goPrev, goNext, atStart, atEnd, activeIndex, arrangements.length]);
 
   const openLightbox = (index: number, origin: LightboxOpenOrigin) => {
     setLightboxIndex(index);
@@ -88,11 +166,31 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
   const openAt = (index: number) => {
     const image = arrangements[index]?.image;
     if (!image) return;
-    const rect = getSlideRect(index) ?? new DOMRect(0, 0, 0, 0);
-    openLightbox(index, {
-      rect,
-      objectPosition: productImageObjectPosition(image),
-    });
+    const img = imageRefs.current.get(index);
+    // Lock before measuring so origin/target share the same viewport width.
+    lockLightboxScroll(true);
+
+    const open = () => {
+      requestAnimationFrame(() => {
+        const node = imageRefs.current.get(index);
+        const rect = node?.getBoundingClientRect() ?? new DOMRect(0, 0, 0, 0);
+        const aspectRatio =
+          node && node.naturalWidth > 0 && node.naturalHeight > 0
+            ? node.naturalWidth / node.naturalHeight
+            : (peekImageAspectRatio(image.src) ?? undefined);
+        openLightbox(index, {
+          rect,
+          objectPosition: productImageObjectPosition(image),
+          aspectRatio,
+        });
+      });
+    };
+
+    if (img?.decode) {
+      void img.decode().then(open).catch(open);
+      return;
+    }
+    open();
   };
 
   const lightboxImages = arrangements.map((arrangement) => ({
@@ -107,40 +205,47 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
     >
       <BrandMotif
         name="dots-grid"
-        className="absolute top-0 right-[max(0px,calc((100%-var(--max-width-content))/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+        className={cn(
+          "pointer-events-none absolute top-0 hidden h-52 w-12 opacity-30",
+          // Only in the side gutter outside max-w-content - avoids overlapping the title.
+          "inset-s-[max(0px,calc((100%-96rem)/2-3rem))] min-[110rem]:block",
+        )}
       />
 
       <Container size="content" className="relative z-10">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
           <div className="min-w-0 max-w-2xl">
-            <Eyebrow className="mb-3">Produkt w aranżacji</Eyebrow>
+            <Eyebrow className="mb-3">{eyebrow}</Eyebrow>
             <TextRevealLead
               id="inspiration-title"
               revealUnit="word"
               className="max-w-none"
-              typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+              typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
               mutedClassName="text-neutral-900/20"
               fillClassName="text-neutral-900"
             >
-              Inspiracje producenta
+              {title}
             </TextRevealLead>
           </div>
 
-          {arrangements.length > 1 ? (
+          {showHeaderNav ? (
             <div className="flex items-center gap-4">
-              <p className="m-0 font-body text-sm tabular-nums tracking-wide text-neutral-600">
-                {formatIndex(activeIndex, arrangements.length)}
+              <p className="m-0 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
+                {formatSlideIndex(activeIndex, arrangements.length)}
               </p>
               <div className="flex items-center gap-1">
                 <button
                   type="button"
                   className={iconButtonClassName({
                     variant: "elevated",
-                    className: cn("shadow-subtle", atStart && "pointer-events-none opacity-35"),
+                    className: cn(
+                      "shadow-subtle",
+                      atStart && "pointer-events-none opacity-35",
+                    ),
                   })}
                   aria-label="Poprzednia aranżacja"
                   disabled={atStart}
-                  onClick={() => swiper?.slidePrev()}
+                  onClick={goPrev}
                 >
                   <i className="ph ph-caret-left" aria-hidden="true" />
                 </button>
@@ -148,11 +253,14 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
                   type="button"
                   className={iconButtonClassName({
                     variant: "elevated",
-                    className: cn("shadow-subtle", atEnd && "pointer-events-none opacity-35"),
+                    className: cn(
+                      "shadow-subtle",
+                      atEnd && "pointer-events-none opacity-35",
+                    ),
                   })}
                   aria-label="Następna aranżacja"
                   disabled={atEnd}
-                  onClick={() => swiper?.slideNext()}
+                  onClick={goNext}
                 >
                   <i className="ph ph-caret-right" aria-hidden="true" />
                 </button>
@@ -169,23 +277,39 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
         <Swiper
           key={`inspiration-${gutterPx}`}
           className={cn(
-            "w-full touch-pan-y [touch-action:pan-y_pinch-zoom]",
+            "w-full cursor-grab touch-pan-y touch-[pan-y_pinch-zoom] active:cursor-grabbing",
             // Start at page gutter; peek past the right edge on ultrawide.
-            "[&_.swiper-slide]:!h-auto [&_.swiper-slide]:!w-[min(calc(100vw-var(--inspiration-inset)*2-2rem),72rem)] [&_.swiper-slide]:shrink-0",
+            "[&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-[min(calc(100vw-var(--inspiration-inset)*2-2rem),72rem)]! [&_.swiper-slide]:shrink-0",
           )}
           modules={[A11y, Mousewheel]}
           slidesPerView="auto"
           spaceBetween={12}
           slidesOffsetBefore={gutterPx}
           slidesOffsetAfter={gutterPx}
+          // Keep a snap point for the last slide when slides are nearly full-width.
+          snapToSlideEdge
           watchOverflow
-          mousewheel={{ forceToAxis: true, releaseOnEdges: true, sensitivity: 0.85 }}
+          grabCursor
+          simulateTouch
+          // Image open controls are buttons - keep them out of focusableElements so drag still starts on them.
+          focusableElements="input, select, option, textarea, video, label"
+          threshold={6}
+          mousewheel={{
+            enabled: true,
+            // Only horizontal trackpad / shift+wheel - never steal vertical page scroll.
+            forceToAxis: true,
+            releaseOnEdges: true,
+            sensitivity: 0.85,
+          }}
           onSwiper={(instance) => {
             setSwiper(instance);
             syncEdges(instance);
           }}
           onSlideChange={syncEdges}
+          onSlideChangeTransitionEnd={syncEdges}
+          onFromEdge={syncEdges}
           onResize={syncEdges}
+          onSlidesUpdated={syncEdges}
           a11y={{
             prevSlideMessage: "Poprzednia aranżacja",
             nextSlideMessage: "Następna aranżacja",
@@ -198,27 +322,44 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
             return (
               <SwiperSlide key={arrangement.id}>
                 <article className="grid overflow-hidden bg-neutral-100 md:grid-cols-[minmax(0,1.4fr)_minmax(18rem,0.85fr)]">
-                  <div className="relative min-h-[240px] bg-neutral-200 md:min-h-[min(28rem,52vh)]">
+                  <div
+                    ref={(node) => registerFrame(index, node)}
+                    className="relative min-h-60 overflow-hidden bg-neutral-200 md:min-h-[min(28rem,52vh)]"
+                  >
                     <button
                       type="button"
-                      className="absolute inset-0 block cursor-crosshair"
+                      className="group/insp absolute inset-0 block cursor-inherit"
                       onClick={() => openAt(index)}
                       aria-label={`Powiększ: ${alt}`}
                     >
-                      <img
-                        ref={(node) => registerImage(index, node)}
-                        src={image.src}
-                        alt={alt}
+                      {/* Scale a GPU layer, not the <img> - same pattern as product cards. */}
+                      <div
                         className={cn(
-                          "absolute inset-0 size-full object-cover",
-                          lightboxClosing && lightboxIndex === index && "opacity-0",
+                          "absolute inset-0 origin-center transform-gpu backface-hidden",
+                          "transition-transform duration-500 ease-out motion-reduce:transition-none",
+                          "group-hover/insp:scale-[1.05] group-focus-visible/insp:scale-[1.05]",
+                          "motion-reduce:group-hover/insp:scale-100 motion-reduce:group-focus-visible/insp:scale-100",
                         )}
-                        style={{ objectPosition: productImageObjectPosition(image) }}
-                        loading="lazy"
-                        draggable={false}
-                      />
+                      >
+                        <img
+                          ref={(node) => registerImage(index, node)}
+                          src={image.src}
+                          alt={alt}
+                          className={cn(
+                            "pointer-events-none absolute inset-0 size-full object-cover",
+                            lightboxClosing &&
+                              lightboxIndex === index &&
+                              "opacity-0",
+                          )}
+                          style={{
+                            objectPosition: productImageObjectPosition(image),
+                          }}
+                          loading="lazy"
+                          draggable={false}
+                        />
+                      </div>
                     </button>
-                    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+                    <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex justify-end px-4">
                       <IconButton
                         label="Powiększ zdjęcie"
                         iconClass="ph ph-magnifying-glass-plus"
@@ -229,9 +370,9 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
                     </div>
                   </div>
 
-                  <div className="relative flex flex-col justify-center border-t border-neutral-200/80 px-6 py-8 md:border-t-0 md:border-l md:px-8 md:py-10 lg:px-10">
+                  <div className="relative flex flex-col justify-center border-t border-neutral-200/80 px-6 py-8 md:border-t-0 md:border-s md:px-8 md:py-10 lg:px-10">
                     <div
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(184,151,90,0.14),transparent_55%)]"
+                      className="pointer-events-none absolute inset-0 bg-radial-[at_100%_0%] from-gold-500/14 to-transparent to-55%"
                       aria-hidden="true"
                     />
                     <div className="relative">
@@ -242,7 +383,7 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
                         {arrangement.items.map((item) => (
                           <li
                             key={item}
-                            className="flex items-start gap-3 text-ui leading-body text-neutral-700"
+                            className="flex items-start gap-3 text-ui leading-[1.75] text-neutral-700"
                           >
                             <img
                               src={assetUrl("sygnet.svg")}
@@ -264,6 +405,50 @@ export function ProductInspiration({ arrangements }: ProductInspirationProps) {
           })}
         </Swiper>
       </div>
+
+      {showFooterNav ? (
+        <Container
+          size="content"
+          className="mt-8 flex items-center justify-center gap-3 md:mt-10"
+        >
+          <button
+            type="button"
+            className={iconButtonClassName({
+              variant: "elevated",
+              className: cn(
+                "shadow-subtle",
+                atStart && "pointer-events-none opacity-35",
+              ),
+            })}
+            aria-label="Poprzednia aranżacja"
+            disabled={atStart}
+            onClick={goPrev}
+          >
+            <i className="ph ph-caret-left" aria-hidden="true" />
+          </button>
+          <p
+            className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
+            aria-live="polite"
+          >
+            {formatSlideIndex(activeIndex, arrangements.length)}
+          </p>
+          <button
+            type="button"
+            className={iconButtonClassName({
+              variant: "elevated",
+              className: cn(
+                "shadow-subtle",
+                atEnd && "pointer-events-none opacity-35",
+              ),
+            })}
+            aria-label="Następna aranżacja"
+            disabled={atEnd}
+            onClick={goNext}
+          >
+            <i className="ph ph-caret-right" aria-hidden="true" />
+          </button>
+        </Container>
+      ) : null}
 
       {lightboxOpen && lightboxOrigin ? (
         <ProductGalleryLightbox

@@ -4,7 +4,7 @@ import { cn } from "../../../lib/cn";
 export function HeaderUtility() {
   return (
     <div className="border-b border-neutral-200 bg-neutral-50">
-      <div className="container flex h-header-utility-h items-stretch justify-between gap-6">
+      <div className="container flex h-11 items-stretch justify-between gap-6">
         <p className="m-0 flex shrink-0 items-center text-xs leading-none text-neutral-600 italic">
           {utilityTagline}
         </p>
@@ -18,7 +18,7 @@ export function HeaderUtility() {
                   "flex items-stretch",
                   "dividerAfter" in item &&
                     item.dividerAfter &&
-                    "after:mx-1 after:block after:w-px after:self-center after:h-3 after:bg-neutral-300 after:content-['']",
+                    "after:mx-1 after:block after:w-px after:self-center after:h-3 after:bg-neutral-300",
                 )}
               >
                 <a
@@ -26,7 +26,10 @@ export function HeaderUtility() {
                   className="inline-flex h-full items-center gap-1.5 px-2.5 text-xs leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
                 >
                   {"iconClass" in item && item.iconClass ? (
-                    <i className={cn(item.iconClass, "text-sm leading-none")} aria-hidden="true" />
+                    <i
+                      className={cn(item.iconClass, "text-sm leading-none")}
+                      aria-hidden="true"
+                    />
                   ) : null}
                   {item.label}
                 </a>

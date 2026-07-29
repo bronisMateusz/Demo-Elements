@@ -10,7 +10,9 @@ export default defineConfig(({ command }) => {
     plugins: [react(), tailwindcss()],
     base,
     define: {
-      "import.meta.env.VERCEL_DEPLOY": JSON.stringify(process.env.VERCEL === "1"),
+      "import.meta.env.VERCEL_DEPLOY": JSON.stringify(
+        process.env.VERCEL === "1",
+      ),
     },
     server: {
       port: 5173,

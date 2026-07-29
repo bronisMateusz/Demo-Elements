@@ -88,7 +88,11 @@ export function useTextLineSplit(
   return lines;
 }
 
-export function getLineRevealProgress(overall: number, index: number, total: number): number {
+export function getLineRevealProgress(
+  overall: number,
+  index: number,
+  total: number,
+): number {
   if (total <= 1) return overall;
 
   const segment = 1 / total;

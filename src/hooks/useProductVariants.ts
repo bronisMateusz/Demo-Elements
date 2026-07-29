@@ -75,7 +75,8 @@ export function resolveProductVariant(
     title: fallback.title,
     price: fallback.price,
     available: false,
-    availabilityNote: "Wybrana konfiguracja jest chwilowo niedostępna. Poniżej najbliższy dostępny wariant.",
+    availabilityNote:
+      "Wybrana konfiguracja jest chwilowo niedostępna. Poniżej najbliższy dostępny wariant.",
     isExactMatch: false,
   };
 }

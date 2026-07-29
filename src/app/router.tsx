@@ -1,7 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "../components/routing/RootLayout";
 import { LibraryLayout } from "../library/LibraryLayout";
-import { LibraryCategoryPage, LibraryIndexPage } from "../routes/LibraryCategoryPage";
+import {
+  LibraryCategoryPage,
+  LibraryIndexPage,
+} from "../routes/LibraryCategoryPage";
+import { HomePage } from "../routes/HomePage";
 import { NotFoundPage } from "../routes/NotFoundPage";
 import { ProductDetailPage } from "../routes/ProductDetailPage";
 
@@ -22,7 +26,8 @@ export const router = createBrowserRouter(
     {
       element: <RootLayout />,
       children: [
-        { path: "/", element: <ProductDetailPage /> },
+        { path: "/", element: <HomePage /> },
+        { path: "/produkt", element: <ProductDetailPage /> },
         {
           path: "/biblioteka",
           element: <LibraryLayout />,

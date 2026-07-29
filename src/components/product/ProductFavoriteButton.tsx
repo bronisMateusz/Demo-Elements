@@ -46,14 +46,19 @@ export function ProductFavoriteButton({
       className={iconButtonClassName({
         variant,
         active: isFavorite,
-        className: cn(isFavorite && "text-gold-500 hover:text-gold-500", className),
+        className: cn(
+          isFavorite && "text-gold-500 hover:text-gold-500",
+          className,
+        ),
       })}
       aria-label={label}
       aria-pressed={isFavorite}
       onClick={handleClick}
     >
       <i
-        className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+        className={
+          isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"
+        }
         aria-hidden="true"
       />
     </button>
@@ -68,7 +73,7 @@ export function ProductFavoriteButton({
         side="bottom"
         align="end"
         sideOffset={8}
-        className="w-64 bg-neutral-900 px-5 py-4 text-left"
+        className="w-64 bg-neutral-900 px-5 py-4 text-start"
       >
         <p className="m-0 mb-2.5 font-body text-sm font-medium text-neutral-0">
           {favoritesTooltipCopy.title}

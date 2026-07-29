@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { ProductSalonCard } from "../../components/product/ProductSalonCard";
 import { salonOptions } from "../../data/nav";
-import { getStoredSalonId, useSelectedSalon } from "../../hooks/useSelectedSalon";
+import {
+  getStoredSalonId,
+  useSelectedSalon,
+} from "../../hooks/useSelectedSalon";
 
 const salonCardDefaultProps = {
   eyebrow: "Obejrzyj na żywo",

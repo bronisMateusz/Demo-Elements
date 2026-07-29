@@ -1,4 +1,7 @@
-import { iconButtonClassName, type IconButtonVariant } from "./iconButtonClassName";
+import {
+  iconButtonClassName,
+  type IconButtonVariant,
+} from "./iconButtonClassName";
 
 type IconButtonProps = {
   label: string;

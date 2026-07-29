@@ -51,10 +51,15 @@ export function PolandSalonsMap({ className }: PolandSalonsMapProps) {
   const { width, height } = POLAND_VOIV_VIEW;
 
   return (
-    <div className={cn("flex w-full justify-center overflow-visible lg:justify-end", className)}>
+    <div
+      className={cn(
+        "flex w-full justify-center overflow-visible lg:justify-end",
+        className,
+      )}
+    >
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="pointer-events-none w-full max-w-[30rem] overflow-visible xl:max-w-[34rem]"
+        className="pointer-events-none w-full max-w-120 overflow-visible xl:max-w-136"
         role="img"
         aria-label="Mapa Polski z podziałem na województwa i lokalizacjami salonów Elements"
       >

@@ -1,5 +1,10 @@
 import { assetUrl } from "../../app/assets";
-import type { Product, ProductVariants, RelatedProduct } from "../../types/product";
+import { homeCatalogProducts } from "../home";
+import type {
+  Product,
+  ProductVariants,
+  RelatedProduct,
+} from "../../types/product";
 
 const montebiancoFrontImage = {
   src: assetUrl("products/montebianco/01-front.png"),
@@ -137,11 +142,6 @@ export const montebiancoVariants: ProductVariants = {
   ],
 };
 
-const placeholder = (name: string): RelatedProduct["image"] => ({
-  src: assetUrl(`products/montebianco/${name}`),
-  alt: "",
-});
-
 function related(
   id: string,
   brand: string,
@@ -170,7 +170,7 @@ function related(
     title,
     image,
     images: options.images,
-    href: "#",
+    href: "/produkt",
     hasStorage: options.hasStorage ?? true,
     price: options.price,
     pricePrevious: options.pricePrevious,
@@ -191,27 +191,46 @@ const montebiancoRecentlyViewed: RelatedProduct[] = [
     colorCount: 2,
     sizeCount: 1,
   }),
-  related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie", {
-    subtitle: "Wykończenie ręczne",
-    price: "1 290 zł",
-    badge: { label: "Bestseller", variant: "gold" },
-    image: { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco" },
-    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-    colorCount: 2,
-    sizeCount: 1,
-  }),
-  related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat", {
-    subtitle: "System modułowy",
-    price: "1 690 zł",
-    image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna Montebianco" },
-    swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-    colorCount: 3,
-    sizeCount: 1,
-  }),
+  related(
+    "montebianco-mirror",
+    "Montebianco",
+    "Lustro Montebianco 80 cm w ramie",
+    {
+      subtitle: "Wykończenie ręczne",
+      price: "1 290 zł",
+      badge: { label: "Bestseller", variant: "gold" },
+      image: {
+        src: assetUrl("products/montebianco/04-angle.jpg"),
+        alt: "Lustro Montebianco",
+      },
+      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+      colorCount: 2,
+      sizeCount: 1,
+    },
+  ),
+  related(
+    "montebianco-side",
+    "Montebianco",
+    "Szafka boczna Montebianco, biały mat",
+    {
+      subtitle: "System modułowy",
+      price: "1 690 zł",
+      image: {
+        src: assetUrl("products/montebianco/02-detail.jpg"),
+        alt: "Szafka boczna Montebianco",
+      },
+      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
+      colorCount: 3,
+      sizeCount: 1,
+    },
+  ),
   related("mellow", "Elita", "Szafka Mellow 80 cm fume mat, dwie szuflady", {
     subtitle: "Front MDF wilgocioodporny",
     price: "1 790 zł",
-    image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka Mellow 80 cm" },
+    image: {
+      src: assetUrl("products/montebianco/02-detail.jpg"),
+      alt: "Szafka Mellow 80 cm",
+    },
     swatch: { src: montebiancoFrontImage.src, alt: "Fume mat" },
     colorCount: 2,
     sizeCount: 1,
@@ -270,69 +289,16 @@ export const montebianco80: Product = {
     },
   ],
   seriesTitle: "Inne produkty z tej serii",
-  seriesProducts: [
-    related("oristo-80", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm, biała", {
-      subtitle: "Lakier mat",
-      price: "890 zł",
-      image: { src: montebiancoFrontImage.src, alt: "Umywalka ORiSTO 80 cm" },
-      images: [
-        { src: montebiancoFrontImage.src, alt: "Umywalka ORiSTO - front" },
-        { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Umywalka ORiSTO - detal" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-      colorCount: 2,
-      sizeCount: 1,
-    }),
-    related("montebianco-tall", "Montebianco", "Słupek wysoki Montebianco, biały mat", {
-      subtitle: "Front MDF wilgocioodporny",
-      price: "2 090 zł",
-      pricePrevious: "2 490 zł",
-      badge: { label: "Promocja", variant: "promo" },
-      image: { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Słupek Montebianco" },
-      images: [
-        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Słupek Montebianco - aranżacja" },
-        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Słupek Montebianco - detal" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-      colorCount: 3,
-    }),
-    related("montebianco-mirror", "Montebianco", "Lustro Montebianco 80 cm w ramie", {
-      subtitle: "Wykończenie ręczne",
-      price: "1 290 zł",
-      badge: { label: "Bestseller", variant: "gold" },
-      image: { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco" },
-      images: [
-        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Lustro Montebianco - front" },
-        { src: montebiancoFrontImage.src, alt: "Lustro Montebianco - detal ramy" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-      colorCount: 2,
-      sizeCount: 1,
-    }),
-    related("montebianco-side", "Montebianco", "Szafka boczna Montebianco, biały mat", {
-      subtitle: "System modułowy",
-      price: "1 690 zł",
-      image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna Montebianco" },
-      images: [
-        { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka boczna - detal" },
-        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka boczna - aranżacja" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-      colorCount: 3,
-      sizeCount: 1,
-    }),
-    related("montebianco-wall", "Montebianco", "Szafka wisząca Montebianco 60 cm", {
-      subtitle: "Montaż wiszący",
-      price: "1 490 zł",
-      image: { src: montebiancoFrontImage.src, alt: "Szafka wisząca Montebianco" },
-      images: [
-        { src: montebiancoFrontImage.src, alt: "Szafka wisząca - front" },
-        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Szafka wisząca - perspektywa" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Biały mat" },
-      colorCount: 2,
-    }),
-  ],
+  seriesProducts: homeCatalogProducts(
+    "series",
+    ["omnires-ottawa", "trinnity-m16", "grespania-halley", "florim-tundra"],
+    {
+      "omnires-ottawa": { label: "Promocja", variant: "promo" },
+      "trinnity-m16": { label: "Bestseller", variant: "gold" },
+      "grespania-halley": { label: "Promocja", variant: "promo" },
+      "florim-tundra": { label: "Nowość", variant: "brand" },
+    },
+  ),
   editorial: {
     eyebrow: "Informacje o produkcie",
     title: "Klasyczna forma, współczesna funkcjonalność",
@@ -409,7 +375,12 @@ export const montebianco80: Product = {
     {
       id: "insp-1",
       title: "Klasyczna elegancja w jasnej łazience",
-      image: placeholder("inspiration-1.jpg"),
+      image: {
+        src: assetUrl("home/inspiration-oristo-pillow.jpg"),
+        alt: "Klasyczna elegancja w jasnej łazience",
+        fit: "cover",
+        focalPoint: { x: 50, y: 55 },
+      },
       items: [
         "Szafka Montebianco 80 cm - ten produkt",
         "Umywalka meblowa ORiSTO 80 cm",
@@ -420,22 +391,33 @@ export const montebianco80: Product = {
     {
       id: "insp-2",
       title: "Ciepły minimalizm z akcentami drewna",
-      image: placeholder("inspiration-2.jpg"),
+      image: {
+        src: assetUrl("home/inspiration-warm-minimal.jpg"),
+        alt: "Ciepły minimalizm z akcentami drewna",
+        fit: "cover",
+        focalPoint: { x: 50, y: 55 },
+      },
       items: [
-        "Szafka Montebianco 80 cm - ten produkt",
-        "Słupek wysoki Montebianco, biały mat",
-        "Bateria umywalkowa, czarny mat",
+        "Wanna wolnostojąca, biały mat",
+        "Bateria wannowa podtynkowa, złoto szczotkowane",
+        "Słuchawka prysznicowa z wężem, złoto szczotkowane",
+        "Półka drewniana na wannę",
       ],
     },
     {
       id: "insp-3",
-      title: "Klasyka glamour z połyskiem",
-      image: placeholder("inspiration-3.jpg"),
+      title: "Głęboka zieleń i marmur",
+      image: {
+        src: assetUrl("home/inspiration-green-marble.jpg"),
+        alt: "Głęboka zieleń i marmur",
+        fit: "cover",
+        focalPoint: { x: 50, y: 55 },
+      },
       items: [
-        "Szafka Montebianco 80 cm - ten produkt",
-        "Lustro Montebianco 80 cm w ramie",
-        "Uchwyty kryształowe, złoty połysk",
-        "Bateria umywalkowa, złoto połysk",
+        "Szafka podumywalkowa, zielony mat, fronty ryflowane",
+        "Umywalka nablatowa, zieleń / biały",
+        "Bateria umywalkowa podtynkowa, czarny mat",
+        "Płytki imitujące czarny marmur",
       ],
     },
   ],
@@ -450,69 +432,16 @@ export const montebianco80: Product = {
       label: "Znajdź salon",
     },
   },
-  similarProducts: [
-    related("d-neo", "Duravit", "Szafka podumywalkowa D-Neo 78 cm, len brąz", {
-      subtitle: "Front z płyty meblowej",
-      price: "2 190 zł",
-      badge: { label: "Nowość", variant: "default" },
-      image: { src: montebiancoFrontImage.src, alt: "Szafka D-Neo 78 cm" },
-      images: [
-        { src: montebiancoFrontImage.src, alt: "Szafka D-Neo - front" },
-        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka D-Neo - aranżacja" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Len brąz" },
-      colorCount: 3,
-      sizeCount: 2,
-    }),
-    related("mellow", "Elita", "Szafka Mellow 80 cm fume mat, dwie szuflady", {
-      subtitle: "Front MDF wilgocioodporny",
-      price: "1 790 zł",
-      image: { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka Mellow 80 cm" },
-      images: [
-        { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka Mellow - detal" },
-        { src: montebiancoFrontImage.src, alt: "Szafka Mellow - front" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Fume mat" },
-      colorCount: 2,
-      sizeCount: 1,
-    }),
-    related("soho", "Elita", "Szafka Soho 80 cm fume mat, front ryflowane szkło", {
-      subtitle: "Front szklany ryflowany",
-      price: "2 390 zł",
-      badge: { label: "Bestseller", variant: "gold" },
-      image: { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Szafka Soho 80 cm" },
-      images: [
-        { src: assetUrl("products/montebianco/04-angle.jpg"), alt: "Szafka Soho - front" },
-        { src: assetUrl("products/montebianco/02-detail.jpg"), alt: "Szafka Soho - detal szkła" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Fume mat" },
-      colorCount: 2,
-    }),
-    related("ella", "Roca", "Szafka Ella 100 cm, zielony mat, soft-close", {
-      subtitle: "System soft-close",
-      price: "2 690 zł",
-      image: { src: montebiancoFrontImage.src, alt: "Szafka Ella 100 cm" },
-      images: [
-        { src: montebiancoFrontImage.src, alt: "Szafka Ella - front" },
-        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka Ella - aranżacja" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Zielony mat" },
-      colorCount: 4,
-      sizeCount: 2,
-    }),
-    related("larga", "Cersanit", "Szafka Larga 80 cm, czarny mat, dwie szuflady", {
-      subtitle: "Lakier mat",
-      price: "1 990 zł",
-      image: { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka Larga 80 cm" },
-      images: [
-        { src: assetUrl("products/montebianco/03-room.jpg"), alt: "Szafka Larga - aranżacja" },
-        { src: montebiancoFrontImage.src, alt: "Szafka Larga - front" },
-      ],
-      swatch: { src: montebiancoFrontImage.src, alt: "Czarny mat" },
-      colorCount: 3,
-      sizeCount: 1,
-    }),
-  ],
+  similarProducts: homeCatalogProducts(
+    "similar",
+    ["florim-tundra", "omnires-ottawa", "trinnity-m16", "grespania-halley"],
+    {
+      "florim-tundra": { label: "Nowość", variant: "brand" },
+      "omnires-ottawa": { label: "Promocja", variant: "promo" },
+      "trinnity-m16": { label: "Bestseller", variant: "gold" },
+      "grespania-halley": { label: "Promocja", variant: "promo" },
+    },
+  ),
   recentlyViewedProducts: montebiancoRecentlyViewed,
   breadcrumbs: [
     { label: "Strona główna", to: "/" },

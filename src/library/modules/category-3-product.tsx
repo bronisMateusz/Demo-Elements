@@ -21,7 +21,8 @@ export const productGalleryModule: LibraryModule = {
   id: "3.1",
   slug: "product-gallery",
   title: "ProductGallery",
-  description: "Pionowa galeria Swiper ze scroll-snap, wskaźnikiem postępu i lightboxem.",
+  description:
+    "Pionowa galeria Swiper ze scroll-snap, wskaźnikiem postępu i lightboxem.",
   variants: [
     {
       id: "multi",
@@ -56,7 +57,8 @@ export const productBuyBoxModule: LibraryModule = {
     {
       id: "default",
       label: "Montebianco z wariantami",
-      description: "Buy box z selektorem wariantów (chip + miniatura) i kartą salonu.",
+      description:
+        "Buy box z selektorem wariantów (chip + miniatura) i kartą salonu.",
       render: () => (
         <Container className="max-w-md py-8">
           <ProductBuyBox product={montebianco80} />
@@ -88,8 +90,11 @@ export const productCardModule: LibraryModule = {
       description:
         "Faux-link, badge, ulubione, zmiana zdjęcia na hover i meta wariantów.",
       render: () => (
-        <Container className="max-w-[424px] py-8">
-          <ProductCard product={montebianco80.seriesProducts[0]} layout="carousel" />
+        <Container className="max-w-106 py-8">
+          <ProductCard
+            product={montebianco80.seriesProducts[0]}
+            layout="carousel"
+          />
         </Container>
       ),
     },
@@ -106,7 +111,9 @@ export const productSpecsModule: LibraryModule = {
       id: "default",
       label: "Specyfikacja techniczna",
       description: "Lista parametrów z accordionem.",
-      render: () => <ProductSpecifications specs={montebianco80.specifications} />,
+      render: () => (
+        <ProductSpecifications specs={montebianco80.specifications} />
+      ),
     },
   ],
 };
@@ -131,7 +138,8 @@ export const productSalonCardModule: LibraryModule = {
     {
       id: "selected",
       label: "Wybrany salon",
-      description: "Nazwa salonu, accordion adres/godziny, CTA pytania i telefon.",
+      description:
+        "Nazwa salonu, accordion adres/godziny, CTA pytania i telefon.",
       render: () => (
         <Container className="max-w-md py-8">
           <ProductSalonCardSelectedDemo />
@@ -168,12 +176,14 @@ export const productVariantSelectorModule: LibraryModule = {
     {
       id: "chip",
       label: "VariantChipGroup",
-      description: "Segment z animowanym tłem wyboru i hover pill. Nieaktywne opcje mają border.",
+      description:
+        "Segment z animowanym tłem wyboru i hover pill. Nieaktywne opcje mają border.",
       render: () => (
         <Container className="max-w-md py-8">
           <div className={libPreviewArticleClassName}>
             <p className="mb-3 block text-sm text-neutral-900">
-              <span className="text-neutral-600">Szerokość:</span> interaktywny demo
+              <span className="text-neutral-600">Szerokość:</span> interaktywny
+              demo
             </p>
             <VariantChipGroupDemo />
           </div>
@@ -183,12 +193,14 @@ export const productVariantSelectorModule: LibraryModule = {
     {
       id: "thumbnail",
       label: "VariantThumbnailGroup",
-      description: "Miniaturki bez gapu; aktywny = bg-muted + pełne podkreślenie; hover = jaśniejsza linia.",
+      description:
+        "Miniaturki bez gapu; aktywny = bg-muted + pełne podkreślenie; hover = jaśniejsza linia.",
       render: () => (
         <Container className="max-w-md py-8">
           <div className={libPreviewArticleClassName}>
             <p className="mb-3 block text-sm text-neutral-900">
-              <span className="text-neutral-600">Wykończenie:</span> interaktywny demo
+              <span className="text-neutral-600">Wykończenie:</span>{" "}
+              interaktywny demo
             </p>
             <VariantThumbnailGroupDemo />
           </div>
@@ -212,10 +224,14 @@ export const productPairWithModule: LibraryModule = {
     {
       id: "default",
       label: "W buy boxie",
-      description: "Pod ceną i ask-row - ta sama karta co w „Produkty podobne”.",
+      description:
+        "Pod ceną i ask-row - ta sama karta co w „Produkty podobne”.",
       render: () => (
         <Container className="max-w-md py-8">
-          <ProductPairWith title={montebianco80.seriesTitle} products={montebianco80.seriesProducts} />
+          <ProductPairWith
+            title={montebianco80.seriesTitle}
+            products={montebianco80.seriesProducts}
+          />
         </Container>
       ),
     },

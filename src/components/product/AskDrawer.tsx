@@ -74,7 +74,7 @@ export function AskDrawer({
         onClose={handleClose}
       />
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-gutter py-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(1.25rem,2.222vw,2.5rem)] py-8">
         {submitted ? (
           <div className="rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-6">
             <p className="m-0 font-heading text-xl text-neutral-900">
@@ -96,12 +96,14 @@ export function AskDrawer({
         ) : (
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div className="flex gap-3 rounded-xs border border-neutral-200 bg-neutral-50 p-3">
-              <div className="size-14 shrink-0 overflow-hidden bg-neutral-100">
+              <div className="size-14 shrink-0 overflow-hidden bg-product-stage">
                 <img
                   src={productImage.src}
                   alt=""
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: productImageObjectPosition(productImage) }}
+                  className="size-full object-cover"
+                  style={{
+                    objectPosition: productImageObjectPosition(productImage),
+                  }}
                   width={56}
                   height={56}
                   draggable={false}
@@ -186,7 +188,10 @@ export function AskDrawer({
                 rows={4}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                className={cn(inputClassName, "h-auto min-h-28 resize-y py-3 leading-relaxed")}
+                className={cn(
+                  inputClassName,
+                  "h-auto min-h-28 resize-y py-3 leading-relaxed",
+                )}
               />
             </div>
 

@@ -86,7 +86,7 @@ export function Eyebrow({
   return (
     <span
       className={cn(
-        "mb-4 inline-flex items-center gap-2 font-body text-xs font-medium uppercase leading-none tracking-wide",
+        "mb-4 inline-flex items-center gap-2 font-body text-xs font-medium uppercase leading-none tracking-[0.12em]",
         eyebrowTextVariants[variant],
         className,
       )}

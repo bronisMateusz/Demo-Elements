@@ -13,7 +13,9 @@ const DEFAULT_SHOW_AFTER_SCROLL_PX = 320;
 
 /** Prefer showing after the PDP hero leaves view - falls back to a fixed offset. */
 function getShowAfterScrollPx(fallback: number): number {
-  const hero = document.querySelector<HTMLElement>('[aria-label="Prezentacja produktu"]');
+  const hero = document.querySelector<HTMLElement>(
+    '[aria-label="Prezentacja produktu"]',
+  );
   if (!hero) return fallback;
   return Math.max(fallback, hero.offsetTop + hero.offsetHeight - 160);
 }
@@ -99,11 +101,11 @@ export function AskFab({
         aria-label="Szybkie akcje produktu"
       >
         <div className="flex items-center gap-3 border border-neutral-200/80 bg-neutral-0 px-4 py-3 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
-          <div className="hidden size-12 shrink-0 overflow-hidden bg-neutral-100 lg:block">
+          <div className="hidden size-12 shrink-0 overflow-hidden bg-product-stage lg:block">
             <img
               src={image.src}
               alt=""
-              className="h-full w-full object-cover"
+              className="size-full object-cover"
               style={{ objectPosition: productImageObjectPosition(image) }}
               width={48}
               height={48}
@@ -112,10 +114,12 @@ export function AskFab({
           </div>
 
           <div className="hidden min-w-0 flex-1 lg:block">
-            <p className="m-0 truncate font-heading text-[18px] leading-tight text-neutral-900">
+            <p className="m-0 truncate font-heading text-lg leading-tight text-neutral-900">
               {title}
             </p>
-            <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">{price}</p>
+            <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">
+              {price}
+            </p>
           </div>
 
           <div className="flex w-full gap-2 lg:w-auto lg:shrink-0">
@@ -126,17 +130,24 @@ export function AskFab({
               size="lg"
               className={cn(
                 "min-w-0 flex-1 lg:flex-none",
-                isFavorite && "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
+                isFavorite &&
+                  "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
               )}
               ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
               ariaPressed={isFavorite}
               onClick={toggle}
             >
               <i
-                className={isFavorite ? "ph-fill ph-bookmark-simple" : "ph ph-bookmark-simple"}
+                className={
+                  isFavorite
+                    ? "ph-fill ph-bookmark-simple"
+                    : "ph ph-bookmark-simple"
+                }
                 aria-hidden="true"
               />
-              <span className="truncate">{isFavorite ? "W schowku" : "Dodaj do schowka"}</span>
+              <span className="truncate">
+                {isFavorite ? "W schowku" : "Dodaj do schowka"}
+              </span>
             </Button>
 
             <Button

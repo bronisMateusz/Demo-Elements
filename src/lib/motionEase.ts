@@ -24,5 +24,16 @@ export const SPRING_PANEL = {
 
 export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
+/** CSS cubic-bezier twin of `EASE_OUT` (width / layout transitions). */
+export const EASE_OUT_CSS = "cubic-bezier(0.16, 1, 0.3, 1)";
+
 /** Matches `--ease-luxury` - slow settle for overlay fades. */
 export const EASE_LUXURY = [0.25, 0.1, 0.25, 1] as const;
+
+/** Letter / label swaps (cascade, roll) — snappier than layout glides. */
+export const SPRING_SWAP = {
+  type: "spring",
+  stiffness: 500,
+  damping: 35,
+  mass: 0.5,
+} as const;

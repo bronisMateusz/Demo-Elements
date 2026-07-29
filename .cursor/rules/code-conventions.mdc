@@ -31,9 +31,9 @@ Prefer Tailwind defaults when values match 1:1. Only add custom tokens when the 
 - Brand color scales (`neutral-*`, `gold-*`)
 - Fluid typography (`display-xl`, `h1`–`h3` clamps)
 - Brand-only sizes (`text-ui` 15px, `text-h4` 22px)
-- Layout tokens outside the spacing scale (`spacing-gutter`, `spacing-section`, `spacing-header-h`)
 - Brand shadows (`shadow-subtle`, `shadow-1`, `shadow-2`)
 - Brand motion (`ease-luxury`, `duration-fast/base/slow`)
-- Focus ring offsets used across components
+
+**Do not** add `@theme` aliases for leading, tracking, gutter, section padding, max-width rails, header heights, or focus rings - use Tailwind defaults / spacing scale / clamp (`outline-2 outline-offset-2`, `leading-[1.1]`, `px-[clamp(1.25rem,2.222vw,2.5rem)]`, `max-w-384` / `max-w-448`). Shared clamp strings for JS probes live in `src/lib/layoutTokens.ts`.
 
 When removing a custom token, update `@utility` helpers, `tailwind-merge` extensions in `cn.ts`, and all component class names in the same change.

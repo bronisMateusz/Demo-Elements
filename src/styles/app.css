@@ -2,30 +2,58 @@
 
 /* ---------- Elements design tokens → Tailwind theme ---------------- */
 @theme {
-  /* Neutral scale — client Elements palette */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #fafbfc;
-  --color-neutral-100: #faf6f6;
-  --color-neutral-200: #efece9;
-  --color-neutral-300: #d9d7d4;
-  --color-neutral-400: #b4b3b2;
-  --color-neutral-500: #867e7a;
-  --color-neutral-600: #5c4e49;
-  --color-neutral-700: #2f2d2a;
-  --color-neutral-800: #23201d;
-  --color-neutral-900: #1a1815;
+  /* ---------- Elements brand colors (full RGB list → tokens) ---------- */
 
-  /* Gold accent — client Elements palette */
-  --color-gold-50: #e2dccc;
-  --color-gold-100: #dcc4a7;
-  --color-gold-400: #cab792;
-  --color-gold-500: #b39965;
-  --color-gold-600: #925522;
+  /* Neutral scale */
+  --color-black: #000000; /* 0/0/0 */
+  --color-neutral-0: #ffffff; /* 255/255/255 */
+  --color-neutral-50: #fafbfc; /* 250/251/252 */
+  --color-neutral-100: #faf6f6; /* 250/246/246 */
+  --color-neutral-200: #efece9; /* 239/236/233 */
+  --color-neutral-250: #d9d8d9; /* 217/216/217 */
+  --color-neutral-300: #d9d7d4; /* 217/215/212 */
+  --color-neutral-350: #d0d0d0; /* 208/208/208 */
+  --color-neutral-400: #b4b3b2; /* 180/179/178 */
+  --color-neutral-450: #a5a3a1; /* 165/163/161 */
+  --color-neutral-475: #9d9d9c; /* 157/157/156 */
+  --color-neutral-500: #867e7a; /* 134/126/122 */
+  --color-neutral-600: #5c4e49; /* 92/78/73 */
+  --color-neutral-700: #2f2d2a; /* 47/45/42 */
+  --color-neutral-800: #23201d; /* 35/32/29 */
+  --color-neutral-850: #1d1d1b; /* 29/29/27 */
+  --color-neutral-900: #1a1815; /* 26/24/21 */
+  --color-neutral-950: #15140f; /* 21/20/15 */
 
-  /* Product badges — client Elements palette */
-  --color-badge-brand: #293431;
-  --color-promo: #c65438;
-  --color-promo-muted: #faf6f6;
+  /* Warm sand stage behind packshot / product photos (carousels, gallery, thumbs). */
+  --color-product-stage: #f2eee6;
+
+  /* Gold / warm metal */
+  --color-gold-50: #e2dccc; /* 226/220/204 */
+  --color-gold-75: #e1dad1; /* 225/218/209 */
+  --color-gold-100: #dcc4a7; /* 220/196/167 */
+  --color-gold-150: #d5cdc5; /* 213/205/197 */
+  --color-gold-200: #cdc6b7; /* 205/198/183 */
+  --color-gold-250: #ada69c; /* 173/166/156 */
+  --color-gold-300: #bbab9f; /* 187/171/159 */
+  --color-gold-400: #cab792; /* 202/183/146 */
+  --color-gold-450: #a6916a; /* 166/145/106 */
+  --color-gold-500: #b39965; /* 179/153/101 */
+  --color-gold-550: #9a6f58; /* 154/111/88 */
+  --color-gold-600: #925522; /* 146/85/34 */
+
+  /* Brown */
+  --color-brown-600: #60453e; /* 96/69/62 */
+  --color-brown-700: #533d2b; /* 83/61/43 */
+
+  /* Cool slate / brand green-grey */
+  --color-slate-400: #95a4a8; /* 149/164/168 */
+  --color-slate-700: #6c7f80; /* 108/127/128 */
+  --color-slate-800: #293431; /* 41/52/49 */
+  --color-badge-brand: #6c7f80; /* 108/127/128 - alias of slate-700 */
+
+  /* Promo */
+  --color-promo: #c65438; /* 198/84/56 */
+  --color-promo-muted: #faf6f6; /* 250/246/246 - same as neutral-100 */
 
   /* Typography — single family (General Sans); no licensed brand fonts */
   --font-heading:
@@ -42,34 +70,6 @@
   --text-h4: 22px;
   --text-ui: 15px;
 
-  --leading-display: 1;
-  --leading-heading: 1.1;
-  --leading-body: 1.75;
-  --leading-compact: 1.4;
-
-  --tracking-wide: 0.12em;
-
-  /* Layout - outside Tailwind's default spacing scale */
-  --spacing-section-sm: clamp(32px, 5vw, 48px);
-  --spacing-section: clamp(40px, 6vw, 64px);
-  --spacing-gutter: clamp(20px, 2.222vw, 40px);
-  /* Content rail + wide shell - ultrawide balance (bleed peeks past content). */
-  --max-width-content: 96rem;
-  --max-width-wide: 112rem;
-  /* Side drawers - matches OKA `.drw-Drawer_Inner` (95vw / max 500px). */
-  --max-width-drawer: 500px;
-  /* Footer newsletter banner height and half-overlap into fill. */
-  --spacing-footer-newsletter: 280px;
-  --spacing-footer-newsletter-md: 320px;
-  --spacing-footer-newsletter-overlap: 140px;
-  --spacing-footer-newsletter-overlap-md: 160px;
-  /* Main nav bar only - full sticky chrome = utility + bar (see base layer). */
-  --spacing-header-bar-h: 72px;
-  --spacing-header-utility-h: 44px;
-  --spacing-header-h: 116px;
-  /* Sticky/scroll offset - collapses to 0 while the site header is auto-hidden. */
-  --spacing-header-offset: 116px;
-
   /* Shadows — tinted to neutral-900 (#1a1815) */
   --shadow-subtle: 0 1px 3px rgba(26, 24, 21, 0.04);
   --shadow-1: 0 2px 8px rgba(26, 24, 21, 0.06);
@@ -80,11 +80,10 @@
   --transition-duration-fast: 180ms;
   --transition-duration-base: 280ms;
   --transition-duration-slow: 480ms;
-
-  /* Focus */
-  --spacing-focus-ring-width: 2px;
-  --spacing-focus-ring-offset: 3px;
 }
+
+/* Sticky/scroll-mt when site chrome is concealed (no CSS layout vars). */
+@custom-variant header-concealed (&:where(html.site-header-concealed *));
 
 @layer base {
   *,
@@ -94,15 +93,7 @@
   }
 
   html {
-    @apply overflow-x-clip;
-    -webkit-text-size-adjust: 100%;
-
-    /* Utility bar is desktop-only - keep sticky offsets in sync on smaller viewports. */
-    @media (width < 64rem) {
-      --spacing-header-utility-h: 0px;
-      --spacing-header-h: 72px;
-      --spacing-header-offset: 72px;
-    }
+    @apply overflow-x-clip [-webkit-text-size-adjust:100%];
   }
 
   html:focus-within {
@@ -116,8 +107,7 @@
   }
 
   body {
-    @apply m-0 overflow-x-clip bg-neutral-0 font-body text-base leading-body text-neutral-600 antialiased;
-    text-rendering: optimizeLegibility;
+    @apply m-0 overflow-x-clip bg-neutral-0 font-body text-base leading-[1.75] text-neutral-600 antialiased [text-rendering:optimizeLegibility];
   }
 
   img,
@@ -131,11 +121,7 @@
   }
 
   i.ph {
-    @apply inline-grid shrink-0 place-items-center not-italic leading-none;
-  }
-
-  i.ph::before {
-    @apply block leading-none;
+    @apply inline-grid shrink-0 place-items-center not-italic leading-none before:block before:leading-none;
   }
 
   a {
@@ -156,55 +142,56 @@
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-[var(--spacing-focus-ring-offset)] outline-neutral-800;
+    @apply outline-2 outline-offset-2 outline-neutral-800;
   }
 }
 
 @utility container {
   /* OKA lyt-Container: full viewport width + fluid gutters (~40px desktop) */
-  @apply mx-auto w-full max-w-none px-gutter;
+  @apply mx-auto w-full max-w-none px-[clamp(1.25rem,2.222vw,2.5rem)];
 }
 
 @utility t-display {
-  @apply font-heading text-display-xl leading-display tracking-tight text-neutral-900 font-medium;
+  @apply font-heading text-display-xl leading-none tracking-tight text-neutral-900 font-medium;
 }
 
 @utility t-h1 {
-  @apply font-heading text-h1 leading-heading tracking-tight text-neutral-900 font-medium;
+  @apply font-heading text-h1 leading-[1.1] tracking-tight text-neutral-900 font-medium;
 }
 
 @utility t-h2 {
-  @apply font-heading text-h2 leading-heading tracking-tight text-neutral-900 font-medium;
+  @apply font-heading text-h2 leading-[1.1] tracking-tight text-neutral-900 font-medium;
 }
 
 @utility t-h3 {
-  @apply font-heading text-h3 leading-heading text-neutral-900 font-medium;
+  @apply font-heading text-h3 leading-[1.1] text-neutral-900 font-medium;
 }
 
 @utility t-h4 {
-  @apply font-heading text-h4 leading-compact text-neutral-900 font-normal;
+  @apply font-heading text-h4 leading-[1.4] text-neutral-900 font-normal;
 }
 
 @utility t-body {
-  @apply font-body text-base leading-body text-neutral-600;
+  @apply font-body text-base leading-[1.75] text-neutral-600;
 }
 
 @utility t-body-lg {
-  @apply font-body text-lg leading-body text-neutral-600;
+  @apply font-body text-lg leading-[1.75] text-neutral-600;
 }
 
 @utility t-ui {
-  @apply font-body text-ui leading-compact;
+  @apply font-body text-ui leading-[1.4];
 }
 
 @utility t-small {
-  @apply font-body text-sm leading-compact;
+  @apply font-body text-sm leading-[1.4];
 }
 
 @utility visually-hidden {
   @apply sr-only;
 }
 
+/* Near-zero duration (not animation:none) so animationend still fires where listeners expect it. */
 html.elements-pause-motion *,
 html.elements-pause-motion *::before,
 html.elements-pause-motion *::after {
@@ -214,13 +201,15 @@ html.elements-pause-motion *::after {
 }
 
 /* Lock scroll on the root only - adding overflow:hidden to <body> would make it
-   a scroll container and break the sticky header (it would jump by scroll offset). */
+   a scroll container and break the sticky header (it would jump by scroll offset).
+   padding-inline-end (set in lock helpers via --scrollbar-compensation) cancels the
+   width jump when the scrollbar disappears. */
 html.has-drawer-open,
 html.has-lightbox-open {
   @apply overflow-hidden;
 }
 
-/* During the lightbox fly-back, lift the header above the overlay (z-[400]) so
+/* During the lightbox fly-back, lift the header above the overlay (z-400) so
    the shrinking image tucks under it instead of covering it. */
 html.lightbox-closing #siteHeader,
 html.lightbox-closing #siteHeaderUtility,
@@ -228,46 +217,49 @@ html.lightbox-closing #siteHeaderBar {
   @apply z-420;
 }
 
-/* Sticky content offsets collapse while site chrome is off-screen. */
-html.site-header-concealed {
-  --spacing-header-offset: 0px;
-}
-
-/* Menu layers share timing; delays create level-by-level reveal / conceal. */
+/* Menu layers share timing; delays create level-by-level reveal / conceal.
+   Position shifts use CSS `translate` (not `top`) - sticky `top` does not interpolate smoothly. */
 .site-header-layer {
-  transition:
-    transform var(--transition-duration-base) var(--ease-luxury),
-    border-color var(--transition-duration-base) var(--ease-luxury),
-    background-color var(--transition-duration-base) var(--ease-luxury);
+  @apply transition-[translate,border-color,background-color] duration-base ease-luxury;
 }
 
 #siteHeaderUtility {
-  transition: transform var(--transition-duration-base) var(--ease-luxury);
+  @apply transition-[translate] duration-base ease-luxury;
 }
 
-/* Reveal (scroll up): utility first, then bar + section menu together (no overlap). */
-html:not(.site-header-concealed) #siteHeaderUtility {
-  transition-delay: 0ms;
-}
-html:not(.site-header-concealed) #siteHeaderBar {
-  transition-delay: 100ms;
-}
-html:not(.site-header-concealed) #pdpSubnav {
-  transition-delay: 100ms;
+#siteHeaderBar {
+  @apply transition-[translate,border-color,background-color] duration-base ease-luxury;
 }
 
-/* Conceal (scroll down): all chrome layers move together - avoids gaps between levels. */
+#pdpSubnav {
+  @apply transition-[translate,border-color,background-color,top] duration-base ease-luxury;
+}
+
+/* Reveal (scroll up): utility returns with the stack. */
+html:not(.site-header-concealed) #siteHeaderUtility,
+html:not(.site-header-concealed) #siteHeaderBar,
+html:not(.site-header-concealed) #pdpSubnav.is-stuck {
+  @apply delay-0;
+}
+
+/* Conceal (scroll down): whole sticky stack slides up by utility height.
+   Utility leaves the viewport; bar/subnav keep sticky `top` and move via translate.
+   Only on lg+ - utility is `hidden` below lg, so translating would hide the main bar.
+   Only translate the PDP subnav while it is actually stuck - otherwise scroll-up
+   reveal of the utility strip would nudge the in-flow subnav. */
 html.site-header-concealed #siteHeaderUtility,
-html.site-header-concealed #siteHeaderBar,
-html.site-header-concealed #pdpSubnav {
-  transform: translateY(calc(-1 * var(--spacing-header-h)));
-  transition-delay: 0ms;
+html.site-header-concealed #siteHeaderBar {
+  @apply lg:-translate-y-11 delay-0;
+}
+
+html.site-header-concealed #pdpSubnav.is-stuck {
+  @apply lg:-translate-y-11 delay-0;
 }
 
 html.elements-pause-motion .site-header-layer,
 html.elements-pause-motion #pdpSubnav,
 html.elements-pause-motion #siteHeaderUtility {
-  transition: none !important;
+  @apply transition-none!;
 }
 
 html.elements-pause-motion .motion-fill-surface::before {
@@ -294,7 +286,7 @@ html.elements-pause-motion .motion-fill-chevron {
 }
 
 .liquid-cta-blob {
-  animation: liquid-cta-drift 18s var(--ease-luxury) infinite;
+  @apply animate-[liquid-cta-drift_18s_var(--ease-luxury)_infinite];
 }
 
 @keyframes liquid-cta-swirl {
@@ -309,13 +301,27 @@ html.elements-pause-motion .motion-fill-chevron {
 }
 
 .liquid-cta-blob-swirl {
-  animation: liquid-cta-swirl 22s var(--ease-luxury) infinite;
+  @apply animate-[liquid-cta-swirl_22s_var(--ease-luxury)_infinite];
 }
 
 html.elements-pause-motion .liquid-cta-blob {
-  animation: none;
+  @apply animate-none;
 }
 
 html.elements-pause-motion .liquid-cta-blob-swirl {
-  animation: none;
+  @apply animate-none;
+}
+
+@keyframes home-hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+html.elements-pause-motion .home-hero-progress {
+  @apply animate-none scale-x-100;
 }

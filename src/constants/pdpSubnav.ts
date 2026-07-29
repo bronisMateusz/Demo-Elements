@@ -7,7 +7,8 @@ export type PdpSubnavItem = {
 export const PDP_HEADER_HEIGHT_PX = 116;
 export const PDP_HEADER_BAR_HEIGHT_PX = 72;
 export const PDP_SUBNAV_HEIGHT_PX = 58;
-export const PDP_SUBNAV_SCROLL_OFFSET_PX = PDP_HEADER_HEIGHT_PX + PDP_SUBNAV_HEIGHT_PX + 8;
+export const PDP_SUBNAV_SCROLL_OFFSET_PX =
+  PDP_HEADER_HEIGHT_PX + PDP_SUBNAV_HEIGHT_PX + 8;
 
 export function buildPdpSubnavItems(): PdpSubnavItem[] {
   return [
@@ -21,4 +22,4 @@ export function buildPdpSubnavItems(): PdpSubnavItem[] {
 }
 
 export const pdpSectionScrollMarginClassName =
-  "scroll-mt-[calc(var(--spacing-header-offset)+58px+8px)]";
+  "scroll-mt-34.5 lg:scroll-mt-45.5 header-concealed:lg:scroll-mt-34.5";

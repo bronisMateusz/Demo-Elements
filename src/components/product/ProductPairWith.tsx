@@ -14,18 +14,26 @@ export function ProductPairWith({ title, products }: ProductPairWithProps) {
   if (products.length === 0) return null;
 
   return (
-    <section aria-labelledby="pair-with-title" className="relative overflow-x-clip">
+    <section
+      aria-labelledby="pair-with-title"
+      className="relative overflow-x-clip"
+    >
       <BrandMotif
         name="dots-grid"
-        className="absolute top-0 right-[max(0px,calc((100%-var(--max-width-content))/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+        className={cn(
+          "pointer-events-none absolute top-0 hidden h-52 w-12 opacity-30",
+          "inset-s-[max(0px,calc((100%-96rem)/2-3rem))] min-[110rem]:block",
+        )}
       />
 
-      <div className={cn(productCarouselBleedWrapperClassName, "relative z-10")}>
+      <div
+        className={cn(productCarouselBleedWrapperClassName, "relative z-10")}
+      >
         <ProductCarousel
           products={products}
           labelledBy="pair-with-title"
           layout="bleed"
-          navPlacement="header"
+          navPlacement="footer"
           header={{ title, titleId: "pair-with-title" }}
         />
       </div>

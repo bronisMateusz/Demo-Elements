@@ -30,7 +30,10 @@ export function SectionHeader({
       )}
     >
       {eyebrow ? (
-        <Eyebrow variant={eyebrowVariant} className={align === "center" ? "justify-center" : undefined}>
+        <Eyebrow
+          variant={eyebrowVariant}
+          className={align === "center" ? "justify-center" : undefined}
+        >
           {eyebrow}
         </Eyebrow>
       ) : null}
@@ -38,7 +41,7 @@ export function SectionHeader({
         id={titleId}
         revealUnit="word"
         className={cn("max-w-none", align === "center" && "mx-auto")}
-        typographyClassName="font-heading text-h2 leading-heading tracking-tight font-medium"
+        typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
         mutedClassName="text-neutral-900/20"
         fillClassName="text-neutral-900"
       >

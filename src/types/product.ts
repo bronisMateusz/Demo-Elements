@@ -1,6 +1,6 @@
 export type ProductBadge = {
   label: string;
-  variant?: "default" | "gold" | "brand" | "outline" | "promo";
+  variant?: "default" | "gold" | "brand" | "outline" | "promo" | "neutral";
 };
 
 export type ProductImageFocalPoint = {

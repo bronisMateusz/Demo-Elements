@@ -1,10 +1,23 @@
-import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+} from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
-import { productImageFitClassName, productImageObjectPosition } from "../../lib/productImageStyle";
-import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
+import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
+import {
+  productImageFitClassName,
+  productImageObjectPosition,
+} from "../../lib/productImageStyle";
+import {
+  liftHeaderAboveLightbox,
+  lockLightboxScroll,
+} from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
 import { IconButton } from "../ui/IconButton";
 import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
@@ -23,10 +36,20 @@ type GalleryThumbnailRailProps = {
   onSelect: (index: number) => void;
 };
 
-function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnailRailProps) {
+function GalleryThumbnailRail({
+  images,
+  activeIndex,
+  onSelect,
+}: GalleryThumbnailRailProps) {
   return (
-    <div className="hidden h-full w-14 shrink-0 flex-col xl:flex" aria-label="Miniatury galerii">
-      <div className="mx-auto min-h-4 w-px flex-1 bg-neutral-200" aria-hidden="true" />
+    <div
+      className="hidden h-full w-14 shrink-0 flex-col xl:flex"
+      aria-label="Miniatury galerii"
+    >
+      <div
+        className="mx-auto min-h-4 w-px flex-1 bg-neutral-200"
+        aria-hidden="true"
+      />
 
       <div className="flex flex-col justify-end gap-2">
         {images.map((image, index) => {
@@ -37,7 +60,7 @@ function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnai
               key={image.src}
               type="button"
               className={cn(
-                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-neutral-50 transition-[opacity,border-color] duration-base ease-out",
+                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-product-stage transition-[opacity,border-color] duration-base ease-out",
                 isActive
                   ? "border-neutral-900 opacity-100"
                   : "border-neutral-200 opacity-55 hover:opacity-100",
@@ -49,7 +72,7 @@ function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnai
               <img
                 src={image.src}
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 size-full object-cover"
                 style={{ objectPosition: productImageObjectPosition(image) }}
                 loading="lazy"
                 draggable={false}
@@ -80,9 +103,9 @@ function GalleryPagination({
   if (count <= 1) return null;
 
   return (
-    <div className="pointer-events-none absolute bottom-4 left-4 z-[2] xl:hidden">
+    <div className="pointer-events-none absolute bottom-4 inset-s-4 z-2 xl:hidden">
       <p
-        className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-wide text-neutral-800 shadow-subtle"
+        className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
         aria-live="polite"
       >
         {activeIndex + 1}
@@ -106,7 +129,7 @@ function GalleryControls({
     <>
       <GalleryPagination activeIndex={activeIndex} count={count} />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-[2] flex justify-end px-4">
+      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex justify-end px-4">
         <div className="pointer-events-auto flex gap-1">
           {/* Zoom is redundant on mobile - tap the image opens the lightbox. */}
           <IconButton
@@ -120,14 +143,20 @@ function GalleryControls({
             label="Poprzednie zdjęcie"
             iconClass="ph ph-caret-left"
             variant="elevated"
-            className={cn("shadow-subtle", atStart && "pointer-events-none opacity-35")}
+            className={cn(
+              "shadow-subtle",
+              atStart && "pointer-events-none opacity-35",
+            )}
             onClick={atStart ? undefined : onPrev}
           />
           <IconButton
             label="Następne zdjęcie"
             iconClass="ph ph-caret-right"
             variant="elevated"
-            className={cn("shadow-subtle", atEnd && "pointer-events-none opacity-35")}
+            className={cn(
+              "shadow-subtle",
+              atEnd && "pointer-events-none opacity-35",
+            )}
             onClick={atEnd ? undefined : onNext}
           />
         </div>
@@ -153,19 +182,26 @@ function GallerySlideContent({
 }) {
   const handleOpen = (event: MouseEvent<HTMLButtonElement>) => {
     const img = event.currentTarget.querySelector("img");
-    const rect = img?.getBoundingClientRect() ?? event.currentTarget.getBoundingClientRect();
+    const rect =
+      img?.getBoundingClientRect() ??
+      event.currentTarget.getBoundingClientRect();
+    const aspectRatio =
+      img && img.naturalWidth > 0 && img.naturalHeight > 0
+        ? img.naturalWidth / img.naturalHeight
+        : undefined;
     onOpen({
       rect,
       objectPosition: productImageObjectPosition(image),
+      aspectRatio,
     });
   };
 
   return (
-    <figure className="m-0 h-full w-full">
+    <figure className="m-0 size-full">
       <button
         type="button"
         className={cn(
-          "relative w-full cursor-crosshair overflow-hidden bg-neutral-50",
+          "relative w-full cursor-crosshair overflow-hidden bg-product-stage",
           fillViewport
             ? cn(
                 // Stack (mobile/tablet): capped height so the gallery does not dominate the viewport.
@@ -173,7 +209,7 @@ function GallerySlideContent({
                 "md:h-[min(52svh,32rem)]",
                 "lg:aspect-auto lg:h-full lg:min-h-0",
               )
-            : "block aspect-[4/5] lg:aspect-[3/4] lg:max-h-[min(36rem,70svh)]",
+            : "block aspect-4/5 lg:aspect-3/4 lg:max-h-[min(36rem,70svh)]",
         )}
         onClick={handleOpen}
         aria-label={`Powiększ zdjęcie ${index + 1}`}
@@ -183,7 +219,7 @@ function GallerySlideContent({
           src={image.src}
           alt={image.alt}
           className={cn(
-            "h-full w-full",
+            "size-full",
             productImageFitClassName(image),
             isHidden && "opacity-0",
           )}
@@ -196,11 +232,15 @@ function GallerySlideContent({
   );
 }
 
-export function ProductGallery({ images, layout = "default" }: ProductGalleryProps) {
+export function ProductGallery({
+  images,
+  layout = "default",
+}: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxOrigin, setLightboxOrigin] = useState<LightboxOpenOrigin | null>(null);
+  const [lightboxOrigin, setLightboxOrigin] =
+    useState<LightboxOpenOrigin | null>(null);
   const [lightboxClosing, setLightboxClosing] = useState(false);
 
   const swiperRef = useRef<SwiperInstance | null>(null);
@@ -209,13 +249,16 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   const isMulti = images.length > 1;
   const fillViewport = layout === "viewport";
 
-  const registerSlideImage = useCallback((index: number, node: HTMLImageElement | null) => {
-    if (node) {
-      slideImageRefs.current.set(index, node);
-      return;
-    }
-    slideImageRefs.current.delete(index);
-  }, []);
+  const registerSlideImage = useCallback(
+    (index: number, node: HTMLImageElement | null) => {
+      if (node) {
+        slideImageRefs.current.set(index, node);
+        return;
+      }
+      slideImageRefs.current.delete(index);
+    },
+    [],
+  );
 
   const getSlideRect = useCallback((index: number) => {
     return slideImageRefs.current.get(index)?.getBoundingClientRect() ?? null;
@@ -224,6 +267,18 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   useEffect(() => {
     lockLightboxScroll(lightboxOpen);
     return () => lockLightboxScroll(false);
+  }, [lightboxOpen]);
+
+  // Imperatively disable the stage Keyboard module - the `enabled` prop alone can lag
+  // behind open state and steal arrow keys from the lightbox.
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    if (!swiper?.keyboard) return;
+    if (lightboxOpen) {
+      swiper.keyboard.disable();
+      return;
+    }
+    swiper.keyboard.enable();
   }, [lightboxOpen]);
 
   useEffect(() => {
@@ -236,6 +291,37 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     setLightboxClosing(false);
     liftHeaderAboveLightbox(false);
     setLightboxOpen(true);
+  };
+
+  /** Lock scroll first, then remeasure - keeps FLIP origin aligned with the locked viewport. */
+  const openLightboxMeasured = (index: number, origin: LightboxOpenOrigin) => {
+    lockLightboxScroll(true);
+    const img = slideImageRefs.current.get(index);
+
+    const open = () => {
+      requestAnimationFrame(() => {
+        const node = slideImageRefs.current.get(index);
+        const rect = node?.getBoundingClientRect() ?? origin.rect;
+        const aspectRatio =
+          node && node.naturalWidth > 0 && node.naturalHeight > 0
+            ? node.naturalWidth / node.naturalHeight
+            : (origin.aspectRatio ??
+              (images[index]
+                ? (peekImageAspectRatio(images[index].src) ?? undefined)
+                : undefined));
+        openLightbox(index, {
+          ...origin,
+          rect,
+          aspectRatio,
+        });
+      });
+    };
+
+    if (img?.decode) {
+      void img.decode().then(open).catch(open);
+      return;
+    }
+    open();
   };
 
   // While the fly-back plays, lift the sticky site header above the lightbox so
@@ -263,10 +349,16 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   const openZoom = () => {
     const image = images[activeIndex];
     if (!image) return;
-    const rect = getSlideRect(activeIndex) ?? new DOMRect(0, 0, 0, 0);
-    openLightbox(activeIndex, {
+    const img = slideImageRefs.current.get(activeIndex);
+    const rect = img?.getBoundingClientRect() ?? new DOMRect(0, 0, 0, 0);
+    const aspectRatio =
+      img && img.naturalWidth > 0 && img.naturalHeight > 0
+        ? img.naturalWidth / img.naturalHeight
+        : undefined;
+    openLightboxMeasured(activeIndex, {
       rect,
       objectPosition: productImageObjectPosition(image),
+      aspectRatio,
     });
   };
 
@@ -294,7 +386,8 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
       <div
         className={cn(
           "min-w-0",
-          fillViewport && "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
+          fillViewport &&
+            "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
         )}
       >
         <div
@@ -304,7 +397,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
           <GallerySlideContent
             image={image}
             index={0}
-            onOpen={(origin) => openLightbox(0, origin)}
+            onOpen={(origin) => openLightboxMeasured(0, origin)}
             registerImage={registerSlideImage}
             isHidden={lightboxClosing && lightboxIndex === 0}
             fillViewport={fillViewport}
@@ -330,7 +423,8 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     <div
       className={cn(
         "min-w-0",
-        fillViewport && "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
+        fillViewport &&
+          "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
       )}
     >
       <div
@@ -364,7 +458,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
                     "lg:h-full lg:min-h-0 lg:flex-1",
                     "lg:[&_.swiper-slide]:flex lg:[&_.swiper-slide]:h-full lg:[&_.swiper-slide]:items-center",
                   )
-                : "max-h-[calc(100svh-var(--spacing-header-h)-48px)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
+                : "max-h-[calc(100svh-4.5rem-3rem)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
             )}
             direction="horizontal"
             slidesPerView={1}
@@ -395,7 +489,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
                 <GallerySlideContent
                   image={image}
                   index={index}
-                  onOpen={(origin) => openLightbox(index, origin)}
+                  onOpen={(origin) => openLightboxMeasured(index, origin)}
                   registerImage={registerSlideImage}
                   isHidden={lightboxClosing && lightboxIndex === index}
                   fillViewport={fillViewport}
@@ -406,7 +500,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
 
           {/* Cover GPU/subpixel hairline on the stage’s right edge (not the next slide). */}
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-px bg-neutral-50"
+            className="pointer-events-none absolute inset-y-0 inset-e-0 z-1 w-px bg-neutral-50"
             aria-hidden
           />
 

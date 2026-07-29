@@ -2,11 +2,7 @@ import { assetUrl } from "../../app/assets";
 import { cn } from "../../lib/cn";
 
 export type BrandMotifName =
-  | "arc-dark"
-  | "arc-light"
-  | "circle-beige"
-  | "bar-gold"
-  | "dots-grid";
+  "arc-dark" | "arc-light" | "circle-beige" | "bar-gold" | "dots-grid";
 
 type BrandMotifProps = {
   name: BrandMotifName;

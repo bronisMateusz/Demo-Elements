@@ -52,10 +52,23 @@ export function computeLightboxTargetRect(
   };
 }
 
+/** Sync aspect when the browser already has the image decoded (typical on open). */
+export function peekImageAspectRatio(src: string): number | null {
+  const img = new Image();
+  img.src = src;
+  if (img.complete && img.naturalWidth > 0 && img.naturalHeight > 0) {
+    return img.naturalWidth / img.naturalHeight;
+  }
+  return null;
+}
+
 export function resolveImageAspectRatio(
   src: string,
   fallbackAspect: number,
 ): Promise<number> {
+  const peeked = peekImageAspectRatio(src);
+  if (peeked !== null) return Promise.resolve(peeked);
+
   return new Promise((resolve) => {
     const img = new Image();
     img.onload = () => {

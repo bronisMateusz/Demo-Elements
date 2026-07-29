@@ -26,7 +26,8 @@ export function ProductBadges({
   className,
 }: ProductBadgesProps) {
   const hasPromoBadge = badges.some(
-    (badge) => badge.variant === "promo" || badge.label.toLowerCase() === "promocja",
+    (badge) =>
+      badge.variant === "promo" || badge.label.toLowerCase() === "promocja",
   );
   const displayBadges =
     isPromoPrice(price) && !hasPromoBadge ? [PROMO_BADGE, ...badges] : badges;
@@ -35,14 +36,19 @@ export function ProductBadges({
     (brand ? `#marka-${brand.toLowerCase().replace(/\s+/g, "-")}` : undefined);
 
   return (
-    <div className={cn("mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 lg:mb-4", className)}>
+    <div
+      className={cn(
+        "mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 lg:mb-4",
+        className,
+      )}
+    >
       {brand && href ? (
         <a
           href={href}
           className={cn(
-            "m-0 font-body text-xs uppercase tracking-wide text-neutral-600 no-underline",
+            "m-0 font-body text-xs uppercase tracking-[0.12em] text-neutral-600 no-underline",
             "transition-colors duration-fast ease-out hover:text-neutral-900",
-            "focus-visible:outline-2 focus-visible:outline-offset-[var(--spacing-focus-ring-offset)] focus-visible:outline-neutral-800",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
           )}
         >
           {brand}
@@ -84,7 +90,7 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
             <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
               <p
                 className={cn(
-                  "font-heading text-[clamp(36px,3.6vw,48px)] leading-none tracking-tight",
+                  "font-heading text-[clamp(2.25rem,3.6vw,3rem)] leading-none tracking-tight",
                   price.discount ? "text-promo" : "text-neutral-900",
                 )}
               >
@@ -109,7 +115,9 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
                 ) : null}
                 {price.lowestPrice30Days ? (
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                    <dt className="text-neutral-500">Najniższa cena z 30 dni przed obniżką</dt>
+                    <dt className="text-neutral-500">
+                      Najniższa cena z 30 dni przed obniżką
+                    </dt>
                     <dd className="m-0 tabular-nums font-medium text-neutral-800">
                       {price.lowestPrice30Days}
                     </dd>

@@ -31,12 +31,12 @@ Obsługuje webhook Agentation z `event: "submit"` i payloadem `{ output, annotat
 
 ## Włączanie Agentation
 
-| Warunek | Efekt |
-|---------|--------|
-| `VITE_AGENTATION_ENABLED=true` (Preview) | bundel Agentation w buildzie |
-| `VITE_DEPLOY_TARGET=team` | `PageShell` ładuje skrypt zawsze |
-| Host `*.vercel.app` | toolbar aktywny na preview |
-| `?review=1` lub `?agentation=1` | wymuszenie na localhost |
+| Warunek                                  | Efekt                            |
+| ---------------------------------------- | -------------------------------- |
+| `VITE_AGENTATION_ENABLED=true` (Preview) | bundel Agentation w buildzie     |
+| `VITE_DEPLOY_TARGET=team`                | `PageShell` ładuje skrypt zawsze |
+| Host `*.vercel.app`                      | toolbar aktywny na preview       |
+| `?review=1` lub `?agentation=1`          | wymuszenie na localhost          |
 
 Na **Production** (`client`) Agentation jest wyłączone.
 
@@ -46,11 +46,11 @@ Na **Production** (`client`) Agentation jest wyłączone.
 
 Domyślny tryb **minimal** (skonfigurowany w `assets/agentation-entry.jsx`):
 
-| Widoczne | Ukryte |
-|----------|--------|
-| **Send** - wysyłka do GitHub | Pause animacji |
-| **Clear** - wyczyść pinezki | Layout mode |
-| **Exit** - zamknij toolbar | Show/hide markers, Copy, Settings |
+| Widoczne                     | Ukryte                            |
+| ---------------------------- | --------------------------------- |
+| **Send** - wysyłka do GitHub | Pause animacji                    |
+| **Clear** - wyczyść pinezki  | Layout mode                       |
+| **Exit** - zamknij toolbar   | Show/hide markers, Copy, Settings |
 
 - Pozycja: **lewy dolny róg** (nie zasłania Zasobników po prawej)
 - Po sukcesie: zielony toast „Wysłano do GitHub: issue #N”
@@ -95,10 +95,10 @@ git add assets/agentation-bundle.js assets/agentation-entry.jsx
 
 ### Zmienne Vercel
 
-| Zmienna | Scope |
-|---------|-------|
-| `GITHUB_TOKEN` | Production and Preview |
-| `GITHUB_REPO` | `owner/repo` |
+| Zmienna           | Scope                                            |
+| ----------------- | ------------------------------------------------ |
+| `GITHUB_TOKEN`    | Production and Preview                           |
+| `GITHUB_REPO`     | `owner/repo`                                     |
 | `ALLOWED_ORIGINS` | URL preview + localhost (**bez** trailing slash) |
 
 Po dodaniu/zmianie tokena: **Redeploy** preview.

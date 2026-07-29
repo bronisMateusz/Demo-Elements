@@ -161,7 +161,8 @@ export function MorphPopoverTrigger({ children }: MorphPopoverTriggerProps) {
   if (!isValidElement(children)) return children;
 
   const child = children as ReactElement<Record<string, unknown>>;
-  const childOnClick = child.props.onClick as ((event: unknown) => void) | undefined;
+  const childOnClick = child.props.onClick as
+    ((event: unknown) => void) | undefined;
 
   return cloneElement(child, {
     id: ctx.triggerId,
@@ -170,12 +171,14 @@ export function MorphPopoverTrigger({ children }: MorphPopoverTriggerProps) {
       if (ctx.triggerMode === "click") ctx.toggle();
     },
     onFocus: (event: unknown) => {
-      const childOnFocus = child.props.onFocus as ((e: unknown) => void) | undefined;
+      const childOnFocus = child.props.onFocus as
+        ((e: unknown) => void) | undefined;
       childOnFocus?.(event);
       if (ctx.triggerMode === "hover") ctx.setOpen(true);
     },
     onBlur: (event: unknown) => {
-      const childOnBlur = child.props.onBlur as ((e: unknown) => void) | undefined;
+      const childOnBlur = child.props.onBlur as
+        ((e: unknown) => void) | undefined;
       childOnBlur?.(event);
       if (ctx.triggerMode === "hover") ctx.setOpen(false);
     },
@@ -222,10 +225,12 @@ export function MorphPopoverContent({
 
   const posClass = cn(
     side === "bottom" ? "top-full" : "bottom-full",
-    align === "end" ? "right-0" : "left-0",
+    align === "end" ? "inset-e-0" : "inset-s-0",
   );
   const marginStyle =
-    side === "bottom" ? { marginTop: sideOffset } : { marginBottom: sideOffset };
+    side === "bottom"
+      ? { marginTop: sideOffset }
+      : { marginBottom: sideOffset };
 
   const wrap = reduce
     ? undefined
@@ -256,7 +261,7 @@ export function MorphPopoverContent({
           transition={reduce ? { duration: 0.12 } : undefined}
           style={{ transformOrigin: originFor(side, align), ...marginStyle }}
           className={cn(
-            "absolute z-30 [filter:drop-shadow(0_8px_24px_rgba(26,24,21,0.18))]",
+            "absolute z-30 filter-[drop-shadow(0_0.5rem_1.5rem_rgba(26,24,21,0.18))]",
             posClass,
           )}
         >

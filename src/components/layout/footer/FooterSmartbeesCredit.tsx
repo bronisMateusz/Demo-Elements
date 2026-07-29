@@ -5,9 +5,16 @@ type FooterSmartbeesCreditProps = {
   className?: string;
 };
 
-export function FooterSmartbeesCredit({ className }: FooterSmartbeesCreditProps) {
+export function FooterSmartbeesCredit({
+  className,
+}: FooterSmartbeesCreditProps) {
   return (
-    <p className={cn("inline-flex items-baseline gap-1 text-sm leading-none text-neutral-500", className)}>
+    <p
+      className={cn(
+        "inline-flex items-baseline gap-1 text-sm leading-none text-neutral-500",
+        className,
+      )}
+    >
       <LoopingWord words={["Projekt", "Realizacja"]} align="end" />
       <a
         href="https://smartbees.pl"

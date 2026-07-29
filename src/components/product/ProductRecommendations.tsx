@@ -8,20 +8,30 @@ type ProductRecommendationsProps = {
   similarProducts: RelatedProduct[];
 };
 
-export function ProductRecommendations({ similarProducts }: ProductRecommendationsProps) {
+export function ProductRecommendations({
+  similarProducts,
+}: ProductRecommendationsProps) {
   return (
-    <section aria-labelledby="similar-title" className="relative overflow-x-clip">
+    <section
+      aria-labelledby="similar-title"
+      className="relative overflow-x-clip"
+    >
       <BrandMotif
         name="dots-grid"
-        className="absolute top-0 right-[max(0px,calc((100%-var(--max-width-content))/2))] h-40 w-10 opacity-30 max-md:hidden md:h-52 md:w-12"
+        className={cn(
+          "pointer-events-none absolute top-0 hidden h-52 w-12 opacity-30",
+          "inset-s-[max(0px,calc((100%-96rem)/2-3rem))] min-[110rem]:block",
+        )}
       />
 
-      <div className={cn(productCarouselBleedWrapperClassName, "relative z-10")}>
+      <div
+        className={cn(productCarouselBleedWrapperClassName, "relative z-10")}
+      >
         <ProductCarousel
           products={similarProducts}
           labelledBy="similar-title"
           layout="bleed"
-          navPlacement="header"
+          navPlacement="footer"
           header={{ title: "Produkty podobne", titleId: "similar-title" }}
         />
       </div>

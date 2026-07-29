@@ -3,14 +3,15 @@ import { cn } from "../../lib/cn";
 
 export const containerClassName = "container";
 
-/** Content rail - text/list sections on ultrawide (`--max-width-content`). */
-export const containerContentClassName = "max-w-content";
+/** Content rail - text/list sections on ultrawide. */
+export const containerContentClassName = "max-w-384";
 
-/** Wide shell - hero / large CTAs (`--max-width-wide`). */
-export const containerWideClassName = "max-w-wide";
+/** Wide shell - hero / large CTAs. */
+export const containerWideClassName = "max-w-448";
 
 /** Shared box model without `container`'s `max-w-none` (avoids fighting size caps). */
-const containerRailClassName = "mx-auto w-full px-gutter";
+const containerRailClassName =
+  "mx-auto w-full px-[clamp(1.25rem,2.222vw,2.5rem)]";
 
 type ContainerSize = "full" | "content" | "wide";
 

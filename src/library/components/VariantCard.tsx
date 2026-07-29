@@ -33,14 +33,20 @@ export function VariantCard({
   const headingId = useId();
 
   return (
-    <article className={libVariantClassName} data-lib-variant aria-labelledby={headingId}>
+    <article
+      className={libVariantClassName}
+      data-lib-variant
+      aria-labelledby={headingId}
+    >
       <header className={libVariantHeaderClassName}>
         <h3 className={libVariantLabelClassName} id={headingId}>
           {label}
         </h3>
         <p className={libVariantDescClassName}>{description}</p>
       </header>
-      <div className={libVariantPreviewClassName({ hasDevPanel: devMode })}>{children}</div>
+      <div className={libVariantPreviewClassName({ hasDevPanel: devMode })}>
+        {children}
+      </div>
       {devMode ? (
         <DevPanel
           optionalProps={optionalProps}

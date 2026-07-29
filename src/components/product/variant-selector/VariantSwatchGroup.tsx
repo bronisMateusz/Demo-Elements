@@ -1,7 +1,12 @@
 import type { VariantAxisGroupProps } from "./types";
 import { VariantSwatch } from "./VariantSwatch";
 
-export function VariantSwatchGroup({ options, selectedId, axisLabel, onSelect }: VariantAxisGroupProps) {
+export function VariantSwatchGroup({
+  options,
+  selectedId,
+  axisLabel,
+  onSelect,
+}: VariantAxisGroupProps) {
   return (
     <div className="flex flex-wrap gap-2" role="group" aria-label={axisLabel}>
       {options.map((option) => (

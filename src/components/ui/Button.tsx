@@ -1,7 +1,12 @@
 import { type ReactNode } from "react";
-import { buttonClassName, type ButtonSize, type ButtonVariant } from "./buttonClassName";
+import {
+  buttonClassName,
+  type ButtonSize,
+  type ButtonTone,
+  type ButtonVariant,
+} from "./buttonClassName";
 
-export type { ButtonSize, ButtonVariant };
+export type { ButtonSize, ButtonTone, ButtonVariant };
 
 interface LinkButtonProps {
   as?: "link";
@@ -9,6 +14,7 @@ interface LinkButtonProps {
   children: ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
+  tone?: ButtonTone;
   full?: boolean;
   target?: "_blank" | "_self";
   rel?: string;
@@ -23,6 +29,7 @@ interface ActionButtonProps {
   children: ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
+  tone?: ButtonTone;
   full?: boolean;
   className?: string;
   ariaLabel?: string;
@@ -35,8 +42,15 @@ export type ButtonProps = LinkButtonProps | ActionButtonProps;
 export function Button(props: ButtonProps) {
   const variant = props.variant ?? "primary";
   const size = props.size ?? "md";
+  const tone = props.tone ?? "default";
   const full = props.full ?? false;
-  const classes = buttonClassName({ variant, size, full, className: props.className });
+  const classes = buttonClassName({
+    variant,
+    size,
+    tone,
+    full,
+    className: props.className,
+  });
 
   if (props.as === "button") {
     return (
