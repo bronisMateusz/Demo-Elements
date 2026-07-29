@@ -137,18 +137,20 @@ function product(
     pricePrevious?: string;
     badge?: RelatedProduct["badge"];
     image: RelatedProduct["image"];
-    href?: string;
+    images?: RelatedProduct["images"];
   },
 ): RelatedProduct {
   return {
     id,
     brand,
     title,
-    href: options.href ?? "/produkt",
+    // Demo: every product card points at the showcase PDP for now.
+    href: "/produkt",
     price: options.price,
     pricePrevious: options.pricePrevious,
     badge: options.badge,
     image: options.image,
+    images: options.images,
   };
 }
 
@@ -161,23 +163,34 @@ type HomeProductCatalogItem = {
   title: string;
   price: string;
   pricePrevious?: string;
-  href?: string;
   image: RelatedProduct["image"];
+  images?: RelatedProduct["images"];
 };
 
 /** Shared catalog for home product tabs - order is shuffled per tab, badges stay tab-specific. */
 const homeProductCatalog: HomeProductCatalogItem[] = [
   {
-    key: "grespania-halley",
-    brand: "Grespania",
-    title: "Płytka gresowa Halley White Mat 60×120 cm",
-    price: "119,00 zł",
-    pricePrevious: "139,00 zł",
+    // Showcase PDP product - used in place of missing catalog packshots.
+    key: "montebianco-80",
+    brand: "ORiSTO",
+    title: "Szafka podumywalkowa Montebianco 80 cm biały mat",
+    price: "1 990 zł",
+    pricePrevious: "2 390 zł",
     image: {
-      src: assetUrl("home/inspiration-large-tiles.jpg"),
-      alt: "Grespania Halley White Mat",
-      fit: "cover",
+      src: assetUrl("products/montebianco/01-front.png"),
+      alt: "Szafka podumywalkowa Montebianco 80 cm biały mat",
     },
+    images: [
+      {
+        src: assetUrl("products/montebianco/01-front.png"),
+        alt: "Szafka podumywalkowa Montebianco 80 cm biały mat - widok produktu",
+      },
+      {
+        src: assetUrl("products/montebianco/03-room.jpg"),
+        alt: "Szafka Montebianco w aranżacji łazienki",
+        fit: "cover",
+      },
+    ],
   },
   {
     key: "florim-tundra",
@@ -208,7 +221,6 @@ const homeProductCatalog: HomeProductCatalogItem[] = [
     brand: "Trinnity",
     title: "Przycisk TRINNITY M16 zlicowany, złoty brąz",
     price: "258,00 zł",
-    href: "https://www.elements-show.pl/lazienka/toaleta/przyciski-splukujace/przyciski-splukujace/przycisk-trinnity-m16-zlicowany-zloty-braz",
     image: {
       src: assetUrl("home/przycisk-trinnity.png"),
       alt: "Przycisk TRINNITY M16 zlicowany, złoty brąz",
@@ -229,9 +241,9 @@ function productsForTab(
     return product(`${tabId}-${item.key}`, item.brand, item.title, {
       price: item.price,
       pricePrevious: item.pricePrevious,
-      href: item.href,
       badge,
       image: item.image,
+      images: item.images,
     });
   });
 }
@@ -249,9 +261,9 @@ export function homeCatalogProducts(
     return product(`${idPrefix}-${item.key}`, item.brand, item.title, {
       price: item.price,
       pricePrevious: item.pricePrevious,
-      href: item.href,
       badge: badgeByKey[key],
       image: item.image,
+      images: item.images,
     });
   });
 }
@@ -270,7 +282,7 @@ export const homeProductTabs: {
     seeAllHref: "#promocje",
     products: productsForTab(
       "promocje",
-      ["grespania-halley", "florim-tundra", "omnires-ottawa", "trinnity-m16"],
+      ["montebianco-80", "florim-tundra", "omnires-ottawa", "trinnity-m16"],
       { label: "Promocja", variant: "promo" },
     ),
   },
@@ -281,7 +293,7 @@ export const homeProductTabs: {
     seeAllHref: "#nowosci",
     products: productsForTab(
       "nowosci",
-      ["omnires-ottawa", "trinnity-m16", "grespania-halley", "florim-tundra"],
+      ["omnires-ottawa", "trinnity-m16", "montebianco-80", "florim-tundra"],
       { label: "Nowość", variant: "brand" },
     ),
   },
@@ -292,7 +304,7 @@ export const homeProductTabs: {
     seeAllHref: "#bestsellery",
     products: productsForTab(
       "bestsellery",
-      ["florim-tundra", "grespania-halley", "trinnity-m16", "omnires-ottawa"],
+      ["florim-tundra", "montebianco-80", "trinnity-m16", "omnires-ottawa"],
       { label: "Bestseller", variant: "gold" },
     ),
   },
@@ -303,7 +315,7 @@ export const homeProductTabs: {
     seeAllHref: "#outlet",
     products: productsForTab(
       "outlet",
-      ["trinnity-m16", "omnires-ottawa", "florim-tundra", "grespania-halley"],
+      ["trinnity-m16", "omnires-ottawa", "florim-tundra", "montebianco-80"],
       { label: "Outlet", variant: "neutral" },
     ),
   },
