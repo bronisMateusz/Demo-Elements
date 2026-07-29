@@ -23,7 +23,7 @@ export function VariantChipGroup({ options, selectedId, axisLabel, onSelect }: V
                   data-hoverable={option.unavailable ? false : undefined}
                   className={cn(
                     "group relative shrink-0 rounded-xs border bg-neutral-0 transition-[border-color] duration-base ease-out",
-                    selected ? "border-transparent" : "border-neutral-200 hover:border-neutral-300",
+                    selected ? "border-transparent" : "border-neutral-800 hover:border-neutral-900",
                     option.unavailable && "cursor-not-allowed",
                   )}
                 >

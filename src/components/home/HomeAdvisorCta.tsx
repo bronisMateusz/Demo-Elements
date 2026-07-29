@@ -2,7 +2,6 @@ import { motion, useReducedMotion } from "motion/react";
 import { homeAdvisorCta } from "../../data/home";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { useScrollExpandInset } from "../../hooks/useScrollExpandInset";
-import { cn } from "../../lib/cn";
 import { EASE_OUT } from "../../lib/motionEase";
 import { LiquidCtaGlow } from "../motion/LiquidCtaGlow";
 import { TextRevealLead } from "../motion/TextRevealLead";
@@ -17,7 +16,7 @@ export function HomeAdvisorCta() {
     <section
       ref={targetRef}
       aria-labelledby="home-advisor-cta-title"
-      className="py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
+      className="relative z-10 isolate py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"
@@ -46,24 +45,15 @@ export function HomeAdvisorCta() {
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.7, delay: 0.12, ease: EASE_OUT }}
           >
-            <Button
-              href={primaryCta.href}
-              variant="primary"
-              size="lg"
-              className="border-neutral-0 bg-neutral-0 text-neutral-900 hover:border-gold-500 hover:text-neutral-0 focus-visible:border-gold-500 focus-visible:text-neutral-0"
-            >
+            <Button href={primaryCta.href} variant="primary" tone="onDark" size="lg">
               {primaryCta.label}
             </Button>
             <Button
               as="button"
               type="button"
               variant="secondary"
+              tone="onDark"
               size="lg"
-              className={cn(
-                "border-neutral-0/45 bg-neutral-0/10 text-neutral-0 backdrop-blur-sm",
-                "hover:border-gold-500 hover:text-neutral-0",
-                "focus-visible:border-gold-500 focus-visible:text-neutral-0",
-              )}
               onClick={requestSalonDrawer}
             >
               {secondaryCta.label}

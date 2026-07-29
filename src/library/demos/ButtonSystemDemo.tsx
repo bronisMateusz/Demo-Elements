@@ -236,7 +236,7 @@ export function ButtonLiveHoverDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Najedź kursorem - Primary, Secondary i Gold mają animację wypełnienia złotem od dołu (OKA).
+        Najedź kursorem - wypełnienie wjeżdża od dołu: czarne na jasnym tle, białe przy tone=onDark.
       </p>
       <div className={libBtnRowClassName}>
         <button type="button" className={libButtonPreviewClassName({ variant: "primary" })}>
@@ -248,6 +248,32 @@ export function ButtonLiveHoverDemo() {
         <button type="button" className={libButtonPreviewClassName({ variant: "gold" })}>
           Gold
         </button>
+      </div>
+    </div>
+  );
+}
+
+export function ButtonOnDarkDemo() {
+  return (
+    <div className="grid max-w-xl gap-3">
+      <p className="m-0 text-sm text-neutral-600">
+        tone=&quot;onDark&quot; - Primary (gold) i Secondary (glass); hover = biały fill.
+      </p>
+      <div className={libBtnDarkSurfaceClassName}>
+        <div className={libBtnRowClassName}>
+          <button
+            type="button"
+            className={libButtonPreviewClassName({ variant: "primary", tone: "onDark" })}
+          >
+            Napisz do doradcy
+          </button>
+          <button
+            type="button"
+            className={libButtonPreviewClassName({ variant: "secondary", tone: "onDark" })}
+          >
+            Umów spotkanie
+          </button>
+        </div>
       </div>
     </div>
   );

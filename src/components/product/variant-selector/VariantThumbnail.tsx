@@ -25,11 +25,17 @@ export function VariantThumbnail({
         unavailable && "pointer-events-none cursor-not-allowed opacity-45",
       )}
     >
-      <span className="flex aspect-square w-20 items-center justify-center bg-transparent">
+      <span className="flex aspect-square w-20 items-center justify-center overflow-hidden bg-product-stage">
         <img
           src={image.src}
           alt=""
-          className="max-size-full object-contain"
+          className={cn(
+            "max-size-full origin-center object-contain transform-gpu backface-hidden",
+            "transition-transform duration-base ease-luxury",
+            "motion-reduce:transition-none",
+            "group-hover:scale-[1.06] group-focus-visible:scale-[1.06]",
+            "motion-reduce:group-hover:scale-100 motion-reduce:group-focus-visible:scale-100",
+          )}
           style={{ objectPosition: productImageObjectPosition(image) }}
           loading="lazy"
           draggable={false}

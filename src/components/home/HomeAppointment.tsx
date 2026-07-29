@@ -53,8 +53,8 @@ export function HomeAppointment() {
               as="button"
               type="button"
               variant="primary"
+              tone="onDark"
               size="lg"
-              className="border-neutral-0 bg-neutral-0 text-neutral-900 hover:border-gold-500 hover:text-neutral-0"
               onClick={requestSalonDrawer}
             >
               {ctaLabel}

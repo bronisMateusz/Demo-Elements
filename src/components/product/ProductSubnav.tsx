@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { LayoutGroup, motion } from "motion/react";
 import { cn } from "../../lib/cn";
 import type { PdpSubnavItem } from "../../constants/pdpSubnav";
@@ -13,6 +14,32 @@ type ProductSubnavProps = {
 export function ProductSubnav({ items }: ProductSubnavProps) {
   const { activeId, stuck, sentinelRef, scrollToSection } = usePdpSubnav(items);
   const reduce = useMotionReduced();
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef(new Map<string, HTMLAnchorElement>());
+
+  useEffect(() => {
+    const link = linkRefs.current.get(activeId);
+    const scroller = scrollerRef.current;
+    if (!link || !scroller) return;
+
+    const scrollerRect = scroller.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const pad = 12;
+    const fullyVisible =
+      linkRect.left >= scrollerRect.left + pad &&
+      linkRect.right <= scrollerRect.right - pad;
+
+    if (fullyVisible) return;
+
+    // Keep vertical page scroll untouched - only nudge the horizontal track.
+    const linkCenter =
+      linkRect.left - scrollerRect.left + scroller.scrollLeft + linkRect.width / 2;
+    const nextLeft = linkCenter - scroller.clientWidth / 2;
+    scroller.scrollTo({
+      left: Math.max(0, nextLeft),
+      behavior: reduce ? "auto" : "smooth",
+    });
+  }, [activeId, reduce]);
 
   if (items.length === 0) return null;
 
@@ -22,13 +49,16 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
       <nav
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-18 lg:top-29 z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm transition-[border-color,background-color,translate] duration-base ease-luxury",
+          "pdp-subnav sticky top-18 lg:top-29 z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm",
           stuck &&
             "is-stuck border-neutral-200 bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
         aria-label="Sekcje strony produktu"
       >
-        <div className="container mx-auto max-w-384 overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div
+          ref={scrollerRef}
+          className="container mx-auto max-w-384 overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
           <LayoutGroup id="pdp-subnav-active">
             <SharedLayoutUnderline
               className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"
@@ -41,6 +71,10 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
                 return (
                   <a
                     key={item.id}
+                    ref={(node) => {
+                      if (node) linkRefs.current.set(item.id, node);
+                      else linkRefs.current.delete(item.id);
+                    }}
                     href={`#${item.id}`}
                     className={cn(
                       "relative inline-flex min-h-14.5 items-center px-3 py-3 font-body text-ui leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out",

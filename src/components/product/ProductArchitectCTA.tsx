@@ -122,7 +122,7 @@ export function ProductArchitectCTA({
               >
                 <Button href={href} variant="primary" size="lg">
                   {label}
-                  <i className="ph ph-triangle" aria-hidden="true" />
+                  <i className="ph ph-cube" aria-hidden="true" />
                 </Button>
               </motion.div>
             </div>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
-import { readHeaderHeightPx } from "../../lib/layoutTokens";
+import { LG_MIN_WIDTH_PX } from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
 import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
 import { HeaderBar } from "./header/HeaderBar";
@@ -11,25 +11,17 @@ import { SalonDrawer } from "./SalonDrawer";
 const TOP_ALWAYS_VISIBLE_PX = 64;
 const DIRECTION_DELTA_PX = 6;
 
-/** On PDP, only conceal after the sticky section menu has actually pinned under the header. */
-function canConcealHeader(): boolean {
-  const subnav = document.getElementById("pdpSubnav");
-  if (!subnav) return true;
-  if (!document.documentElement.classList.contains("pdp-subnav-stuck")) return false;
-  const offset = readHeaderHeightPx();
-  return subnav.getBoundingClientRect().top <= offset + 2;
-}
-
 export function Header() {
   useSiteChrome();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [salonOpen, setSalonOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [concealed, setConcealed] = useState(false);
+  const [utilityConcealed, setUtilityConcealed] = useState(false);
   const lastScrollY = useRef(0);
-  const chromeLocked = drawerOpen || salonOpen || productsOpen;
-  const chromeConcealed = concealed && !chromeLocked;
+  // Drawers keep the utility strip visible; bar hover / mega menu must not toggle it.
+  const chromeLocked = drawerOpen || salonOpen;
+  const concealUtility = utilityConcealed && !chromeLocked;
 
   const openSalonDrawer = useCallback(() => {
     setProductsOpen(false);
@@ -39,35 +31,52 @@ export function Header() {
   useSalonDrawerRequest(openSalonDrawer);
 
   useEffect(() => {
+    const lgQuery = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`);
+
     const onScroll = () => {
       const y = window.scrollY;
       setIsScrolled(y > 8);
 
-      if (y <= TOP_ALWAYS_VISIBLE_PX || !canConcealHeader()) {
-        setConcealed(false);
+      // Utility strip exists only from lg up - never conceal the main bar on mobile.
+      if (!lgQuery.matches) {
+        setUtilityConcealed(false);
+        lastScrollY.current = y;
+        return;
+      }
+
+      if (y <= TOP_ALWAYS_VISIBLE_PX) {
+        setUtilityConcealed(false);
       } else if (y > lastScrollY.current + DIRECTION_DELTA_PX) {
-        setConcealed(true);
+        setUtilityConcealed(true);
       } else if (y < lastScrollY.current - DIRECTION_DELTA_PX) {
-        setConcealed(false);
+        setUtilityConcealed(false);
       }
 
       lastScrollY.current = y;
     };
 
+    const onBreakpointChange = () => {
+      if (!lgQuery.matches) setUtilityConcealed(false);
+      onScroll();
+    };
+
     lastScrollY.current = window.scrollY;
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    lgQuery.addEventListener("change", onBreakpointChange);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      lgQuery.removeEventListener("change", onBreakpointChange);
+    };
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("site-header-concealed", chromeConcealed);
+    document.documentElement.classList.toggle("site-header-concealed", concealUtility);
     return () => document.documentElement.classList.remove("site-header-concealed");
-  }, [chromeConcealed]);
+  }, [concealUtility]);
 
   return (
     <>
-      {/* Split sticky layers so utility → bar → subnav can stagger on show/hide. */}
       <div
         id="siteHeaderUtility"
         className="site-header-layer sticky top-0 z-102 hidden lg:block"
@@ -79,7 +88,6 @@ export function Header() {
         id="siteHeaderBar"
         className={cn(
           "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm lg:top-11",
-          "transition-[border-color,background-color,translate] duration-base ease-luxury",
           isScrolled &&
             "bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}

@@ -27,7 +27,7 @@ export function HomePartners() {
           </p>
         </div>
 
-        <ul className="m-0 grid list-none gap-8 p-0 lg:grid-cols-2 lg:gap-10">
+        <ul className="m-0 grid list-none gap-8 p-0 md:grid-cols-2 md:gap-8 lg:gap-10">
           {homePartners.cards.map((card) => (
             <li key={card.id} className="min-w-0">
               <article className="flex h-full flex-col overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0">
@@ -42,7 +42,11 @@ export function HomePartners() {
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6 md:p-8">
-                  <h3 className="m-0 font-heading text-h3 leading-heading font-medium text-neutral-900">
+                  <h3 className="m-0 flex items-center gap-3 font-heading text-h3 leading-heading font-medium text-neutral-900">
+                    <i
+                      className={cn(card.iconClass, "text-[1.15em] leading-none text-gold-500")}
+                      aria-hidden="true"
+                    />
                     {card.title}
                   </h3>
                   <p className="mt-3 mb-0 text-sm leading-relaxed text-neutral-600">

@@ -7,6 +7,7 @@ import {
   isValidElement,
   useId,
   useState,
+  type HTMLAttributes,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
@@ -24,7 +25,7 @@ export type SharedLayoutUnderlineProps = {
   insetX?: number;
   /** Distance from the bottom of each item (px). Default 0. */
   bottom?: number;
-};
+} & Omit<HTMLAttributes<HTMLDivElement>, "children" | "className">;
 
 export function SharedLayoutUnderline({
   children,
@@ -32,6 +33,8 @@ export function SharedLayoutUnderline({
   lineClassName = "bg-neutral-900",
   insetX = 0,
   bottom = 0,
+  onMouseLeave,
+  ...rest
 }: SharedLayoutUnderlineProps) {
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
   const uid = useId();
@@ -43,7 +46,11 @@ export function SharedLayoutUnderline({
     <LayoutGroup id={`shared-underline-${uid}`}>
       <motion.div
         layoutRoot
-        onMouseLeave={() => setHoveredKey(null)}
+        {...rest}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          setHoveredKey(null);
+        }}
         className={cn("flex", className)}
       >
         {Children.toArray(children)

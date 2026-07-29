@@ -34,8 +34,8 @@ export function SiteNewsletter() {
             aria-hidden="true"
           />
 
-          <div className="relative flex min-h-70 items-center justify-center p-8 md:min-h-80 md:p-10 lg:p-12">
-            <div className="flex w-full max-w-5xl flex-col justify-between gap-8 lg:flex-row lg:items-center lg:gap-10">
+          <div className="relative flex min-h-70 items-center justify-center p-4 md:min-h-80 md:p-10 lg:p-12">
+            <div className="flex w-full max-w-5xl flex-col justify-between gap-6 md:gap-8 lg:flex-row lg:items-center lg:gap-10">
               <div className="max-w-lg">
                 <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-[0.12em] text-neutral-0/70">
                   <img

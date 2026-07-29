@@ -2,6 +2,7 @@ import { cn } from "../lib/cn";
 import {
   buttonClassName,
   type ButtonSize,
+  type ButtonTone,
   type ButtonVariant,
 } from "../components/ui/buttonClassName";
 import { btnAnimatedPreviewClassName } from "../components/ui/btnAnimatedClassName";
@@ -135,12 +136,12 @@ const libButtonStateOverrides: Partial<
     active: cn(btnAnimatedPreviewClassName(true), "translate-y-px"),
   },
   secondary: {
-    hover: cn(btnAnimatedPreviewClassName(true), "border-gold-500 text-neutral-0"),
-    active: cn(btnAnimatedPreviewClassName(true), "translate-y-px border-gold-500 text-neutral-0"),
+    hover: cn(btnAnimatedPreviewClassName(true), "border-neutral-800 text-neutral-0"),
+    active: cn(btnAnimatedPreviewClassName(true), "translate-y-px border-neutral-800 text-neutral-0"),
   },
   gold: {
-    hover: cn(btnAnimatedPreviewClassName(true), "text-neutral-0"),
-    active: cn(btnAnimatedPreviewClassName(true), "translate-y-px text-neutral-0"),
+    hover: cn(btnAnimatedPreviewClassName(true), "border-neutral-800 text-neutral-0"),
+    active: cn(btnAnimatedPreviewClassName(true), "translate-y-px border-neutral-800 text-neutral-0"),
   },
   ghost: {
     hover: "bg-neutral-100 text-neutral-900",
@@ -166,18 +167,21 @@ export function libButtonPreviewClassName({
   variant,
   state = "default",
   size = "md",
+  tone = "default",
   full = false,
   className,
 }: {
   variant: ButtonVariant;
   state?: LibButtonPreviewState;
   size?: ButtonSize;
+  tone?: ButtonTone;
   full?: boolean;
   className?: string;
 }) {
   return buttonClassName({
     variant,
     size,
+    tone,
     full,
     className: cn(libButtonStateClassName(variant, state), className),
   });
@@ -194,12 +198,12 @@ const libIconButtonStateOverrides: Partial<
     active: "translate-y-px bg-neutral-200 text-neutral-900",
   },
   bordered: {
-    hover: "border-neutral-800 text-neutral-900",
-    active: "translate-y-px border-neutral-800 text-neutral-900",
+    hover: cn(btnAnimatedPreviewClassName(true), "border-neutral-800 text-neutral-0"),
+    active: cn(btnAnimatedPreviewClassName(true), "translate-y-px border-neutral-800 text-neutral-0"),
   },
   elevated: {
-    hover: "bg-neutral-100 text-neutral-900",
-    active: "translate-y-px bg-neutral-100 text-neutral-900",
+    hover: cn(btnAnimatedPreviewClassName(true), "border-neutral-800 text-neutral-0"),
+    active: cn(btnAnimatedPreviewClassName(true), "translate-y-px border-neutral-800 text-neutral-0"),
   },
   "on-dark": {
     hover: "bg-white/10 text-neutral-0",

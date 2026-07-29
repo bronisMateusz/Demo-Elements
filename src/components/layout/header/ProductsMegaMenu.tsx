@@ -10,9 +10,15 @@ function MegaCategoryLink({ group }: { group: MegaMenuGroup }) {
   return (
     <a
       href={group.href}
-      className="group/cat mb-4 flex w-full items-center gap-2 font-heading text-xl leading-[1.4] text-neutral-900 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
+      className="group/cat mb-4 flex w-full items-center gap-2.5 font-heading text-xl leading-[1.4] text-neutral-900 no-underline transition-colors duration-fast ease-out hover:text-gold-500"
     >
-      {group.title}
+      {group.iconClass ? (
+        <i
+          className={cn(group.iconClass, "text-xl leading-none text-gold-500")}
+          aria-hidden="true"
+        />
+      ) : null}
+      <span className="min-w-0 flex-1">{group.title}</span>
       <i
         className="ph ph-arrow-right text-sm text-neutral-400 transition-colors duration-fast ease-out group-hover/cat:text-gold-500"
         aria-hidden="true"

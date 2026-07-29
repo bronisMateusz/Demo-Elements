@@ -24,7 +24,7 @@ export function ProductRecommendations({ similarProducts }: ProductRecommendatio
           products={similarProducts}
           labelledBy="similar-title"
           layout="bleed"
-          navPlacement="header"
+          navPlacement="footer"
           header={{ title: "Produkty podobne", titleId: "similar-title" }}
         />
       </div>

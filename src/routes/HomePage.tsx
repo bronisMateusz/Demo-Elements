@@ -10,12 +10,19 @@ import { HomeInspiration } from "../components/home/HomeInspiration";
 import { HomeMagazine } from "../components/home/HomeMagazine";
 import { HomePartners } from "../components/home/HomePartners";
 import { HomeProducts } from "../components/home/HomeProducts";
+import { cn } from "../lib/cn";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 
-function RevealSection({ children }: { children: React.ReactNode }) {
-  const { ref, className } = useRevealOnScroll();
+function RevealSection({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const { ref, className: revealClassName } = useRevealOnScroll();
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={cn(revealClassName, className)}>
       {children}
     </div>
   );
@@ -55,10 +62,10 @@ export function HomePage() {
         <RevealSection>
           <HomePartners />
         </RevealSection>
-        <RevealSection>
+        <RevealSection className="relative z-20">
           <HomeAdvisorCta />
         </RevealSection>
-        <RevealSection>
+        <RevealSection className="relative z-0">
           <HomeAbout />
         </RevealSection>
       </PageShell>

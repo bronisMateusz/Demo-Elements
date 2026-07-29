@@ -4,10 +4,8 @@ import { cn } from "../../lib/cn";
 import { EASE_LUXURY, EASE_OUT } from "../../lib/motionEase";
 import { LIGHTBOX_MOTION } from "../../lib/lightboxMotion";
 import {
-  computeLightboxTargetRect,
   type LightboxRect,
   rectFromDomRect,
-  resolveImageAspectRatio,
 } from "../../lib/lightboxImageRect";
 import { productImageFitClassName } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
@@ -15,15 +13,17 @@ import type { ProductImage } from "../../types/product";
 export type LightboxOpenOrigin = {
   rect: DOMRectReadOnly;
   objectPosition?: string;
+  /** Natural aspect from the already-loaded thumb - required for a stable FLIP target. */
+  aspectRatio?: number;
 };
 
 type ProductGalleryLightboxFlyerProps = {
   image: ProductImage;
   origin: LightboxOpenOrigin;
   mode: "enter" | "exit";
+  /** Precomputed contained frame - shared with the Swiper slide so handoff sizes match. */
+  targetRect: LightboxRect;
   fadingOut?: boolean;
-  /** Live size/offset of the image stage - the box the slide fills. */
-  getViewport: () => { width: number; height: number; left?: number; top?: number };
   onPositionComplete: () => void;
   onFadeComplete?: () => void;
 };
@@ -39,19 +39,31 @@ export function ProductGalleryLightboxFlyer({
   image,
   origin,
   mode,
+  targetRect,
   fadingOut = false,
-  getViewport,
   onPositionComplete,
   onFadeComplete,
 }: ProductGalleryLightboxFlyerProps) {
-  const [targetRect, setTargetRect] = useState<LightboxRect | null>(null);
+  const fromRect = rectFromDomRect(origin.rect);
   const [positionDone, setPositionDone] = useState(false);
   const fadeDoneRef = useRef(false);
-  const fromRect = rectFromDomRect(origin.rect);
+  const reportedRef = useRef(false);
 
   useLayoutEffect(() => {
     fadeDoneRef.current = false;
+    reportedRef.current = false;
   }, [fadingOut, mode]);
+
+  useEffect(() => {
+    if (mode !== "enter" || reportedRef.current) return;
+    const timer = window.setTimeout(() => {
+      if (reportedRef.current) return;
+      reportedRef.current = true;
+      setPositionDone(true);
+      onPositionComplete();
+    }, FLYER_DURATION_S * 1000);
+    return () => window.clearTimeout(timer);
+  }, [mode, onPositionComplete]);
 
   useEffect(() => {
     if (!fadingOut) return;
@@ -62,27 +74,15 @@ export function ProductGalleryLightboxFlyer({
     return () => window.clearTimeout(timer);
   }, [fadingOut, onFadeComplete]);
 
-  useLayoutEffect(() => {
-    let cancelled = false;
-    const fallbackAspect = origin.rect.width / origin.rect.height || 1;
-
-    resolveImageAspectRatio(image.src, fallbackAspect).then((aspectRatio) => {
-      if (cancelled) return;
-      const viewport = getViewport();
-      setTargetRect(
-        computeLightboxTargetRect(viewport.width, viewport.height, aspectRatio, {
-          left: viewport.left,
-          top: viewport.top,
-        }),
-      );
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [getViewport, image.src, origin.rect]);
-
-  if (!targetRect) return null;
+  useEffect(() => {
+    if (mode !== "exit") return;
+    const timer = window.setTimeout(() => {
+      if (fadeDoneRef.current) return;
+      fadeDoneRef.current = true;
+      onFadeComplete?.();
+    }, FLYER_DURATION_S * 1000);
+    return () => window.clearTimeout(timer);
+  }, [mode, onFadeComplete]);
 
   const frameFrom = mode === "enter" ? fromRect : targetRect;
   const frameTo = mode === "enter" ? targetRect : fromRect;
@@ -90,12 +90,13 @@ export function ProductGalleryLightboxFlyer({
   const frameBackgroundInitialOpacity = mode === "exit" ? 0 : 1;
   const frameBackgroundOpacity = handoffActive ? 0 : 1;
 
-  // Match gallery object-fit so the exit handoff does not flash contain→cover
-  // (or the reverse). Target rect shares the image aspect, so both fits look
-  // identical at the lightbox end of the flight.
   const thumbPosition = origin.objectPosition ?? "50% 50%";
   const positionFrom = mode === "enter" ? thumbPosition : "50% 50%";
   const positionTo = mode === "enter" ? "50% 50%" : thumbPosition;
+
+  // Always match the gallery fit. For cover images the lightbox target frame shares the
+  // natural aspect, so cover ≡ contain there - and the exit lands on the same crop as the slide.
+  const imageFitClass = productImageFitClassName(image);
 
   return (
     <motion.div
@@ -125,17 +126,6 @@ export function ProductGalleryLightboxFlyer({
           ease: EASE_LUXURY,
         },
       }}
-      onAnimationComplete={() => {
-        if (mode === "exit") {
-          if (fadeDoneRef.current) return;
-          fadeDoneRef.current = true;
-          onFadeComplete?.();
-          return;
-        }
-        if (positionDone || fadingOut) return;
-        setPositionDone(true);
-        onPositionComplete();
-      }}
     >
       <motion.div
         className="absolute inset-0 bg-neutral-0"
@@ -154,7 +144,7 @@ export function ProductGalleryLightboxFlyer({
       <motion.img
         src={image.src}
         alt=""
-        className={cn("relative z-1 block size-full", productImageFitClassName(image))}
+        className={cn("relative z-1 block size-full", imageFitClass)}
         initial={{ objectPosition: positionFrom }}
         animate={{ objectPosition: positionTo }}
         transition={{ duration: FLYER_DURATION_S, ease: EASE_OUT }}

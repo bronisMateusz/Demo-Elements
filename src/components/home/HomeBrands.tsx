@@ -1,4 +1,10 @@
-import { useEffect, useState, type HTMLAttributes, type MouseEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type HTMLAttributes,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { homeBrands } from "../../data/home";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
@@ -15,14 +21,22 @@ type BrandCycleCellProps = {
   pool: readonly BrandItem[];
   slotIndex: number;
   slotCount: number;
+  paused: boolean;
+  /** SharedLayoutBg injects the sliding pill here. */
+  children?: ReactNode;
   className?: string;
   onMouseEnter?: (event: MouseEvent<HTMLAnchorElement>) => void;
-} & Omit<HTMLAttributes<HTMLAnchorElement>, "href" | "children" | "onMouseEnter" | "className">;
+} & Omit<
+  HTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "onMouseEnter" | "className"
+>;
 
 function BrandCycleCell({
   pool,
   slotIndex,
   slotCount,
+  paused,
+  children,
   className,
   onMouseEnter,
   ...rest
@@ -32,7 +46,7 @@ function BrandCycleCell({
   const brand = pool[poolIndex] ?? pool[0];
 
   useEffect(() => {
-    if (reduce || pool.length <= slotCount) return;
+    if (reduce || paused || pool.length <= slotCount) return;
 
     const intervalMs = homeBrands.cycleIntervalMs;
     // Stagger each cell so the grid flips gradually, not all at once.
@@ -53,7 +67,7 @@ function BrandCycleCell({
       window.clearTimeout(timeoutId);
       window.clearInterval(intervalId);
     };
-  }, [pool.length, reduce, slotCount, slotIndex]);
+  }, [paused, pool.length, reduce, slotCount, slotIndex]);
 
   if (!brand) return null;
 
@@ -63,17 +77,18 @@ function BrandCycleCell({
       href={brand.href}
       onMouseEnter={onMouseEnter}
       className={cn(
-        "relative flex min-h-20 items-center justify-center border-r border-b border-neutral-200 px-4 py-6 no-underline",
+        "group relative flex min-h-20 items-center justify-center border-r border-b border-neutral-200 px-4 py-6 no-underline",
         "md:min-h-24 md:px-6 md:py-8",
         "focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
         className,
       )}
     >
+      {children}
       <span className="relative z-10 flex min-h-[1.5em] items-center justify-center overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={brand.label}
-            className="text-center font-heading text-base font-medium tracking-tight text-neutral-500 md:text-lg"
+            className="text-center font-heading text-base font-medium tracking-tight text-neutral-500 transition-colors duration-fast ease-out group-hover:text-neutral-900 md:text-lg"
             initial={reduce ? false : { opacity: 0, y: 10, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={reduce ? undefined : { opacity: 0, y: -8, filter: "blur(6px)" }}
@@ -88,24 +103,19 @@ function BrandCycleCell({
 }
 
 export function HomeBrands() {
+  const [paused, setPaused] = useState(false);
   const slotCount = Math.min(homeBrands.slotCount, homeBrands.items.length);
   const slots = Array.from({ length: slotCount }, (_, index) => index);
 
   return (
     <Section ariaLabelledby="home-brands-title">
       <Container size="content">
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-12">
-          <h2
-            id="home-brands-title"
-            className="m-0 max-w-md font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
-          >
-            {homeBrands.title}
-          </h2>
-          <Button href={homeBrands.seeAllHref} variant="secondary" className="w-fit shrink-0">
-            {homeBrands.seeAllLabel}
-            <i className="ph ph-arrow-right" aria-hidden="true" />
-          </Button>
-        </div>
+        <h2
+          id="home-brands-title"
+          className="m-0 max-w-md font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
+        >
+          {homeBrands.title}
+        </h2>
 
         <SharedLayoutBg
           className={cn(
@@ -113,6 +123,8 @@ export function HomeBrands() {
             "sm:grid-cols-3 md:grid-cols-4",
           )}
           pillClassName="rounded-none bg-neutral-100"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
         >
           {slots.map((slotIndex) => (
             <BrandCycleCell
@@ -120,9 +132,17 @@ export function HomeBrands() {
               pool={homeBrands.items}
               slotIndex={slotIndex}
               slotCount={slotCount}
+              paused={paused}
             />
           ))}
         </SharedLayoutBg>
+
+        <div className="mt-8 flex justify-center md:mt-10">
+          <Button href={homeBrands.seeAllHref} variant="secondary" className="w-fit">
+            {homeBrands.seeAllLabel}
+            <i className="ph ph-arrow-right" aria-hidden="true" />
+          </Button>
+        </div>
       </Container>
     </Section>
   );

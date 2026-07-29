@@ -15,10 +15,12 @@ import { TextCascade } from "../motion/TextCascade";
 import { SharedLayoutUnderline } from "../motion/SharedLayoutUnderline";
 import {
   ProductCarousel,
-  ProductCarouselNavButtons,
   type ProductCarouselControls,
 } from "../product/ProductCarousel";
+import { productCarouselBleedWrapperClassName } from "../product/productCarouselClassName";
+import { iconButtonClassName } from "../ui/iconButtonClassName";
 import { Button } from "../ui/Button";
+import { formatSlideIndex } from "../../lib/formatSlideIndex";
 
 const PANEL_TRANSITION = { duration: 0.3, ease: EASE_LUXURY } as const;
 
@@ -48,7 +50,7 @@ export function HomeProducts() {
   };
 
   return (
-    <Section ariaLabelledby="home-products-title">
+    <Section ariaLabelledby="home-products-title" className="overflow-x-clip">
       <Container size="content" className="mb-8 md:mb-10">
         <TextRevealLead
           id="home-products-title"
@@ -61,67 +63,47 @@ export function HomeProducts() {
           {homeProductsSection.title}
         </TextRevealLead>
 
-        <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-          <div role="tablist" aria-label="Kategorie produktów" className="min-w-0">
-            <LayoutGroup id="home-product-tabs-active">
-              <SharedLayoutUnderline
-                className="flex-wrap gap-2 border-b border-neutral-200"
-                lineClassName="h-0.5 bg-gold-500/45"
-                insetX={12}
-                bottom={0}
-              >
-                {homeProductTabs.map((entry) => {
-                  const selected = entry.id === activeTab;
-                  return (
-                    <button
-                      key={entry.id}
-                      type="button"
-                      role="tab"
-                      id={`home-product-tab-${entry.id}`}
-                      aria-selected={selected}
-                      aria-controls={`home-product-panel-${entry.id}`}
-                      tabIndex={selected ? 0 : -1}
-                      className={cn(
-                        "px-3 py-2.5 font-body text-sm font-medium transition-colors duration-fast",
-                        selected
-                          ? "text-neutral-900"
-                          : "text-neutral-500 hover:text-neutral-800",
-                      )}
-                      onClick={() => selectTab(entry.id)}
-                    >
-                      {selected ? (
-                        <motion.span
-                          layoutId="home-product-tab-active-line"
-                          className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-gold-500"
-                          transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                      {entry.label}
-                    </button>
-                  );
-                })}
-              </SharedLayoutUnderline>
-            </LayoutGroup>
-          </div>
-
-          {tab.products.length > 1 ? (
-            <ProductCarouselNavButtons
-              atStart={Boolean(controls?.atStart)}
-              atEnd={Boolean(controls?.atEnd)}
-              layout="bleed"
-              loop={controls?.loop ?? true}
-              onPrev={() => {
-                if (!navLive || !controls) return;
-                controls.slidePrev();
-              }}
-              onNext={() => {
-                if (!navLive || !controls) return;
-                controls.slideNext();
-              }}
-              className={cn(navPending && "pointer-events-none")}
-            />
-          ) : null}
+        <div role="tablist" aria-label="Kategorie produktów" className="mt-6 min-w-0">
+          <LayoutGroup id="home-product-tabs-active">
+            <SharedLayoutUnderline
+              className="flex-wrap gap-2 border-b border-neutral-200"
+              lineClassName="h-0.5 bg-gold-500/45"
+              insetX={12}
+              bottom={0}
+            >
+              {homeProductTabs.map((entry) => {
+                const selected = entry.id === activeTab;
+                return (
+                  <button
+                    key={entry.id}
+                    type="button"
+                    role="tab"
+                    id={`home-product-tab-${entry.id}`}
+                    aria-selected={selected}
+                    aria-controls={`home-product-panel-${entry.id}`}
+                    tabIndex={selected ? 0 : -1}
+                    className={cn(
+                      "px-3 py-2.5 font-body text-sm font-medium transition-colors duration-fast",
+                      selected
+                        ? "text-neutral-900"
+                        : "text-neutral-500 hover:text-neutral-800",
+                    )}
+                    onClick={() => selectTab(entry.id)}
+                  >
+                    {selected ? (
+                      <motion.span
+                        layoutId="home-product-tab-active-line"
+                        className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-gold-500"
+                        transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                    {entry.label}
+                  </button>
+                );
+              })}
+            </SharedLayoutUnderline>
+          </LayoutGroup>
         </div>
       </Container>
 
@@ -141,21 +123,87 @@ export function HomeProducts() {
             exit={reduce ? undefined : { opacity: 0, y: -10 }}
             transition={reduce ? { duration: 0 } : PANEL_TRANSITION}
           >
-            <ProductCarousel
-              products={tab.products}
-              layout="bleed"
-              navPlacement="none"
-              labelledBy="home-products-title"
-              onControlsChange={(next) => {
-                if (activeTabRef.current !== tab.id) return;
-                setControls({ ...next, tabId: tab.id });
-              }}
-            />
+            <div className={cn(productCarouselBleedWrapperClassName, "relative")}>
+              <ProductCarousel
+                products={tab.products}
+                layout="bleed"
+                navPlacement="none"
+                labelledBy="home-products-title"
+                onControlsChange={(next) => {
+                  if (activeTabRef.current !== tab.id) return;
+                  setControls({ ...next, tabId: tab.id });
+                }}
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <Container size="content" className="mt-8 flex justify-center md:mt-10">
+      <Container
+        size="content"
+        className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:mt-10"
+      >
+        {tab.products.length > 1 ? (
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              navPending && "pointer-events-none opacity-60",
+            )}
+          >
+            <button
+              type="button"
+              className={iconButtonClassName({
+                variant: "elevated",
+                className: cn(
+                  "shadow-subtle",
+                  !navLive || (!(controls?.loop ?? true) && controls?.atStart)
+                    ? "pointer-events-none opacity-35"
+                    : null,
+                ),
+              })}
+              aria-label="Poprzednie produkty"
+              disabled={!navLive || (!(controls?.loop ?? true) && Boolean(controls?.atStart))}
+              onClick={() => {
+                if (!navLive || !controls) return;
+                controls.slidePrev();
+              }}
+            >
+              <i className="ph ph-caret-left" aria-hidden="true" />
+            </button>
+
+            <p
+              className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
+              aria-live="polite"
+            >
+              {formatSlideIndex(
+                navLive ? (controls?.activeIndex ?? 0) : 0,
+                navLive ? (controls?.count ?? tab.products.length) : tab.products.length,
+              )}
+            </p>
+
+            <button
+              type="button"
+              className={iconButtonClassName({
+                variant: "elevated",
+                className: cn(
+                  "shadow-subtle",
+                  !navLive || (!(controls?.loop ?? true) && controls?.atEnd)
+                    ? "pointer-events-none opacity-35"
+                    : null,
+                ),
+              })}
+              aria-label="Następne produkty"
+              disabled={!navLive || (!(controls?.loop ?? true) && Boolean(controls?.atEnd))}
+              onClick={() => {
+                if (!navLive || !controls) return;
+                controls.slideNext();
+              }}
+            >
+              <i className="ph ph-caret-right" aria-hidden="true" />
+            </button>
+          </div>
+        ) : null}
+
         <Button
           href={tab.seeAllHref}
           variant="secondary"

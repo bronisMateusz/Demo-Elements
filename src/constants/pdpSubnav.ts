@@ -21,4 +21,4 @@ export function buildPdpSubnavItems(): PdpSubnavItem[] {
 }
 
 export const pdpSectionScrollMarginClassName =
-  "scroll-mt-34.5 lg:scroll-mt-45.5 header-concealed:scroll-mt-16.5";
+  "scroll-mt-34.5 lg:scroll-mt-45.5 header-concealed:lg:scroll-mt-34.5";

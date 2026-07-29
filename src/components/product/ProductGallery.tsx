@@ -3,6 +3,7 @@ import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
+import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
 import { productImageFitClassName, productImageObjectPosition } from "../../lib/productImageStyle";
 import { liftHeaderAboveLightbox, lockLightboxScroll } from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
@@ -37,7 +38,7 @@ function GalleryThumbnailRail({ images, activeIndex, onSelect }: GalleryThumbnai
               key={image.src}
               type="button"
               className={cn(
-                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-neutral-50 transition-[opacity,border-color] duration-base ease-out",
+                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-product-stage transition-[opacity,border-color] duration-base ease-out",
                 isActive
                   ? "border-neutral-900 opacity-100"
                   : "border-neutral-200 opacity-55 hover:opacity-100",
@@ -154,9 +155,14 @@ function GallerySlideContent({
   const handleOpen = (event: MouseEvent<HTMLButtonElement>) => {
     const img = event.currentTarget.querySelector("img");
     const rect = img?.getBoundingClientRect() ?? event.currentTarget.getBoundingClientRect();
+    const aspectRatio =
+      img && img.naturalWidth > 0 && img.naturalHeight > 0
+        ? img.naturalWidth / img.naturalHeight
+        : undefined;
     onOpen({
       rect,
       objectPosition: productImageObjectPosition(image),
+      aspectRatio,
     });
   };
 
@@ -165,7 +171,7 @@ function GallerySlideContent({
       <button
         type="button"
         className={cn(
-          "relative w-full cursor-crosshair overflow-hidden bg-neutral-50",
+          "relative w-full cursor-crosshair overflow-hidden bg-product-stage",
           fillViewport
             ? cn(
                 // Stack (mobile/tablet): capped height so the gallery does not dominate the viewport.
@@ -226,6 +232,18 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     return () => lockLightboxScroll(false);
   }, [lightboxOpen]);
 
+  // Imperatively disable the stage Keyboard module - the `enabled` prop alone can lag
+  // behind open state and steal arrow keys from the lightbox.
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    if (!swiper?.keyboard) return;
+    if (lightboxOpen) {
+      swiper.keyboard.disable();
+      return;
+    }
+    swiper.keyboard.enable();
+  }, [lightboxOpen]);
+
   useEffect(() => {
     return () => liftHeaderAboveLightbox(false);
   }, []);
@@ -236,6 +254,35 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
     setLightboxClosing(false);
     liftHeaderAboveLightbox(false);
     setLightboxOpen(true);
+  };
+
+  /** Lock scroll first, then remeasure - keeps FLIP origin aligned with the locked viewport. */
+  const openLightboxMeasured = (index: number, origin: LightboxOpenOrigin) => {
+    lockLightboxScroll(true);
+    const img = slideImageRefs.current.get(index);
+
+    const open = () => {
+      requestAnimationFrame(() => {
+        const node = slideImageRefs.current.get(index);
+        const rect = node?.getBoundingClientRect() ?? origin.rect;
+        const aspectRatio =
+          node && node.naturalWidth > 0 && node.naturalHeight > 0
+            ? node.naturalWidth / node.naturalHeight
+            : origin.aspectRatio ??
+              (images[index] ? peekImageAspectRatio(images[index].src) ?? undefined : undefined);
+        openLightbox(index, {
+          ...origin,
+          rect,
+          aspectRatio,
+        });
+      });
+    };
+
+    if (img?.decode) {
+      void img.decode().then(open).catch(open);
+      return;
+    }
+    open();
   };
 
   // While the fly-back plays, lift the sticky site header above the lightbox so
@@ -263,10 +310,16 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
   const openZoom = () => {
     const image = images[activeIndex];
     if (!image) return;
-    const rect = getSlideRect(activeIndex) ?? new DOMRect(0, 0, 0, 0);
-    openLightbox(activeIndex, {
+    const img = slideImageRefs.current.get(activeIndex);
+    const rect = img?.getBoundingClientRect() ?? new DOMRect(0, 0, 0, 0);
+    const aspectRatio =
+      img && img.naturalWidth > 0 && img.naturalHeight > 0
+        ? img.naturalWidth / img.naturalHeight
+        : undefined;
+    openLightboxMeasured(activeIndex, {
       rect,
       objectPosition: productImageObjectPosition(image),
+      aspectRatio,
     });
   };
 
@@ -304,7 +357,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
           <GallerySlideContent
             image={image}
             index={0}
-            onOpen={(origin) => openLightbox(0, origin)}
+            onOpen={(origin) => openLightboxMeasured(0, origin)}
             registerImage={registerSlideImage}
             isHidden={lightboxClosing && lightboxIndex === 0}
             fillViewport={fillViewport}
@@ -395,7 +448,7 @@ export function ProductGallery({ images, layout = "default" }: ProductGalleryPro
                 <GallerySlideContent
                   image={image}
                   index={index}
-                  onOpen={(origin) => openLightbox(index, origin)}
+                  onOpen={(origin) => openLightboxMeasured(index, origin)}
                   registerImage={registerSlideImage}
                   isHidden={lightboxClosing && lightboxIndex === index}
                   fillViewport={fillViewport}

@@ -45,6 +45,11 @@ export function readHeaderHeightPx(): number {
 }
 
 export function readHeaderOffsetPx(): number {
-  if (document.documentElement.classList.contains("site-header-concealed")) return 0;
-  return readHeaderHeightPx();
+  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
+  if (!isLg) return HEADER_H_MOBILE_PX;
+  // Utility strip hidden - only the main menu bar remains.
+  if (document.documentElement.classList.contains("site-header-concealed")) {
+    return HEADER_BAR_PX;
+  }
+  return HEADER_H_DESKTOP_PX;
 }

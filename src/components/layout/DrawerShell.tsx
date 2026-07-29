@@ -97,6 +97,8 @@ type DrawerHeaderProps = {
   /** Optional back control (drill-down panels). */
   onBack?: () => void;
   backLabel?: string;
+  /** Phosphor icon beside the title (drill-down category headers). */
+  titleIconClass?: string;
 };
 
 export function DrawerHeader({
@@ -107,6 +109,7 @@ export function DrawerHeader({
   compact = false,
   onBack,
   backLabel = "Wróć",
+  titleIconClass,
 }: DrawerHeaderProps) {
   if (compact) {
     return (
@@ -114,8 +117,16 @@ export function DrawerHeader({
         {onBack ? (
           <IconButton label={backLabel} iconClass="ph ph-caret-left" onClick={onBack} />
         ) : null}
-        <span className="min-w-0 flex-1 truncate font-heading text-xl leading-none text-neutral-900">
-          {title}
+        <span className="flex min-w-0 flex-1 items-center gap-2.5">
+          {titleIconClass ? (
+            <i
+              className={cn(titleIconClass, "shrink-0 text-xl leading-none text-gold-500")}
+              aria-hidden="true"
+            />
+          ) : null}
+          <span className="min-w-0 truncate font-heading text-xl leading-none text-neutral-900">
+            {title}
+          </span>
         </span>
         <IconButton label={closeLabel} iconClass="ph ph-x" onClick={onClose} />
       </div>

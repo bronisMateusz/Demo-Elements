@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from "motion/react";
-import { cn } from "../../lib/cn";
 import { useScrollExpandInset } from "../../hooks/useScrollExpandInset";
 import { Button } from "../ui/Button";
 import { LiquidCtaGlow } from "../motion/LiquidCtaGlow";
@@ -58,26 +57,12 @@ export function ProductVisualizationCTA({
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.7, delay: 0.12, ease: EASE_OUT }}
           >
-            <Button
-              href={href}
-              variant="primary"
-              size="lg"
-              className="border-neutral-0 bg-neutral-0 text-neutral-900 hover:border-gold-500 hover:text-neutral-0 focus-visible:border-gold-500 focus-visible:text-neutral-0"
-            >
+            <Button href={href} variant="primary" tone="onDark" size="lg">
               {label}
               <i className="ph ph-arrow-right" aria-hidden="true" />
             </Button>
             {secondary ? (
-              <Button
-                href={secondary.href}
-                variant="secondary"
-                size="lg"
-                className={cn(
-                  "border-neutral-0/45 bg-neutral-0/10 text-neutral-0 backdrop-blur-sm",
-                  "hover:border-gold-500 hover:text-neutral-0",
-                  "focus-visible:border-gold-500 focus-visible:text-neutral-0",
-                )}
-              >
+              <Button href={secondary.href} variant="secondary" tone="onDark" size="lg">
                 {secondary.label}
               </Button>
             ) : null}

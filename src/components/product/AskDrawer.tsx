@@ -96,7 +96,7 @@ export function AskDrawer({
         ) : (
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div className="flex gap-3 rounded-xs border border-neutral-200 bg-neutral-50 p-3">
-              <div className="size-14 shrink-0 overflow-hidden bg-neutral-100">
+              <div className="size-14 shrink-0 overflow-hidden bg-product-stage">
                 <img
                   src={productImage.src}
                   alt=""

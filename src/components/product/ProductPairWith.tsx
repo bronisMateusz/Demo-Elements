@@ -28,7 +28,7 @@ export function ProductPairWith({ title, products }: ProductPairWithProps) {
           products={products}
           labelledBy="pair-with-title"
           layout="bleed"
-          navPlacement="header"
+          navPlacement="footer"
           header={{ title, titleId: "pair-with-title" }}
         />
       </div>

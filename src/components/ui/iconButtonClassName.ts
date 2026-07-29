@@ -1,5 +1,9 @@
 import { cn } from "../../lib/cn";
 import { phosphorIconInFlexClassName } from "../../lib/phosphorIconInFlexClassName";
+import {
+  btnAnimatedFillLightClassName,
+  btnAnimatedFillStructureClassName,
+} from "./btnAnimatedClassName";
 
 export type IconButtonVariant = "default" | "bordered" | "elevated" | "on-dark";
 
@@ -10,18 +14,40 @@ type IconButtonClassNameOptions = {
 };
 
 const iconButtonBase = cn(
-  "icon-btn inline-flex size-12 min-size-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800 transition-[background-color,color,border-color] duration-fast ease-out",
+  "icon-btn inline-flex size-12 min-size-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800",
   phosphorIconInFlexClassName,
   "[&_i]:text-xl",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
 );
 
+const iconButtonPlain = cn(
+  iconButtonBase,
+  "transition-[background-color,color,border-color] duration-fast ease-out",
+);
+
+const iconButtonAnimated = cn(
+  iconButtonBase,
+  "relative isolate overflow-hidden transition-[color,border-color] duration-base ease-luxury",
+  btnAnimatedFillStructureClassName,
+  btnAnimatedFillLightClassName,
+);
+
 const iconButtonVariants: Record<IconButtonVariant, string> = {
   default: "hover:bg-neutral-100 hover:text-neutral-900",
-  bordered: "border-neutral-200 hover:border-neutral-800 hover:text-neutral-900",
-  elevated: "border-neutral-200 bg-neutral-0 hover:bg-neutral-100 hover:text-neutral-900",
+  bordered: cn(
+    "border-neutral-800",
+    "hover:border-neutral-800 hover:text-neutral-0",
+    "focus-visible:border-neutral-800 focus-visible:text-neutral-0",
+  ),
+  elevated: cn(
+    "border-neutral-800 bg-neutral-0",
+    "hover:border-neutral-800 hover:text-neutral-0",
+    "focus-visible:border-neutral-800 focus-visible:text-neutral-0",
+  ),
   "on-dark": "text-neutral-0 hover:bg-white/10",
 };
+
+const animatedIconVariants = new Set<IconButtonVariant>(["bordered", "elevated"]);
 
 export function iconButtonClassName({
   variant = "default",
@@ -34,7 +60,7 @@ export function iconButtonClassName({
       : active && "bg-neutral-100 text-neutral-900";
 
   return cn(
-    iconButtonBase,
+    animatedIconVariants.has(variant) ? iconButtonAnimated : iconButtonPlain,
     iconButtonVariants[variant],
     activeClassName,
     className,

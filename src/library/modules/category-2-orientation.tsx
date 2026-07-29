@@ -8,6 +8,7 @@ import {
   ButtonHierarchyDemo,
   ButtonIconsDemo,
   ButtonLiveHoverDemo,
+  ButtonOnDarkDemo,
   ButtonPrimaryStatesDemo,
   ButtonQuickAddDemo,
   ButtonSecondaryStatesDemo,
@@ -91,10 +92,11 @@ export const buttonModule: LibraryModule = {
   slug: "button",
   title: "Przycisk / CTA",
   description:
-    "System przycisków Elements - warianty Primary, Secondary, Gold, Ghost i Tertiary; rozmiary; stany; IconButton (default, bordered, elevated, on-dark); ask-row i quick-add.",
+    "System przycisków Elements - warianty Primary, Secondary, Gold, Ghost i Tertiary; tone default/onDark; rozmiary; stany; IconButton (default, bordered, elevated, on-dark); ask-row i quick-add.",
   optionalProps: [
     { name: "variant", type: "ButtonVariant", defaultValue: "primary" },
     { name: "size", type: '"sm" | "md" | "lg"', defaultValue: "md" },
+    { name: "tone", type: '"default" | "onDark"', defaultValue: "default" },
     { name: "full", type: "boolean", defaultValue: "false" },
     { name: "href", type: "string", description: "Gdy link zamiast <button>." },
     { name: "disabled", type: "boolean" },
@@ -105,7 +107,7 @@ export const buttonModule: LibraryModule = {
       id: "hierarchy",
       label: "Hierarchia wariantów",
       description:
-        "Primary = główna akcja, Secondary = alternatywa, Gold = akcent marki, Ghost = akcja drugorzędna, Tertiary = link w treści.",
+        "Primary = solid gold, Secondary = białe tło + border w kolorze tekstu, Gold = outline akcent, Ghost = transparent, Tertiary = link. Hover: czarny fill (jasne) / biały fill (tone=onDark).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonHierarchyDemo />
@@ -126,7 +128,7 @@ export const buttonModule: LibraryModule = {
       id: "primary-states",
       label: "Stany · Primary",
       description:
-        "Hover z animacją złotego wypełnienia od dołu (before:scale-y-100 w preview). Focus - ring WCAG.",
+        "Hover z animacją czarnego wypełnienia od dołu (before:scale-y-100 w preview). Focus - ring WCAG.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonPrimaryStatesDemo />
@@ -136,7 +138,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "secondary-states",
       label: "Stany · Secondary",
-      description: "Obramowany przycisk z tym samym wypełnieniem złotem na hover.",
+      description: "Białe tło + border = kolor tekstu (neutral-800); czarne wypełnienie na hover.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonSecondaryStatesDemo />
@@ -146,7 +148,7 @@ export const buttonModule: LibraryModule = {
     {
       id: "gold-states",
       label: "Stany · Gold",
-      description: "Złota obwódka - wypełnienie złotem na hover.",
+      description: "Złota obwódka - czarne wypełnienie na hover (nie solid primary).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonGoldStatesDemo />
@@ -196,10 +198,21 @@ export const buttonModule: LibraryModule = {
     {
       id: "live-hover",
       label: "Animacja hover (interaktywna)",
-      description: "Najedź kursorem - złote wypełnienie wjeżdża od dołu jak na OKA.",
+      description: "Najedź kursorem - wypełnienie wjeżdża od dołu: czarne na jasnym, białe przy onDark.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonLiveHoverDemo />
+        </div>
+      ),
+    },
+    {
+      id: "on-dark",
+      label: "Tone · onDark",
+      description:
+        "Primary (solid gold) i Secondary (glass) na ciemnej powierzchni; hover = biały fill.",
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <ButtonOnDarkDemo />
         </div>
       ),
     },

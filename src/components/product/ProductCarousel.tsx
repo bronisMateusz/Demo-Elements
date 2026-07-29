@@ -3,6 +3,7 @@ import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
+import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { useBleedRightWidth } from "../../hooks/useBleedRightWidth";
 import { useContentInsetPx } from "../../hooks/useContentInsetPx";
 import { useGutterPx } from "../../hooks/useGutterPx";
@@ -32,6 +33,9 @@ export type ProductCarouselControls = {
   atStart: boolean;
   atEnd: boolean;
   loop: boolean;
+  /** Index among unique `products` (not cloned loop slides). */
+  activeIndex: number;
+  count: number;
 };
 
 type ProductCarouselProps = {
@@ -42,9 +46,9 @@ type ProductCarouselProps = {
   bleed?: boolean;
   layout?: ProductCarouselLayout;
   header?: ProductCarouselHeader;
-  /** `header` - arrows beside the title; `overlay` - on the track edges; `none` - parent owns nav. */
-  navPlacement?: "overlay" | "header" | "none";
-  /** Sync nav state for external header arrows (`navPlacement="none"`). */
+  /** `header` - arrows beside the title; `footer` - arrows + index under the track; `overlay` - on the track edges; `none` - parent owns nav. */
+  navPlacement?: "overlay" | "header" | "footer" | "none";
+  /** Sync nav state for external arrows (`navPlacement="none"`). */
   onControlsChange?: (controls: ProductCarouselControls) => void;
 };
 
@@ -116,6 +120,72 @@ export function ProductCarouselNavButtons({
   );
 }
 
+function ProductCarouselFooterNav({
+  activeIndex,
+  count,
+  atStart,
+  atEnd,
+  loop,
+  layout,
+  onPrev,
+  onNext,
+}: {
+  activeIndex: number;
+  count: number;
+  atStart: boolean;
+  atEnd: boolean;
+  loop: boolean;
+  layout: ProductCarouselLayout;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  if (count <= 1) return null;
+
+  const prevDisabled = !loop && atStart;
+  const nextDisabled = !loop && atEnd;
+  const isBleed = layout === "bleed";
+
+  return (
+    <div
+      className={cn(
+        "mt-8 flex items-center justify-center gap-3 md:mt-10",
+        isBleed && "mx-auto w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)]",
+      )}
+    >
+      <button
+        type="button"
+        className={iconButtonClassName({
+          variant: "elevated",
+          className: cn("shadow-subtle", prevDisabled && "pointer-events-none opacity-35"),
+        })}
+        aria-label="Poprzednie produkty"
+        disabled={prevDisabled}
+        onClick={onPrev}
+      >
+        <i className="ph ph-caret-left" aria-hidden="true" />
+      </button>
+      <p
+        className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
+        aria-live="polite"
+      >
+        {formatSlideIndex(activeIndex, count)}
+      </p>
+      <button
+        type="button"
+        className={iconButtonClassName({
+          variant: "elevated",
+          className: cn("shadow-subtle", nextDisabled && "pointer-events-none opacity-35"),
+        })}
+        aria-label="Następne produkty"
+        disabled={nextDisabled}
+        onClick={onNext}
+      >
+        <i className="ph ph-caret-right" aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
 export function ProductCarousel({
   products,
   labelledBy,
@@ -132,6 +202,7 @@ export function ProductCarousel({
   const isBleed = resolvedLayout === "bleed";
   const resolvedNavPlacement = navPlacement ?? (isInline ? "header" : "overlay");
   const showHeaderNav = Boolean(header) && resolvedNavPlacement === "header";
+  const showFooterNav = resolvedNavPlacement === "footer" && products.length > 1;
   const showOverlayNav = resolvedNavPlacement === "overlay" && products.length > 1;
   const gutterPx = useGutterPx();
   const contentInsetPx = useContentInsetPx();
@@ -141,6 +212,7 @@ export function ProductCarousel({
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const enableLoop = !isInline && products.length > 1;
   // Ultrawide needs enough duplicates so a clone always peeks past the right edge.
@@ -149,8 +221,12 @@ export function ProductCarousel({
     () => (enableLoop ? withClonedSlides(products, minLoopSlides) : products),
     [products, enableLoop, minLoopSlides],
   );
+  const productCount = products.length;
 
   const syncEdges = (instance: SwiperInstance) => {
+    const real = instance.realIndex ?? instance.activeIndex;
+    setActiveIndex(productCount > 0 ? real % productCount : 0);
+
     if (instance.params.loop) {
       setAtStart(false);
       setAtEnd(false);
@@ -179,8 +255,10 @@ export function ProductCarousel({
       atStart,
       atEnd,
       loop: enableLoop,
+      activeIndex,
+      count: productCount,
     });
-  }, [slidePrev, slideNext, atStart, atEnd, enableLoop]);
+  }, [slidePrev, slideNext, atStart, atEnd, enableLoop, activeIndex, productCount]);
 
   const swiperKey = isBleed
     ? `bleed-${bleedInsetPx}-${slides.length}`
@@ -327,6 +405,19 @@ export function ProductCarousel({
             <i className="ph ph-caret-right" aria-hidden="true" />
           </button>
         </>
+      ) : null}
+
+      {showFooterNav ? (
+        <ProductCarouselFooterNav
+          activeIndex={activeIndex}
+          count={productCount}
+          atStart={atStart}
+          atEnd={atEnd}
+          loop={enableLoop}
+          layout={resolvedLayout}
+          onPrev={slidePrev}
+          onNext={slideNext}
+        />
       ) : null}
     </div>
   );

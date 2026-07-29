@@ -76,15 +76,10 @@ export function SiteSalonsPresence() {
               {presenceSalonsCopy.description}
             </p>
 
-            <ul
-              className={cn(
-                "mt-8 mb-0 grid list-none grid-cols-1 gap-x-6 gap-y-6 p-0",
-                "sm:grid-cols-2 lg:grid-cols-3",
-              )}
-            >
+            <ul className="mt-8 mb-0 grid list-none grid-cols-2 gap-x-6 gap-y-6 p-0 md:gap-x-8">
               {voivGroups.map((group) => (
                 <li key={group.id} className="min-w-0">
-                  <p className="m-0 mb-1.5 font-body text-2.75 font-medium tracking-[0.12em] uppercase text-neutral-500">
+                  <p className="m-0 mb-1.5 font-body text-2.75 font-medium tracking-[0.12em] break-words uppercase text-neutral-500">
                     {group.name}
                   </p>
                   <ul className="m-0 flex list-none flex-col gap-0.5 p-0">
@@ -111,8 +106,9 @@ export function SiteSalonsPresence() {
               <Button
                 as="button"
                 type="button"
-                variant="gold"
-                className="w-fit rounded-xs"
+                variant="primary"
+                tone="onDark"
+                className="w-fit"
                 onClick={requestSalonDrawer}
               >
                 {presenceSalonsCopy.allSalonsLabel}
@@ -122,7 +118,7 @@ export function SiteSalonsPresence() {
           </div>
 
           <div className="flex min-w-0 flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-end">
               <p className="m-0 font-body text-sm text-neutral-400">
                 {presenceSalonsCopy.socialLabel}
               </p>

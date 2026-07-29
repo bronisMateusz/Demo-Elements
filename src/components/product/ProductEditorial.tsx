@@ -69,10 +69,10 @@ export function ProductEditorial({
         ) : null}
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
-          <div className="min-w-0 lg:sticky lg:top-47.5 header-concealed:lg:top-18.5 lg:self-start">
+          <div className="min-w-0 lg:sticky lg:top-47.5 header-concealed:lg:top-36.5 lg:self-start">
             <SectionHeader eyebrow={eyebrow} title={title} titleId="editorial-title" className="mb-8" />
             <div className="space-y-6">
-              <p className="m-0 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
+              <p className="mb-3 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
                 {lead}
               </p>
               {paragraphs.map((paragraph) => (

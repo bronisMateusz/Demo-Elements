@@ -25,43 +25,50 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
         <span className="sr-only">Przejdź do: {product.title}</span>
       </a>
 
-      <div className="relative aspect-square shrink-0 overflow-hidden bg-[#eef1f4]">
-        {images.map((image, index) => {
-          const isPrimary = index === 0;
-          const isHoverImage = index === 1;
-          const imageMotion = cn(
-            "origin-center",
-            "transition-[opacity,transform] duration-slow ease-luxury",
+      <div className="relative aspect-square shrink-0 overflow-hidden bg-product-stage">
+        {/* Scale a GPU layer, not the <img> - avoids paint jank on object-cover images. */}
+        <div
+          className={cn(
+            "absolute inset-0 origin-center transform-gpu backface-hidden",
+            "transition-transform duration-500 ease-out",
             "motion-reduce:transition-none",
-          );
+            "group-hover/card:scale-[1.07] group-focus-within/card:scale-[1.07]",
+            "motion-reduce:group-hover/card:scale-100 motion-reduce:group-focus-within/card:scale-100",
+          )}
+        >
+          {images.map((image, index) => {
+            const isPrimary = index === 0;
+            const isHoverImage = index === 1;
 
-          return (
-            <img
-              key={`${product.id}-${index}`}
-              src={image.src}
-              alt={image.alt || product.title}
-              className={cn(
-                "absolute inset-0 size-full object-cover",
-                imageMotion,
-                isPrimary &&
-                  cn(
-                    "z-1 opacity-100",
-                    hasMultipleImages &&
-                      "group-hover/card:opacity-0 group-focus-within/card:opacity-0",
-                  ),
-                isHoverImage &&
-                  cn(
-                    "z-0 opacity-0 scale-120",
-                    "group-hover/card:opacity-100 group-hover/card:scale-100",
-                    "group-focus-within/card:opacity-100 group-focus-within/card:scale-100",
-                    "motion-reduce:scale-100",
-                  ),
-                !isPrimary && !isHoverImage && "hidden",
-              )}
-              loading="lazy"
-            />
-          );
-        })}
+            return (
+              <img
+                key={`${product.id}-${index}`}
+                src={image.src}
+                alt={image.alt || product.title}
+                className={cn(
+                  "absolute inset-0 size-full object-cover",
+                  hasMultipleImages &&
+                    "transition-opacity duration-500 ease-out motion-reduce:transition-none",
+                  isPrimary &&
+                    cn(
+                      "z-1 opacity-100",
+                      hasMultipleImages &&
+                        "group-hover/card:opacity-0 group-focus-within/card:opacity-0",
+                    ),
+                  isHoverImage &&
+                    cn(
+                      "z-0 opacity-0",
+                      "group-hover/card:opacity-100 group-focus-within/card:opacity-100",
+                    ),
+                  !isPrimary && !isHoverImage && "hidden",
+                )}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+              />
+            );
+          })}
+        </div>
 
         {product.badge ? (
           <Badge
@@ -89,7 +96,7 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
         <h3
           className={cn(
             "m-0 font-heading text-neutral-900",
-            compact ? "text-sm leading-[1.4]" : "text-lg leading-[1.35]",
+            compact ? "text-sm leading-[1.4]" : "text-base leading-[1.35] md:text-lg",
           )}
         >
           {product.title}
@@ -120,4 +127,3 @@ export function ProductCarouselCard({ product, className, compact = false }: Pro
     </article>
   );
 }
-

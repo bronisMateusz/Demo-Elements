@@ -1,4 +1,12 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useState } from "react";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { homeMagazine } from "../../data/home";
 import { useScrollExpandInset } from "../../hooks/useScrollExpandInset";
 import { EASE_LUXURY } from "../../lib/motionEase";
@@ -10,13 +18,13 @@ import { TextRevealLead } from "../motion/TextRevealLead";
 
 export function HomeMagazine() {
   const reducedMotion = useReducedMotion();
+  const [stackHovered, setStackHovered] = useState(false);
   const { targetRef, sideInset } = useScrollExpandInset<HTMLElement>();
   const {
     id,
     eyebrow,
     title,
     description,
-    badge,
     image,
     primaryCta,
     secondaryCta,
@@ -34,31 +42,64 @@ export function HomeMagazine() {
   const pageMidX = useTransform(scrollYProgress, [0, 1], [16, 6]);
   const coverRotate = useTransform(scrollYProgress, [0, 1], [-9, -2]);
 
+  // Hover gently fans the stack open on top of the scroll-settled pose.
+  const hoverFan = useMotionValue(0);
+  const setHovered = (hovered: boolean) => {
+    setStackHovered(hovered);
+    if (reducedMotion) {
+      hoverFan.set(hovered ? 1 : 0);
+      return;
+    }
+    animate(hoverFan, hovered ? 1 : 0, { duration: 0.45, ease: EASE_LUXURY });
+  };
+
+  const pageBackXLive = useTransform([pageBackX, hoverFan], ([x, h]) => Number(x) + Number(h) * 14);
+  const pageBackRotateLive = useTransform(
+    [pageBackRotate, hoverFan],
+    ([r, h]) => Number(r) + Number(h) * 5,
+  );
+  const pageMidXLive = useTransform([pageMidX, hoverFan], ([x, h]) => Number(x) + Number(h) * 8);
+  const pageMidRotateLive = useTransform(
+    [pageMidRotate, hoverFan],
+    ([r, h]) => Number(r) + Number(h) * 2.5,
+  );
+  const coverRotateLive = useTransform(
+    [coverRotate, hoverFan],
+    ([r, h]) => Number(r) - Number(h) * 1.5,
+  );
+
   return (
     <section
       ref={targetRef}
       id={id}
       aria-labelledby="home-magazine-title"
-      className="py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
+      className="overflow-x-clip py-[clamp(2.5rem,6vw,4rem)] md:py-[clamp(3rem,7vw,5rem)]"
     >
       <motion.div
-        className="relative overflow-hidden rounded-xs bg-gold-100"
+        className="relative overflow-visible"
         style={{ marginLeft: sideInset, marginRight: sideInset }}
       >
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {/* Clipped surface - magazine stack sits above and can overhang. */}
+        <div
+          className="pointer-events-none absolute inset-0 overflow-hidden rounded-xs"
+          aria-hidden="true"
+        >
+          <div className="absolute inset-0 bg-linear-to-br from-neutral-700 via-brown-600 to-neutral-800" />
+          <div className="absolute inset-0 bg-radial-[at_85%_15%] from-gold-500/25 via-gold-600/10 to-transparent to-55%" />
+          <div className="absolute inset-0 bg-radial-[at_10%_90%] from-brown-700/50 to-transparent to-45%" />
           <BrandMotif
             name="dots-grid"
-            className="absolute top-6 inset-e-4 h-32 w-8 opacity-30 max-md:hidden md:top-8 md:inset-e-6 md:h-40 md:w-9"
+            className="absolute top-8 inset-e-6 h-36 w-9 opacity-40 brightness-0 invert max-md:hidden"
           />
           <BrandMotif
-            name="arc-dark"
-            className="absolute -inset-e-14 -bottom-20 size-52 opacity-25 max-md:hidden"
+            name="arc-light"
+            className="absolute -bottom-10 -inset-e-8 size-[min(48vw,20rem)] opacity-35 max-md:hidden"
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-384 items-center gap-10 px-[clamp(1.25rem,2.222vw,2.5rem)] py-10 md:gap-12 md:py-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14 lg:py-14">
-          <div className="min-w-0">
-            <Eyebrow variant="gold" className="mb-3 text-gold-600">
+        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-10 px-[clamp(1.25rem,2.222vw,2.5rem)] py-10 md:gap-12 md:py-12 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10 lg:py-14 xl:gap-12 xl:py-16">
+          <div className="min-w-0 lg:max-w-xl">
+            <Eyebrow variant="gold" className="mb-3 text-gold-400">
               {eyebrow}
             </Eyebrow>
             <TextRevealLead
@@ -66,21 +107,28 @@ export function HomeMagazine() {
               revealUnit="word"
               className="max-w-xl"
               typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
-              mutedClassName="text-neutral-900/20"
-              fillClassName="text-neutral-900"
+              mutedClassName="text-neutral-0/25"
+              fillClassName="text-neutral-0"
             >
               {title}
             </TextRevealLead>
-            <p className="mt-4 mb-0 max-w-lg text-sm leading-relaxed text-neutral-700 md:text-ui">
+            <p className="mt-4 mb-0 max-w-lg text-sm leading-relaxed text-neutral-200 md:text-ui">
               {description}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href={primaryCta.href} variant="primary" target="_blank" rel="noopener noreferrer">
+              <Button
+                href={primaryCta.href}
+                variant="primary"
+                tone="onDark"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {primaryCta.label}
               </Button>
               <Button
                 href={secondaryCta.href}
                 variant="secondary"
+                tone="onDark"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -89,25 +137,33 @@ export function HomeMagazine() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-76 py-4 sm:max-w-84 lg:ms-auto lg:me-0 lg:max-w-90 lg:py-6">
+          <div
+            className="relative z-20 mx-auto w-full max-w-88 py-2 sm:max-w-100 md:-my-10 lg:mx-0 lg:w-112 lg:max-w-none lg:-my-24 lg:py-0 xl:w-120 xl:-my-30"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            onFocusCapture={() => setHovered(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setHovered(false);
+              }
+            }}
+          >
             <motion.div
-              className="pointer-events-none absolute inset-x-0 inset-y-4 rounded-xs bg-neutral-0/80 shadow-1 lg:inset-y-6"
+              className="pointer-events-none absolute inset-x-0 inset-y-2 rounded-xs border border-neutral-200 bg-neutral-0 shadow-2 lg:inset-y-0"
               style={
                 reducedMotion
-                  ? { x: 14, rotate: 3 }
-                  : { x: pageBackX, rotate: pageBackRotate }
+                  ? { x: 14 + (stackHovered ? 14 : 0), rotate: 3 + (stackHovered ? 5 : 0) }
+                  : { x: pageBackXLive, rotate: pageBackRotateLive }
               }
-              transition={{ ease: EASE_LUXURY }}
               aria-hidden="true"
             />
             <motion.div
-              className="pointer-events-none absolute inset-x-0 inset-y-4 rounded-xs border border-neutral-200/80 bg-neutral-0 lg:inset-y-6"
+              className="pointer-events-none absolute inset-x-0 inset-y-2 rounded-xs border border-neutral-200/70 bg-neutral-0 shadow-1 lg:inset-y-0"
               style={
                 reducedMotion
-                  ? { x: 6, rotate: 1 }
-                  : { x: pageMidX, rotate: pageMidRotate }
+                  ? { x: 6 + (stackHovered ? 8 : 0), rotate: 1 + (stackHovered ? 2.5 : 0) }
+                  : { x: pageMidXLive, rotate: pageMidRotateLive }
               }
-              transition={{ ease: EASE_LUXURY }}
               aria-hidden="true"
             />
 
@@ -121,8 +177,12 @@ export function HomeMagazine() {
                 "hover:shadow-[0_12px_40px_rgba(26,24,21,0.12)]",
                 "focus-visible:outline-2 focus-visible:outline-gold-500",
               )}
-              style={reducedMotion ? { rotate: -2 } : { rotate: coverRotate }}
-              aria-label={`${image.alt} - otwórz PDF`}
+              style={
+                reducedMotion
+                  ? { rotate: -2 - (stackHovered ? 1.5 : 0) }
+                  : { rotate: coverRotateLive }
+              }
+              aria-label={`${image.alt} - otwórz magazyn online`}
             >
               <span
                 className="pointer-events-none absolute inset-y-0 inset-s-0 z-10 w-2.5 bg-linear-to-r from-neutral-900/25 via-neutral-900/8 to-transparent"
@@ -140,10 +200,6 @@ export function HomeMagazine() {
                 loading="lazy"
                 draggable={false}
               />
-
-              <span className="absolute top-3 inset-e-3 rounded-xs bg-gold-500 px-2 py-0.5 font-body text-[10px] font-medium tracking-wide text-neutral-0 uppercase shadow-subtle">
-                {badge}
-              </span>
             </motion.a>
           </div>
         </div>

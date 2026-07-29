@@ -3,15 +3,17 @@ export type NavItem = {
   href: string;
   /** Opens mega-menu panel when true. */
   hasMenu?: boolean;
+  /** Phosphor icon class for mobile drawer (and similar lists). */
+  iconClass?: string;
 };
 
 export const mainNavItems: NavItem[] = [
-  { label: "Produkty", href: "#produkty", hasMenu: true },
-  { label: "Inspiracje", href: "#inspiracje" },
-  { label: "Nowości", href: "#nowosci" },
-  { label: "Outlet", href: "#outlet" },
-  { label: "Bestsellery", href: "#bestsellery" },
-  { label: "Producenci", href: "#producenci" },
+  { label: "Produkty", href: "#produkty", hasMenu: true, iconClass: "ph ph-squares-four" },
+  { label: "Inspiracje", href: "#inspiracje", iconClass: "ph ph-images" },
+  { label: "Nowości", href: "#nowosci", iconClass: "ph ph-sparkle" },
+  { label: "Outlet", href: "#outlet", iconClass: "ph ph-tag" },
+  { label: "Bestsellery", href: "#bestsellery", iconClass: "ph ph-fire" },
+  { label: "Producenci", href: "#producenci", iconClass: "ph ph-buildings" },
 ];
 
 /** Mega-menu columns - layout inspired by OKA; links from eh-mega prototype. */
@@ -24,6 +26,8 @@ export type MegaMenuGroup = {
   title: string;
   href: string;
   links: MegaMenuLink[];
+  /** Phosphor icon class for category group headers (mobile drawer + mega menu). */
+  iconClass?: string;
 };
 
 export type MegaMenuColumn = {
@@ -36,6 +40,7 @@ export const productsMegaMenu: MegaMenuColumn[] = [
       {
         title: "Łazienka",
         href: "#lazienka",
+        iconClass: "ph ph-bathtub",
         links: [
           { label: "Umywalki", href: "#umywalki" },
           { label: "Armatura", href: "#armatura" },
@@ -56,6 +61,7 @@ export const productsMegaMenu: MegaMenuColumn[] = [
       {
         title: "Kuchnia",
         href: "#kuchnia",
+        iconClass: "ph ph-cooking-pot",
         links: [
           { label: "Zlewozmywaki", href: "#zlewozmywaki" },
           { label: "Baterie zlewozmywakowe", href: "#baterie-zlewozmywakowe" },
@@ -64,6 +70,7 @@ export const productsMegaMenu: MegaMenuColumn[] = [
       {
         title: "Ogrzewanie",
         href: "#ogrzewanie",
+        iconClass: "ph ph-thermometer-simple",
         links: [
           { label: "Grzałki elektryczne", href: "#grzalki-elektryczne" },
           { label: "Grzejniki łazienkowe i dekoracyjne", href: "#grzejniki" },
@@ -77,6 +84,7 @@ export const productsMegaMenu: MegaMenuColumn[] = [
       {
         title: "Płytki · rodzaje",
         href: "#plytki-rodzaje",
+        iconClass: "ph ph-grid-four",
         links: [
           { label: "Monokolor", href: "#monokolor" },
           { label: "Multikolor", href: "#multikolor" },
@@ -93,6 +101,7 @@ export const productsMegaMenu: MegaMenuColumn[] = [
       {
         title: "Płytki · imitacje",
         href: "#plytki-imitacje",
+        iconClass: "ph ph-stack",
         links: [
           { label: "Imitujące beton", href: "#imitujace-beton" },
           { label: "Imitujące drewno", href: "#imitujace-drewno" },
@@ -313,7 +322,7 @@ export const favoritesNav = {
 export const utilityTagline = "Od pomysłu do gotowej łazienki";
 
 export const utilityNavItems = [
-  { label: "Strefa architekta", href: "#strefa-architekta", iconClass: "ph ph-triangle" },
+  { label: "Strefa architekta", href: "#strefa-architekta", iconClass: "ph ph-cube" },
   { label: "Strefa instalatora", href: "#strefa-instalatora", iconClass: "ph ph-wrench", dividerAfter: true },
   { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
   { label: "Konfigurator kabin", href: "#konfigurator-kabin" },

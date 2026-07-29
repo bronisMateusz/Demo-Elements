@@ -84,13 +84,13 @@ export function Checkbox({
           checked ? "checked" : indeterminate ? "indeterminate" : "unchecked"
         }
         className={cn(
-          "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-xs border-2 outline-none",
+          "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-xs border outline-none",
           "transition-colors duration-fast ease-out",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
           "disabled:cursor-not-allowed disabled:opacity-60",
           showMark
             ? "border-neutral-900 bg-neutral-900 text-neutral-0"
-            : "border-neutral-300 bg-neutral-0 hover:border-neutral-600",
+            : "border-neutral-800 bg-neutral-0 hover:border-neutral-900 hover:bg-neutral-50",
         )}
       >
         <AnimatePresence initial={false}>

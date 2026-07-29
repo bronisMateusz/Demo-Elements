@@ -12,6 +12,7 @@ import {
   isValidElement,
   useId,
   useState,
+  type HTMLAttributes,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
@@ -27,7 +28,7 @@ export type SharedLayoutBgProps = {
   pillClassName?: string;
   /** Horizontal inset of the pill relative to each item (px). Default 0. */
   inset?: number;
-};
+} & Omit<HTMLAttributes<HTMLDivElement>, "children" | "className">;
 
 const variants: Variants = {
   initial: { opacity: 0, filter: "blur(0.375rem)" },
@@ -46,6 +47,8 @@ export function SharedLayoutBg({
   className,
   pillClassName,
   inset = 0,
+  onMouseLeave,
+  ...rest
 }: SharedLayoutBgProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const uid = useId();
@@ -55,7 +58,11 @@ export function SharedLayoutBg({
     <LayoutGroup id={`shared-layout-bg-${uid}`}>
       <motion.div
         layoutRoot
-        onMouseLeave={() => setActiveId(null)}
+        {...rest}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          setActiveId(null);
+        }}
         className={cn("flex", className)}
       >
       {Children.toArray(children)
