@@ -39,7 +39,7 @@ export function HomeAdvisorCta() {
             {description}
           </p>
           <motion.div
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center"
             initial={reducedMotion ? false : { opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
@@ -50,6 +50,7 @@ export function HomeAdvisorCta() {
               variant="primary"
               tone="onDark"
               size="lg"
+              className="w-full sm:w-auto"
             >
               {primaryCta.label}
             </Button>
@@ -59,6 +60,7 @@ export function HomeAdvisorCta() {
               variant="secondary"
               tone="onDark"
               size="lg"
+              className="w-full sm:w-auto"
               onClick={requestSalonDrawer}
             >
               {secondaryCta.label}

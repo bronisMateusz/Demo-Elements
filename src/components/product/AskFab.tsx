@@ -114,7 +114,10 @@ export function AskFab({
           </div>
 
           <div className="hidden min-w-0 flex-1 lg:block">
-            <p className="m-0 truncate font-heading text-lg leading-tight text-neutral-900">
+            <p className="m-0 text-xs tracking-[0.08em] text-neutral-500 uppercase">
+              {brand}
+            </p>
+            <p className="mt-1 mb-0 truncate font-heading text-lg leading-tight text-neutral-900">
               {title}
             </p>
             <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">
@@ -129,7 +132,7 @@ export function AskFab({
               variant="secondary"
               size="lg"
               className={cn(
-                "min-w-0 flex-1 lg:flex-none",
+                "shrink-0 max-lg:aspect-square max-lg:px-0",
                 isFavorite &&
                   "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
               )}
@@ -145,7 +148,7 @@ export function AskFab({
                 }
                 aria-hidden="true"
               />
-              <span className="truncate">
+              <span className="hidden truncate lg:inline">
                 {isFavorite ? "W schowku" : "Dodaj do schowka"}
               </span>
             </Button>

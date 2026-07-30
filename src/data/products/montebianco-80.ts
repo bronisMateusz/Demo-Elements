@@ -375,6 +375,7 @@ export const montebianco80: Product = {
     {
       id: "insp-1",
       title: "Klasyczna elegancja w jasnej łazience",
+      showProducts: true,
       image: {
         src: assetUrl("home/inspiration-oristo-pillow.jpg"),
         alt: "Klasyczna elegancja w jasnej łazience",
@@ -387,10 +388,34 @@ export const montebianco80: Product = {
         "Bateria umywalkowa, złoto szczotkowane",
         "Lustro Montebianco 80 cm w ramie",
       ],
+      products: [
+        related(
+          "pdp-insp1-vanity",
+          "ORiSTO",
+          "Szafka podumywalkowa Montebianco 80 cm biały mat",
+          { price: "1 990 zł", pricePrevious: "2 390 zł" },
+        ),
+        related("pdp-insp1-basin", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm", {
+          price: "890 zł",
+        }),
+        related(
+          "pdp-insp1-tap",
+          "Omnires",
+          "Bateria umywalkowa, złoto szczotkowane",
+          { price: "1 240 zł" },
+        ),
+        related(
+          "pdp-insp1-mirror",
+          "ORiSTO",
+          "Lustro Montebianco 80 cm w ramie",
+          { price: "690 zł" },
+        ),
+      ],
     },
     {
       id: "insp-2",
       title: "Ciepły minimalizm z akcentami drewna",
+      href: "#inspiracje",
       image: {
         src: assetUrl("home/inspiration-warm-minimal.jpg"),
         alt: "Ciepły minimalizm z akcentami drewna",
@@ -407,6 +432,7 @@ export const montebianco80: Product = {
     {
       id: "insp-3",
       title: "Głęboka zieleń i marmur",
+      showProducts: true,
       image: {
         src: assetUrl("home/inspiration-green-marble.jpg"),
         alt: "Głęboka zieleń i marmur",
@@ -418,6 +444,26 @@ export const montebianco80: Product = {
         "Umywalka nablatowa, zieleń / biały",
         "Bateria umywalkowa podtynkowa, czarny mat",
         "Płytki imitujące czarny marmur",
+      ],
+      products: [
+        related(
+          "pdp-insp3-vanity",
+          "ORiSTO",
+          "Szafka podumywalkowa, zielony mat, 80 cm",
+          { price: "2 190 zł" },
+        ),
+        related(
+          "pdp-insp3-basin",
+          "ORiSTO",
+          "Umywalka nablatowa, zieleń / biały",
+          { price: "780 zł", pricePrevious: "980 zł" },
+        ),
+        related(
+          "pdp-insp3-tap",
+          "Omnires",
+          "Bateria umywalkowa, czarny mat",
+          { price: "1 120 zł" },
+        ),
       ],
     },
   ],

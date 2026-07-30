@@ -15,6 +15,7 @@ import {
 } from "../../data/home";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { cn } from "../../lib/cn";
+import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { SharedLayoutUnderline } from "../motion/SharedLayoutUnderline";
@@ -240,7 +241,7 @@ export function HomeHero() {
               className={iconButtonClassName({
                 variant: "default",
                 className:
-                  "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
+                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 md:w-14",
               })}
               aria-label="Poprzedni baner"
               onClick={goPrev}
@@ -248,9 +249,46 @@ export function HomeHero() {
               <i className="ph ph-caret-left" aria-hidden="true" />
             </button>
 
+            {/* Mobile: current slide only - 2x2 tab grid is too cramped. */}
+            <div className="relative flex min-h-14 min-w-0 flex-1 items-center gap-2.5 px-1 py-3 md:hidden">
+              <span className="shrink-0 font-body text-xs tabular-nums tracking-[0.08em] text-neutral-400">
+                {formatSlideIndex(activeIndex, slideCount)}
+              </span>
+              <p className="m-0 min-w-0 truncate font-body text-xs leading-snug text-neutral-900">
+                {activeSlide.hint}
+              </p>
+              <span
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 overflow-hidden bg-neutral-200"
+                aria-hidden="true"
+              >
+                <span
+                  key={
+                    progressComplete
+                      ? `full-m-${activeIndex}`
+                      : `run-m-${activeIndex}`
+                  }
+                  className={cn(
+                    "home-hero-progress block h-full origin-left bg-gold-500",
+                    progressComplete
+                      ? "scale-x-100"
+                      : "animate-[home-hero-progress_var(--home-hero-autoplay)_linear_forwards]",
+                  )}
+                  style={
+                    progressComplete
+                      ? undefined
+                      : ({
+                          "--home-hero-autoplay": `${HOME_HERO_AUTOPLAY_MS}ms`,
+                          animationPlayState: paused ? "paused" : "running",
+                        } as CSSProperties)
+                  }
+                  onAnimationEnd={onProgressEnd}
+                />
+              </span>
+            </div>
+
             <LayoutGroup id="home-hero-tabs-active">
               <SharedLayoutUnderline
-                className="grid min-w-0 flex-1 grid-cols-2 md:grid-cols-4"
+                className="hidden min-w-0 flex-1 md:grid md:grid-cols-4"
                 lineClassName="h-0.5 bg-gold-500/45"
                 role="tablist"
                 aria-label="Wybór banera"
@@ -275,7 +313,7 @@ export function HomeHero() {
                       )}
                       onClick={() => goTo(index)}
                     >
-                      <span className="line-clamp-2 font-body text-[11px] leading-snug md:text-xs">
+                      <span className="line-clamp-2 font-body text-xs leading-snug">
                         {slide.hint}
                       </span>
                       {selected ? (
@@ -324,7 +362,7 @@ export function HomeHero() {
               className={iconButtonClassName({
                 variant: "default",
                 className:
-                  "size-auto min-h-14 w-12 shrink-0 rounded-none border-0 md:w-14",
+                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 md:w-14",
               })}
               aria-label="Następny baner"
               onClick={goNext}

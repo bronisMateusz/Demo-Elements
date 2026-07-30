@@ -1,7 +1,6 @@
 import { Breadcrumbs } from "../../components/orientation/Breadcrumbs";
 import {
   ButtonAskRowDemo,
-  ButtonAskFabDemo,
   ButtonFullWidthDemo,
   ButtonGhostStatesDemo,
   ButtonGoldStatesDemo,
@@ -10,11 +9,15 @@ import {
   ButtonLiveHoverDemo,
   ButtonOnDarkDemo,
   ButtonPrimaryStatesDemo,
-  ButtonQuickAddDemo,
   ButtonSecondaryStatesDemo,
   ButtonSizesDemo,
   ButtonTertiaryStatesDemo,
 } from "../demos/ButtonSystemDemo";
+import {
+  BadgeSystemDemo,
+  CheckboxDemo,
+  IconButtonLiveDemo,
+} from "../demos/PrimitivesDemo";
 import { libPreviewArticleClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
@@ -93,7 +96,7 @@ export const buttonModule: LibraryModule = {
   slug: "button",
   title: "Przycisk / CTA",
   description:
-    "System przycisków Elements - warianty Primary, Secondary, Gold, Ghost i Tertiary; tone default/onDark; rozmiary; stany; IconButton (default, bordered, elevated, on-dark); ask-row i quick-add.",
+    "System przycisków Elements - warianty Primary, Secondary, Gold, Ghost i Tertiary; tone default/onDark; rozmiary; stany; IconButton; ProductAskRow (PDP).",
   optionalProps: [
     { name: "variant", type: "ButtonVariant", defaultValue: "primary" },
     { name: "size", type: '"sm" | "md" | "lg"', defaultValue: "md" },
@@ -227,31 +230,72 @@ export const buttonModule: LibraryModule = {
       id: "ask-row",
       label: "Ask row (PDP)",
       description:
-        "Lead jako tekst + osobny przycisk CTA (secondary · lg) pod ceną.",
+        "Lead + CTA (secondary · lg) pod ceną - otwiera AskDrawer przez onAskOpen.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonAskRowDemo />
         </div>
       ),
     },
+  ],
+};
+
+export const badgeModule: LibraryModule = {
+  id: "2.5",
+  slug: "badge",
+  title: "Badge",
+  description:
+    "Etykiety produktu / promo - warianty default, gold, brand, outline, promo, neutral; rozmiary sm/md.",
+  optionalProps: [
+    { name: "variant", type: "BadgeVariant", defaultValue: "default" },
+    { name: "size", type: '"sm" | "md"', defaultValue: "md" },
+  ],
+  variants: [
     {
-      id: "ask-fab",
-      label: "Fixed bar (PDP)",
-      description:
-        "Sticky pasek jak OKA - miniatura/tytuł/cena na desktopie, CTA: Dodaj do schowka + Zadaj pytanie. Po scrollu, znika przed stopką.",
+      id: "system",
+      label: "Warianty i rozmiary",
       render: () => (
         <div className={libPreviewArticleClassName}>
-          <ButtonAskFabDemo />
+          <BadgeSystemDemo />
         </div>
       ),
     },
+  ],
+};
+
+export const iconButtonModule: LibraryModule = {
+  id: "2.6",
+  slug: "icon-button",
+  title: "IconButton",
+  description:
+    "Przyciski ikoniczne (Header, FAB, drawery) - default, bordered, elevated, on-dark; IconLink.",
+  variants: [
     {
-      id: "quick-add",
-      label: "Quick add (karuzela)",
-      description: "Przycisk szybkiego dodania na karcie produktu w karuzeli.",
+      id: "live",
+      label: "Live komponenty",
+      description: "Prawdziwy IconButton / IconLink (nie class-helper preview).",
       render: () => (
         <div className={libPreviewArticleClassName}>
-          <ButtonQuickAddDemo />
+          <IconButtonLiveDemo />
+        </div>
+      ),
+    },
+  ],
+};
+
+export const checkboxModule: LibraryModule = {
+  id: "2.7",
+  slug: "checkbox",
+  title: "Checkbox",
+  description:
+    "Animowany checkbox (AskDrawer, newsletter) - checked, indeterminate, disabled.",
+  variants: [
+    {
+      id: "states",
+      label: "Stany",
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <CheckboxDemo />
         </div>
       ),
     },
@@ -261,4 +305,7 @@ export const buttonModule: LibraryModule = {
 export const category2Modules: LibraryModule[] = [
   breadcrumbsModule,
   buttonModule,
+  badgeModule,
+  iconButtonModule,
+  checkboxModule,
 ];

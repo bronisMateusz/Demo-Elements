@@ -51,13 +51,19 @@ export function ProductVisualizationCTA({
           </TextRevealLead>
 
           <motion.div
-            className="mt-6 flex flex-wrap items-center justify-center gap-3 md:mt-8"
+            className="mt-6 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center md:mt-8"
             initial={reducedMotion ? false : { opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.7, delay: 0.12, ease: EASE_OUT }}
           >
-            <Button href={href} variant="primary" tone="onDark" size="lg">
+            <Button
+              href={href}
+              variant="primary"
+              tone="onDark"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
               {label}
               <i className="ph ph-arrow-right" aria-hidden="true" />
             </Button>
@@ -67,6 +73,7 @@ export function ProductVisualizationCTA({
                 variant="secondary"
                 tone="onDark"
                 size="lg"
+                className="w-full sm:w-auto"
               >
                 {secondary.label}
               </Button>

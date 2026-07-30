@@ -82,7 +82,7 @@ export function ProductArchitectCTA({
             </div>
           </div>
 
-          <div className="relative flex flex-col justify-center bg-gold-100 px-8 py-8 md:px-10 md:py-10 lg:px-12 lg:py-12">
+          <div className="relative flex flex-col justify-center bg-gold-100 px-5 py-6 sm:px-6 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-12">
             <div
               className="pointer-events-none absolute inset-0 overflow-hidden"
               aria-hidden="true"
@@ -97,7 +97,7 @@ export function ProductArchitectCTA({
               />
             </div>
 
-            <div className="relative z-10 flex flex-col gap-5 md:gap-6">
+            <div className="relative z-10 flex min-w-0 flex-col gap-4 md:gap-6">
               <Eyebrow
                 variant="gold"
                 className="mb-0 text-sm tracking-widest text-gold-600"
@@ -105,11 +105,11 @@ export function ProductArchitectCTA({
                 {eyebrow}
               </Eyebrow>
 
-              <div className="flex flex-col gap-4 md:gap-5">
+              <div className="flex min-w-0 flex-col gap-3 md:gap-5">
                 <TextRevealLead
                   id="architect-cta-title"
                   revealUnit="word"
-                  className="max-w-none"
+                  className="max-w-none text-balance"
                   typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
                   mutedClassName="text-neutral-900/20"
                   fillClassName="text-neutral-900"
@@ -122,13 +122,18 @@ export function ProductArchitectCTA({
               </div>
 
               <motion.div
-                className="flex justify-start"
+                className="flex min-w-0 justify-start"
                 initial={preferReducedMotion ? false : { opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.7, delay: 0.12, ease: EASE_OUT }}
               >
-                <Button href={href} variant="primary" size="lg">
+                <Button
+                  href={href}
+                  variant="primary"
+                  size="lg"
+                  className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
+                >
                   {label}
                   <i className="ph ph-cube" aria-hidden="true" />
                 </Button>

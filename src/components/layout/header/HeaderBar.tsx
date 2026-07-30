@@ -2,10 +2,10 @@ import { useEffect, useId, useRef } from "react";
 import { Link } from "react-router-dom";
 import { assetUrl } from "../../../app/assets";
 import { cn } from "../../../lib/cn";
-import { mainNavItems, salonNav } from "../../../data/nav";
+import { favoritesNav, mainNavItems, salonNav } from "../../../data/nav";
+import { useProductFavoritesCount } from "../../../hooks/useProductFavorites";
 import { useSelectedSalon } from "../../../hooks/useSelectedSalon";
-import { IconButton } from "../../ui/IconButton";
-import { iconButtonClassName } from "../../ui/iconButtonClassName";
+import { IconButton, IconLink } from "../../ui/IconButton";
 import { ProductsMegaMenu } from "./ProductsMegaMenu";
 
 type HeaderBarProps = {
@@ -62,31 +62,6 @@ function HeaderSalonButton({
   );
 }
 
-/** Compact location control for viewports where the labeled salon button is hidden. */
-function HeaderSalonIconButton({
-  onClick,
-  open = false,
-}: {
-  onClick: () => void;
-  open?: boolean;
-}) {
-  const { salon } = useSelectedSalon();
-  const label = salon?.name ?? salonNav.label;
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-haspopup="dialog"
-      aria-expanded={open}
-      aria-label={label}
-      className={cn(iconButtonClassName({ variant: "default" }), "lg:hidden")}
-    >
-      <i className="ph ph-map-pin" aria-hidden="true" />
-    </button>
-  );
-}
-
 export function HeaderBar({
   onMenuToggle,
   onSalonToggle,
@@ -98,6 +73,7 @@ export function HeaderBar({
   const megaId = useId().replace(/:/g, "");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const favoritesCount = useProductFavoritesCount();
 
   const clearCloseTimer = () => {
     if (closeTimer.current) {
@@ -148,7 +124,7 @@ export function HeaderBar({
       className="relative"
       onMouseLeave={scheduleCloseProducts}
     >
-      <div className="container flex h-18 items-center gap-4 xl:gap-6">
+      <div className="container flex h-14 items-center gap-3 lg:h-18 lg:gap-4 xl:gap-6">
         <Link
           to="/"
           className="inline-flex shrink-0 items-center no-underline"
@@ -159,7 +135,7 @@ export function HeaderBar({
             alt=""
             width={108}
             height={106}
-            className="h-[clamp(2rem,4vw,2.75rem)] w-auto"
+            className="h-[clamp(1.75rem,4vw,2.75rem)] w-auto"
           />
         </Link>
 
@@ -222,14 +198,28 @@ export function HeaderBar({
           </ul>
         </nav>
 
-        <div className="ms-auto flex h-full shrink-0 items-center gap-1 border-s border-neutral-200 ps-3 lg:ms-0 lg:ps-4">
+        <div className="ms-auto flex h-full shrink-0 items-center gap-0.5 border-s border-neutral-200 ps-2 lg:ms-0 lg:gap-1 lg:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton
             label="Szukaj"
             iconClass="ph ph-magnifying-glass"
             variant="default"
           />
-          <HeaderSalonIconButton onClick={onSalonToggle} open={salonOpen} />
+          <IconLink
+            href={favoritesNav.href}
+            label={
+              favoritesCount > 0
+                ? `${favoritesNav.label} (${favoritesCount})`
+                : favoritesNav.label
+            }
+            iconClass={
+              favoritesCount > 0
+                ? "ph-fill ph-bookmark-simple"
+                : "ph ph-bookmark-simple"
+            }
+            variant="default"
+            className={cn("lg:hidden", favoritesCount > 0 && "text-gold-500")}
+          />
           <IconButton
             label="Otwórz menu"
             iconClass="ph ph-list"
