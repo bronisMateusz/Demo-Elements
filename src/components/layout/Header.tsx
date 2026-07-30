@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "../../lib/cn";
 import { LG_MIN_WIDTH_PX } from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
@@ -14,6 +20,15 @@ import { SalonDrawer } from "./SalonDrawer";
 
 const TOP_ALWAYS_VISIBLE_PX = 64;
 const DIRECTION_DELTA_PX = 6;
+
+function syncSiteHeaderBarHeightVar() {
+  const bar = document.getElementById("siteHeaderBar");
+  if (!bar) return;
+  document.documentElement.style.setProperty(
+    "--site-header-bar-height",
+    `${bar.offsetHeight}px`,
+  );
+}
 
 export function Header() {
   useSiteChrome();
@@ -53,6 +68,21 @@ export function Header() {
 
   useSalonDrawerRequest(openSalonDrawer);
   useInspirationProductsDrawerRequest(openInspirationProducts);
+
+  useLayoutEffect(() => {
+    syncSiteHeaderBarHeightVar();
+    const bar = document.getElementById("siteHeaderBar");
+    if (!bar || typeof ResizeObserver === "undefined") return;
+
+    const observer = new ResizeObserver(() => syncSiteHeaderBarHeightVar());
+    observer.observe(bar);
+    window.addEventListener("resize", syncSiteHeaderBarHeightVar);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncSiteHeaderBarHeightVar);
+      document.documentElement.style.removeProperty("--site-header-bar-height");
+    };
+  }, []);
 
   useEffect(() => {
     const lgQuery = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`);

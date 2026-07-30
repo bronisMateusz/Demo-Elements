@@ -100,7 +100,7 @@ export function AskFab({
         aria-hidden={!visible}
         aria-label="Szybkie akcje produktu"
       >
-        <div className="flex items-center gap-3 border border-neutral-200/80 bg-neutral-0 px-4 py-3 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
+        <div className="flex items-center gap-2 border border-neutral-200/80 bg-neutral-0 px-3 py-2 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
           <div className="hidden size-12 shrink-0 overflow-hidden bg-product-stage lg:block">
             <img
               src={image.src}
@@ -132,7 +132,7 @@ export function AskFab({
               variant="secondary"
               size="lg"
               className={cn(
-                "shrink-0 max-lg:aspect-square max-lg:px-0",
+                "shrink-0 max-lg:h-11 max-lg:aspect-square max-lg:px-0 lg:h-13",
                 isFavorite &&
                   "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
               )}
@@ -158,7 +158,7 @@ export function AskFab({
               type="button"
               variant="primary"
               size="lg"
-              className="min-w-0 flex-1 lg:flex-none"
+              className="min-w-0 flex-1 max-lg:h-11 max-lg:px-5 lg:h-13 lg:flex-none"
               ariaLabel={askLabel}
               onClick={() => setAskOpen(true)}
             >

@@ -31,7 +31,7 @@ export function HeaderSalonStrip({
         aria-haspopup="dialog"
         aria-expanded={open}
         className={cn(
-          "group/salon flex w-full items-center gap-2.5 px-[clamp(1.25rem,2.222vw,2.5rem)] py-3 text-start",
+          "group/salon flex w-full items-center gap-2.5 px-[clamp(1.25rem,2.222vw,2.5rem)] py-2 text-start",
           "transition-colors duration-fast ease-out hover:bg-neutral-50",
           "focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-neutral-800",
         )}

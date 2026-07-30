@@ -10,8 +10,10 @@ export const CONTENT_MAX_FALLBACK_PX = 1536; // 96rem at 16px root
 export const WIDE_MAX_FALLBACK_PX = 1792; // 112rem at 16px root
 
 export const HEADER_BAR_PX = 72;
+export const HEADER_BAR_MOBILE_PX = 56; // h-14
+/** Mobile bar + HeaderSalonStrip (approx; prefer live measure). */
+export const HEADER_H_MOBILE_PX = 120;
 export const HEADER_UTILITY_PX = 44;
-export const HEADER_H_MOBILE_PX = 72;
 export const HEADER_H_DESKTOP_PX = 116;
 export const LG_MIN_WIDTH_PX = 1024; // 64rem
 
@@ -39,17 +41,33 @@ export const maxWContentClassName = "max-w-384";
 export const maxWWideClassName = "max-w-448";
 
 export function readHeaderHeightPx(): number {
-  return window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches
-    ? HEADER_H_DESKTOP_PX
-    : HEADER_H_MOBILE_PX;
+  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
+  const bar = document.getElementById("siteHeaderBar");
+  const barH = bar?.offsetHeight ?? 0;
+
+  if (!isLg) {
+    return barH > 0 ? barH : HEADER_H_MOBILE_PX;
+  }
+
+  const utility = document.getElementById("siteHeaderUtility");
+  const utilH = utility?.offsetHeight ?? HEADER_UTILITY_PX;
+  const barOnly = barH > 0 ? barH : HEADER_BAR_PX;
+  // Full sticky stack (utility always counted for stuck observer).
+  return utilH + barOnly;
 }
 
 export function readHeaderOffsetPx(): number {
   const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
-  if (!isLg) return HEADER_H_MOBILE_PX;
+  const bar = document.getElementById("siteHeaderBar");
+  const barH = bar?.offsetHeight ?? 0;
+
+  if (!isLg) {
+    return barH > 0 ? barH : HEADER_H_MOBILE_PX;
+  }
+
   // Utility strip hidden - only the main menu bar remains.
   if (document.documentElement.classList.contains("site-header-concealed")) {
-    return HEADER_BAR_PX;
+    return barH > 0 ? barH : HEADER_BAR_PX;
   }
-  return HEADER_H_DESKTOP_PX;
+  return readHeaderHeightPx();
 }
