@@ -1,13 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { isMotionPaused } from "../lib/a11yPreferences";
 import type { PdpSubnavItem } from "../constants/pdpSubnav";
-import { PDP_SUBNAV_HEIGHT_PX } from "../constants/pdpSubnav";
-import { readHeaderHeightPx, readHeaderOffsetPx } from "../lib/layoutTokens";
+import {
+  PDP_SUBNAV_HEIGHT_MOBILE_PX,
+  PDP_SUBNAV_HEIGHT_PX,
+} from "../constants/pdpSubnav";
+import {
+  LG_MIN_WIDTH_PX,
+  readHeaderHeightPx,
+  readHeaderOffsetPx,
+} from "../lib/layoutTokens";
 
 const SUBNAV_GAP_PX = 8;
 
+function readSubnavHeightPx() {
+  const node = document.getElementById("pdpSubnav");
+  if (node?.offsetHeight) return node.offsetHeight;
+  return window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches
+    ? PDP_SUBNAV_HEIGHT_PX
+    : PDP_SUBNAV_HEIGHT_MOBILE_PX;
+}
+
 function readSubnavScrollOffsetPx() {
-  return readHeaderOffsetPx() + PDP_SUBNAV_HEIGHT_PX + SUBNAV_GAP_PX;
+  return readHeaderOffsetPx() + readSubnavHeightPx() + SUBNAV_GAP_PX;
 }
 
 export function usePdpSubnav(items: PdpSubnavItem[]) {

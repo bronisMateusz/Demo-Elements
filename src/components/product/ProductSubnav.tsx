@@ -11,11 +11,34 @@ type ProductSubnavProps = {
   items: PdpSubnavItem[];
 };
 
+function syncPdpSubnavHeightVar(node: HTMLElement | null) {
+  if (!node) return;
+  document.documentElement.style.setProperty(
+    "--pdp-subnav-height",
+    `${node.offsetHeight}px`,
+  );
+}
+
 export function ProductSubnav({ items }: ProductSubnavProps) {
   const { activeId, stuck, sentinelRef, scrollToSection } = usePdpSubnav(items);
   const reduce = useMotionReduced();
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef(new Map<string, HTMLAnchorElement>());
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    syncPdpSubnavHeightVar(nav);
+    if (typeof ResizeObserver === "undefined") return;
+
+    const observer = new ResizeObserver(() => syncPdpSubnavHeightVar(nav));
+    observer.observe(nav);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty("--pdp-subnav-height");
+    };
+  }, []);
 
   useEffect(() => {
     const link = linkRefs.current.get(activeId);
@@ -55,9 +78,10 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
         aria-hidden="true"
       />
       <nav
+        ref={navRef}
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-18 lg:top-29 z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm",
+          "pdp-subnav sticky top-[var(--site-header-bar-height,7.5rem)] z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm lg:top-29",
           stuck &&
             "is-stuck border-neutral-200 bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
@@ -85,10 +109,9 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
                     }}
                     href={`#${item.id}`}
                     className={cn(
-                      "relative inline-flex min-h-14.5 items-center px-3 py-3 font-body text-ui leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out",
+                      "relative inline-flex min-h-11 items-center px-3 py-2 font-body text-sm leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out md:min-h-14.5 md:px-4 md:py-3 md:text-ui",
                       "hover:text-neutral-900",
                       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-                      "md:px-4",
                       isActive && "text-neutral-900",
                     )}
                     aria-current={isActive ? "true" : undefined}
