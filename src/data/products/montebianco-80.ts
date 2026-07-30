@@ -458,12 +458,9 @@ export const montebianco80: Product = {
           "Umywalka nablatowa, zieleń / biały",
           { price: "780 zł", pricePrevious: "980 zł" },
         ),
-        related(
-          "pdp-insp3-tap",
-          "Omnires",
-          "Bateria umywalkowa, czarny mat",
-          { price: "1 120 zł" },
-        ),
+        related("pdp-insp3-tap", "Omnires", "Bateria umywalkowa, czarny mat", {
+          price: "1 120 zł",
+        }),
       ],
     },
   ],

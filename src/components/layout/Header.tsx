@@ -129,17 +129,11 @@ export function Header() {
             productsOpen={productsOpen}
             onProductsOpenChange={setProductsOpen}
           />
-          <HeaderSalonStrip
-            onClick={openSalonDrawer}
-            open={salonOpen}
-          />
+          <HeaderSalonStrip onClick={openSalonDrawer} open={salonOpen} />
         </header>
       </div>
 
-      <MobileDrawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      />
+      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <SalonDrawer open={salonOpen} onClose={() => setSalonOpen(false)} />
       <InspirationProductsDrawer
         open={inspirationOpen}

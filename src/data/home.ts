@@ -455,13 +455,18 @@ const montebiancoPackshot = {
 /** Demo products for arrangement drawers (galeria-aranzacji pattern). */
 const homeArrangementProducts = {
   oristoPillow: [
-    product("arr-pillow-vanity", "ORiSTO", "Szafka podumywalkowa Pillow 60 cm, biały połysk", {
-      price: "1 890 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Szafka podumywalkowa Pillow 60 cm, biały połysk",
+    product(
+      "arr-pillow-vanity",
+      "ORiSTO",
+      "Szafka podumywalkowa Pillow 60 cm, biały połysk",
+      {
+        price: "1 890 zł",
+        image: {
+          ...montebiancoPackshot,
+          alt: "Szafka podumywalkowa Pillow 60 cm, biały połysk",
+        },
       },
-    }),
+    ),
     product("arr-pillow-basin", "ORiSTO", "Umywalka meblowa Pillow 60 cm", {
       price: "690 zł",
       image: {
@@ -478,20 +483,30 @@ const homeArrangementProducts = {
     }),
   ],
   compact: [
-    product("arr-compact-vanity", "ORiSTO", "Szafka wisząca Montebianco 80 cm biały mat", {
-      price: "1 990 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Szafka wisząca Montebianco 80 cm biały mat",
+    product(
+      "arr-compact-vanity",
+      "ORiSTO",
+      "Szafka wisząca Montebianco 80 cm biały mat",
+      {
+        price: "1 990 zł",
+        image: {
+          ...montebiancoPackshot,
+          alt: "Szafka wisząca Montebianco 80 cm biały mat",
+        },
       },
-    }),
-    product("arr-compact-mirror", "ORiSTO", "Lustro z podświetleniem LED 80 cm", {
-      price: "890 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Lustro z podświetleniem LED 80 cm",
+    ),
+    product(
+      "arr-compact-mirror",
+      "ORiSTO",
+      "Lustro z podświetleniem LED 80 cm",
+      {
+        price: "890 zł",
+        image: {
+          ...montebiancoPackshot,
+          alt: "Lustro z podświetleniem LED 80 cm",
+        },
       },
-    }),
+    ),
     product(
       "arr-compact-wc",
       "Omnires",
@@ -507,13 +522,18 @@ const homeArrangementProducts = {
     ),
   ],
   deepGreen: [
-    product("arr-green-vanity", "ORiSTO", "Szafka podumywalkowa, zielony mat, 80 cm", {
-      price: "2 190 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Szafka podumywalkowa, zielony mat, 80 cm",
+    product(
+      "arr-green-vanity",
+      "ORiSTO",
+      "Szafka podumywalkowa, zielony mat, 80 cm",
+      {
+        price: "2 190 zł",
+        image: {
+          ...montebiancoPackshot,
+          alt: "Szafka podumywalkowa, zielony mat, 80 cm",
+        },
       },
-    }),
+    ),
     product("arr-green-basin", "ORiSTO", "Umywalka nablatowa, zieleń / biały", {
       price: "780 zł",
       pricePrevious: "980 zł",
