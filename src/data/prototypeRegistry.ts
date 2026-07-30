@@ -54,6 +54,11 @@ export const prototypeSections: PrototypeSection[] = [
         to: "/biblioteka/produkt",
         iconClass: "ph ph-package",
       },
+      {
+        label: "Strona główna",
+        to: "/biblioteka/strona-glowna",
+        iconClass: "ph ph-house-line",
+      },
     ],
   },
 ];

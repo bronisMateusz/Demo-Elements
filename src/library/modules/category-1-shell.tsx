@@ -1,6 +1,11 @@
 import { Header } from "../../components/layout/Header";
 import { Footer } from "../../components/layout/Footer";
-import { AskDrawerDemo, SalonDrawerDemo } from "../demos/DrawerSystemDemo";
+import {
+  AskDrawerDemo,
+  InspirationProductsDrawerDemo,
+  MobileDrawerDemo,
+  SalonDrawerDemo,
+} from "../demos/DrawerSystemDemo";
 import { libPreviewFullBleedWrapperClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
@@ -9,13 +14,13 @@ export const headerModule: LibraryModule = {
   slug: "header",
   title: "Header",
   description:
-    "Shell nagłówka: utility bar (desktop), logo, menu z mega-menu Produktów, selektor salonu (SalonDrawer), schowek i menu mobilne. Sticky z conceal/reveal przy scrollu.",
+    "Shell nagłówka: utility bar (desktop), logo, menu z mega-menu Produktów, selektor salonu (desktop) / HeaderSalonStrip (mobile), szukaj, schowek (mobile) i hamburger. Sticky z conceal/reveal utility przy scrollu. Hostuje też InspirationProductsDrawer.",
   variants: [
     {
       id: "default",
       label: "Domyślny",
       description:
-        "Pełny chrome - utility, nav, Wybierz salon / Zmień salon, szukaj i schowek z badge.",
+        "Pełny chrome - utility, nav, salon, szukaj, schowek (mobile) i menu. Zwęż okno, by zobaczyć strip salonu pod barem.",
       render: () => (
         <div
           className={libPreviewFullBleedWrapperClassName}
@@ -60,12 +65,13 @@ export const drawersModule: LibraryModule = {
   slug: "drawers",
   title: "Drawers",
   description:
-    "Wspólny DrawerShell (backdrop, slide-in, Escape, scroll-lock) oraz drawer salonu i pytania o produkt.",
+    "Wspólny DrawerShell (backdrop, slide-in, Escape, scroll-lock): salon, pytanie o produkt, produkty aranżacji i menu mobilne.",
   variants: [
     {
       id: "salon",
       label: "SalonDrawer",
-      description: "Lista salonów z wyszukiwaniem i lokalizacją.",
+      description:
+        "Lista salonów z wyszukiwaniem i lokalizacją (search w footerze na mobile).",
       render: () => <SalonDrawerDemo />,
     },
     {
@@ -73,6 +79,18 @@ export const drawersModule: LibraryModule = {
       label: "AskDrawer",
       description: "Formularz pytania z kontekstem produktu Montebianco.",
       render: () => <AskDrawerDemo />,
+    },
+    {
+      id: "inspiration-products",
+      label: "InspirationProductsDrawer",
+      description: "Produkty z aranżacji - wiersze + schowek + CTA.",
+      render: () => <InspirationProductsDrawerDemo />,
+    },
+    {
+      id: "mobile-menu",
+      label: "MobileDrawer",
+      description: "Główne menu + strefy/skróty z utility bar.",
+      render: () => <MobileDrawerDemo />,
     },
   ],
 };

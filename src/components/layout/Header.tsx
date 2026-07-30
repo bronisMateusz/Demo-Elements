@@ -2,8 +2,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { LG_MIN_WIDTH_PX } from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
+import { useInspirationProductsDrawerRequest } from "../../hooks/useInspirationProductsDrawer";
 import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
+import type { InspirationArrangement } from "../../types/product";
+import { InspirationProductsDrawer } from "../inspiration/InspirationProductsDrawer";
 import { HeaderBar } from "./header/HeaderBar";
+import { HeaderSalonStrip } from "./header/HeaderSalonStrip";
 import { HeaderUtility } from "./header/HeaderUtility";
 import { MobileDrawer } from "./MobileDrawer";
 import { SalonDrawer } from "./SalonDrawer";
@@ -16,19 +20,39 @@ export function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [salonOpen, setSalonOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [inspirationOpen, setInspirationOpen] = useState(false);
+  const [inspirationArrangement, setInspirationArrangement] =
+    useState<InspirationArrangement | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [utilityConcealed, setUtilityConcealed] = useState(false);
   const lastScrollY = useRef(0);
-  // Drawers keep the utility strip visible; bar hover / mega menu must not toggle it.
-  const chromeLocked = drawerOpen || salonOpen;
-  const concealUtility = utilityConcealed && !chromeLocked;
+  // Drawers must not change header chrome (utility conceal stays scroll-driven).
+  const concealUtility = utilityConcealed;
 
   const openSalonDrawer = useCallback(() => {
     setProductsOpen(false);
+    setInspirationOpen(false);
+    setInspirationArrangement(null);
     setSalonOpen(true);
   }, []);
 
+  const openInspirationProducts = useCallback(
+    (arrangement: InspirationArrangement) => {
+      setProductsOpen(false);
+      setSalonOpen(false);
+      setInspirationArrangement(arrangement);
+      setInspirationOpen(true);
+    },
+    [],
+  );
+
+  const closeInspirationProducts = useCallback(() => {
+    setInspirationOpen(false);
+    setInspirationArrangement(null);
+  }, []);
+
   useSalonDrawerRequest(openSalonDrawer);
+  useInspirationProductsDrawerRequest(openInspirationProducts);
 
   useEffect(() => {
     const lgQuery = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`);
@@ -105,15 +129,23 @@ export function Header() {
             productsOpen={productsOpen}
             onProductsOpenChange={setProductsOpen}
           />
+          <HeaderSalonStrip
+            onClick={openSalonDrawer}
+            open={salonOpen}
+          />
         </header>
       </div>
 
       <MobileDrawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        onSalonOpen={() => setSalonOpen(true)}
       />
       <SalonDrawer open={salonOpen} onClose={() => setSalonOpen(false)} />
+      <InspirationProductsDrawer
+        open={inspirationOpen}
+        arrangement={inspirationArrangement}
+        onClose={closeInspirationProducts}
+      />
     </>
   );
 }

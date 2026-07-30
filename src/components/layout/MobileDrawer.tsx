@@ -1,15 +1,12 @@
-import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  favoritesNav,
   mainNavItems,
   productsMegaMenu,
-  salonNav,
+  utilityNavItems,
   type MegaMenuGroup,
 } from "../../data/nav";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
-import { useProductFavoritesCount } from "../../hooks/useProductFavorites";
-import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { cn } from "../../lib/cn";
 import { EASE_LUXURY } from "../../lib/motionEase";
 import { DrawerHeader, DrawerShell } from "./DrawerShell";
@@ -17,7 +14,6 @@ import { DrawerHeader, DrawerShell } from "./DrawerShell";
 type MobileDrawerProps = {
   open: boolean;
   onClose: () => void;
-  onSalonOpen?: () => void;
 };
 
 type RootFrame = { kind: "root" };
@@ -29,8 +25,6 @@ const PANEL_DURATION_S = 0.32;
 const PANEL_PAD = "px-[clamp(1.25rem,2.222vw,2.5rem)] py-8";
 const PANEL_SURFACE =
   "absolute inset-0 flex flex-col overflow-y-auto bg-neutral-0 " + PANEL_PAD;
-const FOOTER_PAD =
-  "px-[clamp(1.25rem,2.222vw,2.5rem)] pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]";
 
 const productGroups: MegaMenuGroup[] = productsMegaMenu.flatMap(
   (column) => column.groups,
@@ -40,76 +34,7 @@ function peek(stack: Frame[]): Frame {
   return stack[stack.length - 1] ?? { kind: "root" };
 }
 
-function MobileDrawerFooter({
-  salonLabel,
-  salonNote,
-  favoritesCount,
-  onSalonClick,
-  onFavoritesClick,
-}: {
-  salonLabel: string;
-  salonNote: string;
-  favoritesCount: number;
-  onSalonClick: () => void;
-  onFavoritesClick: () => void;
-}): ReactNode {
-  return (
-    <div
-      className={`shrink-0 border-t border-neutral-200 bg-neutral-0 ${FOOTER_PAD}`}
-    >
-      <div className="flex flex-col gap-4">
-        <button
-          type="button"
-          className="flex w-full items-center gap-2.5 text-start"
-          onClick={onSalonClick}
-        >
-          <i
-            className="ph ph-map-pin text-xl text-neutral-700"
-            aria-hidden="true"
-          />
-          <span className="min-w-0 flex-1">
-            <span className="block truncate font-body text-ui text-neutral-900">
-              {salonLabel}
-            </span>
-            <span className="mt-0.5 block text-xs text-neutral-500">
-              {salonNote}
-            </span>
-          </span>
-          <i
-            className="ph ph-caret-right text-sm text-neutral-500"
-            aria-hidden="true"
-          />
-        </button>
-        <a
-          href={favoritesNav.href}
-          className="flex items-center gap-3 font-body text-ui text-neutral-900 no-underline hover:text-gold-500"
-          onClick={onFavoritesClick}
-        >
-          <i
-            className={
-              favoritesCount > 0
-                ? "ph-fill ph-bookmark-simple text-xl"
-                : "ph ph-bookmark-simple text-xl"
-            }
-            aria-hidden="true"
-          />
-          <span>
-            {favoritesNav.label}
-            {favoritesCount > 0 ? ` (${favoritesCount})` : ""}
-          </span>
-        </a>
-      </div>
-    </div>
-  );
-}
-
-export function MobileDrawer({
-  open,
-  onClose,
-  onSalonOpen,
-}: MobileDrawerProps) {
-  const favoritesCount = useProductFavoritesCount();
-  const { salon } = useSelectedSalon();
+export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   const reduce = useMotionReduced();
   const [stack, setStack] = useState<Frame[]>([{ kind: "root" }]);
 
@@ -249,6 +174,40 @@ export function MobileDrawer({
               })}
             </ul>
           </nav>
+
+          <div className="mt-8 border-t border-neutral-200 pt-6">
+            <nav aria-label="Strefy i skróty">
+              <ul className="flex list-none flex-col gap-1">
+                {utilityNavItems.map((item) => (
+                  <li
+                    key={item.href + item.label}
+                    className={cn(
+                      "dividerAfter" in item &&
+                        item.dividerAfter &&
+                        "mb-3 border-b border-neutral-200 pb-3",
+                    )}
+                  >
+                    <a
+                      href={item.href}
+                      className="flex items-center gap-3 py-3 font-body text-lg text-neutral-900 no-underline transition-colors hover:text-gold-500"
+                      onClick={handleClose}
+                    >
+                      {"iconClass" in item && item.iconClass ? (
+                        <i
+                          className={cn(
+                            item.iconClass,
+                            "text-xl leading-none text-gold-500",
+                          )}
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                      <span className="min-w-0 flex-1">{item.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </motion.div>
 
         <AnimatePresence>
@@ -335,17 +294,6 @@ export function MobileDrawer({
           ) : null}
         </AnimatePresence>
       </div>
-
-      <MobileDrawerFooter
-        salonLabel={salon?.name ?? salonNav.label}
-        salonNote={salon ? salonNav.changeNote : salonNav.note}
-        favoritesCount={favoritesCount}
-        onSalonClick={() => {
-          handleClose();
-          onSalonOpen?.();
-        }}
-        onFavoritesClick={handleClose}
-      />
     </DrawerShell>
   );
 }

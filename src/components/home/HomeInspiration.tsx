@@ -3,15 +3,15 @@ import { homeInspiration } from "../../data/home";
 import { cn } from "../../lib/cn";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import {
-  ProductInspiration,
-  type ProductInspirationControls,
-} from "../product/ProductInspiration";
+  InspirationGallery,
+  type InspirationGalleryControls,
+} from "../inspiration/InspirationGallery";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
 
 export function HomeInspiration() {
-  const [controls, setControls] = useState<ProductInspirationControls | null>(
+  const [controls, setControls] = useState<InspirationGalleryControls | null>(
     null,
   );
   const count = homeInspiration.arrangements.length;
@@ -19,11 +19,17 @@ export function HomeInspiration() {
 
   return (
     <div className="pb-[clamp(2rem,5vw,3rem)] md:pb-[clamp(2.5rem,6vw,4rem)]">
-      <ProductInspiration
+      <InspirationGallery
         arrangements={homeInspiration.arrangements}
         eyebrow={homeInspiration.eyebrow}
         title={homeInspiration.title}
         navPlacement="none"
+        endCap={{
+          label: "Kliknij poniżej",
+          title: "Pełna galeria aranżacji",
+          description:
+            "Zobacz wszystkie inspiracje i dobierz produkty do swojej łazienki.",
+        }}
         onControlsChange={setControls}
       />
       <Container

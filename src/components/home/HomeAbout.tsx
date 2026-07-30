@@ -6,7 +6,7 @@ import { Section } from "../structural/Section";
 import { TextRevealLead } from "../motion/TextRevealLead";
 
 export function HomeAbout() {
-  const { title, lead, body, image } = homeAbout;
+  const { title, lead, subtitle, body, image } = homeAbout;
 
   return (
     <Section
@@ -36,23 +36,28 @@ export function HomeAbout() {
               {title}
             </TextRevealLead>
             <div>
-              <p className="m-0 mb-3 max-w-prose font-body text-lg leading-[2] font-medium text-neutral-900 md:text-xl md:leading-[2.05]">
+              <p className="m-0 mb-8 max-w-prose font-body text-base leading-relaxed text-neutral-700">
                 {lead}
               </p>
-              <p className="m-0 max-w-prose font-body text-lg leading-[2] text-neutral-700 md:leading-[2.05]">
-                {body.map((part, index) =>
-                  typeof part === "string" ? (
-                    <span key={index}>{part}</span>
-                  ) : (
-                    <strong
-                      key={index}
-                      className="font-semibold text-neutral-800"
-                    >
-                      {part.bold}
-                    </strong>
-                  ),
-                )}
-              </p>
+              <div>
+                <h3 className="t-h3 mb-5 max-w-prose text-balance">
+                  {subtitle}
+                </h3>
+                <p className="m-0 max-w-prose font-body text-base leading-relaxed text-neutral-700">
+                  {body.map((part, index) =>
+                    typeof part === "string" ? (
+                      <span key={index}>{part}</span>
+                    ) : (
+                      <strong
+                        key={index}
+                        className="font-semibold text-neutral-800"
+                      >
+                        {part.bold}
+                      </strong>
+                    ),
+                  )}
+                </p>
+              </div>
             </div>
           </div>
 

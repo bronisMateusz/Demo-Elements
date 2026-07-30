@@ -180,17 +180,6 @@ const homeProductCatalog: HomeProductCatalogItem[] = [
       src: assetUrl("products/montebianco/01-front.png"),
       alt: "Szafka podumywalkowa Montebianco 80 cm biały mat",
     },
-    images: [
-      {
-        src: assetUrl("products/montebianco/01-front.png"),
-        alt: "Szafka podumywalkowa Montebianco 80 cm biały mat - widok produktu",
-      },
-      {
-        src: assetUrl("products/montebianco/03-room.jpg"),
-        alt: "Szafka Montebianco w aranżacji łazienki",
-        fit: "cover",
-      },
-    ],
   },
   {
     key: "florim-tundra",
@@ -333,35 +322,121 @@ export const homeBrands = {
   slotCount: 8,
   cycleIntervalMs: 7000,
   items: [
-    { label: "Villeroy&Boch", href: "#producenci/villeroy-boch" },
-    { label: "Geberit", href: "#producenci/geberit" },
-    { label: "Grespania", href: "#producenci/grespania" },
-    { label: "Marazzi", href: "#producenci/marazzi" },
-    { label: "Roca", href: "#producenci/roca" },
-    { label: "Tubądzin", href: "#producenci/tubadzin" },
-    { label: "Cersanit", href: "#producenci/cersanit" },
-    { label: "Paradyż", href: "#producenci/paradyz" },
-    { label: "Excellent", href: "#producenci/excellent" },
-    { label: "ORiSTO", href: "#producenci/oristo" },
-    { label: "Kludi", href: "#producenci/kludi" },
-    { label: "Hansgrohe", href: "#producenci/hansgrohe" },
-    { label: "Grohe", href: "#producenci/grohe" },
-    { label: "Duravit", href: "#producenci/duravit" },
-    { label: "Ideal Standard", href: "#producenci/ideal-standard" },
-    { label: "Omnires", href: "#producenci/omnires" },
-    { label: "Koło", href: "#producenci/kolo" },
-    { label: "TECE", href: "#producenci/tece" },
-    { label: "Deante", href: "#producenci/deante" },
-    { label: "Blanco", href: "#producenci/blanco" },
+    {
+      label: "Villeroy&Boch",
+      href: "#producenci/villeroy-boch",
+      logoSrc: assetUrl("brands/villeroy-boch.svg"),
+    },
+    {
+      label: "Geberit",
+      href: "#producenci/geberit",
+      logoSrc: assetUrl("brands/geberit.svg"),
+    },
+    {
+      label: "Grespania",
+      href: "#producenci/grespania",
+      logoSrc: assetUrl("brands/grespania.svg"),
+    },
+    {
+      label: "Marazzi",
+      href: "#producenci/marazzi",
+      logoSrc: assetUrl("brands/marazzi.svg"),
+    },
+    {
+      label: "Roca",
+      href: "#producenci/roca",
+      logoSrc: assetUrl("brands/roca.svg"),
+    },
+    {
+      label: "Tubądzin",
+      href: "#producenci/tubadzin",
+      logoSrc: assetUrl("brands/tubadzin.png"),
+    },
+    {
+      label: "Florim",
+      href: "#producenci/florim",
+      logoSrc: assetUrl("brands/florim.png"),
+    },
+    {
+      label: "Paradyż",
+      href: "#producenci/paradyz",
+      logoSrc: assetUrl("brands/paradyz.svg"),
+    },
+    {
+      label: "Excellent",
+      href: "#producenci/excellent",
+      logoSrc: assetUrl("brands/excellent.svg"),
+    },
+    {
+      label: "ORiSTO",
+      href: "#producenci/oristo",
+      logoSrc: assetUrl("brands/oristo.svg"),
+    },
+    {
+      label: "Kludi",
+      href: "#producenci/kludi",
+      logoSrc: assetUrl("brands/kludi.png"),
+    },
+    {
+      label: "Hansgrohe",
+      href: "#producenci/hansgrohe",
+      logoSrc: assetUrl("brands/hansgrohe.svg"),
+    },
+    {
+      label: "Grohe",
+      href: "#producenci/grohe",
+      logoSrc: assetUrl("brands/grohe.svg"),
+    },
+    {
+      label: "Duravit",
+      href: "#producenci/duravit",
+      logoSrc: assetUrl("brands/duravit.svg"),
+    },
+    {
+      label: "Ideal Standard",
+      href: "#producenci/ideal-standard",
+      logoSrc: assetUrl("brands/ideal-standard.svg"),
+    },
+    {
+      label: "Omnires",
+      href: "#producenci/omnires",
+      logoSrc: assetUrl("brands/omnires.svg"),
+    },
+    {
+      label: "Koło",
+      href: "#producenci/kolo",
+      logoSrc: assetUrl("brands/kolo.svg"),
+    },
+    {
+      label: "TECE",
+      href: "#producenci/tece",
+      logoSrc: assetUrl("brands/tece.svg"),
+    },
+    {
+      label: "Deante",
+      href: "#producenci/deante",
+      logoSrc: assetUrl("brands/deante.png"),
+    },
+    {
+      label: "Blanco",
+      href: "#producenci/blanco",
+      logoSrc: assetUrl("brands/blanco.svg"),
+    },
   ],
 } as const;
 
 export const homeAppointment = {
-  eyebrow: "Twoja nowa łazienka zaczyna się od spotkania",
+  /** Split across two lines on the dark panel (makieta locate banner). */
+  slogan: ["Twoja nowa łazienka", "zaczyna się od spotkania"] as const,
   title: "Umów spotkanie w salonie",
   description:
-    "Nasz doradca będzie czekał na Ciebie w salonie — pozna Twój projekt, pokaże produkty na żywo i pomoże dobrać całe wyposażenie. Bez pośpiechu, w dogodnym terminie.",
+    "Nasz doradca będzie czekał na Ciebie w salonie - pozna Twój projekt, pokaże produkty na żywo i pomoże dobrać całe wyposażenie. Bez pośpiechu, w dogodnym terminie.",
   ctaLabel: "Umów spotkanie",
+  image: {
+    src: assetUrl("home/about-salon.jpg"),
+    alt: "Salon Elements - ekspozycja łazienki",
+    fit: "cover" as const,
+  },
 } as const;
 
 export const homeAdvisorCta = {
@@ -372,6 +447,92 @@ export const homeAdvisorCta = {
   secondaryCta: { label: "Umów spotkanie" },
 } as const;
 
+const montebiancoPackshot = {
+  src: assetUrl("products/montebianco/01-front.png"),
+  alt: "Szafka podumywalkowa Montebianco",
+} as const;
+
+/** Demo products for arrangement drawers (galeria-aranzacji pattern). */
+const homeArrangementProducts = {
+  oristoPillow: [
+    product("arr-pillow-vanity", "ORiSTO", "Szafka podumywalkowa Pillow 60 cm, biały połysk", {
+      price: "1 890 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Szafka podumywalkowa Pillow 60 cm, biały połysk",
+      },
+    }),
+    product("arr-pillow-basin", "ORiSTO", "Umywalka meblowa Pillow 60 cm", {
+      price: "690 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Umywalka meblowa Pillow 60 cm",
+      },
+    }),
+    product("arr-pillow-tall", "ORiSTO", "Szafka wysoka Pillow 40 cm", {
+      price: "1 290 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Szafka wysoka Pillow 40 cm",
+      },
+    }),
+  ],
+  compact: [
+    product("arr-compact-vanity", "ORiSTO", "Szafka wisząca Montebianco 80 cm biały mat", {
+      price: "1 990 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Szafka wisząca Montebianco 80 cm biały mat",
+      },
+    }),
+    product("arr-compact-mirror", "ORiSTO", "Lustro z podświetleniem LED 80 cm", {
+      price: "890 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Lustro z podświetleniem LED 80 cm",
+      },
+    }),
+    product(
+      "arr-compact-wc",
+      "Omnires",
+      "Ottawa Comfort miska WC wisząca z deską wolnoopadającą",
+      {
+        price: "1 280 zł",
+        image: {
+          src: assetUrl("home/ottawa.png"),
+          alt: "Omnires Ottawa Comfort",
+          fit: "cover",
+        },
+      },
+    ),
+  ],
+  deepGreen: [
+    product("arr-green-vanity", "ORiSTO", "Szafka podumywalkowa, zielony mat, 80 cm", {
+      price: "2 190 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Szafka podumywalkowa, zielony mat, 80 cm",
+      },
+    }),
+    product("arr-green-basin", "ORiSTO", "Umywalka nablatowa, zieleń / biały", {
+      price: "780 zł",
+      pricePrevious: "980 zł",
+      image: {
+        ...montebiancoPackshot,
+        alt: "Umywalka nablatowa, zieleń / biały",
+      },
+    }),
+    product("arr-green-tap", "Omnires", "Bateria umywalkowa, czarny mat", {
+      price: "1 120 zł",
+      image: {
+        src: assetUrl("home/ottawa.png"),
+        alt: "Bateria umywalkowa, czarny mat",
+        fit: "cover",
+      },
+    }),
+  ],
+} as const satisfies Record<string, RelatedProduct[]>;
+
 export const homeInspiration = {
   eyebrow: "Inspiracje",
   title: "Poznaj nasze aranżacje i zainspiruj się",
@@ -381,6 +542,7 @@ export const homeInspiration = {
     {
       id: "insp-1",
       title: "Prysznic walk-in w ciepłej palecie",
+      href: "#inspiracje",
       image: {
         src: assetUrl("home/inspiration-walk-in.jpg"),
         alt: "Prysznic walk-in w ciepłej palecie",
@@ -390,10 +552,11 @@ export const homeInspiration = {
     },
     {
       id: "insp-2",
-      title: "Jasne płytki wielkoformatowe",
+      title: "Meble łazienkowe ORiSTO, nowoczesne podejście do elegancji",
+      showProducts: true,
       image: {
         src: assetUrl("home/inspiration-large-tiles.jpg"),
-        alt: "Jasne płytki wielkoformatowe",
+        alt: "Meble łazienkowe ORiSTO, nowoczesne podejście do elegancji",
         fit: "cover" as const,
         focalPoint: { x: 50, y: 75 },
       },
@@ -402,10 +565,12 @@ export const homeInspiration = {
         "Minimalistyczna armatura",
         "Dużo światła",
       ],
+      products: [...homeArrangementProducts.oristoPillow],
     },
     {
       id: "insp-3",
       title: "Beton i czarna armatura",
+      href: "#inspiracje",
       image: {
         src: assetUrl("home/inspiration-concrete-black.jpg"),
         alt: "Beton i czarna armatura",
@@ -417,6 +582,7 @@ export const homeInspiration = {
     {
       id: "insp-4",
       title: "Sprytny metraż do 4 m²",
+      showProducts: true,
       image: {
         src: assetUrl("home/inspiration-compact.jpg"),
         alt: "Sprytny metraż do 4 m²",
@@ -428,10 +594,12 @@ export const homeInspiration = {
         "Lustro z podświetleniem LED",
         "WC podwieszane",
       ],
+      products: [...homeArrangementProducts.compact],
     },
     {
       id: "insp-5",
       title: "Elegancja w ciepłej palecie",
+      href: "#inspiracje",
       image: {
         src: assetUrl("home/inspiration-warm-palette.jpg"),
         alt: "Elegancja w ciepłej palecie",
@@ -442,6 +610,7 @@ export const homeInspiration = {
     {
       id: "insp-6",
       title: "Głębokie kolory i matowe wykończenia",
+      showProducts: true,
       image: {
         src: assetUrl("home/inspiration-deep-green.jpg"),
         alt: "Głębokie kolory i matowe wykończenia",
@@ -450,6 +619,7 @@ export const homeInspiration = {
         focalPoint: { x: 50, y: 75 },
       },
       items: ["Głęboka zieleń", "Matowa ceramika", "Akcenty metaliczne"],
+      products: [...homeArrangementProducts.deepGreen],
     },
   ] satisfies InspirationArrangement[],
 } as const;
@@ -530,6 +700,7 @@ export const homePartners = {
 export const homeAbout = {
   title: "Elements - tu powstają wyjątkowe łazienki",
   lead: "Elements to sieć salonów, które powstały z myślą o spełnianiu marzeń o idealnej łazience - znajdziesz nas w 19 lokalizacjach w całej Polsce. Inspirujemy do tworzenia wnętrz, które łączą modny design, komfort i funkcjonalność. Niezależnie od tego, czy marzysz o domowej strefie SPA, eleganckim salonie kąpielowym czy przytulnej łazience, nasze salony to miejsce, w którym Twoje pomysły mogą stać się rzeczywistością.",
+  subtitle: "Szeroki wybór produktów - armatura, płytki oraz dodatki",
   body: [
     "Każdy z ",
     { bold: "salonów łazienkowych" },

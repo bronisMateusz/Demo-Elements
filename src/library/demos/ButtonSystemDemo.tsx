@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { ProductAskRow } from "../../components/product/ProductAskRow";
-import { productFixedBarClassName } from "../../components/ui/productFixedBarClassName";
 import {
   libBtnDarkSurfaceClassName,
   libBtnRowClassName,
@@ -394,89 +393,14 @@ export function ButtonAskRowDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        Cena + ask w jednym panelu; samodzielny wariant z neutralną ramką.
+        Cena + ask w jednym panelu; CTA otwiera AskDrawer przez{" "}
+        <code className="text-xs">onAskOpen</code>.
       </p>
       <ProductAskRow
-        href="#"
         lead="Interesuje Cię ten produkt?"
         actionLabel="Zadaj pytanie"
+        onAskOpen={() => undefined}
       />
-    </div>
-  );
-}
-
-export function ButtonQuickAddDemo() {
-  return (
-    <div className="grid max-w-md gap-3">
-      <p className="m-0 text-sm text-neutral-600">
-        Przycisk szybkiego dodania w karuzeli produktów - ten sam system
-        animacji co Primary.
-      </p>
-      <button
-        type="button"
-        className={libButtonPreviewClassName({
-          variant: "primary",
-          full: true,
-          className: "uppercase tracking-[0.12em]",
-        })}
-      >
-        <i className="ph ph-shopping-bag" aria-hidden="true" />
-        Dodaj do koszyka
-      </button>
-    </div>
-  );
-}
-
-export function ButtonAskFabDemo() {
-  return (
-    <div className="grid gap-8">
-      <div className={libBtnStatesGridClassName}>
-        <div className={libBtnStateClassName}>
-          <span className={libBtnStateLabelClassName}>Fixed bar · visible</span>
-          <div className="relative overflow-hidden rounded-xs bg-neutral-100 p-4">
-            <div
-              className={productFixedBarClassName({
-                visible: true,
-                className: "static inset-auto translate-y-0",
-              })}
-            >
-              <div className="flex items-center gap-3 border border-neutral-200 bg-neutral-0 px-4 py-3 shadow-2">
-                <div className="hidden size-12 shrink-0 bg-neutral-200 sm:block" />
-                <div className="hidden min-w-0 flex-1 sm:block">
-                  <p className="m-0 truncate font-heading text-lg leading-tight">
-                    Montebianco 80 cm
-                  </p>
-                  <p className="mt-1 mb-0 text-ui tabular-nums">1 990 zł</p>
-                </div>
-                <div className="flex w-full gap-2 sm:w-auto">
-                  <button
-                    type="button"
-                    className={libButtonPreviewClassName({
-                      variant: "secondary",
-                      size: "lg",
-                    })}
-                  >
-                    Dodaj do schowka
-                  </button>
-                  <button
-                    type="button"
-                    className={libButtonPreviewClassName({
-                      variant: "primary",
-                      size: "lg",
-                    })}
-                  >
-                    Zadaj pytanie
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Sticky bar na PDP (jak OKA) - tytuł/cena na desktopie, dwa CTA: schowek
-        + pytanie. Pojawia się po scrollu, znika przed stopką.
-      </p>
     </div>
   );
 }

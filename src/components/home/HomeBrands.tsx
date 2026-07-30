@@ -84,11 +84,11 @@ function BrandCycleCell({
       )}
     >
       {children}
-      <span className="relative z-10 flex min-h-[1.5em] items-center justify-center overflow-hidden">
+      <span className="relative z-10 flex h-10 w-full max-w-40 items-center justify-center overflow-hidden px-1 md:h-12">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={brand.label}
-            className="text-center font-heading text-base font-medium tracking-tight text-neutral-500 transition-colors duration-fast ease-out group-hover:text-neutral-900 md:text-lg"
+            className="flex size-full items-center justify-center"
             initial={
               reduce ? false : { opacity: 0, y: 10, filter: "blur(6px)" }
             }
@@ -98,7 +98,14 @@ function BrandCycleCell({
             }
             transition={{ duration: 0.45, ease: EASE_OUT }}
           >
-            {brand.label}
+            <img
+              src={brand.logoSrc}
+              alt={brand.label}
+              className="max-h-full max-w-full object-contain opacity-70 transition-opacity duration-fast ease-out group-hover:opacity-100"
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+            />
           </motion.span>
         </AnimatePresence>
       </span>

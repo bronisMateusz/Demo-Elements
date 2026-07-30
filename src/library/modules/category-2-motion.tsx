@@ -3,6 +3,10 @@ import {
   SharedLayoutBgSegmentDemo,
   SharedLayoutUnderlineDemo,
 } from "../demos/MotionLayoutDemo";
+import {
+  TextCascadeDemo,
+  TextRevealLeadDemo,
+} from "../demos/PrimitivesDemo";
 import { libPreviewArticleClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
@@ -105,7 +109,48 @@ export const sharedLayoutUnderlineModule: LibraryModule = {
   ],
 };
 
+export const textCascadeModule: LibraryModule = {
+  id: "2.8",
+  slug: "text-cascade",
+  title: "TextCascade",
+  description:
+    "Letter-by-letter slot roll przy zmianie tekstu (np. HomeProducts „zobacz wszystkie”).",
+  variants: [
+    {
+      id: "interactive",
+      label: "Interaktywny",
+      description: "Kliknij „Zmień tekst”, by zobaczyć kaskadę liter.",
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <TextCascadeDemo />
+        </div>
+      ),
+    },
+  ],
+};
+
+export const textRevealLeadModule: LibraryModule = {
+  id: "2.9",
+  slug: "text-reveal-lead",
+  title: "TextRevealLead",
+  description:
+    "Reveal tytułu przy scrollu (słowo / linia) - CTA, hero, sekcje home.",
+  variants: [
+    {
+      id: "word",
+      label: "Reveal · word",
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <TextRevealLeadDemo />
+        </div>
+      ),
+    },
+  ],
+};
+
 export const category2MotionModules: LibraryModule[] = [
   sharedLayoutBgModule,
   sharedLayoutUnderlineModule,
+  textCascadeModule,
+  textRevealLeadModule,
 ];

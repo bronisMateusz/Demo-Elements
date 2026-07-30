@@ -1,10 +1,5 @@
-import { useEffect } from "react";
 import { ProductSalonCard } from "../../components/product/ProductSalonCard";
 import { salonOptions } from "../../data/nav";
-import {
-  getStoredSalonId,
-  useSelectedSalon,
-} from "../../hooks/useSelectedSalon";
 
 const salonCardDefaultProps = {
   eyebrow: "Obejrzyj na żywo",
@@ -13,29 +8,23 @@ const salonCardDefaultProps = {
   label: "Wybierz swój salon",
 } as const;
 
-/** Temporarily seeds / clears selected salon for library previews; restores previous on unmount. */
-function useLibrarySalonSeed(salonId: string | null) {
-  const { select, clear } = useSelectedSalon();
-
-  useEffect(() => {
-    const previous = getStoredSalonId();
-
-    if (salonId) select(salonId);
-    else clear();
-
-    return () => {
-      if (previous) select(previous);
-      else clear();
-    };
-  }, [salonId, select, clear]);
-}
-
+/** Empty CTA - previewSalon freezes state so both library variants can coexist. */
 export function ProductSalonCardEmptyDemo() {
-  useLibrarySalonSeed(null);
-  return <ProductSalonCard {...salonCardDefaultProps} />;
+  return (
+    <ProductSalonCard
+      {...salonCardDefaultProps}
+      id="salonCard-empty"
+      previewSalon={null}
+    />
+  );
 }
 
 export function ProductSalonCardSelectedDemo() {
-  useLibrarySalonSeed(salonOptions[0]?.id ?? null);
-  return <ProductSalonCard {...salonCardDefaultProps} />;
+  return (
+    <ProductSalonCard
+      {...salonCardDefaultProps}
+      id="salonCard-selected"
+      previewSalon={salonOptions[0] ?? null}
+    />
+  );
 }

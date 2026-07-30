@@ -144,13 +144,13 @@ export function DrawerHeader({
   }
 
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] pt-8 pb-8">
+    <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] py-4 md:py-8">
       <div className="min-w-0 pe-2">
         <p className="m-0 font-body text-xl font-medium text-neutral-900">
           {title}
         </p>
         {description ? (
-          <p className="mt-2 mb-0 text-sm leading-relaxed text-neutral-500">
+          <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-500 md:mt-2">
             {description}
           </p>
         ) : null}
@@ -159,7 +159,7 @@ export function DrawerHeader({
         label={closeLabel}
         iconClass="ph ph-x"
         onClick={onClose}
-        className="-mt-2 -me-2"
+        className="-mt-1 -me-2 md:-mt-2"
       />
     </div>
   );

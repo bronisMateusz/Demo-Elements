@@ -90,7 +90,7 @@ export function Checkbox({
           "disabled:cursor-not-allowed disabled:opacity-60",
           showMark
             ? "border-neutral-900 bg-neutral-900 text-neutral-0"
-            : "border-neutral-800 bg-neutral-0 hover:border-neutral-900 hover:bg-neutral-50",
+            : "border-neutral-300 bg-neutral-0 hover:border-neutral-800 hover:bg-neutral-100",
         )}
       >
         <AnimatePresence initial={false}>

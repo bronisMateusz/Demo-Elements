@@ -132,6 +132,8 @@ export function ProductGalleryLightbox({
   }, [contentVisible, reducedMotion, stageReady]);
 
   const handleFlyerFadeComplete = useCallback(() => {
+    // Only dismiss the flyer after enter handoff - early Swiper init events must
+    // not unmount it before onPositionComplete sets contentVisible.
     setShowFlyer(false);
     setFlyerFadingOut(false);
   }, []);
@@ -299,17 +301,19 @@ export function ProductGalleryLightbox({
           onFadeComplete={onClose}
         />
       ) : null}
-      {phase !== "exit" ? (
+      {/* Mount Swiper only after the flyer finishes - init/slide events would
+          otherwise dismiss the flyer before contentVisible is set (blank stage). */}
+      {phase !== "exit" && contentVisible ? (
         <motion.div
           className={cn(
             "absolute inset-0 z-10",
             !stageReady && "[&_.swiper-zoom-container]:transition-none!",
           )}
           initial={false}
-          animate={{ opacity: contentVisible && stageReady ? 1 : 0 }}
+          animate={{ opacity: stageReady ? 1 : 0 }}
           transition={{ duration: 0 }}
           style={{
-            pointerEvents: contentVisible && stageReady ? "auto" : "none",
+            pointerEvents: stageReady ? "auto" : "none",
           }}
         >
           <Swiper

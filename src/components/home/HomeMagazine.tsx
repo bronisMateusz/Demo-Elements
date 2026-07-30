@@ -114,13 +114,14 @@ export function HomeMagazine() {
             <p className="mt-4 mb-0 max-w-lg text-sm leading-relaxed text-neutral-200 md:text-ui">
               {description}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap">
               <Button
                 href={primaryCta.href}
                 variant="primary"
                 tone="onDark"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="w-full sm:w-auto"
               >
                 {primaryCta.label}
               </Button>
@@ -130,6 +131,7 @@ export function HomeMagazine() {
                 tone="onDark"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="w-full sm:w-auto"
               >
                 {secondaryCta.label}
               </Button>

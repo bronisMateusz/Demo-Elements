@@ -2,6 +2,7 @@ import { category1Modules } from "./modules/category-1-shell";
 import { category2Modules } from "./modules/category-2-orientation";
 import { category2MotionModules } from "./modules/category-2-motion";
 import { category3Modules } from "./modules/category-3-product";
+import { category4Modules } from "./modules/category-4-home";
 import type { LibraryCategory } from "./types";
 
 export const libraryCategories: LibraryCategory[] = [
@@ -10,7 +11,7 @@ export const libraryCategories: LibraryCategory[] = [
     number: 1,
     slug: "naglowek-i-stopka",
     title: "Nagłówek i stopka",
-    subtitle: "Shell portalu - header, footer i drawery (salon, pytanie).",
+    subtitle: "Shell portalu - header, footer i drawery (salon, pytanie, aranżacje, menu).",
     modules: category1Modules,
   },
   {
@@ -18,7 +19,8 @@ export const libraryCategories: LibraryCategory[] = [
     number: 2,
     slug: "orientacja-i-nawigacja",
     title: "Orientacja i nawigacja",
-    subtitle: "Okruszki, CTA, animacje layout (SharedLayoutBg / Underline).",
+    subtitle:
+      "Okruszki, CTA, Badge, IconButton, Checkbox, SharedLayout*, TextCascade / TextRevealLead.",
     modules: [...category2Modules, ...category2MotionModules],
   },
   {
@@ -27,8 +29,17 @@ export const libraryCategories: LibraryCategory[] = [
     slug: "produkt",
     title: "Produkt",
     subtitle:
-      "Komponenty strony produktu - galeria, buy box, warianty, karta, specyfikacja.",
+      "Komponenty strony produktu - galeria, buy box, warianty, karuzela, CTA, AskFab, inspiracje.",
     modules: category3Modules,
+  },
+  {
+    id: "cat-4",
+    number: 4,
+    slug: "strona-glowna",
+    title: "Strona główna",
+    subtitle:
+      "Moduły home - hero, kategorie, produkty, marki, inspiracje, magazyn, partnerzy, doradca, about.",
+    modules: category4Modules,
   },
 ];
 

@@ -104,7 +104,17 @@ export type InspirationArrangement = {
   id: string;
   title: string;
   image: ProductImage;
+  /** Short bullets under the card / PDP inspiration slide. */
   items: string[];
+  /** Products shown in the arrangement products drawer (galeria-aranzacji). */
+  products?: RelatedProduct[];
+  /** Whole card links to an article (inspiracje-listing pattern). */
+  href?: string;
+  /**
+   * Show “Pokaż produkty” chip instead of lightbox loupe
+   * (galeria-aranzacji pattern). Ignored when `href` is set.
+   */
+  showProducts?: boolean;
 };
 
 export type Product = {

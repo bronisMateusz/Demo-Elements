@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import { cn } from "../../lib/cn";
-import { salonCardCopy } from "../../data/nav";
+import { salonCardCopy, type SalonOption } from "../../data/nav";
 import {
   requestSalonDrawer,
   useSelectedSalon,
@@ -15,6 +15,11 @@ type ProductSalonCardProps = {
   id?: string;
   className?: string;
   onAskOpen?: () => void;
+  /**
+   * Isolated preview (library). Omit for live global selection;
+   * `null` = empty CTA; salon object = selected state.
+   */
+  previewSalon?: SalonOption | null;
 };
 
 const cardShellClassName = cn(
@@ -45,8 +50,10 @@ export function ProductSalonCard({
   id = "salonCard",
   className,
   onAskOpen,
+  previewSalon,
 }: ProductSalonCardProps) {
-  const { salon } = useSelectedSalon();
+  const { salon: liveSalon } = useSelectedSalon();
+  const salon = previewSalon !== undefined ? previewSalon : liveSalon;
   const hoursId = useId();
   const [hoursOpen, setHoursOpen] = useState(false);
 
