@@ -42,7 +42,9 @@ function ArrangementProductRow({ product }: { product: RelatedProduct }) {
             src={product.image.src}
             alt=""
             className="size-full object-cover"
-            style={{ objectPosition: productImageObjectPosition(product.image) }}
+            style={{
+              objectPosition: productImageObjectPosition(product.image),
+            }}
             width={72}
             height={72}
             loading="lazy"

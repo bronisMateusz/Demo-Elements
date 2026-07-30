@@ -254,6 +254,8 @@ export const badgeModule: LibraryModule = {
     {
       id: "system",
       label: "Warianty i rozmiary",
+      description:
+        "Wszystkie warianty Badge (default, gold, brand, outline, promo, neutral) i rozmiary sm/md.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <BadgeSystemDemo />
@@ -273,7 +275,8 @@ export const iconButtonModule: LibraryModule = {
     {
       id: "live",
       label: "Live komponenty",
-      description: "Prawdziwy IconButton / IconLink (nie class-helper preview).",
+      description:
+        "Prawdziwy IconButton / IconLink (nie class-helper preview).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <IconButtonLiveDemo />
@@ -293,6 +296,7 @@ export const checkboxModule: LibraryModule = {
     {
       id: "states",
       label: "Stany",
+      description: "Checked, indeterminate i disabled.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <CheckboxDemo />

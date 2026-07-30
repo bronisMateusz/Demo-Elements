@@ -273,12 +273,8 @@ export function InspirationGallery({
     alt: arrangement.image.alt || arrangement.title,
   }));
 
-
   return (
-    <section
-      aria-labelledby={titleId}
-      className="relative overflow-x-clip"
-    >
+    <section aria-labelledby={titleId} className="relative overflow-x-clip">
       <BrandMotif
         name="dots-grid"
         className={cn(

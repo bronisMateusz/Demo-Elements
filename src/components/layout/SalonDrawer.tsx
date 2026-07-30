@@ -99,7 +99,10 @@ function SalonSearchBlock({
         </a>
       </p>
       {locateError ? (
-        <p className="m-0 text-xs leading-relaxed text-neutral-700" role="alert">
+        <p
+          className="m-0 text-xs leading-relaxed text-neutral-700"
+          role="alert"
+        >
           {locateError}
         </p>
       ) : null}

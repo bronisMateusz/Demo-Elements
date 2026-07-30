@@ -11,7 +11,8 @@ export const libraryCategories: LibraryCategory[] = [
     number: 1,
     slug: "naglowek-i-stopka",
     title: "Nagłówek i stopka",
-    subtitle: "Shell portalu - header, footer i drawery (salon, pytanie, aranżacje, menu).",
+    subtitle:
+      "Shell portalu - header, footer i drawery (salon, pytanie, aranżacje, menu).",
     modules: category1Modules,
   },
   {

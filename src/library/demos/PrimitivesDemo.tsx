@@ -75,11 +75,7 @@ export function IconButtonLiveDemo() {
           iconClass="ph ph-magnifying-glass"
           variant="on-dark"
         />
-        <IconButton
-          label="Lista"
-          iconClass="ph ph-list"
-          variant="on-dark"
-        />
+        <IconButton label="Lista" iconClass="ph ph-list" variant="on-dark" />
       </div>
     </div>
   );

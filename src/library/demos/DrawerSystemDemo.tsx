@@ -69,8 +69,8 @@ export function InspirationProductsDrawerDemo() {
   return (
     <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Drawer produktów z aranżacji (chip „Pokaż produkty” w InspirationGallery).
-        Montowany w Header - otwierany przez{" "}
+        Drawer produktów z aranżacji (chip „Pokaż produkty” w
+        InspirationGallery). Montowany w Header - otwierany przez{" "}
         <code className="text-xs">requestInspirationProductsDrawer</code>.
       </p>
       <Button

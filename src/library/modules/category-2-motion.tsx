@@ -3,10 +3,7 @@ import {
   SharedLayoutBgSegmentDemo,
   SharedLayoutUnderlineDemo,
 } from "../demos/MotionLayoutDemo";
-import {
-  TextCascadeDemo,
-  TextRevealLeadDemo,
-} from "../demos/PrimitivesDemo";
+import { TextCascadeDemo, TextRevealLeadDemo } from "../demos/PrimitivesDemo";
 import { libPreviewArticleClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
@@ -139,6 +136,7 @@ export const textRevealLeadModule: LibraryModule = {
     {
       id: "word",
       label: "Reveal · word",
+      description: "Reveal tytułu słowo po słowie przy scrollu.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <TextRevealLeadDemo />

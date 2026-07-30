@@ -1,7 +1,4 @@
-import {
-  homeAppointment,
-  homeInspiration,
-} from "../../data/home";
+import { homeAppointment, homeInspiration } from "../../data/home";
 import { HomeAbout } from "../../components/home/HomeAbout";
 import { HomeAdvisorCta } from "../../components/home/HomeAdvisorCta";
 import { HomeAppointment } from "../../components/home/HomeAppointment";
@@ -129,7 +126,10 @@ export const homeHeroModule: LibraryModule = {
       label: "Domyślny",
       description: "4 banery z homeHeroSlides.",
       render: () => (
-        <div className={libPreviewFullBleedWrapperClassName} data-lib-full-bleed>
+        <div
+          className={libPreviewFullBleedWrapperClassName}
+          data-lib-full-bleed
+        >
           <HomeHero />
         </div>
       ),
@@ -146,6 +146,7 @@ export const homeCategoriesModule: LibraryModule = {
     {
       id: "default",
       label: "Domyślny",
+      description: "Siatka kategorii z homeCategories.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeCategories />
@@ -159,11 +160,13 @@ export const homeProductsModule: LibraryModule = {
   id: "4.4",
   slug: "home-products",
   title: "HomeProducts",
-  description: "Taby produktów + ProductCarousel + TextCascade „zobacz wszystkie”.",
+  description:
+    "Taby produktów + ProductCarousel + TextCascade „zobacz wszystkie”.",
   variants: [
     {
       id: "default",
       label: "Domyślny",
+      description: "Taby + karuzela produktów z danymi home.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeProducts />
@@ -182,6 +185,7 @@ export const homeBrandsModule: LibraryModule = {
     {
       id: "default",
       label: "Domyślny",
+      description: "Marquee logo marek z home.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeBrands />
@@ -218,11 +222,13 @@ export const homeMagazineModule: LibraryModule = {
   id: "4.7",
   slug: "home-magazine",
   title: "HomeMagazine",
-  description: "Magazyn online - copy + CTA (pełna szerokość na mobile) + mockup.",
+  description:
+    "Magazyn online - copy + CTA (pełna szerokość na mobile) + mockup.",
   variants: [
     {
       id: "default",
       label: "Domyślny",
+      description: "Magazyn online - copy, CTA i mockup okładki.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeMagazine />
@@ -241,6 +247,7 @@ export const homePartnersModule: LibraryModule = {
     {
       id: "default",
       label: "Domyślny",
+      description: "Karty stref partnerów z homePartners.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomePartners />
@@ -260,6 +267,7 @@ export const homeAdvisorCtaModule: LibraryModule = {
     {
       id: "default",
       label: "Domyślny",
+      description: "CTA doradcy z dwoma przyciskami.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeAdvisorCta />
@@ -278,6 +286,7 @@ export const homeAboutModule: LibraryModule = {
     {
       id: "default",
       label: "Domyślny",
+      description: "O Elements - copy, zdjęcie salonu i newsletter.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeAbout />

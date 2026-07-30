@@ -332,7 +332,8 @@ export const askFabModule: LibraryModule = {
     {
       id: "default",
       label: "Montebianco",
-      description: "Podgląd paska w miejscu (bez sticky nad chrome biblioteki).",
+      description:
+        "Podgląd paska w miejscu (bez sticky nad chrome biblioteki).",
       render: () => <AskFabDemo />,
     },
   ],
