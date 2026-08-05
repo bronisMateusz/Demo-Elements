@@ -4,6 +4,7 @@ import { HomeAdvisorCta } from "../../components/home/HomeAdvisorCta";
 import { HomeAppointment } from "../../components/home/HomeAppointment";
 import { HomeBrands } from "../../components/home/HomeBrands";
 import { HomeCategories } from "../../components/home/HomeCategories";
+import { HomeCategoriesBento } from "../../components/home/HomeCategoriesBento";
 import { HomeHero } from "../../components/home/HomeHero";
 import { HomeInspiration } from "../../components/home/HomeInspiration";
 import { HomeMagazine } from "../../components/home/HomeMagazine";
@@ -150,6 +151,16 @@ export const homeCategoriesModule: LibraryModule = {
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeCategories />
+        </div>
+      ),
+    },
+    {
+      id: "bento",
+      label: "Bento",
+      description: "Wariant mozaiki (duży kafelek Płytki + siatka).",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <HomeCategoriesBento />
         </div>
       ),
     },

@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { homeMagazine } from "../../data/home";
 import { useScrollExpandInset } from "../../hooks/useScrollExpandInset";
 import { cn } from "../../lib/cn";
@@ -18,11 +19,14 @@ export function HomeMagazine() {
       aria-labelledby="home-magazine-title"
       className="overflow-x-clip py-[clamp(2.5rem,6vw,4rem)] md:py-[clamp(3rem,7vw,5rem)]"
     >
-      <div
+      <motion.div
         className="relative overflow-hidden rounded-xs"
         style={{ marginLeft: sideInset, marginRight: sideInset }}
       >
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+        >
           <div className="absolute inset-0 bg-linear-to-br from-neutral-700 via-brown-600 to-neutral-800" />
           <div className="absolute inset-0 bg-radial-[at_85%_15%] from-gold-500/25 via-gold-600/10 to-transparent to-55%" />
           <div className="absolute inset-0 bg-radial-[at_10%_90%] from-brown-700/50 to-transparent to-45%" />
@@ -117,7 +121,7 @@ export function HomeMagazine() {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
