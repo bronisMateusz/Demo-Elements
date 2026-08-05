@@ -77,7 +77,7 @@ function BrandCycleCell({
       href={brand.href}
       onMouseEnter={onMouseEnter}
       className={cn(
-        "group relative flex min-h-20 items-center justify-center border-r border-b border-neutral-200 px-4 py-6 no-underline",
+        "group relative flex min-h-20 items-center justify-center px-4 py-6 no-underline",
         "md:min-h-24 md:px-6 md:py-8",
         "focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
         className,
@@ -130,7 +130,7 @@ export function HomeBrands() {
 
         <SharedLayoutBg
           className={cn(
-            "mt-8 grid w-full grid-cols-2 border-t border-l border-neutral-200 md:mt-10",
+            "mt-8 grid w-full grid-cols-2 md:mt-10",
             "sm:grid-cols-3 md:grid-cols-4",
           )}
           pillClassName="rounded-none bg-neutral-100"

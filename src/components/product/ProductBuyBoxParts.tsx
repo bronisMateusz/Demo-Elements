@@ -12,10 +12,23 @@ type ProductBadgesProps = {
   className?: string;
 };
 
-const PROMO_BADGE: ProductBadge = { label: "Promocja", variant: "promo" };
+const PROMO_BADGE: ProductBadge = {
+  label: "Promocja",
+  variant: "promo",
+  href: "#promocje",
+};
 
 function isPromoPrice(price?: ProductPrice) {
   return Boolean(price?.previous || price?.discount);
+}
+
+function badgeHref(badge: ProductBadge): string {
+  if (badge.href) return badge.href;
+  const key = badge.label.trim().toLowerCase();
+  if (key.includes("promoc")) return "#promocje";
+  if (key.includes("bestseller")) return "#bestsellery";
+  if (key.includes("nowo")) return "#nowosci";
+  return `#${key.replace(/\s+/g, "-")}`;
 }
 
 export function ProductBadges({
@@ -38,29 +51,32 @@ export function ProductBadges({
   return (
     <div
       className={cn(
-        "mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 lg:mb-4",
+        "mb-3 flex flex-wrap items-center gap-2 lg:mb-4",
         className,
       )}
     >
       {brand && href ? (
-        <a
+        <Badge
           href={href}
-          className={cn(
-            "m-0 font-body text-xs uppercase tracking-[0.12em] text-neutral-600 no-underline",
-            "transition-colors duration-fast ease-out hover:text-neutral-900",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-          )}
+          variant="outline"
+          ariaLabel={`Produkty marki ${brand}`}
         >
           {brand}
-        </a>
+        </Badge>
       ) : null}
-      <div className="flex flex-wrap gap-2">
-        {displayBadges.map((badge) => (
-          <Badge key={badge.label} variant={badge.variant ?? "default"}>
+      {displayBadges.map((badge) => {
+        const target = badgeHref(badge);
+        return (
+          <Badge
+            key={badge.label}
+            variant={badge.variant ?? "default"}
+            href={target}
+            ariaLabel={`${badge.label} - zobacz produkty`}
+          >
             {badge.label}
           </Badge>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }

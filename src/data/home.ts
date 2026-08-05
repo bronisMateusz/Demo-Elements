@@ -440,9 +440,15 @@ export const homeAppointment = {
 } as const;
 
 export const homeAdvisorCta = {
-  title: "Nie wiesz, od czego zacząć? Porozmawiaj z doradcą.",
+  eyebrow: "Doradztwo",
+  title: "Nie wiesz, od czego zacząć?",
   description:
-    "Napisz do nas online albo umów się na spotkanie w salonie — doradca pomoże dobrać całe wyposażenie Twojej łazienki.",
+    "Porozmawiaj z doradcą. Napisz do nas online albo umów się na spotkanie w salonie - pomożemy dobrać całe wyposażenie Twojej łazienki.",
+  image: {
+    src: assetUrl("home/about-salon.jpg"),
+    alt: "Salon Elements - rozmowa z doradcą",
+    focalPoint: { x: 50, y: 40 },
+  },
   primaryCta: { label: "Napisz do doradcy", href: "#kontakt" },
   secondaryCta: { label: "Umów spotkanie" },
 } as const;

@@ -21,8 +21,8 @@ export function HomeCategories() {
 
         <ul
           className={cn(
-            "m-0 grid list-none grid-cols-2 gap-3 p-0",
-            "sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4",
+            "m-0 grid list-none grid-cols-2 gap-2 p-0",
+            "sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
           )}
         >
           {homeCategories.items.map((item) => (
@@ -30,15 +30,16 @@ export function HomeCategories() {
               <a
                 href={item.href}
                 className={cn(
-                  "flex h-full flex-col items-start gap-3 rounded-xs border border-neutral-200 bg-neutral-0 p-4 no-underline",
-                  "transition-colors duration-base ease-out hover:border-gold-400 hover:bg-neutral-50",
+                  "group/cat flex h-full flex-col items-start gap-3 rounded-xs bg-gold-50 px-4 py-5 no-underline sm:px-5 sm:py-6",
+                  "transition-[background-color,color] duration-base ease-out",
+                  "hover:bg-gold-100",
                   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
                 )}
               >
                 <i
                   className={cn(
                     item.iconClass,
-                    "text-2xl leading-none text-gold-500",
+                    "text-3xl leading-none text-neutral-900",
                   )}
                   aria-hidden="true"
                 />

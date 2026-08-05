@@ -16,8 +16,8 @@ type EyebrowProps = {
   showRule?: boolean;
 };
 
-/** Inline sygnet so `currentColor` follows the eyebrow text color. */
-function EyebrowSygnet({ className }: { className?: string }) {
+/** Inline sygnet so `currentColor` follows the parent text color. */
+export function EyebrowSygnet({ className }: { className?: string }) {
   const clipId = useId().replace(/:/g, "");
 
   return (

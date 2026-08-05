@@ -1,15 +1,15 @@
-import { motion, useReducedMotion } from "motion/react";
-import { useScrollExpandInset } from "../../hooks/useScrollExpandInset";
+import { SplitMediaCta } from "../structural/SplitMediaCta";
 import { Button } from "../ui/Button";
-import { LiquidCtaGlow } from "../motion/LiquidCtaGlow";
-import { TextRevealLead } from "../motion/TextRevealLead";
-import { EASE_OUT } from "../../lib/motionEase";
+import type { ProductImage } from "../../types/product";
 
 type ProductVisualizationCTAProps = {
   title: string;
+  description?: string;
   href: string;
   label: string;
   note?: string;
+  eyebrow?: string;
+  image: ProductImage;
   secondary?: {
     href: string;
     label: string;
@@ -18,81 +18,45 @@ type ProductVisualizationCTAProps = {
 
 export function ProductVisualizationCTA({
   title,
+  description,
   href,
   label,
   note = "Bezpłatna wizualizacja · Bez zobowiązań",
+  eyebrow = "Wizualizacja",
+  image,
   secondary,
 }: ProductVisualizationCTAProps) {
-  const reducedMotion = useReducedMotion();
-  const { targetRef, sideInset } = useScrollExpandInset<HTMLElement>();
-
   return (
-    <section
-      ref={targetRef}
-      aria-labelledby="viz-cta-title"
-      className="py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
-    >
-      <motion.div
-        className="relative overflow-hidden rounded-xs"
-        style={{ marginLeft: sideInset, marginRight: sideInset }}
-      >
-        <LiquidCtaGlow />
-
-        <div className="relative z-10 mx-auto flex min-h-95 max-w-5xl flex-col items-center justify-center px-6 py-10 text-center md:min-h-140 md:px-10 md:py-18">
-          <TextRevealLead
-            id="viz-cta-title"
-            revealUnit="word"
-            className="mx-auto max-w-none text-balance"
-            typographyClassName="font-heading text-[clamp(2.125rem,4.1vw,3.875rem)] leading-[1.12] tracking-tight font-medium"
-            mutedClassName="text-neutral-0/30"
-            fillClassName="text-neutral-0"
+    <SplitMediaCta
+      titleId="viz-cta-title"
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      note={note}
+      image={image}
+      actions={
+        <>
+          <Button
+            href={href}
+            variant="primary"
+            size="lg"
+            className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
           >
-            {title}
-          </TextRevealLead>
-
-          <motion.div
-            className="mt-6 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center md:mt-8"
-            initial={reducedMotion ? false : { opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.7, delay: 0.12, ease: EASE_OUT }}
-          >
+            {label}
+            <i className="ph ph-arrow-right" aria-hidden="true" />
+          </Button>
+          {secondary ? (
             <Button
-              href={href}
-              variant="primary"
-              tone="onDark"
+              href={secondary.href}
+              variant="secondary"
               size="lg"
-              className="w-full sm:w-auto"
+              className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
             >
-              {label}
-              <i className="ph ph-arrow-right" aria-hidden="true" />
+              {secondary.label}
             </Button>
-            {secondary ? (
-              <Button
-                href={secondary.href}
-                variant="secondary"
-                tone="onDark"
-                size="lg"
-                className="w-full sm:w-auto"
-              >
-                {secondary.label}
-              </Button>
-            ) : null}
-          </motion.div>
-
-          {note ? (
-            <motion.p
-              className="mt-5 font-body text-sm text-neutral-0/75"
-              initial={reducedMotion ? false : { opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT }}
-            >
-              {note}
-            </motion.p>
           ) : null}
-        </div>
-      </motion.div>
-    </section>
+        </>
+      }
+    />
   );
 }

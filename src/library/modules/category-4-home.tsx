@@ -262,7 +262,7 @@ export const homeAdvisorCtaModule: LibraryModule = {
   slug: "home-advisor-cta",
   title: "HomeAdvisorCta",
   description:
-    "CTA doradcy - LiquidCtaGlow, dwa przyciski (pełna szerokość na mobile).",
+    "CTA doradcy - układ split media + copy jak strefa architekta, dwa przyciski (pełna szerokość na mobile).",
   variants: [
     {
       id: "default",

@@ -1,4 +1,3 @@
-import { assetUrl } from "../../app/assets";
 import { homePartners } from "../../data/home";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { cn } from "../../lib/cn";
@@ -48,7 +47,7 @@ export function HomePartners() {
                     <i
                       className={cn(
                         card.iconClass,
-                        "text-[1.15em] leading-none text-gold-500",
+                        "text-[1.15em] leading-none text-neutral-900",
                       )}
                       aria-hidden="true"
                     />
@@ -57,22 +56,9 @@ export function HomePartners() {
                   <p className="mt-3 mb-0 text-sm leading-relaxed text-neutral-600">
                     {card.description}
                   </p>
-                  <ul className="mt-5 mb-0 flex list-none flex-col gap-2.5 p-0">
+                  <ul className="mt-5 mb-0 list-disc space-y-2.5 ps-5 text-sm leading-relaxed text-neutral-700 marker:text-neutral-500">
                     {card.benefits.map((benefit) => (
-                      <li
-                        key={benefit}
-                        className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
-                      >
-                        <img
-                          src={assetUrl("sygnet.svg")}
-                          alt=""
-                          aria-hidden="true"
-                          className="mt-1 size-3.5 shrink-0 opacity-70"
-                          width={14}
-                          height={14}
-                        />
-                        <span>{benefit}</span>
-                      </li>
+                      <li key={benefit}>{benefit}</li>
                     ))}
                   </ul>
                   <div className="mt-auto pt-6">

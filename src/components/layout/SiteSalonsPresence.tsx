@@ -1,9 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { AnimatedNumber } from "../motion/AnimatedNumber";
 import { PolandSalonsMap } from "./PolandSalonsMap";
+import { VoivodeshipSalonsDrawer } from "./VoivodeshipSalonsDrawer";
 import { cn } from "../../lib/cn";
 import {
   footerSocialLinks,
@@ -22,6 +23,9 @@ export function SiteSalonsPresence() {
     () => groupSalonCitiesByVoivodeship(presenceSalonCities),
     [],
   );
+  const [focusedVoivId, setFocusedVoivId] = useState<string | null>(null);
+
+  const closeVoivDrawer = () => setFocusedVoivId(null);
 
   return (
     <section
@@ -80,20 +84,29 @@ export function SiteSalonsPresence() {
               {presenceSalonsCopy.description}
             </p>
 
-            <ul className="mt-8 mb-0 grid list-none grid-cols-2 gap-x-6 gap-y-6 p-0 md:gap-x-8">
+            <ul className="mt-8 mb-0 columns-2 list-none gap-x-6 p-0 md:columns-3 md:gap-x-8">
               {voivGroups.map((group) => (
-                <li key={group.id} className="min-w-0">
-                  <p className="m-0 mb-1.5 font-body text-2.75 font-medium tracking-[0.12em] break-words uppercase text-neutral-500">
+                <li key={group.id} className="mb-6 min-w-0 break-inside-avoid">
+                  <button
+                    type="button"
+                    className={cn(
+                      "m-0 mb-1.5 block w-full text-start font-body text-2.75 font-medium tracking-[0.12em] wrap-break-word uppercase",
+                      "text-neutral-500 transition-colors duration-fast ease-out hover:text-gold-400",
+                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
+                      focusedVoivId === group.id && "text-gold-400",
+                    )}
+                    onClick={() => setFocusedVoivId(group.id)}
+                  >
                     {group.name}
-                  </p>
-                  <ul className="m-0 flex list-none flex-col gap-0.5 p-0">
+                  </button>
+                  <ul className="m-0 flex list-none flex-col p-0">
                     {group.cities.map((city) => (
                       <li key={city.href}>
                         <Link
                           to={city.href}
                           className={cn(
-                            "block py-0.5 font-body text-sm text-neutral-300 no-underline",
-                            "transition-colors duration-base ease-out hover:text-gold-400",
+                            "inline-flex min-h-11 w-fit items-center font-body text-sm text-neutral-300 no-underline underline-offset-2",
+                            "transition-colors duration-base ease-out hover:text-gold-400 hover:underline",
                             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
                           )}
                         >
@@ -127,7 +140,7 @@ export function SiteSalonsPresence() {
                 {presenceSalonsCopy.socialLabel}
               </p>
               <ul
-                className="m-0 flex list-none items-center gap-0.5 p-0"
+                className="m-0 flex list-none items-center gap-1 p-0"
                 aria-label={presenceSalonsCopy.socialLabel}
               >
                 {footerSocialLinks.map((link) => (
@@ -135,7 +148,7 @@ export function SiteSalonsPresence() {
                     <a
                       href={link.href}
                       className={cn(
-                        "inline-flex size-10 items-center justify-center text-neutral-400",
+                        "inline-flex size-11 items-center justify-center text-neutral-400",
                         "transition-colors duration-fast ease-out hover:text-gold-400",
                         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
                       )}
@@ -144,7 +157,7 @@ export function SiteSalonsPresence() {
                       rel="noopener noreferrer"
                     >
                       <i
-                        className={cn(link.iconClass, "text-xl leading-none")}
+                        className={cn(link.iconClass, "text-2xl leading-none")}
                         aria-hidden="true"
                       />
                     </a>
@@ -152,10 +165,19 @@ export function SiteSalonsPresence() {
                 ))}
               </ul>
             </div>
-            <PolandSalonsMap />
+            <PolandSalonsMap
+              focusedVoivId={focusedVoivId}
+              onVoivSelect={setFocusedVoivId}
+            />
           </div>
         </div>
       </Container>
+
+      <VoivodeshipSalonsDrawer
+        open={Boolean(focusedVoivId)}
+        voivId={focusedVoivId}
+        onClose={closeVoivDrawer}
+      />
     </section>
   );
 }

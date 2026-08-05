@@ -23,7 +23,7 @@ export function HomeAbout() {
       />
 
       <Container size="content" className="relative z-10">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
           <div className="relative min-w-0">
             <TextRevealLead
               id="home-about-title"

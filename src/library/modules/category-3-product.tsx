@@ -364,7 +364,7 @@ export const productVisualizationCtaModule: LibraryModule = {
   slug: "product-visualization-cta",
   title: "ProductVisualizationCTA",
   description:
-    "CTA wizualizacji łazienki - LiquidCtaGlow, primary + secondary, pełna szerokość przycisków na mobile.",
+    "CTA wizualizacji łazienki - układ split media + copy jak strefa architekta, primary + secondary.",
   variants: [
     {
       id: "default",
