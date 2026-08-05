@@ -5,6 +5,7 @@ import { HomeAdvisorCta } from "../components/home/HomeAdvisorCta";
 import { HomeAppointment } from "../components/home/HomeAppointment";
 import { HomeBrands } from "../components/home/HomeBrands";
 import { HomeCategories } from "../components/home/HomeCategories";
+import { HomeCategoriesBento } from "../components/home/HomeCategoriesBento";
 import { HomeHero } from "../components/home/HomeHero";
 import { HomeInspiration } from "../components/home/HomeInspiration";
 import { HomeMagazine } from "../components/home/HomeMagazine";
@@ -43,6 +44,9 @@ export function HomePage() {
         <HomeHero />
         <RevealSection>
           <HomeCategories />
+        </RevealSection>
+        <RevealSection>
+          <HomeCategoriesBento />
         </RevealSection>
         <RevealSection>
           <HomeProducts />
