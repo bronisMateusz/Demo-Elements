@@ -25,41 +25,6 @@ type ProductBuyBoxProps = {
   onAskOpen?: () => void;
 };
 
-function ProductTitle({
-  title,
-  collection,
-}: {
-  title: string;
-  collection?: Product["collection"];
-}) {
-  if (!collection?.name) return title;
-
-  const index = title.indexOf(collection.name);
-  if (index === -1) return title;
-
-  const before = title.slice(0, index);
-  const after = title.slice(index + collection.name.length);
-
-  return (
-    <>
-      {before}
-      <a
-        href={collection.href}
-        aria-label={`Kolekcja ${collection.name}`}
-        className={cn(
-          "text-inherit underline decoration-neutral-900 decoration-1 underline-offset-[0.18em]",
-          "transition-[color,text-decoration-color] duration-fast ease-out",
-          "hover:text-gold-500 hover:decoration-gold-500",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-        )}
-      >
-        {collection.name}
-      </a>
-      {after}
-    </>
-  );
-}
-
 export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
   const { selection, resolved, selectOption } = useProductVariants(
     product.variants,
@@ -85,9 +50,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
       />
 
       <div className="mb-3 flex items-start justify-between gap-4">
-        <h1 className="t-h2 min-w-0 flex-1">
-          <ProductTitle title={displayTitle} collection={product.collection} />
-        </h1>
+        <h1 className="t-h2 min-w-0 flex-1">{displayTitle}</h1>
         <ProductFavoriteButton
           sku={product.id}
           variant="bordered"
@@ -96,7 +59,33 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
         />
       </div>
 
-      <p className="mb-5 text-sm text-neutral-500 lg:mb-6">{displaySku}</p>
+      <div className="mb-5 lg:mb-6">
+        {product.collection ? (
+          <p className="m-0 text-sm text-neutral-500">
+            Kolekcja:{" "}
+            <a
+              href={product.collection.href}
+              aria-label={`Kolekcja ${product.collection.name}`}
+              className={cn(
+                "underline decoration-neutral-500 decoration-1 underline-offset-[0.18em]",
+                "transition-[color,text-decoration-color] duration-fast ease-out",
+                "hover:text-gold-500 hover:decoration-gold-500",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+              )}
+            >
+              {product.collection.name}
+            </a>
+          </p>
+        ) : null}
+        <p
+          className={cn(
+            "m-0 text-sm text-neutral-500",
+            product.collection && "mt-3",
+          )}
+        >
+          {displaySku}
+        </p>
+      </div>
 
       {product.variants ? (
         <ProductVariantSelector

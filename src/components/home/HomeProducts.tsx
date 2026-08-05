@@ -57,7 +57,7 @@ export function HomeProducts() {
         <TextRevealLead
           id="home-products-title"
           revealUnit="word"
-          className="max-w-2xl"
+          className="max-w-none whitespace-nowrap"
           typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
           mutedClassName="text-neutral-900/20"
           fillClassName="text-neutral-900"

@@ -123,7 +123,7 @@ export function HomeBrands() {
       <Container size="content">
         <h2
           id="home-brands-title"
-          className="m-0 max-w-md font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
+          className="m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-balance text-neutral-900 md:whitespace-nowrap"
         >
           {homeBrands.title}
         </h2>
