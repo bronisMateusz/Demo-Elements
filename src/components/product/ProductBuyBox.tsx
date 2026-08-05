@@ -1,7 +1,9 @@
 import { useProductVariants } from "../../hooks/useProductVariants";
+import { cn } from "../../lib/cn";
 import type { Product } from "../../types/product";
 import { ProductBadges, ProductPriceBlock } from "./ProductBuyBoxParts";
 import { ProductFavoriteButton } from "./ProductFavoriteButton";
+import { ProductGalleryBanner } from "./ProductGalleryBanner";
 import { ProductSalonCard } from "./ProductSalonCard";
 import { ProductVariantSelector } from "./variant-selector";
 
@@ -11,15 +13,52 @@ type ProductBuyBoxProps = {
     | "id"
     | "brand"
     | "title"
+    | "collection"
     | "sku"
     | "badges"
     | "variants"
     | "price"
     | "cta"
     | "salonCard"
+    | "galleryBanner"
   >;
   onAskOpen?: () => void;
 };
+
+function ProductTitle({
+  title,
+  collection,
+}: {
+  title: string;
+  collection?: Product["collection"];
+}) {
+  if (!collection?.name) return title;
+
+  const index = title.indexOf(collection.name);
+  if (index === -1) return title;
+
+  const before = title.slice(0, index);
+  const after = title.slice(index + collection.name.length);
+
+  return (
+    <>
+      {before}
+      <a
+        href={collection.href}
+        aria-label={`Kolekcja ${collection.name}`}
+        className={cn(
+          "text-inherit underline decoration-neutral-900 decoration-1 underline-offset-[0.18em]",
+          "transition-[color,text-decoration-color] duration-fast ease-out",
+          "hover:text-gold-500 hover:decoration-gold-500",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+        )}
+      >
+        {collection.name}
+      </a>
+      {after}
+    </>
+  );
+}
 
 export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
   const { selection, resolved, selectOption } = useProductVariants(
@@ -46,7 +85,9 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
       />
 
       <div className="mb-3 flex items-start justify-between gap-4">
-        <h1 className="t-h2 min-w-0 flex-1">{displayTitle}</h1>
+        <h1 className="t-h2 min-w-0 flex-1">
+          <ProductTitle title={displayTitle} collection={product.collection} />
+        </h1>
         <ProductFavoriteButton
           sku={product.id}
           variant="bordered"
@@ -89,6 +130,18 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
           className="mt-6 lg:mt-8"
           {...product.salonCard}
           onAskOpen={onAskOpen}
+        />
+      ) : null}
+
+      {product.galleryBanner ? (
+        <ProductGalleryBanner
+          className="mt-6 lg:hidden"
+          eyebrow={product.galleryBanner.eyebrow}
+          title={product.galleryBanner.title}
+          description={product.galleryBanner.description}
+          href={product.galleryBanner.href}
+          label={product.galleryBanner.label}
+          image={product.galleryBanner.image}
         />
       ) : null}
     </div>

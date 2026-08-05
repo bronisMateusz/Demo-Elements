@@ -1,6 +1,7 @@
 import { cn } from "../../lib/cn";
 import { Badge } from "../ui/Badge";
 import type { RelatedProduct } from "../../types/product";
+import { ProductCardPrice } from "./ProductCardPrice";
 import { ProductFavoriteButton } from "./ProductFavoriteButton";
 
 type ProductCarouselCardProps = {
@@ -32,7 +33,7 @@ export function ProductCarouselCard({
         <span className="sr-only">Przejdź do: {product.title}</span>
       </a>
 
-      <div className="relative aspect-square shrink-0 overflow-hidden bg-product-stage">
+      <div className="relative aspect-square shrink-0 overflow-hidden bg-neutral-0">
         {/* Scale a GPU layer, not the <img> - avoids paint jank on object-cover images. */}
         <div
           className={cn(
@@ -80,6 +81,7 @@ export function ProductCarouselCard({
         {product.badge ? (
           <Badge
             variant={product.badge.variant ?? "default"}
+            href={product.badge.href}
             className="absolute inset-s-3 top-3 z-2"
           >
             {product.badge.label}
@@ -102,37 +104,27 @@ export function ProductCarouselCard({
       >
         <h3
           className={cn(
-            "m-0 font-heading text-neutral-900",
+            "m-0 line-clamp-2 font-heading text-neutral-900",
             compact
-              ? "text-sm leading-[1.4]"
-              : "text-base leading-[1.35] md:text-lg",
+              ? "min-h-[2.8em] text-sm leading-[1.4]"
+              : "min-h-[2.7em] text-base leading-[1.35] md:text-lg",
           )}
         >
           {product.title}
         </h3>
 
         {product.subtitle ? (
-          <p className="mt-1.5 mb-0 font-body text-sm text-neutral-600">
+          <p className="mt-1.5 mb-0 line-clamp-1 font-body text-sm text-neutral-600">
             {product.subtitle}
           </p>
         ) : null}
 
         {product.price ? (
-          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <p
-              className={cn(
-                "mb-0 font-body text-ui tabular-nums",
-                product.pricePrevious ? "text-promo" : "text-neutral-900",
-              )}
-            >
-              {product.price}
-            </p>
-            {product.pricePrevious ? (
-              <p className="mb-0 font-body text-sm tabular-nums text-neutral-600 line-through decoration-neutral-400">
-                {product.pricePrevious}
-              </p>
-            ) : null}
-          </div>
+          <ProductCardPrice
+            price={product.price}
+            pricePrevious={product.pricePrevious}
+            className="mt-auto pt-3"
+          />
         ) : null}
       </div>
     </article>

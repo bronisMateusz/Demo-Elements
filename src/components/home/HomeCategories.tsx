@@ -21,8 +21,8 @@ export function HomeCategories() {
 
         <ul
           className={cn(
-            "m-0 grid list-none grid-cols-2 gap-3 p-0",
-            "sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4",
+            "m-0 grid list-none grid-cols-2 gap-2 p-0",
+            "sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
           )}
         >
           {homeCategories.items.map((item) => (

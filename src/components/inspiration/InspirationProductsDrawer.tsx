@@ -10,6 +10,7 @@ import type {
 import { Button } from "../ui/Button";
 import { IconButton } from "../ui/IconButton";
 import { DrawerHeader, DrawerShell } from "../layout/DrawerShell";
+import { ProductCardPrice } from "../product/ProductCardPrice";
 
 type InspirationProductsDrawerProps = {
   open: boolean;
@@ -37,7 +38,7 @@ function ArrangementProductRow({ product }: { product: RelatedProduct }) {
         to={product.href}
         className="group/row flex min-w-0 flex-1 items-center gap-4 text-inherit no-underline"
       >
-        <div className="size-16 shrink-0 overflow-hidden bg-product-stage sm:size-18">
+        <div className="size-16 shrink-0 overflow-hidden bg-neutral-0 sm:size-18">
           <img
             src={product.image.src}
             alt=""
@@ -60,21 +61,12 @@ function ArrangementProductRow({ product }: { product: RelatedProduct }) {
             {product.title}
           </p>
           {product.price ? (
-            <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-              <p
-                className={cn(
-                  "m-0 font-body text-sm tabular-nums",
-                  product.pricePrevious ? "text-promo" : "text-neutral-700",
-                )}
-              >
-                {product.price}
-              </p>
-              {product.pricePrevious ? (
-                <p className="m-0 font-body text-sm tabular-nums text-neutral-500 line-through decoration-neutral-400">
-                  {product.pricePrevious}
-                </p>
-              ) : null}
-            </div>
+            <ProductCardPrice
+              price={product.price}
+              pricePrevious={product.pricePrevious}
+              size="row"
+              className="mt-1.5"
+            />
           ) : null}
         </div>
       </Link>

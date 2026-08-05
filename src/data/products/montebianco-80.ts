@@ -242,8 +242,12 @@ export const montebianco80: Product = {
   slug: "montebianco-80",
   brand: "ORiSTO",
   title: "Szafka podumywalkowa Montebianco 80 cm biały mat",
+  collection: {
+    name: "Montebianco",
+    href: "#kolekcja-montebianco",
+  },
   sku: "KBN: MONTESU0802S02",
-  badges: [{ label: "Bestseller", variant: "gold" }],
+  badges: [{ label: "Bestseller", variant: "gold", href: "#bestsellery" }],
   variants: montebiancoVariants,
   price: {
     current: "1 990 zł",
@@ -264,6 +268,20 @@ export const montebianco80: Product = {
     description: "Wybierz najbliższy salon Elements i umów się na prezentację.",
     href: "#salony",
     label: "Wybierz swój salon",
+  },
+  galleryBanner: {
+    eyebrow: "Kolekcja Montebianco",
+    title: "Dobierz umywalkę ORiSTO do szafki",
+    description:
+      "Modułowy system - spójna ceramika i meble w jednej kompozycji.",
+    href: "#kolekcja-montebianco",
+    label: "Zobacz kolekcję",
+    image: {
+      src: assetUrl("products/montebianco/03-room.jpg"),
+      alt: "Aranżacja łazienki z kolekcją Montebianco",
+      fit: "cover",
+      focalPoint: { x: 50, y: 55 },
+    },
   },
   images: [
     {
@@ -311,31 +329,19 @@ export const montebianco80: Product = {
         title: "Front z MDF wilgocioodpornej",
         description:
           "Płyta odporna na parę i wilgoć - front nie pęcznieje i zachowuje geometrię przez lata.",
-        image: {
-          src: assetUrl("products/montebianco/02-detail.jpg"),
-          alt: "Detal frontu szafki Montebianco - MDF wilgocioodporna",
-          focalPoint: { x: 50, y: 45 },
-        },
+        iconClass: "ph ph-drop-slash",
       },
       {
         title: "Wykończenie lakierowane",
         description:
           "Lakier w macie - głębia koloru i powierzchnia łatwa w utrzymaniu czystości.",
-        image: {
-          src: assetUrl("products/montebianco/04-angle.jpg"),
-          alt: "Matowe wykończenie frontu Montebianco",
-          focalPoint: { x: 55, y: 40 },
-        },
+        iconClass: "ph ph-paint-brush",
       },
       {
         title: "System modułowy",
         description:
           "Szafkę połączysz z umywalkami i meblami uzupełniającymi ORiSTO w spójną kompozycję.",
-        image: {
-          src: assetUrl("products/montebianco/03-room.jpg"),
-          alt: "Modułowa aranżacja łazienki z kolekcją Montebianco",
-          focalPoint: { x: 50, y: 55 },
-        },
+        iconClass: "ph ph-squares-four",
       },
     ],
   },
@@ -465,11 +471,17 @@ export const montebianco80: Product = {
     },
   ],
   visualizationCta: {
-    title:
-      "Chcesz zobaczyć możliwości Twojej nowej łazienki? Przygotujemy dla Ciebie jej wizualizację.",
+    title: "Chcesz zobaczyć możliwości Twojej nowej łazienki?",
+    description: "Przygotujemy dla Ciebie jej wizualizację.",
     href: "#wizualizacja",
     label: "Poznaj szczegóły",
     note: "Bezpłatna wizualizacja · Bez zobowiązań",
+    eyebrow: "Wizualizacja",
+    image: {
+      src: assetUrl("home/inspiration-warm-minimal.jpg"),
+      alt: "Wizualizacja jasnej łazienki w ciepłych tonach",
+      focalPoint: { x: 50, y: 45 },
+    },
     secondary: {
       href: "#salony",
       label: "Znajdź salon",

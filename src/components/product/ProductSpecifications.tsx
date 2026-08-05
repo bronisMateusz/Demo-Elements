@@ -26,14 +26,16 @@ export function ProductSpecifications({ specs }: ProductSpecificationsProps) {
     <section aria-labelledby="specs-title">
       <Container size="content">
         <SectionHeader title="Specyfikacja techniczna" titleId="specs-title" />
-        <dl className="grid gap-x-12 gap-y-0 border-t border-neutral-200 sm:grid-cols-2 xl:grid-cols-3">
+        <dl className="grid gap-x-16 gap-y-0 overflow-hidden border border-neutral-200 bg-white px-4 sm:grid-cols-2 sm:gap-x-20 sm:px-5 xl:grid-cols-3 xl:gap-x-24">
           {visibleSpecs.map((spec) => (
             <div
               key={spec.label}
-              className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-200 py-4"
+              className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-200 py-3.5"
             >
-              <dt className="text-ui text-neutral-600">{spec.label}</dt>
-              <dd className="text-ui text-neutral-900 text-end">
+              <dt className="text-ui font-semibold text-neutral-900">
+                {spec.label}
+              </dt>
+              <dd className="text-ui text-end text-neutral-700">
                 {spec.value}
               </dd>
             </div>

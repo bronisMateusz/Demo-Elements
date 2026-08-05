@@ -101,7 +101,7 @@ export function AskFab({
         aria-label="Szybkie akcje produktu"
       >
         <div className="flex items-center gap-2 border border-neutral-200/80 bg-neutral-0 px-3 py-2 shadow-2 max-lg:border-x-0 max-lg:border-b-0 lg:gap-5 lg:px-5 lg:py-4">
-          <div className="hidden size-12 shrink-0 overflow-hidden bg-product-stage lg:block">
+          <div className="hidden size-12 shrink-0 overflow-hidden bg-neutral-0 lg:block">
             <img
               src={image.src}
               alt=""

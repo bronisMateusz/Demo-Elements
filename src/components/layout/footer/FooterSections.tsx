@@ -45,12 +45,12 @@ export function FooterMain() {
 
               {footerColumns.map((column, columnIndex) => (
                 <div key={column.links[0]?.label ?? columnIndex}>
-                  <ul className="m-0 flex list-none flex-col gap-2 p-0">
+                  <ul className="m-0 flex list-none flex-col gap-0 p-0">
                     {column.links.map((link) => (
                       <li key={`${columnIndex}-${link.label}`}>
                         <a
                           href={link.href}
-                          className="block w-full text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
+                          className="inline-flex min-h-11 w-fit items-center text-sm text-neutral-500 no-underline underline-offset-2 transition-colors hover:text-neutral-900 hover:underline"
                         >
                           {link.label}
                         </a>
@@ -75,19 +75,19 @@ export function FooterLegal() {
   return (
     <Container
       className={cn(
-        "flex flex-col items-center justify-between gap-4 border-t border-neutral-200 py-8 sm:flex-row",
+        "flex flex-col items-center justify-between gap-4 border-t border-neutral-200 py-8 md:flex-row",
       )}
     >
-      <p className="m-0 text-center text-sm text-neutral-500 sm:text-start">
+      <p className="m-0 text-center text-sm text-neutral-500 md:text-start">
         © {new Date().getFullYear()} {footerLegal.copyright}
       </p>
-      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end">
+      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-end">
         <ul className="m-0 flex list-none flex-wrap items-center justify-center gap-x-6 gap-y-2 p-0">
           {footerLegal.links.map((link) => (
             <li key={link.label}>
               <a
                 href={link.href}
-                className="text-sm text-neutral-500 no-underline transition-colors hover:text-neutral-900"
+                className="inline-flex min-h-11 items-center text-sm text-neutral-500 no-underline underline-offset-2 transition-colors hover:text-neutral-900 hover:underline"
               >
                 {link.label}
               </a>

@@ -21,6 +21,7 @@ export type PolandVoivodeship = {
 /** City salon href → voivodeship id (ISO 3166-2:PL). */
 export const CITY_TO_VOIV: Record<string, string> = {
   "/salony/warszawa": "PL-MZ",
+  "/salony/sekocin": "PL-MZ",
   "/salony/krakow": "PL-MA",
   "/salony/poznan": "PL-WP",
   "/salony/wroclaw": "PL-DS",
@@ -33,9 +34,11 @@ export const CITY_TO_VOIV: Record<string, string> = {
   "/salony/rzeszow": "PL-PK",
   "/salony/opole": "PL-OP",
   "/salony/gliwice1": "PL-SL",
+  "/salony/gliwice2": "PL-SL",
   "/salony/jgora": "PL-DS",
   "/salony/klodzko": "PL-DS",
   "/salony/koszalin1": "PL-ZP",
+  "/salony/koszalin2": "PL-ZP",
 };
 
 export type SalonCityLink = {
@@ -132,7 +135,128 @@ export const polandVoivodeships: PolandVoivodeship[] = [
   },
 ];
 
-/** Groups salon cities by voivodeship, preserving first-seen order. */
+export type VoivodeshipBBox = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+/** Approximate path bbox for MapSVG-style voivodeship outlines (point samples). */
+function approxPathBBox(d: string): VoivodeshipBBox {
+  let i = 0;
+  let cmd = "";
+  let cx = 0;
+  let cy = 0;
+  let sx = 0;
+  let sy = 0;
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  const add = (x: number, y: number) => {
+    minX = Math.min(minX, x);
+    minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x);
+    maxY = Math.max(maxY, y);
+  };
+
+  const tokens = d.match(/[MmLlHhVvCcZz]|-?\d*\.?\d+(?:e[-+]?\d+)?/g) ?? [];
+  const take = (n: number) => {
+    const out: number[] = [];
+    for (let k = 0; k < n; k += 1) {
+      out.push(Number(tokens[i]));
+      i += 1;
+    }
+    return out;
+  };
+
+  while (i < tokens.length) {
+    const token = tokens[i];
+    if (/^[MmLlHhVvCcZz]$/.test(token)) {
+      cmd = token;
+      i += 1;
+    }
+
+    if (cmd === "Z" || cmd === "z") {
+      cx = sx;
+      cy = sy;
+      add(cx, cy);
+      continue;
+    }
+
+    if (cmd === "M" || cmd === "m") {
+      const rel = cmd === "m";
+      const [x, y] = take(2);
+      cx = rel ? cx + x : x;
+      cy = rel ? cy + y : y;
+      sx = cx;
+      sy = cy;
+      add(cx, cy);
+      cmd = rel ? "l" : "L";
+      continue;
+    }
+
+    if (cmd === "L" || cmd === "l") {
+      const rel = cmd === "l";
+      const [x, y] = take(2);
+      cx = rel ? cx + x : x;
+      cy = rel ? cy + y : y;
+      add(cx, cy);
+      continue;
+    }
+
+    if (cmd === "H" || cmd === "h") {
+      const rel = cmd === "h";
+      const [x] = take(1);
+      cx = rel ? cx + x : x;
+      add(cx, cy);
+      continue;
+    }
+
+    if (cmd === "V" || cmd === "v") {
+      const rel = cmd === "v";
+      const [y] = take(1);
+      cy = rel ? cy + y : y;
+      add(cx, cy);
+      continue;
+    }
+
+    if (cmd === "C" || cmd === "c") {
+      const rel = cmd === "c";
+      const [x1, y1, x2, y2, x, y] = take(6);
+      const ax1 = rel ? cx + x1 : x1;
+      const ay1 = rel ? cy + y1 : y1;
+      const ax2 = rel ? cx + x2 : x2;
+      const ay2 = rel ? cy + y2 : y2;
+      const ax = rel ? cx + x : x;
+      const ay = rel ? cy + y : y;
+      add(ax1, ay1);
+      add(ax2, ay2);
+      add(ax, ay);
+      cx = ax;
+      cy = ay;
+      continue;
+    }
+
+    if (!/^[MmLlHhVvCcZz]$/.test(tokens[i] ?? "")) i += 1;
+  }
+
+  return {
+    x: minX,
+    y: minY,
+    width: maxX - minX,
+    height: maxY - minY,
+  };
+}
+
+export const POLAND_VOIV_BBOX: Record<string, VoivodeshipBBox> =
+  Object.fromEntries(
+    polandVoivodeships.map((region) => [region.id, approxPathBBox(region.d)]),
+  );
+
+/** Groups salon cities by voivodeship, sorted A-Z (pl) for regions and cities. */
 export function groupSalonCitiesByVoivodeship(
   cities: readonly SalonCityLink[],
 ): SalonVoivodeshipGroup[] {
@@ -141,6 +265,8 @@ export function groupSalonCitiesByVoivodeship(
   );
   const groups: SalonVoivodeshipGroup[] = [];
   const indexById = new Map<string, number>();
+  const collator = new Intl.Collator("pl", { sensitivity: "base" });
+  const sortLabel = (value: string) => value.replace(/\u00AD/g, "");
 
   for (const city of cities) {
     const voivId = CITY_TO_VOIV[city.href];
@@ -158,5 +284,12 @@ export function groupSalonCitiesByVoivodeship(
     groups[existing].cities.push(city);
   }
 
-  return groups;
+  return groups
+    .map((group) => ({
+      ...group,
+      cities: [...group.cities].sort((a, b) =>
+        collator.compare(a.label, b.label),
+      ),
+    }))
+    .sort((a, b) => collator.compare(sortLabel(a.name), sortLabel(b.name)));
 }

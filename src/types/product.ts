@@ -1,6 +1,8 @@
 export type ProductBadge = {
   label: string;
   variant?: "default" | "gold" | "brand" | "outline" | "promo" | "neutral";
+  /** Listing / filter target - badges in the buy box render as links. */
+  href?: string;
 };
 
 export type ProductImageFocalPoint = {
@@ -79,6 +81,8 @@ export type ProductDownload = {
 export type ProductFeature = {
   title: string;
   description: string;
+  /** Phosphor class, e.g. `ph ph-drop`. Preferred over lifestyle photos. */
+  iconClass?: string;
   image?: ProductImage;
 };
 
@@ -122,6 +126,11 @@ export type Product = {
   slug: string;
   brand: string;
   title: string;
+  /** Collection name linked inside the PDP title (e.g. “Montebianco”). */
+  collection?: {
+    name: string;
+    href: string;
+  };
   sku: string;
   badges: ProductBadge[];
   variants?: ProductVariants;
@@ -141,6 +150,15 @@ export type Product = {
     description: string;
     href: string;
     label: string;
+  };
+  /** Optional promo strip under the PDP gallery carousel. */
+  galleryBanner?: {
+    eyebrow: string;
+    title: string;
+    description?: string;
+    href: string;
+    label: string;
+    image?: ProductImage;
   };
   images: ProductImage[];
   seriesTitle: string;
@@ -167,9 +185,12 @@ export type Product = {
   inspirations: InspirationArrangement[];
   visualizationCta: {
     title: string;
+    description?: string;
     href: string;
     label: string;
     note?: string;
+    eyebrow?: string;
+    image: ProductImage;
     secondary?: {
       href: string;
       label: string;

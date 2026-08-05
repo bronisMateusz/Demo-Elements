@@ -159,22 +159,22 @@ export const salonCardCopy = {
   hoursColumnLabel: "Godziny otwarcia",
   askLabel: "Wyślij pytanie do salonu",
   defaultPhone: "+48 22 000 00 00",
-  defaultHours: ["pon.-pt. 10:00-18:00", "sob. 10:00-14:00"],
+  defaultHours: ["PN - PT 10:00 - 18:00", "SOB 10:00 - 14:00"],
 } as const;
 
 /** Salon points - copy from eh-salon-results prototype. */
 export const salonOptions = [
   {
     id: "warszawa",
-    name: "ELEMENTS Warszawa",
-    address: "ul. Przykładowa 12, 02-222 Warszawa",
+    name: "ELEMENTS Warszawa - Elektronowa",
+    address: "ul. Elektronowa 0, 03-219 Warszawa",
     href: "/salony/warszawa",
     lat: 52.2297,
     lng: 21.0122,
   },
   {
     id: "sekocin",
-    name: "ELEMENTS Warszawa Sękocin Nowy",
+    name: "ELEMENTS Warszawa - Sękocin Nowy",
     address: "al. Krakowska 0, Sękocin Nowy",
     href: "/salony/sekocin",
     lat: 52.1152,
@@ -433,7 +433,8 @@ export const presenceStats = [
 ] as const;
 
 export const presenceSalonCities = [
-  { label: "Warszawa", href: "/salony/warszawa" },
+  { label: "Warszawa - Elektronowa", href: "/salony/warszawa" },
+  { label: "Warszawa - Sękocin Nowy", href: "/salony/sekocin" },
   { label: "Kraków", href: "/salony/krakow" },
   { label: "Poznań", href: "/salony/poznan" },
   { label: "Wrocław", href: "/salony/wroclaw" },
@@ -445,11 +446,23 @@ export const presenceSalonCities = [
   { label: "Kielce", href: "/salony/kielce" },
   { label: "Rzeszów", href: "/salony/rzeszow" },
   { label: "Opole", href: "/salony/opole" },
-  { label: "Gliwice", href: "/salony/gliwice1" },
+  { label: "Gliwice - Pszczyńska", href: "/salony/gliwice1" },
+  { label: "Gliwice - Uszczyka", href: "/salony/gliwice2" },
   { label: "Jelenia Góra", href: "/salony/jgora" },
   { label: "Kłodzko", href: "/salony/klodzko" },
-  { label: "Koszalin", href: "/salony/koszalin1" },
+  { label: "Koszalin - Franciszkańska", href: "/salony/koszalin1" },
+  { label: "Koszalin - Żytnia", href: "/salony/koszalin2" },
 ] as const;
+
+export const presenceVoivodeshipDrawerCopy = {
+  description: "Salony Elements w wybranym województwie.",
+  contactLabel: "Pełny kontakt",
+  selectLabel: "Wybierz salon",
+  selectedLabel: "Wybrany",
+  closeLabel: "Zamknij listę salonów",
+  hoursLabel: "Godziny",
+  phoneLabel: "Telefon",
+} as const;
 
 export const presenceSalonsCopy = {
   title: "Salony Elements w całej Polsce",

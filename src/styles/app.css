@@ -24,9 +24,6 @@
   --color-neutral-900: #1a1815; /* 26/24/21 */
   --color-neutral-950: #15140f; /* 21/20/15 */
 
-  /* Warm sand stage behind packshot / product photos (carousels, gallery, thumbs). */
-  --color-product-stage: #f2eee6;
-
   /* Gold / warm metal */
   --color-gold-50: #e2dccc; /* 226/220/204 */
   --color-gold-75: #e1dad1; /* 225/218/209 */
@@ -63,12 +60,12 @@
     "General Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     sans-serif;
 
-  --text-display-xl: clamp(40px, 5vw, 72px);
-  --text-h1: clamp(32px, 4vw, 52px);
-  --text-h2: clamp(26px, 3.2vw, 40px);
-  --text-h3: clamp(22px, 2.4vw, 32px);
-  --text-h4: 22px;
-  --text-ui: 15px;
+  --text-display-xl: clamp(2.5rem, 5vw, 4.5rem);
+  --text-h1: clamp(2rem, 4vw, 3.25rem);
+  --text-h2: clamp(1.625rem, 3.2vw, 2.5rem);
+  --text-h3: clamp(1.375rem, 2.4vw, 2rem);
+  --text-h4: 1.375rem;
+  --text-ui: 0.9375rem;
 
   /* Shadows — tinted to neutral-900 (#1a1815) */
   --shadow-subtle: 0 1px 3px rgba(26, 24, 21, 0.04);

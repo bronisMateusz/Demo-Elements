@@ -60,7 +60,7 @@ function GalleryThumbnailRail({
               key={image.src}
               type="button"
               className={cn(
-                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-product-stage transition-[opacity,border-color] duration-base ease-out",
+                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-neutral-0 transition-[opacity,border-color] duration-base ease-out",
                 isActive
                   ? "border-neutral-900 opacity-100"
                   : "border-neutral-200 opacity-55 hover:opacity-100",
@@ -201,7 +201,7 @@ function GallerySlideContent({
       <button
         type="button"
         className={cn(
-          "relative w-full cursor-crosshair overflow-hidden bg-product-stage",
+          "relative w-full cursor-crosshair overflow-hidden bg-neutral-0",
           fillViewport
             ? cn(
                 // Stack (mobile/tablet): capped height so the gallery does not dominate the viewport.

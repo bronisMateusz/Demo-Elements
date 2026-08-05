@@ -2,6 +2,7 @@ import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
 import { Breadcrumbs, type BreadcrumbItem } from "../orientation/Breadcrumbs";
 import { SectionHeader } from "../structural/SectionHeader";
+import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductFeature } from "../../types/product";
 
@@ -15,22 +16,36 @@ type ProductEditorialProps = {
 };
 
 function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
+  const visual = feature.iconClass ? (
+    <div
+      className="flex size-14 shrink-0 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-50 sm:size-16"
+      aria-hidden="true"
+    >
+      <i
+        className={cn(
+          feature.iconClass,
+          "text-2xl leading-none text-gold-500 sm:text-3xl",
+        )}
+      />
+    </div>
+  ) : feature.image ? (
+    <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50 sm:size-16">
+      <img
+        src={feature.image.src}
+        alt={feature.image.alt}
+        className="size-full object-contain p-1.5"
+        style={{
+          objectPosition: productImageObjectPosition(feature.image),
+        }}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  ) : null;
+
   return (
     <li className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
-      {feature.image ? (
-        <div className="aspect-16/10 w-full shrink-0 overflow-hidden bg-neutral-100 sm:aspect-4/3 sm:w-36 md:w-40">
-          <img
-            src={feature.image.src}
-            alt={feature.image.alt}
-            className="size-full object-cover"
-            style={{
-              objectPosition: productImageObjectPosition(feature.image),
-            }}
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      ) : null}
+      {visual}
       <div className="min-w-0">
         <h3 className="mb-1 font-body text-base leading-snug font-medium text-neutral-900">
           {feature.title}
