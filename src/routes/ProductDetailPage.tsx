@@ -57,7 +57,7 @@ export function ProductDetailPage() {
           <Breadcrumbs
             items={breadcrumbItems}
             variant="top"
-            className="py-3 md:py-4 lg:hidden"
+            className="py-3 md:py-4"
           />
         }
       >
@@ -77,7 +77,6 @@ export function ProductDetailPage() {
         <RevealSection>
           <Section id="pdp-opis" className={pdpSectionScrollMarginClassName}>
             <ProductEditorial
-              breadcrumbs={breadcrumbItems}
               eyebrow={product.editorial.eyebrow}
               title={product.editorial.title}
               lead={product.editorial.lead}

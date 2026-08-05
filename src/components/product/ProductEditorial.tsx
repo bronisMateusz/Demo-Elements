@@ -1,6 +1,5 @@
 import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
-import { Breadcrumbs, type BreadcrumbItem } from "../orientation/Breadcrumbs";
 import { SectionHeader } from "../structural/SectionHeader";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
@@ -12,7 +11,6 @@ type ProductEditorialProps = {
   lead: string;
   paragraphs: string[];
   features: ProductFeature[];
-  breadcrumbs?: BreadcrumbItem[];
 };
 
 function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
@@ -62,7 +60,6 @@ export function ProductEditorial({
   lead,
   paragraphs,
   features,
-  breadcrumbs,
 }: ProductEditorialProps) {
   return (
     <section
@@ -79,12 +76,6 @@ export function ProductEditorial({
       />
 
       <Container size="content" className="relative z-10">
-        {breadcrumbs ? (
-          <div className="hidden lg:block">
-            <Breadcrumbs items={breadcrumbs} variant="section" />
-          </div>
-        ) : null}
-
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
           <div className="min-w-0 lg:sticky lg:top-47.5 header-concealed:lg:top-36.5 lg:self-start">
             <SectionHeader
