@@ -45,13 +45,20 @@ function CategoryHeading({
       <span className="font-heading text-h3 leading-[1.15] font-medium tracking-tight">
         {name}
       </span>
-      <i
+      <span
         className={cn(
-          "ph ph-arrow-right text-lg leading-none",
+          "inline-flex shrink-0 items-center gap-1.5",
           "transition-transform duration-base ease-out group-hover/heading:translate-x-0.5",
         )}
-        aria-hidden="true"
-      />
+      >
+        <span className="font-body text-xs font-medium uppercase tracking-[0.12em] max-sm:inline hidden">
+          Więcej
+        </span>
+        <i
+          className="ph ph-arrow-right text-lg leading-none"
+          aria-hidden="true"
+        />
+      </span>
     </>
   );
 
