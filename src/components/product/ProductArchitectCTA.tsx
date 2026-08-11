@@ -1,6 +1,5 @@
-import { SplitMediaCta } from "../structural/SplitMediaCta";
-import { Button } from "../ui/Button";
 import type { ProductImage } from "../../types/product";
+import { PromoSplitCta } from "../structural/PromoSplitCta";
 
 type ProductArchitectCTAProps = {
   title: string;
@@ -22,7 +21,7 @@ export function ProductArchitectCTA({
   video,
 }: ProductArchitectCTAProps) {
   return (
-    <SplitMediaCta
+    <PromoSplitCta
       titleId="architect-cta-title"
       eyebrow={eyebrow}
       title={title}
@@ -30,17 +29,7 @@ export function ProductArchitectCTA({
       image={image}
       video={video}
       titleIconClass="ph ph-cube"
-      actions={
-        <Button
-          href={href}
-          variant="primary"
-          size="lg"
-          className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
-        >
-          {label}
-          <i className="ph ph-arrow-right" aria-hidden="true" />
-        </Button>
-      }
+      primary={{ href, label }}
     />
   );
 }

@@ -5,13 +5,19 @@ import type { ProductDownload } from "../../types/product";
 
 type ProductDownloadsProps = {
   downloads: ProductDownload[];
+  title?: string;
+  titleId?: string;
 };
 
-export function ProductDownloads({ downloads }: ProductDownloadsProps) {
+export function ProductDownloads({
+  downloads,
+  title = "Pliki do pobrania",
+  titleId = "downloads-title",
+}: ProductDownloadsProps) {
   return (
-    <section aria-labelledby="downloads-title">
+    <section aria-labelledby={titleId}>
       <Container size="content">
-        <SectionHeader title="Pliki do pobrania" titleId="downloads-title" />
+        <SectionHeader title={title} titleId={titleId} />
         <div className="border-t border-neutral-200">
           <SharedLayoutBg
             className="grid w-full lg:grid-cols-2"

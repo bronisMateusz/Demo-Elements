@@ -58,7 +58,7 @@ export function ProductSalonCard({
   const [hoursOpen, setHoursOpen] = useState(false);
 
   if (salon) {
-    const phone = salonCardCopy.defaultPhone;
+    const phone = salon.phone;
     const hours = salonCardCopy.defaultHours;
     const telHref = `tel:${phone.replace(/\s+/g, "")}`;
 

@@ -50,9 +50,7 @@ export function VoivodeshipSalonsDrawer({
   const voivName =
     polandVoivodeships.find((region) => region.id === voivId)?.name ?? "Salony";
   const salons = voivId ? salonsForVoiv(voivId) : [];
-  const phone = salonCardCopy.defaultPhone;
   const hours = salonCardCopy.defaultHours;
-  const telHref = `tel:${phone.replace(/\s+/g, "")}`;
 
   return (
     <DrawerShell
@@ -77,6 +75,8 @@ export function VoivodeshipSalonsDrawer({
           <ul className="m-0 flex list-none flex-col gap-4 p-0">
             {salons.map((salon) => {
               const isSelected = selectedSalon?.id === salon.id;
+              const phone = salon.phone;
+              const telHref = `tel:${phone.replace(/\s+/g, "")}`;
 
               return (
                 <li

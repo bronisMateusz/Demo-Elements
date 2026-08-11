@@ -13,8 +13,6 @@ import {
   presenceStats,
 } from "../../data/nav";
 import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
-import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
-
 /**
  * Dark pre-footer: stats strip, then salon finder with socials above the map.
  */
@@ -121,12 +119,11 @@ export function SiteSalonsPresence() {
 
             <div className="mt-8">
               <Button
-                as="button"
-                type="button"
+                as="link"
+                href={presenceSalonsCopy.allSalonsHref}
                 variant="primary"
                 tone="onDark"
                 className="w-fit"
-                onClick={requestSalonDrawer}
               >
                 {presenceSalonsCopy.allSalonsLabel}
                 <span aria-hidden="true"> →</span>
