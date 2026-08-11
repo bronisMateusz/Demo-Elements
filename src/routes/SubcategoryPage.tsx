@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
+  subcategoryAdvisorCta,
   subcategoryPage,
   subcategorySeoBlocks,
   subcategoryTypes,
@@ -13,10 +13,24 @@ import { LocateCta } from "../components/marketing/LocateCta";
 import { BlogArticleCarousel } from "../components/marketing/BlogArticleCarousel";
 import { SeoExpandable } from "../components/marketing/SeoExpandable";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
-import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
-import { HomeAdvisorCta } from "../components/home/HomeAdvisorCta";
+import {
+  AdvisorCta,
+  type AdvisorCtaContent,
+} from "../components/marketing/AdvisorCta";
+import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
+
+/** Subcategory-only advisor band (washbasins). */
+const subcategoryAdvisorContent: AdvisorCtaContent = {
+  eyebrow: subcategoryAdvisorCta.eyebrow,
+  title: subcategoryAdvisorCta.title,
+  description: subcategoryAdvisorCta.description,
+  image: subcategoryAdvisorCta.image,
+  bookLabel: subcategoryAdvisorCta.bookLabel,
+  askLabel: subcategoryAdvisorCta.findSalonLabel,
+  askHref: subcategoryAdvisorCta.findSalonHref,
+};
 
 function RevealSection({
   children,
@@ -34,8 +48,6 @@ function RevealSection({
 }
 
 export function SubcategoryPage() {
-  const [askOpen, setAskOpen] = useState(false);
-
   return (
     <>
       <Helmet>
@@ -92,21 +104,17 @@ export function SubcategoryPage() {
         </RevealSection>
 
         <RevealSection className="relative z-20">
-          <HomeAdvisorCta
+          <AdvisorCta
             titleId="subcategory-advisor-cta-title"
-            onPrimaryClick={() => setAskOpen(true)}
+            content={subcategoryAdvisorContent}
+            primaryAction="book"
+            onBookOpen={requestSalonDrawer}
           />
         </RevealSection>
 
         <RevealSection className="relative z-0">
           <SeoExpandable blocks={[...subcategorySeoBlocks]} />
         </RevealSection>
-
-        <AdvisorAskDrawer
-          open={askOpen}
-          onClose={() => setAskOpen(false)}
-          topicTitle="Umywalki"
-        />
       </PageShell>
     </>
   );

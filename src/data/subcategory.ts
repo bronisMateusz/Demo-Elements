@@ -60,80 +60,85 @@ export const subcategoryPage = {
   blog: {
     title: "Porady i inspiracje na naszym blogu",
     seeAllLabel: "Więcej artykułów",
-    seeAllHref: "#",
+    seeAllHref: "https://www.elements-show.pl/blog",
     articles: [
       {
         id: "blog-1",
-        title: "Wymiary umywalki - jak dobrać idealny rozmiar?",
+        title: "Jak wybrać miskę WC do łazienki? Praktyczny poradnik",
         excerpt:
-          "Umywalka to jeden z najczęściej używanych elementów łazienki, dlatego jej wymiary mają duży wpływ na codzienny komfort. W tym poradniku podpowiadamy, jak dobrać jej szerokość, głębokość i wysokość montażu.",
-        href: "#",
+          "Wybór miski WC to coś więcej niż kwestia estetyki. Odpowiedni model powinien być dopasowany do instalacji, metrażu łazienki i codziennych potrzeb użytkowników. Sprawdź, na co zwrócić uwagę przy zakupie miski WC, aby zapewnić sobie wygodę, funkcjonalność i łatwe utrzymanie czystości.",
+        href: "https://www.elements-show.pl/blog/jak-wybrac-miske-wc-do-lazienki",
         image: {
-          src: assetUrl("home/categories/umywalki.png"),
-          alt: "Umywalka w aranżacji łazienki - dobór wymiarów",
+          src: assetUrl("blog/jak-wybrac-miske-wc-do-lazienki.webp"),
+          alt: "Jasna łazienka z miską WC - poradnik wyboru",
           fit: "cover" as const,
         },
       },
       {
         id: "blog-2",
-        title: "Umywalka nablatowa czy wpuszczana? Porównanie",
+        title:
+          "Prostokątna łazienka - jak wykorzystać jej układ i urządzić ją funkcjonalnie?",
         excerpt:
-          "Wybór między umywalką nablatową a wpuszczaną w blat wpływa na wygląd, wygodę użytkowania i sposób montażu. Sprawdź, czym różnią się oba rozwiązania i które lepiej sprawdzi się w Twojej łazience.",
-        href: "#",
+          "Prostokątna łazienka daje wiele możliwości aranżacyjnych, ale wymaga dobrze przemyślanego projektu. Odpowiedni układ wyposażenia, kolory, płytki i oświetlenie pozwalają stworzyć funkcjonalne oraz optycznie lepiej wyważone wnętrze. Sprawdź, jak urządzić prostokątną łazienkę i jakich błędów unikać podczas jej projektowania.",
+        href: "https://www.elements-show.pl/blog/prostokatna-lazienka",
         image: {
-          src: assetUrl("home/inspiration-concrete-black.jpg"),
-          alt: "Umywalka nablatowa w nowoczesnej łazience",
+          src: assetUrl("blog/prostokatna-lazienka.webp"),
+          alt: "Nowoczesna prostokątna łazienka z prysznicem",
           fit: "cover" as const,
         },
       },
       {
         id: "blog-3",
-        title: "Jak dobrać baterię do umywalki?",
+        title: "Marmurowa łazienka - jak urządzić elegancką przestrzeń?",
         excerpt:
-          "Wysokość wylewki, rozstaw otworów i typ montażu decydują o tym, czy bateria będzie wygodna w codziennym użyciu. Podpowiadamy, na co zwrócić uwagę przy zestawianiu baterii z konkretnym modelem umywalki.",
-        href: "#",
+          "Sprawdź, jak urządzić marmurową łazienkę. Poznaj różnice między naturalnym marmurem a płytkami marmuropodobnymi oraz pomysły na elegancką aranżację.",
+        href: "https://www.elements-show.pl/blog/marmurowa-lazienka-jak-urzadzic-elegancka-przestrzen",
         image: {
-          src: assetUrl("home/inspiration-warm-palette.jpg"),
-          alt: "Bateria umywalkowa w ciepłej aranżacji",
+          src: assetUrl(
+            "blog/marmurowa-lazienka-jak-urzadzic-elegancka-przestrzen.webp",
+          ),
+          alt: "Elegancka łazienka z wykończeniem marmurowym",
           fit: "cover" as const,
         },
       },
       {
         id: "blog-4",
-        title: "Umywalka z szafką - jak wybrać zestaw?",
+        title: "Jak urządzić szarą łazienkę? Pomysły i inspiracje",
         excerpt:
-          "Zestaw umywalki z szafką porządkuje łazienkę i ukrywa instalację. Sprawdź, jak dobrać głębokość szafki, rodzaj frontów i układ szuflad do metrażu swojej łazienki.",
-        href: "#",
+          "Sprawdź, jak urządzić szarą łazienkę, aby była elegancka, przytulna i funkcjonalna. Poznaj pomysły na płytki, meble, armaturę, światło i dodatki.",
+        href: "https://www.elements-show.pl/blog/jak-urzadzic-szara-lazienke-pomysly-i-inspiracje",
         image: {
-          src: assetUrl("products/montebianco/01-front.png"),
-          alt: "Umywalka z szafką podumywalkową",
+          src: assetUrl(
+            "blog/jak-urzadzic-szara-lazienke-pomysly-i-inspiracje.webp",
+          ),
+          alt: "Szara łazienka - inspiracje aranżacyjne",
           fit: "cover" as const,
         },
       },
       {
         id: "blog-5",
-        title: "Jak urządzić małą toaletę? Pomysły i inspiracje",
+        title: "Bateria z termostatem - jak wybrać i na co zwrócić uwagę?",
         excerpt:
-          "Małe WC może być funkcjonalne, wygodne i estetyczne mimo ograniczonego metrażu. Sprawdź, jak wykorzystać dostępną przestrzeń, dobrać wyposażenie i stworzyć komfortową aranżację.",
-        href: "#",
+          "Bateria termostatyczna - jak działa i kiedy warto ją wybrać? Sprawdź zalety, ograniczenia oraz dowiedz się, na co zwrócić uwagę przed zakupem.",
+        href: "https://www.elements-show.pl/blog/bateria-z-termostatem-jak-wybrac-i-na-co-zwrocic-uwage",
         image: {
-          src: assetUrl("home/inspiration-compact.jpg"),
-          alt: "Mała łazienka - kompaktowa aranżacja",
+          src: assetUrl(
+            "blog/bateria-z-termostatem-jak-wybrac-i-na-co-zwrocic-uwage.webp",
+          ),
+          alt: "Bateria prysznicowa z termostatem",
           fit: "cover" as const,
-          focalPoint: { x: 50, y: 55 },
         },
       },
       {
         id: "blog-6",
-        title: "Czarno-biała łazienka - jak ją urządzić?",
+        title: "Jak odświeżyć łazienkę bez remontu?",
         excerpt:
-          "Czarno-biała łazienka to ponadczasowe rozwiązanie do nowoczesnych i klasycznych wnętrz. Sprawdź, jak połączyć biel i czerń, dobrać wyposażenie oraz stworzyć spójną i funkcjonalną aranżację.",
-        href: "#",
+          "Planujesz odświeżenie łazienki? Sprawdź, jak niewielkim kosztem odmienić wnętrze i poznaj wyposażenie, które znajdziesz w salonach Elements.",
+        href: "https://www.elements-show.pl/blog/jak-odswiezyc-lazienke-bez-remontu",
         image: {
-          src: assetUrl("home/inspiration-deep-green.jpg"),
-          alt: "Kontrastowa aranżacja łazienki",
+          src: assetUrl("blog/jak-odswiezyc-lazienke-bez-remontu.webp"),
+          alt: "Odświeżona łazienka bez generalnego remontu",
           fit: "cover" as const,
-          focalPoint: { x: 50, y: 75 },
         },
       },
     ],
@@ -191,6 +196,23 @@ export const subcategoryTypes: SubcategoryTypeTile[] = [
     },
   },
 ];
+
+/** Advisor band copy for the washbasin subcategory page. */
+export const subcategoryAdvisorCta = {
+  eyebrow: "Doradztwo",
+  title:
+    "Nie wiesz, która umywalka pasuje do Twojej łazienki?\nZobacz je na żywo.",
+  description:
+    "Nasi doradcy pokażą różne typy, kolory i wykończenia na ekspozycji - dobierzemy rozwiązanie dopasowane do metrażu i stylu Twojej łazienki.",
+  image: {
+    src: assetUrl("home/about-salon.jpg"),
+    alt: "Salon Elements - ekspozycja umywalek",
+    focalPoint: { x: 50, y: 40 },
+  },
+  bookLabel: "Umów spotkanie",
+  findSalonLabel: "Znajdź salon",
+  findSalonHref: "/salony",
+} as const;
 
 export type { SeoBlock };
 export { subcategorySeoBlocks } from "./subcategorySeo";

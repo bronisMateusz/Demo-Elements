@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
@@ -11,7 +11,6 @@ import { useGutterPx } from "../../hooks/useGutterPx";
 import { Section } from "../structural/Section";
 import { TextRevealLead } from "../motion/TextRevealLead";
 import { Button } from "../ui/Button";
-import { Container } from "../ui/Container";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
 import {
   productCarouselBleedWrapperClassName,
@@ -45,6 +44,16 @@ type EditorialCarouselProps = {
   a11yNextLabel?: string;
 };
 
+/** Clone items until the track can fill wide viewports in loop mode. */
+function withClonedSlides<T>(items: T[], minSlides: number): T[] {
+  if (items.length <= 1) return items;
+  const slides: T[] = [];
+  while (slides.length < minSlides) {
+    slides.push(...items);
+  }
+  return slides;
+}
+
 export function EditorialCarousel({
   id,
   title,
@@ -59,8 +68,13 @@ export function EditorialCarousel({
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const enableLoop = items.length > 4;
   const itemCount = items.length;
+  const enableLoop = itemCount > 1;
+  const minLoopSlides = 20;
+  const slides = useMemo(
+    () => (enableLoop ? withClonedSlides(items, minLoopSlides) : items),
+    [items, enableLoop],
+  );
   const swiperKey = `editorial-bleed-${contentInsetPx}-${itemCount}-${titleId}`;
 
   const syncEdges = (instance: SwiperInstance) => {
@@ -74,40 +88,6 @@ export function EditorialCarousel({
   const slideNext = useCallback(() => {
     swiper?.slideNext();
   }, [swiper]);
-
-  const footerNav =
-    itemCount > 1 ? (
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          className={iconButtonClassName({
-            variant: "elevated",
-            className: "shadow-subtle",
-          })}
-          aria-label={a11yPrevLabel}
-          onClick={slidePrev}
-        >
-          <i className="ph ph-caret-left" aria-hidden="true" />
-        </button>
-        <p
-          className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
-          aria-live="polite"
-        >
-          {formatSlideIndex(activeIndex, itemCount)}
-        </p>
-        <button
-          type="button"
-          className={iconButtonClassName({
-            variant: "elevated",
-            className: "shadow-subtle",
-          })}
-          aria-label={a11yNextLabel}
-          onClick={slideNext}
-        >
-          <i className="ph ph-caret-right" aria-hidden="true" />
-        </button>
-      </div>
-    ) : null;
 
   return (
     <Section id={id} ariaLabelledby={titleId} className="overflow-x-clip">
@@ -137,7 +117,7 @@ export function EditorialCarousel({
             modules={[A11y, Mousewheel]}
             watchOverflow={!enableLoop}
             loop={enableLoop}
-            loopAdditionalSlides={enableLoop ? 4 : 0}
+            loopAdditionalSlides={enableLoop ? Math.max(itemCount, 4) : 0}
             slidesPerView="auto"
             slidesPerGroup={1}
             spaceBetween={5}
@@ -152,9 +132,7 @@ export function EditorialCarousel({
             mousewheel={{
               forceToAxis: true,
               releaseOnEdges: !enableLoop,
-              sensitivity: 0.45,
-              thresholdDelta: 40,
-              thresholdTime: 360,
+              sensitivity: 0.85,
             }}
             onSwiper={(instance) => {
               setSwiper(instance);
@@ -168,7 +146,7 @@ export function EditorialCarousel({
               nextSlideMessage: a11yNextLabel,
             }}
           >
-            {items.map((item) => {
+            {slides.map((item, index) => {
               const isExternal =
                 item.href.startsWith("http") || item.href === "#";
               const body = (
@@ -214,7 +192,7 @@ export function EditorialCarousel({
 
               return (
                 <SwiperSlide
-                  key={item.id}
+                  key={`${item.id}-${index}`}
                   className={productCarouselSlideClassName("bleed")}
                 >
                   {isExternal ? (
@@ -231,25 +209,51 @@ export function EditorialCarousel({
             })}
           </Swiper>
 
-          {seeAll ? (
-            <Container
-              size="content"
-              className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:mt-10"
-            >
-              {footerNav}
-              <Button
-                href={seeAll.href}
-                variant="secondary"
-                className="w-fit"
-                ariaLabel={seeAll.label}
-              >
-                {seeAll.label}
-                <i className="ph ph-arrow-right" aria-hidden="true" />
-              </Button>
-            </Container>
-          ) : itemCount > 1 ? (
-            <div className="mx-auto mt-8 flex w-full max-w-384 items-center justify-center gap-3 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mt-10">
-              {footerNav}
+          {itemCount > 1 || seeAll ? (
+            <div className="mx-auto mt-8 flex w-full max-w-384 flex-wrap items-center justify-center gap-x-6 gap-y-4 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mt-10">
+              {itemCount > 1 ? (
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    className={iconButtonClassName({
+                      variant: "elevated",
+                      className: "shadow-subtle",
+                    })}
+                    aria-label={a11yPrevLabel}
+                    onClick={slidePrev}
+                  >
+                    <i className="ph ph-caret-left" aria-hidden="true" />
+                  </button>
+                  <p
+                    className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600"
+                    aria-live="polite"
+                  >
+                    {formatSlideIndex(activeIndex, itemCount)}
+                  </p>
+                  <button
+                    type="button"
+                    className={iconButtonClassName({
+                      variant: "elevated",
+                      className: "shadow-subtle",
+                    })}
+                    aria-label={a11yNextLabel}
+                    onClick={slideNext}
+                  >
+                    <i className="ph ph-caret-right" aria-hidden="true" />
+                  </button>
+                </div>
+              ) : null}
+              {seeAll ? (
+                <Button
+                  href={seeAll.href}
+                  variant="secondary"
+                  className="w-fit"
+                  ariaLabel={seeAll.label}
+                >
+                  {seeAll.label}
+                  <i className="ph ph-arrow-right" aria-hidden="true" />
+                </Button>
+              ) : null}
             </div>
           ) : null}
         </div>
