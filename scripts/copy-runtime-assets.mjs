@@ -25,6 +25,14 @@ async function copyRuntimeAssets() {
   await mkdir(path.dirname(faviconDestDir), { recursive: true });
   await cp(faviconSourceDir, faviconDestDir, { recursive: true });
 
+  const ogSourceFile = path.resolve(
+    projectRoot,
+    "public/assets/og/og-default.png",
+  );
+  const ogDestDir = path.resolve(projectRoot, "dist/assets/og");
+  await mkdir(ogDestDir, { recursive: true });
+  await cp(ogSourceFile, path.resolve(ogDestDir, "og-default.png"));
+
   const productsSourceDir = path.resolve(projectRoot, "assets/products");
   const productsDestDir = path.resolve(projectRoot, "dist/assets/products");
   await mkdir(path.dirname(productsDestDir), { recursive: true });
@@ -49,6 +57,8 @@ async function copyRuntimeAssets() {
     const expectedPath = path.resolve(faviconDestDir, fileName);
     await access(expectedPath);
   }
+
+  await access(path.resolve(ogDestDir, "og-default.png"));
 
   const requiredProductFiles = [
     "montebianco/01-front.png",
