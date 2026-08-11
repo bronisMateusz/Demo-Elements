@@ -72,7 +72,13 @@ export function SalonPage() {
           <SalonStats />
         </RevealSection>
         <RevealSection>
-          <HomeBrands id="marki" className={pdpSectionScrollMarginClassName} />
+          <HomeBrands
+            id="marki"
+            title={salonPage.brands.title}
+            description={salonPage.brands.description}
+            showSeeAll={false}
+            className={pdpSectionScrollMarginClassName}
+          />
         </RevealSection>
         <RevealSection>
           <SalonExpo />

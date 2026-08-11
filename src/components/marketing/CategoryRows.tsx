@@ -35,8 +35,9 @@ function CategoryHeading({
   seeAllLabel: string;
 }) {
   const linkClassName = cn(
-    "group/heading inline-flex items-center gap-2 text-neutral-900 no-underline",
-    "transition-colors duration-fast ease-out hover:text-gold-700",
+    "group/heading flex w-full items-center justify-between gap-3 text-neutral-900 no-underline",
+    "sm:inline-flex sm:w-auto sm:justify-start sm:gap-2",
+    "transition-colors duration-fast ease-out hover:text-gold-500",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
   );
   const content = (

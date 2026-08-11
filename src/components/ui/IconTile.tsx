@@ -11,7 +11,7 @@ type IconTileProps = {
   label: string;
   text?: string;
   href?: string;
-  /** Accessible name when `href` is set (defaults to `label`). */
+  /** Visible corner CTA + accessible name when `href` is set (defaults to `label`). */
   ctaLabel?: string;
   className?: string;
 };
@@ -25,8 +25,6 @@ export function IconTile({
   className,
 }: IconTileProps) {
   const interactive = Boolean(href);
-  // Corner arrow only for explicit CTAs (e.g. salon USP), not plain category links.
-  const showArrow = Boolean(ctaLabel);
   const shellClassName = cn(
     iconTileClassName,
     interactive && "hover:bg-gold-100",
@@ -38,20 +36,34 @@ export function IconTile({
 
   const content: ReactNode = (
     <>
-      {showArrow ? (
+      <div className="flex w-full items-center justify-between gap-3">
         <i
-          className="ph ph-arrow-right absolute top-5 inset-e-4 text-base leading-none text-neutral-900 transition-transform duration-base ease-out group-hover/tile:translate-x-0.5 sm:top-6 sm:inset-e-5"
+          className={cn(
+            iconClass,
+            "shrink-0 text-3xl leading-none text-neutral-900",
+          )}
           aria-hidden="true"
         />
-      ) : null}
-      <i
+        {interactive ? (
+          <span
+            className={cn(
+              "inline-flex min-w-0 items-center gap-1",
+              "font-body text-xs font-medium leading-none text-neutral-900",
+            )}
+          >
+            {ctaLabel ? <span className="truncate">{ctaLabel}</span> : null}
+            <i
+              className="ph ph-arrow-right shrink-0 text-base leading-none transition-transform duration-base ease-out group-hover/tile:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </span>
+        ) : null}
+      </div>
+      <span
         className={cn(
-          iconClass,
-          "shrink-0 text-3xl leading-none text-neutral-900",
+          "mt-auto font-body text-sm leading-snug font-medium text-balance text-neutral-900 md:text-ui",
         )}
-        aria-hidden="true"
-      />
-      <span className="font-body text-sm font-medium text-neutral-900 md:text-ui">
+      >
         {label}
       </span>
       {text ? (

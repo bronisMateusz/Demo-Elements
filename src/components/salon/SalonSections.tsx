@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
-import { A11y, Mousewheel } from "swiper/modules";
+import { A11y, Autoplay, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { salonPage } from "../../data/salon";
 import { cn } from "../../lib/cn";
@@ -11,6 +11,7 @@ import {
   liftHeaderAboveLightbox,
   lockLightboxScroll,
 } from "../../hooks/useSiteChrome";
+import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { AnimatedNumber } from "../motion/AnimatedNumber";
 import { InspirationGallery } from "../inspiration/InspirationGallery";
 import { ProductGalleryLightbox } from "../product/ProductGalleryLightbox";
@@ -27,6 +28,7 @@ import { TextRevealLead } from "../motion/TextRevealLead";
 import { AdvisorCta } from "../marketing/AdvisorCta";
 import { PromoSplitCta } from "../structural/PromoSplitCta";
 import { IconTile } from "../ui/IconTile";
+import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import "swiper/css";
 
 export function SalonUsps() {
@@ -58,7 +60,6 @@ export function SalonUsps() {
                 <IconTile
                   iconClass={item.iconClass}
                   label={item.title}
-                  text={item.text}
                   href={cta?.href}
                   ctaLabel={cta?.label}
                 />
@@ -175,6 +176,7 @@ export function SalonStats() {
 
 export function SalonExpo() {
   const { expo } = salonPage;
+  const reduceMotion = useMotionReduced();
   const [active, setActive] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -185,6 +187,7 @@ export function SalonExpo() {
   const swiperRef = useRef<SwiperInstance | null>(null);
   const hasMultiple = expo.images.length > 1;
   const useThumbStrip = hasMultiple && expo.images.length <= 6;
+  const autoplayEnabled = hasMultiple && !reduceMotion;
 
   useEffect(() => {
     lockLightboxScroll(lightboxOpen);
@@ -194,6 +197,13 @@ export function SalonExpo() {
   useEffect(() => {
     return () => liftHeaderAboveLightbox(false);
   }, []);
+
+  useEffect(() => {
+    const autoplay = swiperRef.current?.autoplay;
+    if (!autoplay) return;
+    if (lightboxOpen || lightboxClosing) autoplay.stop();
+    else if (autoplayEnabled) autoplay.start();
+  }, [autoplayEnabled, lightboxClosing, lightboxOpen]);
 
   const registerImage = (index: number, node: HTMLImageElement | null) => {
     if (node) imageRefs.current.set(index, node);
@@ -285,7 +295,7 @@ export function SalonExpo() {
 
         <div className="relative mt-8 overflow-hidden rounded-xs bg-neutral-0">
           <Swiper
-            modules={[A11y, Mousewheel]}
+            modules={[A11y, Autoplay, Mousewheel]}
             slidesPerView={1}
             spaceBetween={0}
             speed={520}
@@ -297,6 +307,15 @@ export function SalonExpo() {
             // Image open is a button - keep it out of focusableElements so drag still starts on it.
             focusableElements="input, select, option, textarea, video, label"
             threshold={6}
+            autoplay={
+              autoplayEnabled
+                ? {
+                    delay: 4500,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                  }
+                : false
+            }
             mousewheel={{
               enabled: true,
               forceToAxis: true,
@@ -309,6 +328,7 @@ export function SalonExpo() {
             )}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
+              if (lightboxOpen || lightboxClosing) swiper.autoplay?.stop();
             }}
             onSlideChange={(swiper) => {
               setActive(hasMultiple ? swiper.realIndex : swiper.activeIndex);
@@ -483,7 +503,6 @@ export function SalonDesignStrip() {
       description={design.description}
       image={design.image}
       video={design.video}
-      titleIconClass="ph ph-pencil-line"
       primary={{ href: design.ctaHref, label: design.ctaLabel }}
     />
   );
@@ -512,6 +531,7 @@ export function SalonVisitCta({ onAskOpen }: { onAskOpen: () => void }) {
       titleId="salon-visit-title"
       primaryAction="book"
       onAskOpen={onAskOpen}
+      onBookOpen={requestSalonDrawer}
       className={pdpSectionScrollMarginClassName}
       content={{
         id: visit.id,

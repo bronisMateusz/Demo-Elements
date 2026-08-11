@@ -63,10 +63,7 @@ export function SalonHero() {
             <ContactCardBackdrop />
             <div className="relative flex flex-col">
               <div className="border-b border-neutral-0/10 pb-4">
-                <p className="m-0 font-body text-xs tracking-[0.08em] text-neutral-400 uppercase">
-                  {salonCardCopy.hoursToggle}
-                </p>
-                <div className="mt-3.5 grid grid-cols-1 gap-4 text-sm leading-relaxed text-neutral-400 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 text-sm leading-relaxed text-neutral-400 sm:grid-cols-2">
                   <div>
                     <p className="m-0 mb-1.5 font-medium text-neutral-0">
                       {salonCardCopy.addressColumnLabel}

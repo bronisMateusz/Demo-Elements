@@ -683,7 +683,7 @@ export function createEmptyListingFilterState(
 export const listingPage = {
   title: "Umywalki wiszące",
   description:
-    "Umywalki ścienne (wiszące) optycznie odciążają wnętrze i ułatwiają utrzymanie porządku - od kompaktowych 40 cm po modele meblowe 80–120 cm.",
+    "Umywalki ścienne (wiszące) optycznie odciążają wnętrze i ułatwiają utrzymanie porządku - od kompaktowych 40 cm po modele meblowe 80 - 120 cm.",
   breadcrumbs: [
     { label: "Strona główna", to: "/" },
     { label: "Łazienka", to: "/kategoria" },
@@ -816,7 +816,7 @@ export const listingSeoBlocks: SeoBlock[] = [
   { type: "h3", text: "Formaty i wykończenia" },
   {
     type: "p",
-    text: "W ofercie Elements znajdziesz umywalki wiszące w wielu formatach - od kompaktowych modeli 40–45 cm do małych łazienek i toalet, po szerokie umywalki meblowe 80–120 cm do zabudowy. Dostępne są warianty prostokątne, owalne i półokrągłe, w wykończeniu białym połysk, białym macie oraz w wersjach kolorowych.",
+    text: "W ofercie Elements znajdziesz umywalki wiszące w wielu formatach - od kompaktowych modeli 40 - 45 cm do małych łazienek i toalet, po szerokie umywalki meblowe 80 - 120 cm do zabudowy. Dostępne są warianty prostokątne, owalne i półokrągłe, w wykończeniu białym połysk, białym macie oraz w wersjach kolorowych.",
   },
   { type: "h2", text: "Marki i ekspozycja" },
   {

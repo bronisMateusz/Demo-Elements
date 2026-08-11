@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   prototypeHomeItem,
   prototypeSections,
@@ -9,23 +9,38 @@ import { cn } from "../../lib/cn";
 import { buttonClassName } from "../ui/buttonClassName";
 
 const menuItemClass =
-  "flex items-center gap-3 rounded-xs px-3 py-3 text-sm font-medium leading-compact text-neutral-800 no-underline transition-[background-color] duration-fast ease-out hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";
+  "flex items-center gap-3 rounded-xs px-3 py-3 text-sm font-medium leading-compact text-neutral-800 no-underline transition-[background-color,color] duration-fast ease-out hover:bg-neutral-100 focus-visible:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";
+
+const menuItemActiveClass =
+  "bg-neutral-800 text-neutral-0 hover:bg-neutral-800 hover:text-neutral-0 focus-visible:bg-neutral-800 focus-visible:outline-neutral-0";
 
 const sectionTitleClassName =
   "m-0 px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-neutral-500";
 
+/** Exact path match; `/salony` also covers salon detail slugs. */
+function isPrototypePathActive(pathname: string, to: string) {
+  if (to === "/") return pathname === "/";
+  if (to === "/salony") {
+    return pathname === "/salony" || pathname.startsWith("/salony/");
+  }
+  return pathname === to;
+}
+
 function PrototypeMenuLink({
   item,
+  active,
   onNavigate,
 }: {
   item: PrototypeMenuItem;
+  active: boolean;
   onNavigate: () => void;
 }) {
   return (
     <Link
-      className={menuItemClass}
+      className={cn(menuItemClass, active && menuItemActiveClass)}
       to={item.to}
       role="menuitem"
+      aria-current={active ? "page" : undefined}
       onClick={onNavigate}
     >
       <i className={item.iconClass} aria-hidden="true" />
@@ -37,10 +52,12 @@ function PrototypeMenuLink({
 function PrototypeMenuSection({
   title,
   items,
+  pathname,
   onNavigate,
 }: {
   title: string;
   items: PrototypeMenuItem[];
+  pathname: string;
   onNavigate: () => void;
 }) {
   return (
@@ -55,7 +72,11 @@ function PrototypeMenuSection({
       </li>
       {items.map((item) => (
         <li key={item.to} role="none">
-          <PrototypeMenuLink item={item} onNavigate={onNavigate} />
+          <PrototypeMenuLink
+            item={item}
+            active={isPrototypePathActive(pathname, item.to)}
+            onNavigate={onNavigate}
+          />
         </li>
       ))}
     </>
@@ -65,6 +86,7 @@ function PrototypeMenuSection({
 export function PrototypeFabs() {
   const menuId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -129,6 +151,7 @@ export function PrototypeFabs() {
               <li role="none">
                 <PrototypeMenuLink
                   item={prototypeHomeItem}
+                  active={isPrototypePathActive(pathname, prototypeHomeItem.to)}
                   onNavigate={() => setOpen(false)}
                 />
               </li>
@@ -137,6 +160,7 @@ export function PrototypeFabs() {
                   key={section.title}
                   title={section.title}
                   items={section.items}
+                  pathname={pathname}
                   onNavigate={() => setOpen(false)}
                 />
               ))}

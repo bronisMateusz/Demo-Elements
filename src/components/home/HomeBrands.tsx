@@ -116,9 +116,21 @@ function BrandCycleCell({
 type HomeBrandsProps = {
   id?: string;
   className?: string;
+  /** Override default home title. */
+  title?: string;
+  /** Optional lead under the title (salon brands block). */
+  description?: string;
+  /** Footer CTA under the brand grid (home only by default). */
+  showSeeAll?: boolean;
 };
 
-export function HomeBrands({ id, className }: HomeBrandsProps = {}) {
+export function HomeBrands({
+  id,
+  className,
+  title = homeBrands.title,
+  description,
+  showSeeAll = true,
+}: HomeBrandsProps = {}) {
   const [paused, setPaused] = useState(false);
   const slotCount = Math.min(homeBrands.slotCount, homeBrands.items.length);
   const slots = Array.from({ length: slotCount }, (_, index) => index);
@@ -131,8 +143,13 @@ export function HomeBrands({ id, className }: HomeBrandsProps = {}) {
           id={titleId}
           className="m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-balance text-neutral-900 md:whitespace-nowrap"
         >
-          {homeBrands.title}
+          {title}
         </h2>
+        {description ? (
+          <p className="mt-3 mb-0 max-w-2xl font-body text-sm leading-relaxed text-neutral-600 md:mt-4 md:text-ui">
+            {description}
+          </p>
+        ) : null}
 
         <SharedLayoutBg
           className={cn(
@@ -154,16 +171,18 @@ export function HomeBrands({ id, className }: HomeBrandsProps = {}) {
           ))}
         </SharedLayoutBg>
 
-        <div className="mt-8 flex justify-center md:mt-10">
-          <Button
-            href={homeBrands.seeAllHref}
-            variant="secondary"
-            className="w-fit"
-          >
-            {homeBrands.seeAllLabel}
-            <i className="ph ph-arrow-right" aria-hidden="true" />
-          </Button>
-        </div>
+        {showSeeAll ? (
+          <div className="mt-8 flex justify-center md:mt-10">
+            <Button
+              href={homeBrands.seeAllHref}
+              variant="secondary"
+              className="w-fit"
+            >
+              {homeBrands.seeAllLabel}
+              <i className="ph ph-arrow-right" aria-hidden="true" />
+            </Button>
+          </div>
+        ) : null}
       </Container>
     </Section>
   );

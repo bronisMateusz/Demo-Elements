@@ -55,24 +55,20 @@ export const salonPage = {
     items: [
       {
         iconClass: "ph ph-cube",
-        title: "Dostępność towaru",
-        text: "Najlepsza dostępność w Polsce",
+        title: "Najlepsza dostępność towaru w Polsce",
       },
       {
         iconClass: "ph ph-storefront",
-        title: "Odbiór lub dostawa",
-        text: "W salonie albo prosto do domu",
+        title: "Odbiór w salonie lub dostawa do domu",
       },
       {
         iconClass: "ph ph-pencil-line",
-        title: "Projekt łazienki",
-        text: "Z profesjonalnym projektantem",
-        cta: { label: "Dowiedz się więcej", href: "#projektowanie" },
+        title: "Zaprojektujesz łazienkę z profesjonalnym projektantem",
+        cta: { label: "Więcej", href: "#projektowanie" },
       },
       {
         iconClass: "ph ph-truck",
-        title: "Darmowa dostawa",
-        text: "Na terenie woj. kujawsko-pomorskiego",
+        title: "Darmowa dostawa na terenie woj. kujawsko-pomorskiego",
       },
     ],
   },
@@ -99,6 +95,10 @@ export const salonPage = {
       { value: 6, label: "doradców na miejscu, gotowych do obsługi" },
       { value: 20, label: "zaaranżowanych boksów pokazowych" },
     ],
+  },
+  brands: {
+    title: "Renomowani producenci w jednym miejscu",
+    description: "W naszym salonie obejrzysz produkty m.in. takich marek jak:",
   },
   expo: {
     id: "wystawa",
