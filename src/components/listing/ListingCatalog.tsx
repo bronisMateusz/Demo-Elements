@@ -38,11 +38,10 @@ export function ListingCatalog({
     [filterState],
   );
 
-  const pageCount = Math.max(
-    1,
-    Math.ceil(filteredProducts.length / LISTING_PAGE_SIZE),
-  );
+  const totalCount = filteredProducts.length;
+  const pageCount = Math.max(1, Math.ceil(totalCount / LISTING_PAGE_SIZE));
   const safePage = Math.min(page, pageCount);
+  const shownCount = Math.min(safePage * LISTING_PAGE_SIZE, totalCount);
 
   const pageProducts = useMemo(() => {
     const start = (safePage - 1) * LISTING_PAGE_SIZE;
@@ -59,7 +58,8 @@ export function ListingCatalog({
   };
 
   const goToPage = (nextPage: number) => {
-    setPage(nextPage);
+    const clamped = Math.min(Math.max(1, nextPage), pageCount);
+    setPage(clamped);
     catalogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -88,7 +88,7 @@ export function ListingCatalog({
 
         <div className="min-w-0">
           <ListingToolbar
-            resultCount={filteredProducts.length}
+            resultCount={totalCount}
             filterState={filterState}
             onFilterChange={updateFilters}
             onOpenFilters={() => setFiltersOpen(true)}
@@ -99,8 +99,11 @@ export function ListingCatalog({
             onClearFilters={clearFilters}
           />
           <ListingPagination
+            shownCount={shownCount}
+            totalCount={totalCount}
             page={safePage}
             pageCount={pageCount}
+            onShowMore={() => goToPage(safePage + 1)}
             onPageChange={goToPage}
           />
         </div>
