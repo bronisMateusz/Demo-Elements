@@ -187,13 +187,9 @@ export function ListingFilters({
                 {open ? (
                   <motion.div
                     key={`${group.key}-panel`}
-                    initial={
-                      reduceMotion ? false : { height: 0, opacity: 0 }
-                    }
+                    initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
-                    exit={
-                      reduceMotion ? undefined : { height: 0, opacity: 0 }
-                    }
+                    exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
                     transition={panelTransition}
                     className="overflow-hidden"
                   >

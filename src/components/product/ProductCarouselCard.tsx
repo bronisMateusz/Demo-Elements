@@ -17,12 +17,11 @@ export function ProductCarouselCard({
 }: ProductCarouselCardProps) {
   const images = product.images?.length ? product.images : [product.image];
   const hasMultipleImages = images.length > 1;
-  const badges =
-    product.badges?.length
-      ? product.badges
-      : product.badge
-        ? [product.badge]
-        : [];
+  const badges = product.badges?.length
+    ? product.badges
+    : product.badge
+      ? [product.badge]
+      : [];
 
   return (
     <article

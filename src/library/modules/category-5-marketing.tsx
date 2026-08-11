@@ -1,8 +1,5 @@
 import { categoryPage, categoryRows } from "../../data/category";
-import {
-  listingCuratedTiles,
-  listingPage,
-} from "../../data/listing";
+import { listingCuratedTiles, listingPage } from "../../data/listing";
 import { salonPage } from "../../data/salon";
 import { subcategoryPage, subcategoryTypes } from "../../data/subcategory";
 import { categorySeoBlocks } from "../../data/categorySeo";

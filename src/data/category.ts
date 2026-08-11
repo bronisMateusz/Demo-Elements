@@ -108,8 +108,7 @@ export const categoryRows: CategoryRow[] = [
     banner: {
       eyebrow: "Promocja",
       title: "Umywalki Duravit - do -25%",
-      description:
-        "Taki baner może zostać wstawiony po każdej z kategorii.",
+      description: "Taki baner może zostać wstawiony po każdej z kategorii.",
       href: "/listing",
       label: "Zobacz ofertę",
       image: {

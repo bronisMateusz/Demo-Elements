@@ -17,10 +17,7 @@ type CtaBandProps = {
   className?: string;
 };
 
-function renderAction(
-  action: CtaBandAction,
-  variant: "primary" | "secondary",
-) {
+function renderAction(action: CtaBandAction, variant: "primary" | "secondary") {
   if (action.kind === "link") {
     return (
       <Button as="link" href={action.href} variant={variant} size="lg">
@@ -29,7 +26,13 @@ function renderAction(
     );
   }
   return (
-    <Button as="button" type="button" onClick={action.onClick} variant={variant} size="lg">
+    <Button
+      as="button"
+      type="button"
+      onClick={action.onClick}
+      variant={variant}
+      size="lg"
+    >
       {action.label}
     </Button>
   );

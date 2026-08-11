@@ -19,10 +19,7 @@ export function ProductBleedCarouselSection({
   if (products.length === 0) return null;
 
   return (
-    <section
-      aria-labelledby={titleId}
-      className="relative overflow-x-clip"
-    >
+    <section aria-labelledby={titleId} className="relative overflow-x-clip">
       <BrandMotif
         name="dots-grid"
         className={cn(

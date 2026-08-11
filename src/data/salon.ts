@@ -79,7 +79,8 @@ export const salonPage = {
   about: {
     id: "o-salonie",
     eyebrow: "O salonie",
-    title: "Elements Bydgoszcz - miejsce, gdzie estetyka spotyka się z jakością",
+    title:
+      "Elements Bydgoszcz - miejsce, gdzie estetyka spotyka się z jakością",
     lead: "Salon łazienek Elements w Bydgoszczy to miejsce stworzone z myślą o profesjonalistach i osobach poszukujących wyjątkowych, kompleksowych rozwiązań do wnętrz. Na ekspozycji prezentujemy starannie dobraną ofertę armatury, ceramiki sanitarnej, wanien, brodzików, mebli łazienkowych oraz szeroki wybór płytek - w tym kolekcje od topowych marek takich jak GRESPANIA, MARAZZI, CAESAR, TUBĄDZIN czy VIGOUR.",
     paragraphs: [
       "Nasz showroom premium to przestrzeń inspiracji - znajdziesz tu najnowsze trendy w aranżacji łazienek. Prezentujemy różne style - od nowoczesnych, przez minimalistyczne i industrialne, aż po klasyczne czy rustykalne. Wszystkie produkty łączą estetykę z funkcjonalnością.",
@@ -133,7 +134,8 @@ export const salonPage = {
         id: "news-2",
         date: "19.01.2026",
         title: "10-lecie salonów ELEMENTS",
-        excerpt: "Dekadę temu zaczęliśmy budować w Polsce sieć salonów, które miały ułatwiać tworzenie wymarzonych wnętrz.",
+        excerpt:
+          "Dekadę temu zaczęliśmy budować w Polsce sieć salonów, które miały ułatwiać tworzenie wymarzonych wnętrz.",
         href: "https://www.elements-show.pl/salony/aktualnosci/10-lecie-salonow-elements",
         image: {
           src: assetUrl("salon/news/news-02.png"),
@@ -145,7 +147,8 @@ export const salonPage = {
         id: "news-3",
         date: "16.12.2025",
         title: "ACQUABELLA na wyłączność - brodziki, wanny, panele",
-        excerpt: "Produkty ACQUABELLA - wanny, brodziki i przyciągające wzrok panele.",
+        excerpt:
+          "Produkty ACQUABELLA - wanny, brodziki i przyciągające wzrok panele.",
         href: "https://www.elements-show.pl/salony/aktualnosci/acquabella-na-wylacznosc-brodziki-wanny-panele",
         image: {
           src: assetUrl("salon/news/news-03.png"),
@@ -157,7 +160,8 @@ export const salonPage = {
         id: "news-4",
         date: "16.12.2025",
         title: "Kabiny Ophalis i Etna od RONAL na wyłączność w Elements",
-        excerpt: "Kabiny prysznicowe Ophalis i Etna od RONAL to synonim niezawodności i luksusowej estetyki.",
+        excerpt:
+          "Kabiny prysznicowe Ophalis i Etna od RONAL to synonim niezawodności i luksusowej estetyki.",
         href: "https://www.elements-show.pl/salony/aktualnosci/kabiny-ophalis-i-etna-od-ronal-na-wylacznosc-w-elements",
         image: {
           src: assetUrl("salon/news/news-04.png"),
@@ -169,7 +173,8 @@ export const salonPage = {
         id: "news-5",
         date: "16.12.2025",
         title: "Bateria Motivo od Valvex - na wyłączność w salonach Elements",
-        excerpt: "Baterie MOTIVO od VALVEX to kolekcja, która pozwala na nieograniczoną personalizację.",
+        excerpt:
+          "Baterie MOTIVO od VALVEX to kolekcja, która pozwala na nieograniczoną personalizację.",
         href: "https://www.elements-show.pl/salony/aktualnosci/bateria-motivo-od-valvex-na-wylacznosc-w-salonach-elements",
         image: {
           src: assetUrl("salon/news/news-05.png"),
@@ -192,8 +197,10 @@ export const salonPage = {
       {
         id: "news-7",
         date: "15.12.2025",
-        title: "Miski WC EMPORA 2.0 - na wyłączność w salonach łazienek Elements",
-        excerpt: "Seria misek WC EMPORA 2.0 od Villeroy & Boch to synonim komfortu i bezkompromisowej czystości.",
+        title:
+          "Miski WC EMPORA 2.0 - na wyłączność w salonach łazienek Elements",
+        excerpt:
+          "Seria misek WC EMPORA 2.0 od Villeroy & Boch to synonim komfortu i bezkompromisowej czystości.",
         href: "https://www.elements-show.pl/salony/aktualnosci/miski-wc-empora-20-na-wylacznosc-w-salonach-lazienek-elements",
         image: {
           src: assetUrl("salon/news/news-07.png"),
@@ -205,7 +212,8 @@ export const salonPage = {
         id: "news-8",
         date: "20.11.2025",
         title: "OUTLET w salonach ELEMENTS!",
-        excerpt: "W salonach ELEMENTS właśnie ruszyła unikatowa oferta typu OUTLET. To świetna okazja, aby kupić pełnowartościowe, nowe produkty w wyjątkowo atrakcyjnych cenach.",
+        excerpt:
+          "W salonach ELEMENTS właśnie ruszyła unikatowa oferta typu OUTLET. To świetna okazja, aby kupić pełnowartościowe, nowe produkty w wyjątkowo atrakcyjnych cenach.",
         href: "https://www.elements-show.pl/salony/aktualnosci/outlet-w-salonach-elements",
         image: {
           src: assetUrl("salon/news/news-08.png"),
@@ -217,7 +225,8 @@ export const salonPage = {
         id: "news-9",
         date: "13.10.2025",
         title: "Zyskaj zwrot gotówki z kolekcją CALUNA i Geberit!",
-        excerpt: "Wystartowała nowa promocja cashback, w której możesz otrzymać zwrot pieniędzy na swoje konto za zakup zestawu WC z kolekcji Geberit CALUNA. To doskonała okazja, aby odświeżyć swoją łazienkę i przy tym zyskać dodatkowe korzyści finansowe.",
+        excerpt:
+          "Wystartowała nowa promocja cashback, w której możesz otrzymać zwrot pieniędzy na swoje konto za zakup zestawu WC z kolekcji Geberit CALUNA. To doskonała okazja, aby odświeżyć swoją łazienkę i przy tym zyskać dodatkowe korzyści finansowe.",
         href: "https://www.elements-show.pl/salony/aktualnosci/zyskaj-zwrot-gotowki-z-kolekcja-caluna-i-geberit",
         image: {
           src: assetUrl("salon/news/news-09.png"),
@@ -229,7 +238,8 @@ export const salonPage = {
         id: "news-10",
         date: "10.10.2025",
         title: "Nowa seria mebli MELLOW",
-        excerpt: "Seria wyróżnia się minimalistycznym designem, wysoką jakością wykonania oraz możliwościami personalizacji.",
+        excerpt:
+          "Seria wyróżnia się minimalistycznym designem, wysoką jakością wykonania oraz możliwościami personalizacji.",
         href: "https://www.elements-show.pl/salony/aktualnosci/nowa-seria-mebli-mellow",
         image: {
           src: assetUrl("salon/news/news-10.png"),
@@ -253,7 +263,8 @@ export const salonPage = {
         id: "news-12",
         date: "22.01.2025",
         title: "Toaleta myjąca GROHE SENSIA PRO",
-        excerpt: "Toaleta myjąca Sensia Pro do montażu z podtynkowym systemem spłukującym.",
+        excerpt:
+          "Toaleta myjąca Sensia Pro do montażu z podtynkowym systemem spłukującym.",
         href: "https://www.elements-show.pl/salony/aktualnosci/toaleta-myjaca-grohe-sensia-pro",
         image: {
           src: assetUrl("salon/news/news-12.png"),
@@ -264,8 +275,10 @@ export const salonPage = {
       {
         id: "news-13",
         date: "26.08.2024",
-        title: "Toalety myjące Geberit Aqua Clean Alba: funkcjonalność i design na najwyższym poziomie",
-        excerpt: "Korzystanie z toalet myjących Geberit Aqua Clean zapewnia czystość i świeżość przez cały dzień. W tym roku seria została uzupełniona o kolejne produkty, które czynią dbałość o higienę intymną jeszcze łatwiejszą i przyjemniejszą.",
+        title:
+          "Toalety myjące Geberit Aqua Clean Alba: funkcjonalność i design na najwyższym poziomie",
+        excerpt:
+          "Korzystanie z toalet myjących Geberit Aqua Clean zapewnia czystość i świeżość przez cały dzień. W tym roku seria została uzupełniona o kolejne produkty, które czynią dbałość o higienę intymną jeszcze łatwiejszą i przyjemniejszą.",
         href: "https://www.elements-show.pl/salony/aktualnosci/toalety-myjace-geberit-aqua-clean-alba-funkcjonalnosc-i-design-na-najwyzszym",
         image: {
           src: assetUrl("salon/news/news-13.png"),
@@ -277,7 +290,8 @@ export const salonPage = {
         id: "news-14",
         date: "06.07.2023",
         title: "GEBERIT Aquaclean: montaż gratis i wydłużona gwarancja!",
-        excerpt: "Dowiedz się jak uzyskać montaż gratis i jak bezpłatnie przedłużyć o rok gwarancję producenta.",
+        excerpt:
+          "Dowiedz się jak uzyskać montaż gratis i jak bezpłatnie przedłużyć o rok gwarancję producenta.",
         href: "https://www.elements-show.pl/salony/aktualnosci/geberit-aquaclean-montaz-gratis-i-wydluzona-gwarancja",
         image: {
           src: assetUrl("salon/news/news-14.png"),
@@ -289,7 +303,8 @@ export const salonPage = {
         id: "news-15",
         date: "22.06.2023",
         title: "Już jest! Nowa odsłona wanny XEA",
-        excerpt: "Poznaj nową czarną wannę XEA - to wyjątkowa dbałość o detale zarówno w aspekcie wizualnym, jak i funkcjonalnym",
+        excerpt:
+          "Poznaj nową czarną wannę XEA - to wyjątkowa dbałość o detale zarówno w aspekcie wizualnym, jak i funkcjonalnym",
         href: "https://www.elements-show.pl/salony/aktualnosci/czarna-wanna-xea",
         image: {
           src: assetUrl("salon/news/news-15.png"),
@@ -300,8 +315,10 @@ export const salonPage = {
       {
         id: "news-16",
         date: "30.08.2022",
-        title: "IDEALNA HARMONIA W ŁAZIENCE - poznaj dodatki AddStoris marki Hansgrohe.",
-        excerpt: "Nowa linia akcesoriów AddStoris marki Hansgrohe ze zróżnicowanymi produktami o nowoczesnym, minimalistycznym wzornictwie.",
+        title:
+          "IDEALNA HARMONIA W ŁAZIENCE - poznaj dodatki AddStoris marki Hansgrohe.",
+        excerpt:
+          "Nowa linia akcesoriów AddStoris marki Hansgrohe ze zróżnicowanymi produktami o nowoczesnym, minimalistycznym wzornictwie.",
         href: "https://www.elements-show.pl/salony/aktualnosci/idealna-harmonia-w-lazience-poznaj-dodatki-addstoris-marki-hansgrohe",
         image: {
           src: assetUrl("salon/news/news-16.png"),
@@ -313,7 +330,8 @@ export const salonPage = {
         id: "news-17",
         date: "20.07.2022",
         title: "Nowości w ofercie przycisków do WC Trinnity",
-        excerpt: "Najnowsze modele przycisków do montażu z wybranym stelażem Trinnity są już dostępna w naszych salonach. Modna ponadczasowa czerń oraz spieki odwzorowujące naturalny kamień to najnowsze propozycje w seriach M08 oraz M11",
+        excerpt:
+          "Najnowsze modele przycisków do montażu z wybranym stelażem Trinnity są już dostępna w naszych salonach. Modna ponadczasowa czerń oraz spieki odwzorowujące naturalny kamień to najnowsze propozycje w seriach M08 oraz M11",
         href: "https://www.elements-show.pl/salony/aktualnosci/nowosci-w-ofercie-przyciskow-do-wc-trinnity",
         image: {
           src: assetUrl("salon/news/news-17.png"),
@@ -325,7 +343,8 @@ export const salonPage = {
         id: "news-18",
         date: "20.07.2022",
         title: "Nowe dodatki z serii Vogue i Individual",
-        excerpt: "Do linii dodatków marki VIGOUR dołączyły najnowsze propozycje koszyków i akcesoriów z serii individual oraz vogue.",
+        excerpt:
+          "Do linii dodatków marki VIGOUR dołączyły najnowsze propozycje koszyków i akcesoriów z serii individual oraz vogue.",
         href: "https://www.elements-show.pl/salony/aktualnosci/nowe-dodatki-z-serii-vogue-i-individual",
         image: {
           src: assetUrl("salon/news/news-18.png"),
@@ -337,7 +356,8 @@ export const salonPage = {
         id: "news-19",
         date: "20.07.2022",
         title: "NOWOŚĆ! Wanna XEA dostępna wyłącznie w salonach ELements",
-        excerpt: "Poznaj nową wannę XEA - to wyjątkowa dbałość o detale zarówno w aspekcie wizualnym, jak i funkcjonalnym",
+        excerpt:
+          "Poznaj nową wannę XEA - to wyjątkowa dbałość o detale zarówno w aspekcie wizualnym, jak i funkcjonalnym",
         href: "https://www.elements-show.pl/salony/aktualnosci/nowosc-wanna-xea-dostepna-wylacznie-w-salonach-elements",
         image: {
           src: assetUrl("salon/news/news-19.png"),
@@ -349,7 +369,8 @@ export const salonPage = {
         id: "news-20",
         date: "12.05.2022",
         title: "Poznaj nasze nowości - wanna SanitaOne w nowej kolorystyce!",
-        excerpt: "Już jest! Jedna z ulubionych wanien naszych klientów w dwóch zupełnie nowych odsłonach.",
+        excerpt:
+          "Już jest! Jedna z ulubionych wanien naszych klientów w dwóch zupełnie nowych odsłonach.",
         href: "https://www.elements-show.pl/salony/aktualnosci/poznaj-nasze-nowosci-wanna-sanitaone-w-nowej-kolorystyce",
         image: {
           src: assetUrl("salon/news/news-20.png"),
@@ -361,7 +382,8 @@ export const salonPage = {
         id: "news-21",
         date: "19.03.2020",
         title: "Zakres Usług Architekta Elements",
-        excerpt: "Przedstawiamy zakres usług architektonicznych w naszym salonie.",
+        excerpt:
+          "Przedstawiamy zakres usług architektonicznych w naszym salonie.",
         href: "https://www.elements-show.pl/bydgoszcz/aktualnosci/zakres-uslug-architekta-elements",
         image: {
           src: assetUrl("salon/news/news-21.png"),

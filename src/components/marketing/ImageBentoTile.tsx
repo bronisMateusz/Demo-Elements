@@ -19,8 +19,7 @@ export function ImageBentoTile({
   featured = false,
   className,
 }: ImageBentoTileProps) {
-  const isExternalOrHash =
-    href.startsWith("http") || href.startsWith("#");
+  const isExternalOrHash = href.startsWith("http") || href.startsWith("#");
   const shellClassName = cn(
     "group/bento relative flex h-full flex-col justify-end overflow-hidden rounded-xs no-underline",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",

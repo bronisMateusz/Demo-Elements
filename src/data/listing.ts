@@ -23,7 +23,10 @@ const PACKSHOTS = {
     "products/montebianco/01-front.png",
     "Szafka podumywalkowa Montebianco",
   ),
-  florim: packshot("home/product-florim-tundra.png", "Florim Nature Mood Tundra"),
+  florim: packshot(
+    "home/product-florim-tundra.png",
+    "Florim Nature Mood Tundra",
+  ),
   ottawa: packshot("home/ottawa.png", "Omnires Ottawa Comfort"),
   trinnity: packshot("home/przycisk-trinnity.png", "Przycisk TRINNITY M16"),
 } as const;
@@ -729,7 +732,6 @@ export const listingPage = {
   },
 } as const;
 
-
 const curatedImg = (
   path: string,
   alt: string,
@@ -745,52 +747,61 @@ export const listingCuratedTiles: ListingCuratedTile[] = [
   {
     label: "Wiszące 40 cm",
     href: "/listing",
-    image: curatedImg('home/inspiration-compact.jpg', 'Wiszące 40 cm', { x: 50, y: 55 }),
+    image: curatedImg("home/inspiration-compact.jpg", "Wiszące 40 cm", {
+      x: 50,
+      y: 55,
+    }),
   },
   {
     label: "Wiszące 50 cm",
     href: "/listing",
-    image: curatedImg('category/subs/umywalkiwiszace.webp', 'Wiszące 50 cm'),
+    image: curatedImg("category/subs/umywalkiwiszace.webp", "Wiszące 50 cm"),
   },
   {
     label: "Wiszące 60 cm",
     href: "/listing",
-    image: curatedImg('home/categories/umywalki.png', 'Wiszące 60 cm', { x: 50, y: 45 }),
+    image: curatedImg("home/categories/umywalki.png", "Wiszące 60 cm", {
+      x: 50,
+      y: 45,
+    }),
   },
   {
     label: "Wiszące 80 cm",
     href: "/listing",
-    image: curatedImg('category/subs/umywalkimeblowe.webp', 'Wiszące 80 cm'),
+    image: curatedImg("category/subs/umywalkimeblowe.webp", "Wiszące 80 cm"),
   },
   {
     label: "Białe",
     href: "/listing",
-    image: curatedImg('category/subs/umywalkinablatowe.webp', 'Białe'),
+    image: curatedImg("category/subs/umywalkinablatowe.webp", "Białe"),
   },
   {
     label: "Czarne",
     href: "/listing",
-    image: curatedImg('home/inspiration-concrete-black.jpg', 'Czarne'),
+    image: curatedImg("home/inspiration-concrete-black.jpg", "Czarne"),
   },
   {
     label: "Meblowe",
     href: "/listing",
-    image: curatedImg('category/subs/umywalkizszafka.webp', 'Meblowe'),
+    image: curatedImg("category/subs/umywalkizszafka.webp", "Meblowe"),
   },
   {
     label: "Nablatowe",
     href: "/listing",
-    image: curatedImg('category/subs/umywalkinablatowe.webp', 'Nablatowe'),
+    image: curatedImg("category/subs/umywalkinablatowe.webp", "Nablatowe"),
   },
   {
     label: "Kompaktowe",
     href: "/listing",
-    image: curatedImg('home/inspiration-compact.jpg', 'Kompaktowe', { x: 50, y: 55 }),
+    image: curatedImg("home/inspiration-compact.jpg", "Kompaktowe", {
+      x: 50,
+      y: 55,
+    }),
   },
   {
     label: "Premium",
     href: "/listing",
-    image: curatedImg('home/inspiration-warm-palette.jpg', 'Premium'),
+    image: curatedImg("home/inspiration-warm-palette.jpg", "Premium"),
   },
 ];
 

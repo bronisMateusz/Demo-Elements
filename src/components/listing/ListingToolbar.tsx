@@ -45,10 +45,7 @@ export function ListingToolbar({
           </Button>
         ) : null}
 
-        <ListingQuickFilters
-          state={filterState}
-          onChange={onFilterChange}
-        />
+        <ListingQuickFilters state={filterState} onChange={onFilterChange} />
       </div>
     </div>
   );

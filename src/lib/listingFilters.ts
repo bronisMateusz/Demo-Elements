@@ -18,9 +18,7 @@ export function parseListingPrice(price: string | undefined): number {
   return Number.isFinite(value) ? value : Number.POSITIVE_INFINITY;
 }
 
-export function listingFilterHasActive(
-  state: ListingFilterState,
-): boolean {
+export function listingFilterHasActive(state: ListingFilterState): boolean {
   if (state.quick.length > 0) return true;
   return (Object.keys(state.facets) as ListingFacetKey[]).some(
     (key) => state.facets[key].length > 0,
@@ -71,9 +69,9 @@ export function filterAndSortListingProducts(
   state: ListingFilterState,
 ): ListingProduct[] {
   const filtered = products.filter((product) => {
-    const facetsOk = (
-      Object.keys(state.facets) as ListingFacetKey[]
-    ).every((key) => matchesFacet(product, key, state.facets[key]));
+    const facetsOk = (Object.keys(state.facets) as ListingFacetKey[]).every(
+      (key) => matchesFacet(product, key, state.facets[key]),
+    );
     return facetsOk && matchesQuick(product, state.quick);
   });
   return sortProducts(filtered, state.sort);

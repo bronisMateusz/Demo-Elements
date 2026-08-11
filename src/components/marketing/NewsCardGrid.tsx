@@ -1,7 +1,4 @@
-import {
-  EditorialCarousel,
-  type EditorialCardItem,
-} from "./EditorialCarousel";
+import { EditorialCarousel, type EditorialCardItem } from "./EditorialCarousel";
 
 export type NewsCardItem = EditorialCardItem & { date: string };
 

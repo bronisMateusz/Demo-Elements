@@ -1,4 +1,8 @@
-import { homeAdvisorCta, homeAppointment, homeInspiration } from "../../data/home";
+import {
+  homeAdvisorCta,
+  homeAppointment,
+  homeInspiration,
+} from "../../data/home";
 import { HomeAbout } from "../../components/home/HomeAbout";
 import { HomeAdvisorCta } from "../../components/home/HomeAdvisorCta";
 import { AdvisorCta } from "../../components/marketing/AdvisorCta";

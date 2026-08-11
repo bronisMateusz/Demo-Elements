@@ -1,13 +1,7 @@
 import type { RelatedProduct } from "./product";
 
 export type ListingFacetKey =
-  | "brand"
-  | "collection"
-  | "purpose"
-  | "mount"
-  | "size"
-  | "structure"
-  | "color";
+  "brand" | "collection" | "purpose" | "mount" | "size" | "structure" | "color";
 
 export type ListingQuickFilter = "bestseller" | "outlet" | "new" | "promo";
 

@@ -30,7 +30,12 @@ export function ListingProductGrid({
           ofertę.
         </p>
         {onClearFilters ? (
-          <Button as="button" type="button" variant="primary" onClick={onClearFilters}>
+          <Button
+            as="button"
+            type="button"
+            variant="primary"
+            onClick={onClearFilters}
+          >
             Wyczyść filtry
           </Button>
         ) : null}

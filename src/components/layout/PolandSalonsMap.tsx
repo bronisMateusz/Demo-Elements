@@ -337,7 +337,9 @@ export function PolandSalonsMap({
                 d={region.d}
                 className={cn(
                   "outline-none transition-[fill,opacity] duration-base ease-out",
-                  tone === "onLight" ? "stroke-neutral-400" : "stroke-neutral-900",
+                  tone === "onLight"
+                    ? "stroke-neutral-400"
+                    : "stroke-neutral-900",
                   hasSalon && interactive ? "cursor-pointer" : "cursor-default",
                   regionFillClassName({
                     tone,

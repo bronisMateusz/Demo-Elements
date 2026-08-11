@@ -77,7 +77,10 @@ export function SalonAbout() {
     <Section
       id={about.id}
       ariaLabelledby="salon-about-title"
-      className={cn("relative overflow-visible", pdpSectionScrollMarginClassName)}
+      className={cn(
+        "relative overflow-visible",
+        pdpSectionScrollMarginClassName,
+      )}
     >
       <BrandMotif
         name="circle-beige"
@@ -335,9 +338,7 @@ export function SalonExpo() {
                     alt={image.alt}
                     className={cn(
                       "size-full object-cover",
-                      lightboxClosing &&
-                        lightboxIndex === index &&
-                        "opacity-0",
+                      lightboxClosing && lightboxIndex === index && "opacity-0",
                     )}
                     style={{
                       objectPosition: productImageObjectPosition(image),

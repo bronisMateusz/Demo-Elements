@@ -45,7 +45,10 @@ export function IconTile({
         />
       ) : null}
       <i
-        className={cn(iconClass, "shrink-0 text-3xl leading-none text-neutral-900")}
+        className={cn(
+          iconClass,
+          "shrink-0 text-3xl leading-none text-neutral-900",
+        )}
         aria-hidden="true"
       />
       <span className="font-body text-sm font-medium text-neutral-900 md:text-ui">

@@ -77,11 +77,7 @@ function CategoryHeading({
   );
 }
 
-function SubcatTile({
-  label,
-  href,
-  image,
-}: CategoryRow["subs"][number]) {
+function SubcatTile({ label, href, image }: CategoryRow["subs"][number]) {
   const fit = image.fit ?? "cover";
   const className = cn(
     "group/tile flex h-full flex-col gap-3 no-underline text-neutral-900",

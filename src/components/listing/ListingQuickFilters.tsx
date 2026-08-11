@@ -19,7 +19,9 @@ export function ListingQuickFilters({
   showLabel = true,
 }: ListingQuickFiltersProps) {
   return (
-    <div className={cn("flex flex-wrap items-center gap-x-3 gap-y-2", className)}>
+    <div
+      className={cn("flex flex-wrap items-center gap-x-3 gap-y-2", className)}
+    >
       {showLabel ? (
         <p className="m-0 font-body text-sm font-medium text-neutral-900">
           Pokaż tylko:

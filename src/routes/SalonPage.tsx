@@ -72,10 +72,7 @@ export function SalonPage() {
           <SalonStats />
         </RevealSection>
         <RevealSection>
-          <HomeBrands
-            id="marki"
-            className={pdpSectionScrollMarginClassName}
-          />
+          <HomeBrands id="marki" className={pdpSectionScrollMarginClassName} />
         </RevealSection>
         <RevealSection>
           <SalonExpo />

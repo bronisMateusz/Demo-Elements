@@ -78,7 +78,13 @@ function AskButton({
   );
 }
 
-function BookButton({ label, variant }: { label: string; variant: "primary" | "secondary" }) {
+function BookButton({
+  label,
+  variant,
+}: {
+  label: string;
+  variant: "primary" | "secondary";
+}) {
   return (
     <Button
       as="button"

@@ -4,7 +4,7 @@ import { SharedLayoutBg } from "../motion/SharedLayoutBg";
 import type { ProductDownload } from "../../types/product";
 
 type ProductDownloadsProps = {
-  downloads: ProductDownload[];
+  downloads: readonly ProductDownload[];
   title?: string;
   titleId?: string;
 };

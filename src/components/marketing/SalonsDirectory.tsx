@@ -50,8 +50,9 @@ function titleCaseVoiv(name: string): string {
   const plain = name.replace(/\u00AD/g, "");
   return plain
     .toLocaleLowerCase("pl")
-    .replace(/(^|[\s-])(\S)/g, (_, sep: string, char: string) =>
-      `${sep}${char.toLocaleUpperCase("pl")}`,
+    .replace(
+      /(^|[\s-])(\S)/g,
+      (_, sep: string, char: string) => `${sep}${char.toLocaleUpperCase("pl")}`,
     );
 }
 
@@ -74,7 +75,9 @@ export function SalonsDirectory() {
   );
 
   const salonByHref = useMemo(() => {
-    return new Map(salonOptions.map((salon) => [salon.href, salon]));
+    return new Map<string, SalonOption>(
+      salonOptions.map((salon) => [salon.href, salon]),
+    );
   }, []);
 
   const filteredSalons = useMemo(() => {
@@ -89,7 +92,10 @@ export function SalonsDirectory() {
       : [...salonOptions];
 
     if (!userCoords) {
-      return base.map((salon) => ({ salon, distanceKm: null as number | null }));
+      return base.map((salon) => ({
+        salon,
+        distanceKm: null as number | null,
+      }));
     }
 
     return base
@@ -113,7 +119,7 @@ export function SalonsDirectory() {
   const queryMatchedHrefs = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     if (!normalized) return null;
-    return new Set(filteredSalons.map(({ salon }) => salon.href));
+    return new Set<string>(filteredSalons.map(({ salon }) => salon.href));
   }, [filteredSalons, query]);
 
   const visibleGroups = useMemo(() => {
@@ -137,8 +143,7 @@ export function SalonsDirectory() {
         id: group.id,
         name: group.name,
         count: group.cities.filter(
-          (city) =>
-            !queryMatchedHrefs || queryMatchedHrefs.has(city.href),
+          (city) => !queryMatchedHrefs || queryMatchedHrefs.has(city.href),
         ).length,
       }))
       .filter((group) => group.count > 0);
@@ -221,7 +226,10 @@ export function SalonsDirectory() {
             </Button>
           </div>
           {locateError ? (
-            <p className="mt-3 mb-0 font-body text-sm text-red-700" role="alert">
+            <p
+              className="mt-3 mb-0 font-body text-sm text-red-700"
+              role="alert"
+            >
               {locateError}
             </p>
           ) : null}
@@ -340,7 +348,11 @@ export function SalonsDirectory() {
           </div>
 
           <div className={cn(view === "map" && "max-lg:hidden")}>
-            <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filtr województw">
+            <div
+              className="mb-5 flex flex-wrap gap-2"
+              role="group"
+              aria-label="Filtr województw"
+            >
               <button
                 type="button"
                 aria-pressed={focusedVoivId == null}
@@ -464,7 +476,8 @@ export function SalonsDirectory() {
                                 size="md"
                                 className={cn(
                                   "w-full sm:w-auto md:w-full",
-                                  isSelected && "pointer-events-none opacity-70",
+                                  isSelected &&
+                                    "pointer-events-none opacity-70",
                                 )}
                                 onClick={() => select(salon.id)}
                                 disabled={isSelected}
