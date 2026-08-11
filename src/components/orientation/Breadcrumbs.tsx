@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
+import { Container } from "../ui/Container";
 
 export type BreadcrumbItem = {
   label: string;
@@ -23,49 +24,58 @@ export function Breadcrumbs({
 }: BreadcrumbsProps) {
   const isSection = variant === "section";
 
-  return (
-    <nav
-      className={cn(isSection ? "mb-8" : "py-6", className)}
-      aria-label={label}
+  const list = (
+    <ol
+      className={cn(
+        "flex flex-nowrap items-center gap-x-2 overflow-x-auto text-neutral-500",
+        "scrollbar-none [&::-webkit-scrollbar]:hidden",
+        isSection
+          ? "text-xs leading-[1.4] tracking-normal normal-case"
+          : "text-sm",
+      )}
     >
-      <ol
-        className={cn(
-          "flex flex-nowrap items-center gap-x-2 overflow-x-auto text-neutral-500",
-          "scrollbar-none [&::-webkit-scrollbar]:hidden",
-          isSection
-            ? "text-xs leading-[1.4] tracking-normal normal-case"
-            : "container text-sm",
-        )}
-      >
-        {items.map((item, index) => (
-          <li
-            key={`${item.label}-${index}`}
-            className="flex shrink-0 items-center gap-2 not-first:before:content-['/'] not-first:before:text-neutral-300"
-            aria-current={item.current ? "page" : undefined}
-          >
-            {item.to && !item.current ? (
-              <Link
-                to={item.to}
-                className={cn(
-                  "transition-colors hover:text-neutral-900",
-                  isSection ? "text-neutral-500" : "text-neutral-600",
-                )}
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <span
-                className={cn(
-                  item.current &&
-                    "max-w-56 truncate text-neutral-900 sm:max-w-80",
-                )}
-              >
-                {item.label}
-              </span>
-            )}
-          </li>
-        ))}
-      </ol>
+      {items.map((item, index) => (
+        <li
+          key={`${item.label}-${index}`}
+          className="flex shrink-0 items-center gap-2 not-first:before:content-['/'] not-first:before:text-neutral-300"
+          aria-current={item.current ? "page" : undefined}
+        >
+          {item.to && !item.current ? (
+            <Link
+              to={item.to}
+              className={cn(
+                "transition-colors hover:text-neutral-900",
+                isSection ? "text-neutral-500" : "text-neutral-600",
+              )}
+            >
+              {item.label}
+            </Link>
+          ) : (
+            <span
+              className={cn(
+                item.current &&
+                  "max-w-56 truncate text-neutral-900 sm:max-w-80",
+              )}
+            >
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))}
+    </ol>
+  );
+
+  if (isSection) {
+    return (
+      <nav className={cn("mb-8", className)} aria-label={label}>
+        {list}
+      </nav>
+    );
+  }
+
+  return (
+    <nav className={cn("py-6", className)} aria-label={label}>
+      <Container size="content">{list}</Container>
     </nav>
   );
 }

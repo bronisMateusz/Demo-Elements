@@ -146,7 +146,7 @@ export const homeCategories = {
     },
     {
       label: "Umywalki",
-      href: "#umywalki",
+      href: "/podkategoria",
       iconClass: "ph ph-circle",
       image: {
         src: assetUrl("home/categories/umywalki.png"),
@@ -342,7 +342,7 @@ export const homeProductTabs: {
     id: "promocje",
     label: "Promocje",
     seeAllLabel: "Zobacz wszystkie promocje",
-    seeAllHref: "#promocje",
+    seeAllHref: "/listing",
     products: productsForTab(
       "promocje",
       ["montebianco-80", "florim-tundra", "omnires-ottawa", "trinnity-m16"],
@@ -353,7 +353,7 @@ export const homeProductTabs: {
     id: "nowosci",
     label: "Nowości",
     seeAllLabel: "Zobacz wszystkie nowości",
-    seeAllHref: "#nowosci",
+    seeAllHref: "/listing",
     products: productsForTab(
       "nowosci",
       ["omnires-ottawa", "trinnity-m16", "montebianco-80", "florim-tundra"],
@@ -364,7 +364,7 @@ export const homeProductTabs: {
     id: "bestsellery",
     label: "Bestsellery",
     seeAllLabel: "Zobacz wszystkie bestsellery",
-    seeAllHref: "#bestsellery",
+    seeAllHref: "/listing",
     products: productsForTab(
       "bestsellery",
       ["florim-tundra", "montebianco-80", "trinnity-m16", "omnires-ottawa"],
@@ -375,7 +375,7 @@ export const homeProductTabs: {
     id: "outlet",
     label: "Outlet",
     seeAllLabel: "Zobacz cały Outlet",
-    seeAllHref: "#outlet",
+    seeAllHref: "/listing",
     products: productsForTab(
       "outlet",
       ["trinnity-m16", "omnires-ottawa", "florim-tundra", "montebianco-80"],

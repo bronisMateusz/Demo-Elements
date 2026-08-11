@@ -25,6 +25,31 @@ export const prototypeSections: PrototypeSection[] = [
         iconClass: "ph ph-armchair",
       },
       {
+        label: "Salon",
+        to: "/salon",
+        iconClass: "ph ph-storefront",
+      },
+      {
+        label: "Salony",
+        to: "/salony",
+        iconClass: "ph ph-map-trifold",
+      },
+      {
+        label: "Kategoria",
+        to: "/kategoria",
+        iconClass: "ph ph-squares-four",
+      },
+      {
+        label: "Podkategoria",
+        to: "/podkategoria",
+        iconClass: "ph ph-rows",
+      },
+      {
+        label: "Listing produktów",
+        to: "/listing",
+        iconClass: "ph ph-squares-four",
+      },
+      {
         label: "404 - Strona nie znaleziona",
         to: "/404",
         iconClass: "ph ph-warning-circle",
@@ -58,6 +83,11 @@ export const prototypeSections: PrototypeSection[] = [
         label: "Strona główna",
         to: "/biblioteka/strona-glowna",
         iconClass: "ph ph-house-line",
+      },
+      {
+        label: "Marketing",
+        to: "/biblioteka/marketing",
+        iconClass: "ph ph-megaphone",
       },
     ],
   },

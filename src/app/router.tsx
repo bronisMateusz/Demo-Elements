@@ -5,9 +5,14 @@ import {
   LibraryCategoryPage,
   LibraryIndexPage,
 } from "../routes/LibraryCategoryPage";
+import { CategoryPage } from "../routes/CategoryPage";
 import { HomePage } from "../routes/HomePage";
+import { ListingPage } from "../routes/ListingPage";
 import { NotFoundPage } from "../routes/NotFoundPage";
 import { ProductDetailPage } from "../routes/ProductDetailPage";
+import { SalonPage } from "../routes/SalonPage";
+import { SalonsPage } from "../routes/SalonsPage";
+import { SubcategoryPage } from "../routes/SubcategoryPage";
 
 function getRouterBasename() {
   if (import.meta.env.DEV) {
@@ -28,6 +33,12 @@ export const router = createBrowserRouter(
       children: [
         { path: "/", element: <HomePage /> },
         { path: "/produkt", element: <ProductDetailPage /> },
+        { path: "/salon", element: <SalonPage /> },
+        { path: "/salony", element: <SalonsPage /> },
+        { path: "/salony/:slug", element: <SalonPage /> },
+        { path: "/kategoria", element: <CategoryPage /> },
+        { path: "/podkategoria", element: <SubcategoryPage /> },
+        { path: "/listing", element: <ListingPage /> },
         {
           path: "/biblioteka",
           element: <LibraryLayout />,

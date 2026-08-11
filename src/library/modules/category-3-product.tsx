@@ -235,7 +235,7 @@ export const productPairWithModule: LibraryModule = {
   slug: "product-pair-with",
   title: "ProductPairWith",
   description:
-    "Sekcja PDP „Inne produkty z tej serii” - pełna szerokość, bleed carousel (ProductCarousel), nav w stopce.",
+    "Sekcja PDP „Inne produkty z tej serii” - ProductBleedCarouselSection (bleed ProductCarousel, nav w stopce).",
   optionalProps: [
     { name: "title", type: "string", required: true },
     { name: "products", type: "RelatedProduct[]", required: true },
@@ -344,7 +344,7 @@ export const productArchitectCtaModule: LibraryModule = {
   slug: "product-architect-cta",
   title: "ProductArchitectCTA",
   description:
-    "Baner strefy architekta - media + copy + CTA, scroll-expand inset.",
+    "Baner strefy architekta - PromoSplitCta (SplitMedia + primary link), scroll-expand inset.",
   variants: [
     {
       id: "default",
@@ -364,7 +364,7 @@ export const productVisualizationCtaModule: LibraryModule = {
   slug: "product-visualization-cta",
   title: "ProductVisualizationCTA",
   description:
-    "CTA wizualizacji łazienki - układ split media + copy jak strefa architekta, primary + secondary.",
+    "CTA wizualizacji - PromoSplitCta (primary + secondary), jak strefa architekta / SalonDesignStrip.",
   variants: [
     {
       id: "default",
