@@ -1,6 +1,11 @@
-import { homeAppointment, homeInspiration } from "../../data/home";
+import {
+  homeAdvisorCta,
+  homeAppointment,
+  homeInspiration,
+} from "../../data/home";
 import { HomeAbout } from "../../components/home/HomeAbout";
 import { HomeAdvisorCta } from "../../components/home/HomeAdvisorCta";
+import { AdvisorCta } from "../../components/marketing/AdvisorCta";
 import { HomeAppointment } from "../../components/home/HomeAppointment";
 import { HomeBrands } from "../../components/home/HomeBrands";
 import { HomeCategories } from "../../components/home/HomeCategories";
@@ -142,7 +147,8 @@ export const homeCategoriesModule: LibraryModule = {
   id: "4.3",
   slug: "home-categories",
   title: "HomeCategories",
-  description: "Siatka kategorii startowych na home.",
+  description:
+    "Siatka kategorii (IconTile) oraz wariant bento (ImageBentoTile).",
   variants: [
     {
       id: "default",
@@ -211,12 +217,12 @@ export const homeAppointmentModule: LibraryModule = {
   slug: "home-appointment",
   title: "HomeAppointment",
   description:
-    "Baner „Umów spotkanie” - zdjęcie | ciemny panel z CTA otwierającym SalonDrawer.",
+    "Baner „Umów spotkanie” (LocateCta) - zdjęcie ze sloganem | ciemny panel z CTA otwierającym SalonDrawer. Współdzielony z kategorią / podkategorią.",
   optionalProps: [
     {
       name: "data",
       type: "homeAppointment",
-      description: "Copy i obraz z src/data/home.ts.",
+      description: "Copy i obraz z src/data/home.ts (wrapper nad LocateCta).",
     },
   ],
   variants: [
@@ -271,17 +277,41 @@ export const homePartnersModule: LibraryModule = {
 export const homeAdvisorCtaModule: LibraryModule = {
   id: "4.9",
   slug: "home-advisor-cta",
-  title: "HomeAdvisorCta",
+  title: "AdvisorCta / HomeAdvisorCta",
   description:
-    "CTA doradcy - układ split media + copy jak strefa architekta, dwa przyciski (pełna szerokość na mobile).",
+    "Wspólny band doradcy (SplitMediaCta) - home, kategoria, podkategoria (ask primary) oraz salon (book primary via SalonVisitCta).",
   variants: [
     {
-      id: "default",
-      label: "Domyślny",
-      description: "CTA doradcy z dwoma przyciskami.",
+      id: "ask-primary",
+      label: "Ask primary (home)",
+      description: "Napisz do doradcy + Umów spotkanie.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeAdvisorCta />
+        </div>
+      ),
+    },
+    {
+      id: "book-primary",
+      label: "Book primary (salon)",
+      description: "Umów spotkanie + Napisz do doradcy - jak SalonVisitCta.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <AdvisorCta
+            titleId="lib-advisor-book-title"
+            primaryAction="book"
+            onAskOpen={() => undefined}
+            content={{
+              eyebrow: "Wizyta w salonie",
+              title: "Zaplanuj wizytę w salonie",
+              description:
+                "Zostaw kontakt - doradca potwierdzi dogodny termin.",
+              note: "Bezpłatna konsultacja · Bez zobowiązań",
+              image: homeAdvisorCta.image,
+              askLabel: "Napisz do doradcy",
+              bookLabel: "Umów spotkanie",
+            }}
+          />
         </div>
       ),
     },

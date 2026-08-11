@@ -35,8 +35,8 @@ export function SiteNewsletter() {
           />
 
           <div className="relative flex min-h-70 items-center justify-center p-4 md:min-h-80 md:p-10 lg:p-12">
-            <div className="flex w-full max-w-5xl flex-col justify-between gap-6 md:gap-8 lg:flex-row lg:items-center lg:gap-10">
-              <div className="max-w-lg">
+            <div className="flex w-full flex-col justify-between gap-6 md:gap-8 lg:max-w-5xl lg:flex-row lg:items-center lg:gap-10">
+              <div className="min-w-0 lg:max-w-lg">
                 <p className="mb-3 inline-flex items-center gap-2 font-body text-xs font-medium uppercase tracking-[0.12em] text-neutral-0/70">
                   <img
                     src={assetUrl("sygnet.svg")}
@@ -51,14 +51,14 @@ export function SiteNewsletter() {
                 <h2 className="m-0 font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] font-normal text-neutral-0">
                   Inspiracje prosto na Twój adres e-mail
                 </h2>
-                <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-0/80 md:text-ui">
+                <p className="mt-3 mb-0 text-sm leading-relaxed text-neutral-0/80 md:text-ui lg:max-w-md">
                   Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na
                   wydarzenia Elements.
                 </p>
               </div>
 
               <form
-                className="w-full max-w-md shrink-0 rounded-xs bg-neutral-0 p-4 shadow-2"
+                className="w-full shrink-0 rounded-xs bg-neutral-0 p-4 shadow-2 lg:max-w-md"
                 onSubmit={(event) => event.preventDefault()}
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-0">

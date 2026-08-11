@@ -1,6 +1,5 @@
-import { SplitMediaCta } from "../structural/SplitMediaCta";
-import { Button } from "../ui/Button";
 import type { ProductImage } from "../../types/product";
+import { PromoSplitCta } from "../structural/PromoSplitCta";
 
 type ProductVisualizationCTAProps = {
   title: string;
@@ -27,36 +26,15 @@ export function ProductVisualizationCTA({
   secondary,
 }: ProductVisualizationCTAProps) {
   return (
-    <SplitMediaCta
+    <PromoSplitCta
       titleId="viz-cta-title"
       eyebrow={eyebrow}
       title={title}
       description={description}
       note={note}
       image={image}
-      actions={
-        <>
-          <Button
-            href={href}
-            variant="primary"
-            size="lg"
-            className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
-          >
-            {label}
-            <i className="ph ph-arrow-right" aria-hidden="true" />
-          </Button>
-          {secondary ? (
-            <Button
-              href={secondary.href}
-              variant="secondary"
-              size="lg"
-              className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
-            >
-              {secondary.label}
-            </Button>
-          ) : null}
-        </>
-      }
+      primary={{ href, label }}
+      secondary={secondary}
     />
   );
 }

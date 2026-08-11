@@ -1,43 +1,43 @@
+import { AdvisorCta, type AdvisorCtaContent } from "../marketing/AdvisorCta";
 import { homeAdvisorCta } from "../../data/home";
-import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
-import { SplitMediaCta } from "../structural/SplitMediaCta";
-import { Button } from "../ui/Button";
 
-export function HomeAdvisorCta() {
-  const { title, description, eyebrow, image, primaryCta, secondaryCta } =
-    homeAdvisorCta;
+const homeAdvisorContent: AdvisorCtaContent = {
+  eyebrow: homeAdvisorCta.eyebrow,
+  title: homeAdvisorCta.title,
+  description: homeAdvisorCta.description,
+  image: homeAdvisorCta.image,
+  askLabel: homeAdvisorCta.primaryCta.label,
+  bookLabel: homeAdvisorCta.secondaryCta.label,
+  askHref: homeAdvisorCta.primaryCta.href,
+};
 
+type HomeAdvisorCtaProps = {
+  titleId?: string;
+  /** Page-specific copy. Defaults to home/category advisor text. */
+  content?: AdvisorCtaContent;
+  /** When set, ask CTA opens ask flow instead of navigating to the default href. */
+  onPrimaryClick?: () => void;
+  /** When set, book CTA opens book flow instead of `bookHref`. */
+  onBookOpen?: () => void;
+  /** Which CTA is primary. Subcategory uses book; home/category use ask. */
+  primaryAction?: "ask" | "book";
+};
+
+/** Thin wrapper around AdvisorCta used on home, category, listing. */
+export function HomeAdvisorCta({
+  titleId = "home-advisor-cta-title",
+  content = homeAdvisorContent,
+  onPrimaryClick,
+  onBookOpen,
+  primaryAction = "ask",
+}: HomeAdvisorCtaProps) {
   return (
-    <SplitMediaCta
-      titleId="home-advisor-cta-title"
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      image={image}
-      className="relative z-10 isolate py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
-      actions={
-        <>
-          <Button
-            href={primaryCta.href}
-            variant="primary"
-            size="lg"
-            className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
-          >
-            {primaryCta.label}
-            <i className="ph ph-arrow-right" aria-hidden="true" />
-          </Button>
-          <Button
-            as="button"
-            type="button"
-            variant="secondary"
-            size="lg"
-            className="w-full max-w-full px-5 whitespace-normal sm:w-auto sm:px-10 sm:whitespace-nowrap"
-            onClick={requestSalonDrawer}
-          >
-            {secondaryCta.label}
-          </Button>
-        </>
-      }
+    <AdvisorCta
+      titleId={titleId}
+      content={content}
+      onAskOpen={onPrimaryClick}
+      onBookOpen={onBookOpen}
+      primaryAction={primaryAction}
     />
   );
 }

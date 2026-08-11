@@ -448,6 +448,22 @@ function LightboxControls({
   onNext,
   onSelect,
 }: LightboxControlsProps) {
+  const thumbsRef = useRef<HTMLDivElement | null>(null);
+  // Image thumbs stay usable on short galleries; long sets get a counter instead.
+  const useThumbStrip = hasMultiple && images.length <= 6;
+
+  useEffect(() => {
+    if (!useThumbStrip) return;
+    const root = thumbsRef.current;
+    if (!root) return;
+    const active = root.querySelector<HTMLElement>("[aria-current='true']");
+    active?.scrollIntoView({
+      behavior: reducedMotion ? "auto" : "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [index, reducedMotion, useThumbStrip]);
+
   return (
     <motion.div
       className="pointer-events-none absolute inset-0 z-410"
@@ -484,7 +500,7 @@ function LightboxControls({
 
       {hasMultiple ? (
         <>
-          {/* Arrows float over the image (desktop). Mobile: swipe + thumbs. */}
+          {/* Arrows float over the image (desktop). Mobile: swipe + thumbs/counter. */}
           <div className="pointer-events-none absolute inset-y-0 inset-s-[clamp(1.25rem,2.222vw,2.5rem)] hidden items-center md:flex">
             <IconButton
               label="Poprzednie zdjęcie"
@@ -503,36 +519,57 @@ function LightboxControls({
               onClick={onNext}
             />
           </div>
-          <div className="absolute bottom-[clamp(1.25rem,2.222vw,2.5rem)] inset-x-[clamp(1.25rem,2.222vw,2.5rem)] flex justify-center gap-2 overflow-x-auto md:justify-start md:max-w-[min(100%-2*clamp(1.25rem,2.222vw,2.5rem),36rem)] md:inset-x-auto md:inset-s-[clamp(1.25rem,2.222vw,2.5rem)]">
-            {images.map((image, thumbIndex) => {
-              const isActive = thumbIndex === index;
-              return (
-                <button
-                  key={image.src}
-                  type="button"
-                  className={cn(
-                    "pointer-events-auto size-14 shrink-0 overflow-hidden border bg-neutral-50 transition-[border-color,opacity] duration-fast ease-out md:size-16",
-                    isActive
-                      ? "border-neutral-900 opacity-100"
-                      : "border-transparent opacity-70 hover:opacity-100",
-                  )}
-                  aria-label={`Pokaż zdjęcie ${thumbIndex + 1}`}
-                  aria-current={isActive ? "true" : undefined}
-                  onClick={() => onSelect(thumbIndex)}
-                >
-                  <img
-                    src={image.src}
-                    alt=""
-                    className="size-full object-cover"
-                    style={{
-                      objectPosition: productImageObjectPosition(image),
-                    }}
-                    draggable={false}
-                  />
-                </button>
-              );
-            })}
-          </div>
+
+          {useThumbStrip ? (
+            <div className="absolute inset-x-[clamp(1.25rem,2.222vw,2.5rem)] bottom-[clamp(1.25rem,2.222vw,2.5rem)] flex justify-center">
+              <div
+                ref={thumbsRef}
+                className={cn(
+                  "pointer-events-auto flex max-w-full gap-2 overflow-x-auto",
+                  "scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+                )}
+              >
+                {images.map((image, thumbIndex) => {
+                  const isActive = thumbIndex === index;
+                  return (
+                    <button
+                      key={image.src}
+                      type="button"
+                      className={cn(
+                        "size-14 shrink-0 overflow-hidden rounded-xs border bg-neutral-50 transition-[border-color,opacity] duration-fast ease-out md:size-16",
+                        isActive
+                          ? "border-neutral-900 opacity-100"
+                          : "border-transparent opacity-70 hover:opacity-100",
+                      )}
+                      aria-label={`Pokaż zdjęcie ${thumbIndex + 1}`}
+                      aria-current={isActive ? "true" : undefined}
+                      onClick={() => onSelect(thumbIndex)}
+                    >
+                      <img
+                        src={image.src}
+                        alt=""
+                        className="size-full object-cover"
+                        style={{
+                          objectPosition: productImageObjectPosition(image),
+                        }}
+                        draggable={false}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div className="absolute inset-x-[clamp(1.25rem,2.222vw,2.5rem)] bottom-[clamp(1.25rem,2.222vw,2.5rem)] flex justify-center">
+              <p
+                className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-4 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
+                aria-live="polite"
+              >
+                {index + 1}
+                <span className="text-neutral-400"> / {images.length}</span>
+              </p>
+            </div>
+          )}
         </>
       ) : null}
     </motion.div>

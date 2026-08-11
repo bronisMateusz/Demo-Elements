@@ -211,12 +211,48 @@ function MapPin({
   );
 }
 
+type PolandSalonsMapTone = "onDark" | "onLight";
+
 type PolandSalonsMapProps = {
   className?: string;
+  /** Drop the default max-width so the map can fill a wider column. */
+  fluid?: boolean;
+  /** Surface behind the map - drives region fill contrast. */
+  tone?: PolandSalonsMapTone;
   /** When set, map zooms to this voivodeship and keeps its markers. */
   focusedVoivId?: string | null;
   onVoivSelect?: (voivId: string) => void;
 };
+
+function regionFillClassName({
+  tone,
+  hasSalon,
+  isHovered,
+  isSelected,
+  isDimmed,
+  zoomActive,
+}: {
+  tone: PolandSalonsMapTone;
+  hasSalon: boolean;
+  isHovered: boolean;
+  isSelected: boolean;
+  isDimmed: boolean;
+  zoomActive: boolean;
+}) {
+  if (tone === "onLight") {
+    if (isDimmed) return "pointer-events-none opacity-25 fill-neutral-100";
+    if (isHovered && hasSalon) return "fill-neutral-300";
+    if (!zoomActive && isSelected) return "fill-neutral-300";
+    if (hasSalon || isSelected) return "fill-neutral-200";
+    return "fill-neutral-50";
+  }
+
+  if (isDimmed) return "pointer-events-none opacity-15 fill-neutral-0/5";
+  if (isHovered && hasSalon) return "fill-neutral-0/28";
+  if (!zoomActive && isSelected) return "fill-neutral-0/28";
+  if (hasSalon || isSelected) return "fill-neutral-0/16";
+  return "fill-neutral-0/5";
+}
 
 /**
  * Clickable Poland map by voivodeship with salon markers.
@@ -225,6 +261,8 @@ type PolandSalonsMapProps = {
  */
 export function PolandSalonsMap({
   className,
+  fluid = false,
+  tone = "onDark",
   focusedVoivId = null,
   onVoivSelect,
 }: PolandSalonsMapProps) {
@@ -265,7 +303,8 @@ export function PolandSalonsMap({
   return (
     <div
       className={cn(
-        "flex w-full justify-center overflow-hidden lg:justify-end",
+        "flex w-full justify-center overflow-hidden",
+        fluid ? "lg:justify-start" : "lg:justify-end",
         className,
       )}
     >
@@ -278,7 +317,8 @@ export function PolandSalonsMap({
           ease: EASE_OUT,
         }}
         className={cn(
-          "w-full max-w-120 overflow-hidden xl:max-w-136",
+          "w-full overflow-hidden",
+          !fluid && "max-w-120 xl:max-w-136",
           !interactive && "pointer-events-none",
         )}
         role="img"
@@ -296,20 +336,19 @@ export function PolandSalonsMap({
                 key={region.id}
                 d={region.d}
                 className={cn(
-                  "stroke-neutral-900 outline-none transition-[fill,opacity] duration-base ease-out",
+                  "outline-none transition-[fill,opacity] duration-base ease-out",
+                  tone === "onLight"
+                    ? "stroke-neutral-400"
+                    : "stroke-neutral-900",
                   hasSalon && interactive ? "cursor-pointer" : "cursor-default",
-                  isDimmed && "pointer-events-none opacity-15 fill-neutral-0/5",
-                  !isDimmed && isHovered && hasSalon && "fill-neutral-0/28",
-                  !isDimmed &&
-                    !isHovered &&
-                    (hasSalon || isSelected) &&
-                    "fill-neutral-0/16",
-                  !isDimmed &&
-                    !isHovered &&
-                    !hasSalon &&
-                    !isSelected &&
-                    "fill-neutral-0/5",
-                  !zoomActive && isSelected && "fill-neutral-0/28",
+                  regionFillClassName({
+                    tone,
+                    hasSalon,
+                    isHovered,
+                    isSelected,
+                    isDimmed,
+                    zoomActive,
+                  }),
                 )}
                 strokeWidth={zoomActive ? 0.6 : 1.1}
                 onMouseEnter={() => {

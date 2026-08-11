@@ -15,8 +15,13 @@ export function ProductCarouselCard({
   className,
   compact = false,
 }: ProductCarouselCardProps) {
-  const images = product.images?.length ? product.images : [product.image];
-  const hasMultipleImages = images.length > 1;
+  const image = product.images?.[0] ?? product.image;
+  const isCover = image.fit === "cover";
+  const badges = product.badges?.length
+    ? product.badges
+    : product.badge
+      ? [product.badge]
+      : [];
 
   return (
     <article
@@ -44,48 +49,31 @@ export function ProductCarouselCard({
             "motion-reduce:group-hover/card:scale-100 motion-reduce:group-focus-within/card:scale-100",
           )}
         >
-          {images.map((image, index) => {
-            const isPrimary = index === 0;
-            const isHoverImage = index === 1;
-
-            return (
-              <img
-                key={`${product.id}-${index}`}
-                src={image.src}
-                alt={image.alt || product.title}
-                className={cn(
-                  "absolute inset-0 size-full object-cover",
-                  hasMultipleImages &&
-                    "transition-opacity duration-500 ease-out motion-reduce:transition-none",
-                  isPrimary &&
-                    cn(
-                      "z-1 opacity-100",
-                      hasMultipleImages &&
-                        "group-hover/card:opacity-0 group-focus-within/card:opacity-0",
-                    ),
-                  isHoverImage &&
-                    cn(
-                      "z-0 opacity-0",
-                      "group-hover/card:opacity-100 group-focus-within/card:opacity-100",
-                    ),
-                  !isPrimary && !isHoverImage && "hidden",
-                )}
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-              />
-            );
-          })}
+          <img
+            src={image.src}
+            alt={image.alt || product.title}
+            className={cn(
+              "absolute inset-0 size-full",
+              isCover ? "object-cover" : "object-contain p-4",
+            )}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
         </div>
 
-        {product.badge ? (
-          <Badge
-            variant={product.badge.variant ?? "default"}
-            href={product.badge.href}
-            className="absolute inset-s-3 top-3 z-2"
-          >
-            {product.badge.label}
-          </Badge>
+        {badges.length > 0 ? (
+          <div className="absolute inset-s-3 top-3 z-2 flex max-w-[calc(100%-4.5rem)] flex-wrap gap-1">
+            {badges.map((badge) => (
+              <Badge
+                key={`${badge.label}-${badge.variant ?? "default"}`}
+                variant={badge.variant ?? "default"}
+                href={badge.href}
+              >
+                {badge.label}
+              </Badge>
+            ))}
+          </div>
         ) : null}
 
         <ProductFavoriteButton

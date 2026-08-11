@@ -84,25 +84,26 @@ export function Checkbox({
           checked ? "checked" : indeterminate ? "indeterminate" : "unchecked"
         }
         className={cn(
-          "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-xs border outline-none",
-          "transition-colors duration-fast ease-out",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+          // Match `inputClassName` surface: border, hover fill, shadow, radius.
+          "mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-xs border outline-none",
+          "transition-[border-color,background-color,box-shadow,color] duration-fast ease-out",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
           "disabled:cursor-not-allowed disabled:opacity-60",
           showMark
-            ? "border-neutral-900 bg-neutral-900 text-neutral-0"
-            : "border-neutral-300 bg-neutral-0 hover:border-neutral-800 hover:bg-neutral-100",
+            ? "border-neutral-900 bg-neutral-900 text-neutral-0 shadow-none"
+            : "border-neutral-300 bg-neutral-0 hover:border-neutral-800 hover:bg-neutral-50 hover:shadow-subtle",
         )}
       >
         <AnimatePresence initial={false}>
           {showMark ? (
             <motion.svg
               key={indeterminate ? "indeterminate" : "checked"}
-              width="10"
-              height="10"
+              width="12"
+              height="12"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth={3}
+              strokeWidth={2.5}
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.5 }}

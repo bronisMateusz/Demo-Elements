@@ -53,7 +53,8 @@ type InspirationGalleryProps = {
   navPlacement?: "header" | "footer" | "none";
   /** Trailing hint slide - fills the empty peek beside the last card (not a link). */
   endCap?: {
-    label: string;
+    /** Optional footer hint (e.g. “Kliknij poniżej” when a see-more CTA follows). */
+    label?: string;
     title?: string;
     description?: string;
   };
@@ -430,10 +431,12 @@ export function InspirationGallery({
                       {endCap.description}
                     </p>
                   ) : null}
-                  <p className="relative m-0 inline-flex items-center gap-2 font-body text-ui font-medium text-neutral-700">
-                    {endCap.label}
-                    <i className="ph ph-arrow-down" aria-hidden="true" />
-                  </p>
+                  {endCap.label ? (
+                    <p className="relative m-0 inline-flex items-center gap-2 font-body text-ui font-medium text-neutral-700">
+                      {endCap.label}
+                      <i className="ph ph-arrow-down" aria-hidden="true" />
+                    </p>
+                  ) : null}
                 </div>
                 <p
                   className={inspirationGalleryCardTitleClassName()}

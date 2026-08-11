@@ -3,6 +3,7 @@ import { category2Modules } from "./modules/category-2-orientation";
 import { category2MotionModules } from "./modules/category-2-motion";
 import { category3Modules } from "./modules/category-3-product";
 import { category4Modules } from "./modules/category-4-home";
+import { category5Modules } from "./modules/category-5-marketing";
 import type { LibraryCategory } from "./types";
 
 export const libraryCategories: LibraryCategory[] = [
@@ -41,6 +42,15 @@ export const libraryCategories: LibraryCategory[] = [
     subtitle:
       "Moduły home - hero, kategorie, produkty, marki, inspiracje, magazyn, partnerzy, doradca, about.",
     modules: category4Modules,
+  },
+  {
+    id: "cat-5",
+    number: 5,
+    slug: "marketing",
+    title: "Marketing",
+    subtitle:
+      "Kategoria, podkategoria, listing PLP i salon - intro, wiersze, banery, bento, filtry, blog/news, SEO, hero i sekcje salonu.",
+    modules: category5Modules,
   },
 ];
 

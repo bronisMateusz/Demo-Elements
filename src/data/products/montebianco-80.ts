@@ -266,7 +266,7 @@ export const montebianco80: Product = {
   salonCard: {
     eyebrow: "Obejrzyj na żywo",
     description: "Wybierz najbliższy salon Elements i umów się na prezentację.",
-    href: "#salony",
+    href: "/salony",
     label: "Wybierz swój salon",
   },
   galleryBanner: {
@@ -483,7 +483,7 @@ export const montebianco80: Product = {
       focalPoint: { x: 50, y: 45 },
     },
     secondary: {
-      href: "#salony",
+      href: "/salony",
       label: "Znajdź salon",
     },
   },
@@ -500,7 +500,7 @@ export const montebianco80: Product = {
   recentlyViewedProducts: montebiancoRecentlyViewed,
   breadcrumbs: [
     { label: "Strona główna", to: "/" },
-    { label: "Łazienka", to: "#" },
+    { label: "Łazienka", to: "/kategoria" },
     { label: "Meble łazienkowe", to: "#" },
   ],
 };

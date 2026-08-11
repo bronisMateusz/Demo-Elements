@@ -12,9 +12,12 @@ import { Eyebrow } from "../ui/Eyebrow";
 import { cn } from "../../lib/cn";
 
 type SplitMediaCtaProps = {
+  id?: string;
   titleId: string;
   eyebrow: string;
   title: string;
+  /** Optional second headline under the title. */
+  lead?: string;
   description?: string;
   note?: string;
   image: ProductImage;
@@ -28,9 +31,11 @@ type SplitMediaCtaProps = {
 
 /** Two-column media + copy CTA used across PDP / home promotional banners. */
 export function SplitMediaCta({
+  id,
   titleId,
   eyebrow,
   title,
+  lead,
   description,
   note,
   image,
@@ -46,6 +51,7 @@ export function SplitMediaCta({
 
   return (
     <section
+      id={id}
       ref={targetRef}
       aria-labelledby={titleId}
       className={
@@ -137,7 +143,7 @@ export function SplitMediaCta({
                     id={titleId}
                     revealUnit="word"
                     className={cn(
-                      "min-w-0 text-balance",
+                      "min-w-0 text-balance whitespace-pre-line",
                       titleIconClass && "flex-1",
                     )}
                     typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
@@ -147,6 +153,11 @@ export function SplitMediaCta({
                     {title}
                   </TextRevealLead>
                 </div>
+                {lead ? (
+                  <p className="m-0 max-w-lg font-heading text-h4 leading-snug font-medium text-neutral-900">
+                    {lead}
+                  </p>
+                ) : null}
                 {description ? (
                   <p className="t-body max-w-lg text-neutral-700">
                     {description}

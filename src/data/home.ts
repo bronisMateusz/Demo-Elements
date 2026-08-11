@@ -102,7 +102,7 @@ export const homeCategories = {
   items: [
     {
       label: "Płytki",
-      href: "#plytki-rodzaje",
+      href: "/kategoria",
       iconClass: "ph ph-squares-four",
       image: {
         src: assetUrl("home/categories/plytki.png"),
@@ -113,7 +113,7 @@ export const homeCategories = {
     },
     {
       label: "Domowe SPA",
-      href: "#domowe-spa",
+      href: "/kategoria",
       iconClass: "ph ph-flower-lotus",
       image: {
         src: assetUrl("home/categories/domowe-spa.png"),
@@ -124,7 +124,7 @@ export const homeCategories = {
     },
     {
       label: "Wanny",
-      href: "#wanny",
+      href: "/kategoria",
       iconClass: "ph ph-bathtub",
       image: {
         src: assetUrl("home/categories/wanny.png"),
@@ -135,7 +135,7 @@ export const homeCategories = {
     },
     {
       label: "Armatura",
-      href: "#armatura",
+      href: "/kategoria",
       iconClass: "ph ph-drop",
       image: {
         src: assetUrl("home/categories/armatura.png"),
@@ -146,7 +146,7 @@ export const homeCategories = {
     },
     {
       label: "Umywalki",
-      href: "#umywalki",
+      href: "/kategoria",
       iconClass: "ph ph-circle",
       image: {
         src: assetUrl("home/categories/umywalki.png"),
@@ -157,7 +157,7 @@ export const homeCategories = {
     },
     {
       label: "Meble",
-      href: "#meble",
+      href: "/kategoria",
       iconClass: "ph ph-stack",
       image: {
         src: assetUrl("home/categories/meble.png"),
@@ -168,7 +168,7 @@ export const homeCategories = {
     },
     {
       label: "Prysznic",
-      href: "#prysznic",
+      href: "/kategoria",
       iconClass: "ph ph-shower",
       image: {
         src: assetUrl("home/categories/prysznic.png"),
@@ -179,7 +179,7 @@ export const homeCategories = {
     },
     {
       label: "Kabiny",
-      href: "#konfigurator-kabin",
+      href: "/kategoria",
       iconClass: "ph ph-corners-out",
       image: {
         src: assetUrl("home/categories/kabiny.png"),
@@ -190,7 +190,7 @@ export const homeCategories = {
     },
     {
       label: "Płytki imitujące drewno",
-      href: "#imitujace-drewno",
+      href: "/kategoria",
       iconClass: "ph ph-tree",
       image: {
         src: assetUrl("home/categories/plytki-drewno.png"),
@@ -342,7 +342,7 @@ export const homeProductTabs: {
     id: "promocje",
     label: "Promocje",
     seeAllLabel: "Zobacz wszystkie promocje",
-    seeAllHref: "#promocje",
+    seeAllHref: "/listing",
     products: productsForTab(
       "promocje",
       ["montebianco-80", "florim-tundra", "omnires-ottawa", "trinnity-m16"],
@@ -353,7 +353,7 @@ export const homeProductTabs: {
     id: "nowosci",
     label: "Nowości",
     seeAllLabel: "Zobacz wszystkie nowości",
-    seeAllHref: "#nowosci",
+    seeAllHref: "/listing",
     products: productsForTab(
       "nowosci",
       ["omnires-ottawa", "trinnity-m16", "montebianco-80", "florim-tundra"],
@@ -364,7 +364,7 @@ export const homeProductTabs: {
     id: "bestsellery",
     label: "Bestsellery",
     seeAllLabel: "Zobacz wszystkie bestsellery",
-    seeAllHref: "#bestsellery",
+    seeAllHref: "/listing",
     products: productsForTab(
       "bestsellery",
       ["florim-tundra", "montebianco-80", "trinnity-m16", "omnires-ottawa"],
@@ -375,7 +375,7 @@ export const homeProductTabs: {
     id: "outlet",
     label: "Outlet",
     seeAllLabel: "Zobacz cały Outlet",
-    seeAllHref: "#outlet",
+    seeAllHref: "/listing",
     products: productsForTab(
       "outlet",
       ["trinnity-m16", "omnires-ottawa", "florim-tundra", "montebianco-80"],
@@ -515,9 +515,9 @@ export const homeAppointment = {
 
 export const homeAdvisorCta = {
   eyebrow: "Doradztwo",
-  title: "Nie wiesz, od czego zacząć?",
+  title: "Nie wiesz, od czego zacząć?\nPorozmawiaj z doradcą.",
   description:
-    "Porozmawiaj z doradcą. Napisz do nas online albo umów się na spotkanie w salonie - pomożemy dobrać całe wyposażenie Twojej łazienki.",
+    "Napisz do nas online albo umów się na spotkanie w salonie - doradca pomoże dobrać całe wyposażenie Twojej łazienki.",
   image: {
     src: assetUrl("home/about-salon.jpg"),
     alt: "Salon Elements - rozmowa z doradcą",
