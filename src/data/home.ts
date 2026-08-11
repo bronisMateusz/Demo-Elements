@@ -515,9 +515,9 @@ export const homeAppointment = {
 
 export const homeAdvisorCta = {
   eyebrow: "Doradztwo",
-  title: "Nie wiesz, od czego zacząć?",
+  title: "Nie wiesz, od czego zacząć?\nPorozmawiaj z doradcą.",
   description:
-    "Porozmawiaj z doradcą. Napisz do nas online albo umów się na spotkanie w salonie - pomożemy dobrać całe wyposażenie Twojej łazienki.",
+    "Napisz do nas online albo umów się na spotkanie w salonie - doradca pomoże dobrać całe wyposażenie Twojej łazienki.",
   image: {
     src: assetUrl("home/about-salon.jpg"),
     alt: "Salon Elements - rozmowa z doradcą",
