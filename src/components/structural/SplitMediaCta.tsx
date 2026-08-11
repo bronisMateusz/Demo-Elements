@@ -12,6 +12,7 @@ import { Eyebrow } from "../ui/Eyebrow";
 import { cn } from "../../lib/cn";
 
 type SplitMediaCtaProps = {
+  id?: string;
   titleId: string;
   eyebrow: string;
   title: string;
@@ -28,6 +29,7 @@ type SplitMediaCtaProps = {
 
 /** Two-column media + copy CTA used across PDP / home promotional banners. */
 export function SplitMediaCta({
+  id,
   titleId,
   eyebrow,
   title,
@@ -46,6 +48,7 @@ export function SplitMediaCta({
 
   return (
     <section
+      id={id}
       ref={targetRef}
       aria-labelledby={titleId}
       className={

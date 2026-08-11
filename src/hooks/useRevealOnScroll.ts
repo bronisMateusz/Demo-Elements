@@ -15,6 +15,12 @@ function getInitialVisibility() {
   return isMotionPaused();
 }
 
+/** True when any part of the element intersects the viewport. */
+function isInViewport(element: HTMLElement) {
+  const rect = element.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
 export function useRevealOnScroll<T extends HTMLElement = HTMLDivElement>(
   options: UseRevealOnScrollOptions = {},
 ) {
@@ -25,6 +31,8 @@ export function useRevealOnScroll<T extends HTMLElement = HTMLDivElement>(
     const element = ref.current;
     if (!element || isMotionPaused()) return;
 
+    // Tall sections (category grids, salon lists) never reach a high
+    // intersection ratio while only the top is on screen - use threshold 0.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -33,12 +41,19 @@ export function useRevealOnScroll<T extends HTMLElement = HTMLDivElement>(
         }
       },
       {
-        threshold: options.threshold ?? 0.12,
-        rootMargin: options.rootMargin ?? "0px 0px -8% 0px",
+        threshold: options.threshold ?? 0,
+        rootMargin: options.rootMargin ?? "0px 0px -40px 0px",
       },
     );
 
     observer.observe(element);
+
+    // Reveal immediately when already in view on mount (no wait for IO).
+    if (isInViewport(element)) {
+      setIsVisible(true);
+      observer.disconnect();
+    }
+
     return () => observer.disconnect();
   }, [options.rootMargin, options.threshold]);
 
