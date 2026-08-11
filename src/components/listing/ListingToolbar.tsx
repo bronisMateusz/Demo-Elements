@@ -21,22 +21,23 @@ export function ListingToolbar({
   return (
     <div
       className={cn(
-        "flex min-h-12 flex-wrap items-center justify-between gap-x-4 gap-y-3",
+        "flex flex-col gap-4",
+        "lg:min-h-12 lg:flex-row lg:items-center lg:justify-between lg:gap-x-6",
         className,
       )}
     >
-      <p className="m-0 font-body text-sm text-neutral-600 tabular-nums">
-        Produkty:{" "}
-        <span className="font-medium text-neutral-900">{resultCount}</span>
-      </p>
+      <div className="flex min-h-12 items-center justify-between gap-4 lg:min-h-0 lg:justify-start">
+        <p className="m-0 font-body text-sm text-neutral-600 tabular-nums">
+          Produkty:{" "}
+          <span className="font-medium text-neutral-900">{resultCount}</span>
+        </p>
 
-      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         {onOpenFilters ? (
           <Button
             as="button"
             type="button"
             variant="secondary"
-            className="lg:hidden"
+            className="shrink-0 lg:hidden"
             onClick={onOpenFilters}
             ariaLabel="Otwórz filtry"
           >
@@ -44,9 +45,13 @@ export function ListingToolbar({
             Filtry
           </Button>
         ) : null}
-
-        <ListingQuickFilters state={filterState} onChange={onFilterChange} />
       </div>
+
+      <ListingQuickFilters
+        state={filterState}
+        onChange={onFilterChange}
+        className="min-w-0 lg:justify-end"
+      />
     </div>
   );
 }

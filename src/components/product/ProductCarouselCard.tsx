@@ -15,8 +15,8 @@ export function ProductCarouselCard({
   className,
   compact = false,
 }: ProductCarouselCardProps) {
-  const images = product.images?.length ? product.images : [product.image];
-  const hasMultipleImages = images.length > 1;
+  const image = product.images?.[0] ?? product.image;
+  const isCover = image.fit === "cover";
   const badges = product.badges?.length
     ? product.badges
     : product.badge
@@ -49,40 +49,17 @@ export function ProductCarouselCard({
             "motion-reduce:group-hover/card:scale-100 motion-reduce:group-focus-within/card:scale-100",
           )}
         >
-          {images.map((image, index) => {
-            const isPrimary = index === 0;
-            const isHoverImage = index === 1;
-            const isCover = image.fit === "cover";
-
-            return (
-              <img
-                key={`${product.id}-${index}`}
-                src={image.src}
-                alt={image.alt || product.title}
-                className={cn(
-                  "absolute inset-0 size-full",
-                  isCover ? "object-cover" : "object-contain p-4",
-                  hasMultipleImages &&
-                    "transition-opacity duration-500 ease-out motion-reduce:transition-none",
-                  isPrimary &&
-                    cn(
-                      "z-1 opacity-100",
-                      hasMultipleImages &&
-                        "group-hover/card:opacity-0 group-focus-within/card:opacity-0",
-                    ),
-                  isHoverImage &&
-                    cn(
-                      "z-0 opacity-0",
-                      "group-hover/card:opacity-100 group-focus-within/card:opacity-100",
-                    ),
-                  !isPrimary && !isHoverImage && "hidden",
-                )}
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-              />
-            );
-          })}
+          <img
+            src={image.src}
+            alt={image.alt || product.title}
+            className={cn(
+              "absolute inset-0 size-full",
+              isCover ? "object-cover" : "object-contain p-4",
+            )}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
         </div>
 
         {badges.length > 0 ? (

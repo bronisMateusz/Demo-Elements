@@ -46,7 +46,7 @@ export function ListingProductGrid({
   return (
     <ul
       className={cn(
-        "m-0 grid list-none grid-cols-2 gap-x-3 gap-y-8 p-0 sm:gap-x-4 md:grid-cols-3 md:gap-y-10 xl:grid-cols-3",
+        "m-0 grid list-none grid-cols-1 gap-y-8 p-0 xs:grid-cols-2 xs:gap-x-3 sm:gap-x-4 md:grid-cols-3 md:gap-y-10",
         className,
       )}
     >

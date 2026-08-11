@@ -38,12 +38,12 @@ const PACKSHOT_LIST = [
   PACKSHOTS.trinnity,
 ] as const;
 
-function packshotFor(seedId: string, offset = 0): ProductImage {
+function packshotFor(seedId: string): ProductImage {
   let hash = 0;
   for (let i = 0; i < seedId.length; i += 1) {
     hash = (hash + seedId.charCodeAt(i) * (i + 1)) % 997;
   }
-  return PACKSHOT_LIST[(hash + offset) % PACKSHOT_LIST.length]!;
+  return PACKSHOT_LIST[hash % PACKSHOT_LIST.length]!;
 }
 
 function badgesForFlags(flags: ListingProduct["flags"]): ProductBadge[] {
@@ -75,7 +75,6 @@ type Seed = {
 function toListingProduct(seed: Seed): ListingProduct {
   const badges = badgesForFlags(seed.flags);
   const image = packshotFor(seed.id);
-  const hover = packshotFor(seed.id, 1);
   return {
     id: seed.id,
     brand: seed.brand,
@@ -86,7 +85,6 @@ function toListingProduct(seed: Seed): ListingProduct {
     badge: badges[0],
     badges,
     image,
-    images: image.src === hover.src ? undefined : [image, hover],
     collection: seed.collection,
     purpose: seed.purpose,
     mount: seed.mount,
