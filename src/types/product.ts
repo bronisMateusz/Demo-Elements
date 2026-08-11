@@ -99,6 +99,8 @@ export type RelatedProduct = {
   pricePrevious?: string;
   subtitle?: string;
   badge?: ProductBadge;
+  /** When set, product cards show all badges (listing multi-flag products). */
+  badges?: ProductBadge[];
   swatch?: ProductImage;
   colorCount?: number;
   sizeCount?: number;

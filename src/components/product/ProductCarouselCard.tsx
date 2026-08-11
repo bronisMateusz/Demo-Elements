@@ -17,6 +17,12 @@ export function ProductCarouselCard({
 }: ProductCarouselCardProps) {
   const images = product.images?.length ? product.images : [product.image];
   const hasMultipleImages = images.length > 1;
+  const badges =
+    product.badges?.length
+      ? product.badges
+      : product.badge
+        ? [product.badge]
+        : [];
 
   return (
     <article
@@ -47,6 +53,7 @@ export function ProductCarouselCard({
           {images.map((image, index) => {
             const isPrimary = index === 0;
             const isHoverImage = index === 1;
+            const isCover = image.fit === "cover";
 
             return (
               <img
@@ -54,7 +61,8 @@ export function ProductCarouselCard({
                 src={image.src}
                 alt={image.alt || product.title}
                 className={cn(
-                  "absolute inset-0 size-full object-cover",
+                  "absolute inset-0 size-full",
+                  isCover ? "object-cover" : "object-contain p-4",
                   hasMultipleImages &&
                     "transition-opacity duration-500 ease-out motion-reduce:transition-none",
                   isPrimary &&
@@ -78,14 +86,18 @@ export function ProductCarouselCard({
           })}
         </div>
 
-        {product.badge ? (
-          <Badge
-            variant={product.badge.variant ?? "default"}
-            href={product.badge.href}
-            className="absolute inset-s-3 top-3 z-2"
-          >
-            {product.badge.label}
-          </Badge>
+        {badges.length > 0 ? (
+          <div className="absolute inset-s-3 top-3 z-2 flex max-w-[calc(100%-4.5rem)] flex-wrap gap-1">
+            {badges.map((badge) => (
+              <Badge
+                key={`${badge.label}-${badge.variant ?? "default"}`}
+                variant={badge.variant ?? "default"}
+                href={badge.href}
+              >
+                {badge.label}
+              </Badge>
+            ))}
+          </div>
         ) : null}
 
         <ProductFavoriteButton

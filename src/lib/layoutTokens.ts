@@ -40,6 +40,13 @@ export const mdPbSectionClassName = "md:pb-[clamp(2.5rem,6vw,4rem)]";
 export const maxWContentClassName = "max-w-384";
 export const maxWWideClassName = "max-w-448";
 
+/**
+ * Stick just under the full site header; when the utility strip conceals,
+ * drop to bar height (`readHeaderOffsetPx`). Full literals for Tailwind.
+ */
+export const stickyUnderHeaderClassName =
+  "sticky top-29 transition-[top] duration-base ease-luxury header-concealed:top-18";
+
 export function readHeaderHeightPx(): number {
   const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
   const bar = document.getElementById("siteHeaderBar");
