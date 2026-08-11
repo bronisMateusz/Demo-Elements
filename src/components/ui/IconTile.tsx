@@ -48,7 +48,7 @@ export function IconTile({
           <span
             className={cn(
               "inline-flex min-w-0 items-center gap-1",
-              "font-body text-xs font-medium leading-none text-neutral-900",
+              "font-body text-xs font-medium uppercase leading-none tracking-[0.12em] text-neutral-900",
             )}
           >
             {ctaLabel ? <span className="truncate">{ctaLabel}</span> : null}

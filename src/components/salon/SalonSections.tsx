@@ -487,6 +487,7 @@ export function SalonInspiration() {
         arrangements={[...salonPage.inspiration.arrangements]}
         title={salonPage.inspiration.title}
         titleId="salon-insp-title"
+        endCap={salonPage.inspiration.endCap}
       />
     </Section>
   );

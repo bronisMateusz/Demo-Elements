@@ -44,14 +44,20 @@ type EditorialCarouselProps = {
   a11yNextLabel?: string;
 };
 
-/** Clone items until the track can fill wide viewports in loop mode. */
-function withClonedSlides<T>(items: T[], minSlides: number): T[] {
-  if (items.length <= 1) return items;
-  const slides: T[] = [];
-  while (slides.length < minSlides) {
-    slides.push(...items);
+function createLoopTrack<T>(items: T[]) {
+  if (items.length <= 1) {
+    return { slides: items, middleStart: 0 };
   }
-  return slides;
+
+  const minimumCycles = Math.max(3, Math.ceil(20 / items.length));
+  const cycleCount =
+    minimumCycles % 2 === 0 ? minimumCycles + 1 : minimumCycles;
+  const slides = Array.from({ length: cycleCount }, () => items).flat();
+
+  return {
+    slides,
+    middleStart: Math.floor(cycleCount / 2) * items.length,
+  };
 }
 
 export function EditorialCarousel({
@@ -70,16 +76,30 @@ export function EditorialCarousel({
 
   const itemCount = items.length;
   const enableLoop = itemCount > 1;
-  const minLoopSlides = 20;
-  const slides = useMemo(
-    () => (enableLoop ? withClonedSlides(items, minLoopSlides) : items),
-    [items, enableLoop],
+  const { slides, middleStart } = useMemo(
+    () => createLoopTrack(items),
+    [items],
   );
-  const swiperKey = `editorial-bleed-${contentInsetPx}-${itemCount}-${titleId}`;
+  const swiperKey = `editorial-bleed-${contentInsetPx}-${slides.length}-${titleId}`;
 
   const syncEdges = (instance: SwiperInstance) => {
-    const real = instance.realIndex ?? instance.activeIndex;
-    setActiveIndex(itemCount > 0 ? real % itemCount : 0);
+    setActiveIndex(
+      itemCount > 0
+        ? ((instance.activeIndex % itemCount) + itemCount) % itemCount
+        : 0,
+    );
+  };
+
+  const recenterLoop = (instance: SwiperInstance) => {
+    if (!enableLoop) return;
+
+    const index = instance.activeIndex;
+    const nearStart = index < itemCount;
+    const nearEnd = index >= slides.length - itemCount;
+    if (!nearStart && !nearEnd) return;
+
+    const logicalIndex = ((index % itemCount) + itemCount) % itemCount;
+    instance.slideTo(middleStart + logicalIndex, 0, false);
   };
 
   const slidePrev = useCallback(() => {
@@ -116,15 +136,11 @@ export function EditorialCarousel({
             className={productCarouselSwiperClassName("bleed")}
             modules={[A11y, Mousewheel]}
             watchOverflow={!enableLoop}
-            loop={enableLoop}
-            loopAdditionalSlides={enableLoop ? Math.max(itemCount, 4) : 0}
+            initialSlide={enableLoop ? middleStart : 0}
             slidesPerView="auto"
             slidesPerGroup={1}
             spaceBetween={5}
             speed={480}
-            threshold={8}
-            grabCursor
-            simulateTouch
             // Card links - keep out of focusableElements so drag still starts on them.
             focusableElements="input, select, option, textarea, video, label"
             slidesOffsetBefore={contentInsetPx}
@@ -139,6 +155,7 @@ export function EditorialCarousel({
               syncEdges(instance);
             }}
             onSlideChange={syncEdges}
+            onTransitionEnd={recenterLoop}
             onResize={syncEdges}
             onSlidesUpdated={syncEdges}
             a11y={{

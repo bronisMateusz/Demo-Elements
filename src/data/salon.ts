@@ -396,6 +396,11 @@ export const salonPage = {
   inspiration: {
     id: "warto-zobaczyc",
     title: "Inspiracje, które warto zobaczyć",
+    endCap: {
+      title: "Więcej aranżacji w salonie",
+      description:
+        "Obejrzyj inspiracje na żywo i dobierz produkty z doradcą Elements.",
+    },
     arrangements: [
       {
         ...homeInspiration.arrangements[0],

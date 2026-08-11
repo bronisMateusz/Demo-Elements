@@ -28,7 +28,6 @@ export function ProductArchitectCTA({
       description={description}
       image={image}
       video={video}
-      titleIconClass="ph ph-cube"
       primary={{ href, label }}
     />
   );

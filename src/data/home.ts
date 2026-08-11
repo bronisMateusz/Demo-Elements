@@ -102,7 +102,7 @@ export const homeCategories = {
   items: [
     {
       label: "Płytki",
-      href: "#plytki-rodzaje",
+      href: "/kategoria",
       iconClass: "ph ph-squares-four",
       image: {
         src: assetUrl("home/categories/plytki.png"),
@@ -113,7 +113,7 @@ export const homeCategories = {
     },
     {
       label: "Domowe SPA",
-      href: "#domowe-spa",
+      href: "/kategoria",
       iconClass: "ph ph-flower-lotus",
       image: {
         src: assetUrl("home/categories/domowe-spa.png"),
@@ -124,7 +124,7 @@ export const homeCategories = {
     },
     {
       label: "Wanny",
-      href: "#wanny",
+      href: "/kategoria",
       iconClass: "ph ph-bathtub",
       image: {
         src: assetUrl("home/categories/wanny.png"),
@@ -135,7 +135,7 @@ export const homeCategories = {
     },
     {
       label: "Armatura",
-      href: "#armatura",
+      href: "/kategoria",
       iconClass: "ph ph-drop",
       image: {
         src: assetUrl("home/categories/armatura.png"),
@@ -146,7 +146,7 @@ export const homeCategories = {
     },
     {
       label: "Umywalki",
-      href: "/podkategoria",
+      href: "/kategoria",
       iconClass: "ph ph-circle",
       image: {
         src: assetUrl("home/categories/umywalki.png"),
@@ -157,7 +157,7 @@ export const homeCategories = {
     },
     {
       label: "Meble",
-      href: "#meble",
+      href: "/kategoria",
       iconClass: "ph ph-stack",
       image: {
         src: assetUrl("home/categories/meble.png"),
@@ -168,7 +168,7 @@ export const homeCategories = {
     },
     {
       label: "Prysznic",
-      href: "#prysznic",
+      href: "/kategoria",
       iconClass: "ph ph-shower",
       image: {
         src: assetUrl("home/categories/prysznic.png"),
@@ -179,7 +179,7 @@ export const homeCategories = {
     },
     {
       label: "Kabiny",
-      href: "#konfigurator-kabin",
+      href: "/kategoria",
       iconClass: "ph ph-corners-out",
       image: {
         src: assetUrl("home/categories/kabiny.png"),
@@ -190,7 +190,7 @@ export const homeCategories = {
     },
     {
       label: "Płytki imitujące drewno",
-      href: "#imitujace-drewno",
+      href: "/kategoria",
       iconClass: "ph ph-tree",
       image: {
         src: assetUrl("home/categories/plytki-drewno.png"),
