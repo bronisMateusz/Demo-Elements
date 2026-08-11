@@ -28,7 +28,6 @@ function ContactCardBackdrop() {
 
 export function SalonHero() {
   const { hero } = salonPage;
-  const primaryPhone = hero.phoneGroups[0]?.phones[0];
 
   return (
     <section
@@ -138,7 +137,7 @@ export function SalonHero() {
                 </a>
               </div>
 
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-neutral-0/10 pt-5">
+              <div className="mt-5 border-t border-neutral-0/10 pt-5">
                 <Button
                   as="button"
                   type="button"
@@ -149,22 +148,6 @@ export function SalonHero() {
                 >
                   {hero.bookLabel}
                 </Button>
-                {primaryPhone ? (
-                  <a
-                    href={primaryPhone.href}
-                    className={cn(
-                      "inline-flex items-center gap-2 font-body text-sm font-medium text-neutral-0 no-underline",
-                      "transition-colors duration-fast ease-out hover:text-gold-400",
-                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-                    )}
-                  >
-                    <i
-                      className="ph ph-phone text-base leading-none"
-                      aria-hidden="true"
-                    />
-                    <span>{primaryPhone.label}</span>
-                  </a>
-                ) : null}
               </div>
             </div>
           </aside>

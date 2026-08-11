@@ -166,7 +166,7 @@ export function SeoExpandable({
         <button
           type="button"
           className={cn(
-            "mt-6 inline-flex items-center gap-2 font-body text-sm font-medium text-gold-700",
+            "mx-auto mt-6 flex items-center gap-2 font-body text-sm font-medium text-gold-700 md:mx-0",
             "transition-colors duration-fast ease-out hover:text-gold-500",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
           )}

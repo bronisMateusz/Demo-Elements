@@ -156,7 +156,7 @@ export function CategoryRows({ rows, locate }: CategoryRowsProps) {
 
               <ul
                 className={cn(
-                  "mt-6 m-0 grid list-none gap-4 p-0 sm:mt-8 sm:gap-5",
+                  "mt-8 mb-0 list-none grid gap-4 p-0 sm:mt-10 sm:gap-5",
                   "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
                 )}
               >
