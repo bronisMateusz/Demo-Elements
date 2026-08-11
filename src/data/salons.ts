@@ -38,7 +38,7 @@ export const salonsPage = {
   description:
     "19 salonów w całej Polsce - ekspozycje, na których zobaczysz produkty na żywo i porozmawiasz z doradcą.",
   breadcrumbs: [
-    { label: "Elements", to: "/" },
+    { label: "Strona główna", to: "/" },
     { label: "Salony", current: true },
   ],
   usps: [
