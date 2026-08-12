@@ -36,19 +36,19 @@ export function SalonHero() {
       className="pt-6 pb-8 md:pt-8 md:pb-10 lg:pt-10"
     >
       <Container size="content">
-        <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+        <div className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
           <h1
             id="salon-hero-title"
-            className="order-1 m-0 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900 lg:col-start-1 lg:row-start-1"
+            className="order-1 m-0 min-w-0 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900 lg:col-start-1 lg:row-start-1"
           >
             {hero.titleLead} {hero.titleStrong}
           </h1>
 
-          <div className="relative order-2 min-h-72 overflow-hidden rounded-xs bg-neutral-100 max-lg:aspect-4/3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:min-h-full">
+          <div className="relative order-2 min-w-0 w-full overflow-hidden rounded-xs bg-neutral-100 aspect-4/3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-auto lg:min-h-full">
             <img
               src={hero.image.src}
               alt={hero.image.alt}
-              className="absolute inset-0 size-full object-cover"
+              className="absolute inset-0 size-full max-w-none object-cover"
               style={{ objectPosition: productImageObjectPosition(hero.image) }}
             />
           </div>
@@ -141,6 +141,8 @@ export function SalonHero() {
                   variant="primary"
                   tone="onDark"
                   size="md"
+                  full
+                  className="sm:w-auto"
                   onClick={requestSalonDrawer}
                 >
                   {hero.bookLabel}

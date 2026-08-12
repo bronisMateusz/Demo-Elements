@@ -20,7 +20,8 @@ export function VariantChipGroup({
         <MotionFieldGroup>
           <SharedLayoutBg
             className="inline-flex gap-1"
-            pillClassName="rounded-xs bg-neutral-100"
+            pillClassName="rounded-xs bg-neutral-300"
+            inset={0}
           >
             {options.map((option) => {
               const selected = selectedId === option.id;
@@ -30,17 +31,19 @@ export function VariantChipGroup({
                   key={option.id}
                   data-hoverable={option.unavailable ? false : undefined}
                   className={cn(
-                    "group relative shrink-0 rounded-xs border bg-neutral-0 transition-[border-color] duration-base ease-out",
+                    "group relative shrink-0 rounded-xs bg-neutral-0",
+                    // Border as overlay so SharedLayoutBg pill cannot cover it.
+                    "after:pointer-events-none after:absolute after:inset-0 after:z-20 after:rounded-xs after:border after:transition-[border-color] after:duration-base after:ease-out",
                     selected
-                      ? "border-transparent"
-                      : "border-neutral-800 hover:border-neutral-900",
+                      ? "after:border-transparent"
+                      : "after:border-neutral-800 hover:after:border-neutral-900",
                     option.unavailable && "cursor-not-allowed",
                   )}
                 >
                   {selected ? (
                     <motion.span
                       layoutId={selectedLayoutId}
-                      className="absolute inset-0 rounded-xs bg-neutral-900"
+                      className="absolute inset-0 z-1 rounded-xs bg-neutral-900"
                       aria-hidden="true"
                     />
                   ) : null}

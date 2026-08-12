@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   subcategoryAdvisorCta,
@@ -17,6 +18,8 @@ import {
   AdvisorCta,
   type AdvisorCtaContent,
 } from "../components/marketing/AdvisorCta";
+import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
+import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
@@ -48,6 +51,8 @@ function RevealSection({
 }
 
 export function SubcategoryPage() {
+  const [askOpen, setAskOpen] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -116,6 +121,16 @@ export function SubcategoryPage() {
           <SeoExpandable blocks={[...subcategorySeoBlocks]} />
         </RevealSection>
       </PageShell>
+
+      <FloatingAdvisorCta
+        label="Napisz do doradcy"
+        onClick={() => setAskOpen(true)}
+      />
+      <AdvisorAskDrawer
+        open={askOpen}
+        onClose={() => setAskOpen(false)}
+        topicTitle={subcategoryPage.title}
+      />
     </>
   );
 }

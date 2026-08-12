@@ -19,10 +19,16 @@ export function parseListingPrice(price: string | undefined): number {
 }
 
 export function listingFilterHasActive(state: ListingFilterState): boolean {
-  if (state.quick.length > 0) return true;
-  return (Object.keys(state.facets) as ListingFacetKey[]).some(
-    (key) => state.facets[key].length > 0,
+  return listingFilterActiveCount(state) > 0;
+}
+
+/** Selected quick filters + facet values (each checkbox counts as 1). */
+export function listingFilterActiveCount(state: ListingFilterState): number {
+  const facetCount = (Object.keys(state.facets) as ListingFacetKey[]).reduce(
+    (sum, key) => sum + state.facets[key].length,
+    0,
   );
+  return state.quick.length + facetCount;
 }
 
 function matchesFacet(
@@ -39,7 +45,8 @@ function matchesQuick(
   quick: ListingQuickFilter[],
 ): boolean {
   if (quick.length === 0) return true;
-  return quick.every((flag) => Boolean(product.flags[flag]));
+  // “Pokaż tylko” is a union - any selected badge matches.
+  return quick.some((flag) => Boolean(product.flags[flag]));
 }
 
 function sortProducts(

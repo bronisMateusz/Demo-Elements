@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, type ReactNode } from "react";
 import { cn } from "../../lib/cn";
-import { EASE_OUT, SPRING_PRESS } from "../../lib/motionEase";
+import { EASE_OUT } from "../../lib/motionEase";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 
 const CHECK_PATH = "M5 13l4 4L19 7";
@@ -67,7 +67,11 @@ export function Checkbox({
           if (!disabled) onCheckedChange(!checked);
         }}
       />
-      <motion.button
+      {/*
+        Plain button (not motion) so layout projections from other
+        motion trees cannot shift the control when filters update.
+      */}
+      <button
         id={id}
         type="button"
         role="checkbox"
@@ -78,15 +82,13 @@ export function Checkbox({
         onClick={() => {
           if (!disabled) onCheckedChange(!checked);
         }}
-        whileTap={reduce || disabled ? undefined : { scale: 0.92 }}
-        transition={SPRING_PRESS}
         data-state={
           checked ? "checked" : indeterminate ? "indeterminate" : "unchecked"
         }
         className={cn(
-          // Match `inputClassName` surface: border, hover fill, shadow, radius.
-          "mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-xs border outline-none",
-          "transition-[border-color,background-color,box-shadow,color] duration-fast ease-out",
+          "mt-0.5 inline-flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-xs border outline-none",
+          "transition-[border-color,background-color,box-shadow,color,scale] duration-fast ease-out",
+          "active:enabled:scale-95",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
           "disabled:cursor-not-allowed disabled:opacity-60",
           showMark
@@ -94,48 +96,47 @@ export function Checkbox({
             : "border-neutral-300 bg-neutral-0 hover:border-neutral-800 hover:bg-neutral-50 hover:shadow-subtle",
         )}
       >
-        <AnimatePresence initial={false}>
-          {showMark ? (
-            <motion.svg
-              key={indeterminate ? "indeterminate" : "checked"}
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.5 }}
-              animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              exit={
-                reduce
-                  ? { opacity: 0 }
-                  : { opacity: 0, scale: 0.5, filter: "blur(0.25rem)" }
-              }
-              transition={
-                reduce ? { duration: 0 } : { duration: 0.16, ease: EASE_OUT }
-              }
-              aria-hidden
-            >
-              <motion.path
-                d={path}
-                initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
-                animate={{ pathLength: 1 }}
+        <span className="flex size-3 items-center justify-center">
+          <AnimatePresence initial={false}>
+            {showMark ? (
+              <motion.svg
+                key={indeterminate ? "indeterminate" : "checked"}
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="block size-3"
+                initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.5 }}
+                animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.5 }}
                 transition={
-                  reduce
-                    ? { duration: 0 }
-                    : {
-                        duration: indeterminate ? 0.2 : 0.3,
-                        ease: EASE_OUT,
-                        delay: 0.04,
-                      }
+                  reduce ? { duration: 0 } : { duration: 0.16, ease: EASE_OUT }
                 }
-              />
-            </motion.svg>
-          ) : null}
-        </AnimatePresence>
-      </motion.button>
+                aria-hidden
+              >
+                <motion.path
+                  d={path}
+                  initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={
+                    reduce
+                      ? { duration: 0 }
+                      : {
+                          duration: indeterminate ? 0.2 : 0.3,
+                          ease: EASE_OUT,
+                          delay: 0.04,
+                        }
+                  }
+                />
+              </motion.svg>
+            ) : null}
+          </AnimatePresence>
+        </span>
+      </button>
       {labelContent ? (
         <span className={cn("min-w-0 select-none", disabled && "opacity-60")}>
           {labelContent}

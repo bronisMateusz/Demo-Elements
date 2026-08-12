@@ -203,7 +203,7 @@ export function HeaderBar({
           <IconButton
             label="Szukaj"
             iconClass="ph ph-magnifying-glass"
-            variant="default"
+            variant="ghost"
           />
           <IconLink
             href={favoritesNav.href}
@@ -217,13 +217,13 @@ export function HeaderBar({
                 ? "ph-fill ph-bookmark-simple"
                 : "ph ph-bookmark-simple"
             }
-            variant="default"
+            variant="ghost"
             className={cn("lg:hidden", favoritesCount > 0 && "text-gold-500")}
           />
           <IconButton
             label="Otwórz menu"
             iconClass="ph ph-list"
-            variant="default"
+            variant="ghost"
             className="lg:hidden"
             onClick={onMenuToggle}
           />

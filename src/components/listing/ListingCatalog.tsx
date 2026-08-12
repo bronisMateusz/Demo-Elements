@@ -6,9 +6,9 @@ import {
 import { filterAndSortListingProducts } from "../../lib/listingFilters";
 import type { ListingFilterState } from "../../types/listing";
 import { cn } from "../../lib/cn";
-import { stickyUnderHeaderClassName } from "../../lib/layoutTokens";
 import { ListingFilters } from "./ListingFilters";
 import { ListingFiltersDrawer } from "./ListingFiltersDrawer";
+import { ListingFiltersSticky } from "./ListingFiltersSticky";
 import { ListingPagination } from "./ListingPagination";
 import { ListingProductGrid } from "./ListingProductGrid";
 import { ListingToolbar } from "./ListingToolbar";
@@ -75,14 +75,13 @@ export function ListingCatalog({
       >
         {showSidebar ? (
           <aside className="hidden self-stretch lg:block">
-            <div className={stickyUnderHeaderClassName}>
+            <ListingFiltersSticky>
               <ListingFilters
                 state={filterState}
                 onChange={updateFilters}
                 onClear={clearFilters}
-                collapseOnScroll
               />
-            </div>
+            </ListingFiltersSticky>
           </aside>
         ) : null}
 
@@ -115,6 +114,7 @@ export function ListingCatalog({
         state={filterState}
         onChange={updateFilters}
         onClear={clearFilters}
+        resultCount={totalCount}
       />
     </>
   );

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { PageShell } from "../components/layout/PageShell";
 import { HomeAbout } from "../components/home/HomeAbout";
@@ -11,6 +12,8 @@ import { HomeInspiration } from "../components/home/HomeInspiration";
 import { HomeMagazine } from "../components/home/HomeMagazine";
 import { HomePartners } from "../components/home/HomePartners";
 import { HomeProducts } from "../components/home/HomeProducts";
+import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
+import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { cn } from "../lib/cn";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 
@@ -30,6 +33,8 @@ function RevealSection({
 }
 
 export function HomePage() {
+  const [askOpen, setAskOpen] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -67,12 +72,22 @@ export function HomePage() {
           <HomePartners />
         </RevealSection>
         <RevealSection className="relative z-20">
-          <HomeAdvisorCta />
+          <HomeAdvisorCta onPrimaryClick={() => setAskOpen(true)} />
         </RevealSection>
         <RevealSection className="relative z-0">
           <HomeAbout />
         </RevealSection>
       </PageShell>
+
+      <FloatingAdvisorCta
+        label="Napisz do doradcy"
+        onClick={() => setAskOpen(true)}
+      />
+      <AdvisorAskDrawer
+        open={askOpen}
+        onClose={() => setAskOpen(false)}
+        topicTitle="Doradztwo Elements"
+      />
     </>
   );
 }

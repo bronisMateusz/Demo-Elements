@@ -11,6 +11,7 @@ import { PageIntro } from "../components/marketing/PageIntro";
 import { CategoryRows } from "../components/marketing/CategoryRows";
 import { SeoExpandable } from "../components/marketing/SeoExpandable";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
+import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { HomeAdvisorCta } from "../components/home/HomeAdvisorCta";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
@@ -85,6 +86,11 @@ export function CategoryPage() {
           topicTitle="Wyposażenie łazienki"
         />
       </PageShell>
+
+      <FloatingAdvisorCta
+        label="Napisz do doradcy"
+        onClick={() => setAskOpen(true)}
+      />
     </>
   );
 }

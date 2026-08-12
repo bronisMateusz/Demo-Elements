@@ -6,6 +6,7 @@ import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { ProductSubnav } from "../components/product/ProductSubnav";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
+import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { SalonHero } from "../components/salon/SalonHero";
 import { HomeBrands } from "../components/home/HomeBrands";
 import { HomeMagazine } from "../components/home/HomeMagazine";
@@ -20,6 +21,7 @@ import {
   SalonUsps,
   SalonVisitCta,
 } from "../components/salon/SalonSections";
+import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
 
@@ -104,6 +106,12 @@ export function SalonPage() {
           topicTitle="Salon Elements Bydgoszcz"
         />
       </PageShell>
+
+      <FloatingAdvisorCta
+        label="Umów wizytę"
+        iconClass="ph ph-calendar-blank"
+        onClick={requestSalonDrawer}
+      />
     </>
   );
 }

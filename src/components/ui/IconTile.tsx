@@ -51,7 +51,9 @@ export function IconTile({
               "font-body text-xs font-medium uppercase leading-none tracking-[0.12em] text-neutral-900",
             )}
           >
-            {ctaLabel ? <span className="truncate">{ctaLabel}</span> : null}
+            {ctaLabel ? (
+              <span className="hidden truncate sm:inline">{ctaLabel}</span>
+            ) : null}
             <i
               className="ph ph-arrow-right shrink-0 text-base leading-none transition-transform duration-base ease-out group-hover/tile:translate-x-0.5"
               aria-hidden="true"
