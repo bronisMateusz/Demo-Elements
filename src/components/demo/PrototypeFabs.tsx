@@ -117,7 +117,7 @@ export function PrototypeFabs() {
 
   return (
     <div
-      className="fixed top-1/2 inset-s-4 z-40 -translate-y-1/2 max-lg:inset-s-3"
+      className="fixed top-1/2 inset-s-4 z-100 -translate-y-1/2 max-lg:inset-s-3"
       ref={rootRef}
     >
       <div className="relative overflow-visible">

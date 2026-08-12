@@ -47,6 +47,21 @@ export const maxWWideClassName = "max-w-448";
 export const stickyUnderHeaderClassName =
   "sticky top-29 transition-[top] duration-base ease-luxury header-concealed:top-18";
 
+/**
+ * Listing sidebar shell: stick under header with capped height.
+ * Extra 1rem under the header so Filtry / Wyczyść are not flush to the bar.
+ * Scroll + fades live on the inner element (ListingFiltersSticky).
+ */
+export const stickyListingFiltersShellClassName = [
+  "sticky top-33 transition-[top] duration-base ease-luxury header-concealed:top-22",
+  "relative max-h-[calc(100svh-8.25rem)] header-concealed:max-h-[calc(100svh-5.5rem)]",
+].join(" ");
+
+export const stickyListingFiltersScrollClassName = [
+  "max-h-[inherit] overflow-y-auto overscroll-contain scrollbar-none",
+  "[-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+].join(" ");
+
 export function readHeaderHeightPx(): number {
   const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
   const bar = document.getElementById("siteHeaderBar");

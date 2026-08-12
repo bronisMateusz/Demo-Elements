@@ -102,6 +102,8 @@ type DrawerHeaderProps = {
   backLabel?: string;
   /** Phosphor icon beside the title (drill-down category headers). */
   titleIconClass?: string;
+  /** Optional actions before the close control (e.g. “Wyczyść”). */
+  actions?: ReactNode;
 };
 
 export function DrawerHeader({
@@ -113,14 +115,16 @@ export function DrawerHeader({
   onBack,
   backLabel = "Wróć",
   titleIconClass,
+  actions,
 }: DrawerHeaderProps) {
   if (compact) {
     return (
-      <div className="flex h-18 shrink-0 items-center gap-1 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]">
+      <div className="flex h-18 shrink-0 items-center gap-2 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]">
         {onBack ? (
           <IconButton
             label={backLabel}
             iconClass="ph ph-caret-left"
+            variant="ghost"
             onClick={onBack}
           />
         ) : null}
@@ -138,29 +142,47 @@ export function DrawerHeader({
             {title}
           </span>
         </span>
-        <IconButton label={closeLabel} iconClass="ph ph-x" onClick={onClose} />
+        {actions}
+        <IconButton
+          label={closeLabel}
+          iconClass="ph ph-x"
+          variant="ghost"
+          onClick={onClose}
+        />
       </div>
     );
   }
 
+  const hasDescription = Boolean(description);
+
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] py-4 md:py-8">
+    <div
+      className={cn(
+        "flex justify-between gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]",
+        hasDescription
+          ? "items-start py-4 md:py-8"
+          : "items-center py-4",
+      )}
+    >
       <div className="min-w-0 pe-2">
-        <p className="m-0 font-body text-xl font-medium text-neutral-900">
+        <p className="m-0 font-body text-xl leading-none font-medium text-neutral-900">
           {title}
         </p>
-        {description ? (
+        {hasDescription ? (
           <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-500 md:mt-2">
             {description}
           </p>
         ) : null}
       </div>
-      <IconButton
-        label={closeLabel}
-        iconClass="ph ph-x"
-        onClick={onClose}
-        className="-mt-1 -me-2 md:-mt-2"
-      />
+      <div className="flex shrink-0 items-center gap-2">
+        {actions}
+        <IconButton
+          label={closeLabel}
+          iconClass="ph ph-x"
+          variant="ghost"
+          onClick={onClose}
+        />
+      </div>
     </div>
   );
 }

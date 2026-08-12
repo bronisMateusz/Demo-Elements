@@ -1,4 +1,7 @@
+import { AnimatePresence, motion, type Transition } from "motion/react";
+import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { cn } from "../../lib/cn";
+import { EASE_LUXURY } from "../../lib/motionEase";
 import type { ListingProduct } from "../../types/listing";
 import { ProductCarouselCard } from "../product/ProductCarouselCard";
 import { Button } from "../ui/Button";
@@ -9,52 +12,100 @@ type ListingProductGridProps = {
   className?: string;
 };
 
+const FADE_S = 0.26;
+const ENTER_STAGGER_S = 0.028;
+const ENTER_STAGGER_MAX = 5;
+
+function resultsKey(products: ListingProduct[]) {
+  if (products.length === 0) return "empty";
+  return products.map((product) => product.id).join("|");
+}
+
+function cardEnterTransition(index: number): Transition {
+  const delay =
+    FADE_S * 0.15 + Math.min(index, ENTER_STAGGER_MAX) * ENTER_STAGGER_S;
+  return {
+    opacity: { duration: 0.3, ease: EASE_LUXURY, delay },
+    y: { duration: 0.36, ease: EASE_LUXURY, delay },
+  };
+}
+
+function ListingEmptyState({ onClearFilters }: { onClearFilters?: () => void }) {
+  return (
+    <div className="flex min-h-96 flex-col items-center justify-center px-5 py-16 text-center sm:px-8">
+      <p className="t-h2 mb-4">Brak produktów dla wybranych filtrów</p>
+      <p className="t-body mt-0 mb-8 max-w-md">
+        Spróbuj zmienić kryteria albo wyczyść filtry, aby zobaczyć pełną ofertę.
+      </p>
+      {onClearFilters ? (
+        <Button
+          as="button"
+          type="button"
+          variant="primary"
+          onClick={onClearFilters}
+        >
+          Wyczyść filtry
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
 export function ListingProductGrid({
   products,
   onClearFilters,
   className,
 }: ListingProductGridProps) {
-  if (products.length === 0) {
-    return (
-      <div
-        className={cn(
-          "flex flex-col items-start gap-4 rounded-xs bg-neutral-50 px-5 py-10 sm:px-8",
-          className,
-        )}
-      >
-        <p className="m-0 font-heading text-lg font-medium text-neutral-900">
-          Brak produktów dla wybranych filtrów
-        </p>
-        <p className="m-0 max-w-md font-body text-sm leading-relaxed text-neutral-600">
-          Spróbuj zmienić kryteria albo wyczyść filtry, aby zobaczyć pełną
-          ofertę.
-        </p>
-        {onClearFilters ? (
-          <Button
-            as="button"
-            type="button"
-            variant="primary"
-            onClick={onClearFilters}
-          >
-            Wyczyść filtry
-          </Button>
-        ) : null}
-      </div>
-    );
-  }
+  const reduceMotion = useMotionReduced();
+  const isEmpty = products.length === 0;
+  const key = resultsKey(products);
+  const fadeTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: FADE_S, ease: EASE_LUXURY };
 
   return (
-    <ul
-      className={cn(
-        "m-0 grid list-none grid-cols-1 gap-y-8 p-0 xs:grid-cols-2 xs:gap-x-3 sm:gap-x-4 md:grid-cols-3 md:gap-y-10",
-        className,
-      )}
+    <div
+      className={cn("relative bg-neutral-0", isEmpty && "min-h-96", className)}
     >
-      {products.map((product) => (
-        <li key={product.id} className="min-w-0">
-          <ProductCarouselCard product={product} />
-        </li>
-      ))}
-    </ul>
+      {/*
+        mode="wait": fade current results out to white, then fade the next
+        set in - avoids mid-filter layout jumps between overlapping cards.
+      */}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={key}
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={
+            reduceMotion
+              ? undefined
+              : { opacity: 0, transition: fadeTransition }
+          }
+          transition={fadeTransition}
+        >
+          {isEmpty ? (
+            <ListingEmptyState onClearFilters={onClearFilters} />
+          ) : (
+            <ul className="m-0 grid list-none grid-cols-1 gap-y-8 p-0 xs:grid-cols-2 xs:gap-x-3 sm:gap-x-4 md:grid-cols-3 md:gap-y-10">
+              {products.map((product, index) => (
+                <motion.li
+                  key={product.id}
+                  className="min-w-0"
+                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={
+                    reduceMotion
+                      ? { duration: 0 }
+                      : cardEnterTransition(index)
+                  }
+                >
+                  <ProductCarouselCard product={product} />
+                </motion.li>
+              ))}
+            </ul>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }

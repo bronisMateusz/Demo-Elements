@@ -1,4 +1,5 @@
 import { cn } from "../../lib/cn";
+import { listingFilterActiveCount } from "../../lib/listingFilters";
 import type { ListingFilterState } from "../../types/listing";
 import { Button } from "../ui/Button";
 import { ListingQuickFilters } from "./ListingQuickFilters";
@@ -18,6 +19,8 @@ export function ListingToolbar({
   onOpenFilters,
   className,
 }: ListingToolbarProps) {
+  const activeFilterCount = listingFilterActiveCount(filterState);
+
   return (
     <div
       className={cn(
@@ -39,10 +42,17 @@ export function ListingToolbar({
             variant="secondary"
             className="shrink-0 lg:hidden"
             onClick={onOpenFilters}
-            ariaLabel="Otwórz filtry"
+            ariaLabel={
+              activeFilterCount > 0
+                ? `Otwórz filtry (${activeFilterCount} aktywne)`
+                : "Otwórz filtry"
+            }
           >
             <i className="ph ph-funnel" aria-hidden="true" />
             Filtry
+            {activeFilterCount > 0 ? (
+              <span className="tabular-nums">({activeFilterCount})</span>
+            ) : null}
           </Button>
         ) : null}
       </div>
@@ -50,7 +60,7 @@ export function ListingToolbar({
       <ListingQuickFilters
         state={filterState}
         onChange={onFilterChange}
-        className="min-w-0 lg:justify-end"
+        className="hidden lg:flex lg:justify-end"
       />
     </div>
   );
