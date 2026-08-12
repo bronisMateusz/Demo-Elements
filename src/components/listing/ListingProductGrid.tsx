@@ -30,7 +30,11 @@ function cardEnterTransition(index: number): Transition {
   };
 }
 
-function ListingEmptyState({ onClearFilters }: { onClearFilters?: () => void }) {
+function ListingEmptyState({
+  onClearFilters,
+}: {
+  onClearFilters?: () => void;
+}) {
   return (
     <div className="flex min-h-96 flex-col items-center justify-center px-5 py-16 text-center sm:px-8">
       <p className="t-h2 mb-4">Brak produktów dla wybranych filtrów</p>
@@ -94,9 +98,7 @@ export function ListingProductGrid({
                   initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={
-                    reduceMotion
-                      ? { duration: 0 }
-                      : cardEnterTransition(index)
+                    reduceMotion ? { duration: 0 } : cardEnterTransition(index)
                   }
                 >
                   <ProductCarouselCard product={product} />

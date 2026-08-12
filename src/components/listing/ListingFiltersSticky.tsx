@@ -29,7 +29,10 @@ function readEdges(el: HTMLElement): ScrollEdges {
  */
 export function ListingFiltersSticky({ children }: ListingFiltersStickyProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [edges, setEdges] = useState<ScrollEdges>({ top: false, bottom: false });
+  const [edges, setEdges] = useState<ScrollEdges>({
+    top: false,
+    bottom: false,
+  });
 
   useEffect(() => {
     const el = scrollRef.current;

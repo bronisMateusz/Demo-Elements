@@ -119,9 +119,7 @@ export function SharedLayoutBg({
                       {activeId === childKey ? (
                         <motion.div
                           layoutId={`shared-bg-${uid}`}
-                          transition={
-                            reduce ? { duration: 0 } : SPRING_LAYOUT
-                          }
+                          transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
                           className={cn(
                             "pointer-events-none size-full rounded-xs bg-neutral-900/[0.06]",
                             pillClassName,

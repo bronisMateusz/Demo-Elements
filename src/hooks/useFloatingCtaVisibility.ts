@@ -12,10 +12,7 @@ type UseFloatingCtaVisibilityOptions = {
 };
 
 /** Prefer showing after a hero leaves view - falls back to a fixed offset. */
-function getShowAfterScrollPx(
-  fallback: number,
-  heroSelector?: string,
-): number {
+function getShowAfterScrollPx(fallback: number, heroSelector?: string): number {
   if (!heroSelector) return fallback;
   const hero = document.querySelector<HTMLElement>(heroSelector);
   if (!hero) return fallback;

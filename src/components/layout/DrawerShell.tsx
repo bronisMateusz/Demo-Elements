@@ -159,9 +159,7 @@ export function DrawerHeader({
     <div
       className={cn(
         "flex justify-between gap-4 border-b border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)]",
-        hasDescription
-          ? "items-start py-4 md:py-8"
-          : "items-center py-4",
+        hasDescription ? "items-start py-4 md:py-8" : "items-center py-4",
       )}
     >
       <div className="min-w-0 pe-2">

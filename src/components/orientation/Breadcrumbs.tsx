@@ -24,7 +24,10 @@ type Crumb =
  * Mobile: keep breadcrumb look without horizontal scroll.
  * Long trails collapse the middle into an ellipsis (first + … + last two).
  */
-function crumbsForViewport(items: BreadcrumbItem[], collapseMiddle: boolean): Crumb[] {
+function crumbsForViewport(
+  items: BreadcrumbItem[],
+  collapseMiddle: boolean,
+): Crumb[] {
   if (!collapseMiddle || items.length <= 3) {
     return items.map((item, index) => ({
       type: "item" as const,
@@ -79,7 +82,9 @@ function CrumbList({
     >
       {crumbs.map((crumb) => {
         if (crumb.type === "ellipsis") {
-          const skippedLabels = crumb.skipped.map((item) => item.label).join(" / ");
+          const skippedLabels = crumb.skipped
+            .map((item) => item.label)
+            .join(" / ");
           return (
             <li
               key={crumb.key}

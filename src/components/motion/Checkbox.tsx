@@ -112,11 +112,7 @@ export function Checkbox({
                 className="block size-3"
                 initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.5 }}
                 animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-                exit={
-                  reduce
-                    ? { opacity: 0 }
-                    : { opacity: 0, scale: 0.5 }
-                }
+                exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.5 }}
                 transition={
                   reduce ? { duration: 0 } : { duration: 0.16, ease: EASE_OUT }
                 }

@@ -6,11 +6,7 @@ import {
 } from "./btnAnimatedClassName";
 
 export type IconButtonVariant =
-  | "default"
-  | "ghost"
-  | "bordered"
-  | "elevated"
-  | "on-dark";
+  "default" | "ghost" | "bordered" | "elevated" | "on-dark";
 
 type IconButtonClassNameOptions = {
   variant?: IconButtonVariant;
@@ -40,10 +36,7 @@ const iconButtonAnimated = cn(
 const iconButtonVariants: Record<IconButtonVariant, string> = {
   default: "hover:bg-neutral-100 hover:text-neutral-900",
   /** Secondary rising fill, no resting border (drawer header controls). */
-  ghost: cn(
-    "hover:text-neutral-0",
-    "focus-visible:text-neutral-0",
-  ),
+  ghost: cn("hover:text-neutral-0", "focus-visible:text-neutral-0"),
   bordered: cn(
     "border-neutral-800",
     "hover:border-neutral-800 hover:text-neutral-0",
