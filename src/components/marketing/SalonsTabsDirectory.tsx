@@ -129,15 +129,13 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
             >
               {location.title}
             </h2>
-            <p className="mt-2 mb-0 font-body text-sm text-neutral-600">
-              {groupBy === "voivodeship"
-                ? location.voivLabel
-                : location.cityLabel}
-            </p>
           </div>
 
           <SalonLocationChips
             className="shrink-0"
+            mobileAs="chips"
+            stretchOnMobile
+            size="lg"
             ariaLabel={location.groupByAria}
             chips={[
               { id: "voivodeship", label: location.groupByVoiv },
@@ -156,6 +154,7 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
         <SalonLocationChips
           className="mt-6"
           role="tablist"
+          mobileAs="select"
           ariaLabel={location.title}
           chips={tabs.map((tab) => ({
             id: tab.id,

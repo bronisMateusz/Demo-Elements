@@ -207,12 +207,19 @@ export function SalonsDirectory() {
               type="button"
               variant="secondary"
               size="lg"
-              className="shrink-0 rounded-s-none"
+              className="shrink-0 rounded-s-none px-4 sm:px-10"
+              ariaLabel={
+                locateStatus === "loading" ? find.locatingLabel : find.geoLabel
+              }
               onClick={locateNearestSalon}
               disabled={locateStatus === "loading"}
             >
               <i className="ph ph-crosshair text-base" aria-hidden="true" />
-              {locateStatus === "loading" ? find.locatingLabel : find.geoLabel}
+              <span className="hidden sm:inline">
+                {locateStatus === "loading"
+                  ? find.locatingLabel
+                  : find.geoLabel}
+              </span>
             </Button>
           </div>
           {locateError ? (
@@ -278,40 +285,26 @@ export function SalonsDirectory() {
       ) : null}
 
       <Container size="content" className="mainview">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
           <h2
             id="salons-directory-title"
             className="m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
           >
             {directory.title}
           </h2>
-          <div
-            className="inline-flex rounded-xs border border-neutral-200 p-1 lg:hidden"
-            role="group"
-            aria-label="Widok salonów"
-          >
-            {(
-              [
-                ["list", directory.listLabel],
-                ["map", directory.mapLabel],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                aria-pressed={view === value}
-                className={cn(
-                  "rounded-xs px-4 py-2 font-body text-sm transition-colors duration-fast",
-                  view === value
-                    ? "bg-neutral-100 text-neutral-900"
-                    : "text-neutral-600 hover:text-neutral-900",
-                )}
-                onClick={() => setView(value)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <SalonLocationChips
+            className="lg:hidden"
+            mobileAs="chips"
+            stretchOnMobile
+            size="lg"
+            ariaLabel="Widok salonów"
+            chips={[
+              { id: "list", label: directory.listLabel },
+              { id: "map", label: directory.mapLabel },
+            ]}
+            activeId={view}
+            onSelect={(id) => setView(id as "list" | "map")}
+          />
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] xl:gap-10">
@@ -340,6 +333,7 @@ export function SalonsDirectory() {
           <div className={cn(view === "map" && "max-lg:hidden")}>
             <SalonLocationChips
               className="mb-5"
+              mobileAs="select"
               ariaLabel="Filtr województw"
               chips={[
                 {
