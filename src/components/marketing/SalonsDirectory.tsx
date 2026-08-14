@@ -19,21 +19,11 @@ import { PolandSalonsMap } from "../layout/PolandSalonsMap";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { inputClassName } from "../ui/inputClassName";
+import { SalonLocationChips } from "./SalonLocationChips";
 
 type LocateStatus = "idle" | "loading" | "ready" | "error";
 
-/** Filter chips: min 44px target (WCAG 2.5.5 / project chip pattern), text-sm for readable AA contrast. */
-const voivFilterChipClassName = cn(
-  "inline-flex min-h-11 items-center rounded-xs border px-3 py-2 font-body text-sm leading-none tracking-[0.04em]",
-  "transition-colors duration-fast ease-out",
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
-);
-
-function voivFilterChipToneClassName(active: boolean): string {
-  return active
-    ? "border-neutral-900 bg-neutral-900 text-neutral-0"
-    : "border-neutral-200 bg-neutral-0 text-neutral-700 hover:border-neutral-800";
-}
+const ALL_VOIV_CHIP_ID = "all";
 
 function cityLabelFor(salon: SalonOption): string {
   return (
@@ -348,40 +338,24 @@ export function SalonsDirectory() {
           </div>
 
           <div className={cn(view === "map" && "max-lg:hidden")}>
-            <div
-              className="mb-5 flex flex-wrap gap-2"
-              role="group"
-              aria-label="Filtr województw"
-            >
-              <button
-                type="button"
-                aria-pressed={focusedVoivId == null}
-                className={cn(
-                  voivFilterChipClassName,
-                  voivFilterChipToneClassName(focusedVoivId == null),
-                )}
-                onClick={() => setFocusedVoivId(null)}
-              >
-                {directory.allVoivLabel} · {allVoivCount}
-              </button>
-              {filteredVoivChips.map((group) => {
-                const active = focusedVoivId === group.id;
-                return (
-                  <button
-                    key={group.id}
-                    type="button"
-                    aria-pressed={active}
-                    className={cn(
-                      voivFilterChipClassName,
-                      voivFilterChipToneClassName(active),
-                    )}
-                    onClick={() => setFocusedVoivId(group.id)}
-                  >
-                    {titleCaseVoiv(group.name)} · {group.count}
-                  </button>
-                );
-              })}
-            </div>
+            <SalonLocationChips
+              className="mb-5"
+              ariaLabel="Filtr województw"
+              chips={[
+                {
+                  id: ALL_VOIV_CHIP_ID,
+                  label: `${directory.allVoivLabel} · ${allVoivCount}`,
+                },
+                ...filteredVoivChips.map((group) => ({
+                  id: group.id,
+                  label: `${titleCaseVoiv(group.name)} · ${group.count}`,
+                })),
+              ]}
+              activeId={focusedVoivId ?? ALL_VOIV_CHIP_ID}
+              onSelect={(id) =>
+                setFocusedVoivId(id === ALL_VOIV_CHIP_ID ? null : id)
+              }
+            />
 
             <div className="flex flex-col gap-8">
               {visibleGroups.map((group) => (
