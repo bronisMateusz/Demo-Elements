@@ -31,8 +31,8 @@ const voivFilterChipClassName = cn(
 
 function voivFilterChipToneClassName(active: boolean): string {
   return active
-    ? "border-gold-500 bg-gold-50 text-gold-700"
-    : "border-neutral-200 bg-neutral-0 text-neutral-700 hover:border-gold-500";
+    ? "border-neutral-900 bg-neutral-900 text-neutral-0"
+    : "border-neutral-200 bg-neutral-0 text-neutral-700 hover:border-neutral-800";
 }
 
 function cityLabelFor(salon: SalonOption): string {

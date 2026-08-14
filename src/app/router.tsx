@@ -12,6 +12,7 @@ import { NotFoundPage } from "../routes/NotFoundPage";
 import { ProductDetailPage } from "../routes/ProductDetailPage";
 import { SalonPage } from "../routes/SalonPage";
 import { SalonsPage } from "../routes/SalonsPage";
+import { SalonsPageB } from "../routes/SalonsPageB";
 import { SubcategoryPage } from "../routes/SubcategoryPage";
 
 function getRouterBasename() {
@@ -35,6 +36,7 @@ export const router = createBrowserRouter(
         { path: "/produkt", element: <ProductDetailPage /> },
         { path: "/salon", element: <SalonPage /> },
         { path: "/salony", element: <SalonsPage /> },
+        { path: "/salony-b", element: <SalonsPageB /> },
         { path: "/salony/:slug", element: <SalonPage /> },
         { path: "/kategoria", element: <CategoryPage /> },
         { path: "/podkategoria", element: <SubcategoryPage /> },
