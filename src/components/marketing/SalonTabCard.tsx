@@ -136,7 +136,10 @@ export function SalonTabCard({
                 <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-2.5 p-0 sm:grid-cols-2">
                   {group.phones.map((phone) => (
                     <li key={phone}>
-                      <a href={salonTelHref(phone)} className={phoneLinkClassName}>
+                      <a
+                        href={salonTelHref(phone)}
+                        className={phoneLinkClassName}
+                      >
                         <i
                           className="ph ph-phone text-base leading-none"
                           aria-hidden="true"

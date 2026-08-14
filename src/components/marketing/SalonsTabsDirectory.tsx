@@ -6,15 +6,13 @@ import {
   type SalonOption,
 } from "../../data/nav";
 import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
-import {
-  salonCityChipLabel,
-  salonsPageB,
-} from "../../data/salons";
+import { salonCityChipLabel, salonsPageB } from "../../data/salons";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { cn } from "../../lib/cn";
 import { EASE_LUXURY } from "../../lib/motionEase";
 import { Container } from "../ui/Container";
+import { SalonLocationChips } from "./SalonLocationChips";
 import { SalonTabCard } from "./SalonTabCard";
 
 type GroupBy = "voivodeship" | "city";
@@ -28,18 +26,6 @@ type TabChip = {
 
 const FADE_S = 0.22;
 
-const tabChipClassName = cn(
-  "inline-flex min-h-11 items-center rounded-xs border px-3 py-2 font-body text-sm leading-none tracking-[0.04em]",
-  "transition-colors duration-fast ease-out",
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
-);
-
-function tabChipToneClassName(active: boolean): string {
-  return active
-    ? "border-neutral-900 bg-neutral-900 text-neutral-0"
-    : "border-neutral-200 bg-neutral-0 text-neutral-700 hover:border-neutral-800";
-}
-
 function titleCaseVoiv(name: string): string {
   const plain = name.replace(/\u00AD/g, "");
   return plain
@@ -52,21 +38,26 @@ function titleCaseVoiv(name: string): string {
 
 function buildVoivTabs(): TabChip[] {
   const groups = groupSalonCitiesByVoivodeship(presenceSalonCities);
-  const byHref = new Map(salonOptions.map((salon) => [salon.href, salon.id]));
+  const byHref = new Map<string, string>(
+    salonOptions.map((salon) => [salon.href, salon.id]),
+  );
 
   return groups.map((group) => ({
     id: group.id,
     label: titleCaseVoiv(group.name),
     count: group.cities.length,
-    salonIds: group.cities
-      .map((city) => byHref.get(city.href))
-      .filter((id): id is string => Boolean(id)),
+    salonIds: group.cities.flatMap((city) => {
+      const id = byHref.get(city.href);
+      return id ? [id] : [];
+    }),
   }));
 }
 
 function buildCityTabs(): TabChip[] {
   const collator = new Intl.Collator("pl", { sensitivity: "base" });
-  const byHref = new Map(salonOptions.map((salon) => [salon.href, salon]));
+  const byHref = new Map<string, SalonOption>(
+    salonOptions.map((salon) => [salon.href, salon]),
+  );
   const byCity = new Map<string, SalonOption[]>();
 
   for (const city of presenceSalonCities) {
@@ -110,10 +101,13 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
   const activeTab = tabs.find((tab) => tab.id === resolvedTabId) ?? tabs[0];
   const visibleSalons = useMemo(() => {
     if (!activeTab) return [];
-    const byId = new Map(salonOptions.map((salon) => [salon.id, salon]));
-    return activeTab.salonIds
-      .map((id) => byId.get(id))
-      .filter((salon): salon is SalonOption => Boolean(salon));
+    const byId = new Map<string, SalonOption>(
+      salonOptions.map((salon) => [salon.id, salon]),
+    );
+    return activeTab.salonIds.flatMap((id) => {
+      const salon = byId.get(id);
+      return salon ? [salon] : [];
+    });
   }, [activeTab]);
 
   const resultsKey = activeTab
@@ -142,65 +136,34 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
             </p>
           </div>
 
-          <div
-            className="inline-flex shrink-0 rounded-xs border border-neutral-200 p-1"
-            role="group"
-            aria-label={location.groupByAria}
-          >
-            {(
-              [
-                ["voivodeship", location.groupByVoiv],
-                ["city", location.groupByCity],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                aria-pressed={groupBy === value}
-                className={cn(
-                  "rounded-xs px-3 py-2 font-body text-sm transition-colors duration-fast ease-out",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
-                  groupBy === value
-                    ? "bg-neutral-900 text-neutral-0"
-                    : "text-neutral-600 hover:text-neutral-900",
-                )}
-                onClick={() => {
-                  setGroupBy(value);
-                  const nextTabs =
-                    value === "voivodeship" ? voivTabs : cityTabs;
-                  setActiveTabId(nextTabs[0]?.id ?? "");
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <SalonLocationChips
+            className="shrink-0"
+            ariaLabel={location.groupByAria}
+            chips={[
+              { id: "voivodeship", label: location.groupByVoiv },
+              { id: "city", label: location.groupByCity },
+            ]}
+            activeId={groupBy}
+            onSelect={(id) => {
+              const value = id as GroupBy;
+              setGroupBy(value);
+              const nextTabs = value === "voivodeship" ? voivTabs : cityTabs;
+              setActiveTabId(nextTabs[0]?.id ?? "");
+            }}
+          />
         </div>
 
-        <div
-          className="mt-6 flex flex-wrap gap-2"
+        <SalonLocationChips
+          className="mt-6"
           role="tablist"
-          aria-label={location.title}
-        >
-          {tabs.map((tab) => {
-            const active = tab.id === activeTab?.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                className={cn(
-                  tabChipClassName,
-                  tabChipToneClassName(active),
-                )}
-                onClick={() => setActiveTabId(tab.id)}
-              >
-                {chipLabel(tab)}
-              </button>
-            );
-          })}
-        </div>
+          ariaLabel={location.title}
+          chips={tabs.map((tab) => ({
+            id: tab.id,
+            label: chipLabel(tab),
+          }))}
+          activeId={activeTab?.id ?? ""}
+          onSelect={setActiveTabId}
+        />
 
         <div className="relative mt-2 bg-neutral-0">
           <AnimatePresence mode="wait" initial={false}>
