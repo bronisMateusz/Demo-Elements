@@ -35,6 +35,11 @@ export const prototypeSections: PrototypeSection[] = [
         iconClass: "ph ph-map-trifold",
       },
       {
+        label: "Salony B (zakładki)",
+        to: "/salony-b",
+        iconClass: "ph ph-rows",
+      },
+      {
         label: "Kategoria",
         to: "/kategoria",
         iconClass: "ph ph-squares-four",
