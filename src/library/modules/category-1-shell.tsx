@@ -14,13 +14,13 @@ export const headerModule: LibraryModule = {
   slug: "header",
   title: "Header",
   description:
-    "Shell nagłówka: utility bar (desktop), logo, menu z mega-menu Produktów, selektor salonu (desktop) / HeaderSalonStrip (mobile), szukaj, schowek (mobile) i hamburger. Sticky z conceal/reveal utility przy scrollu. Hostuje też InspirationProductsDrawer.",
+    "Shell nagłówka: utility bar (desktop), logo, menu z mega-menu Produktów, selektor salonu w barze od sm (HeaderSalonStrip tylko na telefonie), szukaj, schowek (mobile) i hamburger. Sticky z conceal/reveal utility przy scrollu. Hostuje też InspirationProductsDrawer.",
   variants: [
     {
       id: "default",
       label: "Domyślny",
       description:
-        "Pełny chrome - utility, nav, salon, szukaj, schowek (mobile) i menu. Zwęż okno, by zobaczyć strip salonu pod barem.",
+        "Pełny chrome - utility, nav, salon, szukaj, schowek (mobile) i menu. Strip salonu pod barem tylko poniżej sm.",
       render: () => (
         <div
           className={libPreviewFullBleedWrapperClassName}

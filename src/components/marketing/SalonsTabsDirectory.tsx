@@ -9,7 +9,12 @@ import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
 import { salonCityChipLabel, salonsPageB } from "../../data/salons";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
+import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
 import { cn } from "../../lib/cn";
+import {
+  pxGutterClassName,
+  stickyUnderHeaderClassName,
+} from "../../lib/layoutTokens";
 import { EASE_LUXURY } from "../../lib/motionEase";
 import { Container } from "../ui/Container";
 import { SalonLocationChips } from "./SalonLocationChips";
@@ -20,11 +25,13 @@ type GroupBy = "voivodeship" | "city";
 type TabChip = {
   id: string;
   label: string;
-  count: number;
   salonIds: string[];
 };
 
 const FADE_S = 0.22;
+
+const directoryCardPadXClassName = "px-4 sm:px-6 md:px-8";
+const directoryCardPadXNegClassName = "-mx-4 sm:-mx-6 md:-mx-8";
 
 function titleCaseVoiv(name: string): string {
   const plain = name.replace(/\u00AD/g, "");
@@ -45,7 +52,6 @@ function buildVoivTabs(): TabChip[] {
   return groups.map((group) => ({
     id: group.id,
     label: titleCaseVoiv(group.name),
-    count: group.cities.length,
     salonIds: group.cities.flatMap((city) => {
       const id = byHref.get(city.href);
       return id ? [id] : [];
@@ -73,14 +79,9 @@ function buildCityTabs(): TabChip[] {
     .map(([label, salons]) => ({
       id: `city:${label}`,
       label,
-      count: salons.length,
       salonIds: salons.map((salon) => salon.id),
     }))
     .sort((a, b) => collator.compare(a.label, b.label));
-}
-
-function chipLabel(tab: TabChip): string {
-  return tab.count > 1 ? `${tab.label} · ${tab.count}` : tab.label;
 }
 
 export function SalonsTabsDirectory({ className }: { className?: string }) {
@@ -118,6 +119,8 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
     ? { duration: 0 }
     : { duration: FADE_S, ease: EASE_LUXURY };
 
+  const { stuck, sentinelRef } = useStickyUnderHeader();
+
   return (
     <Container size="content" className={cn("mainview", className)}>
       <div className="rounded-xs border border-neutral-200 bg-neutral-0 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10">
@@ -151,18 +154,31 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
           />
         </div>
 
-        <SalonLocationChips
-          className="mt-6"
-          role="tablist"
-          mobileAs="select"
-          ariaLabel={location.title}
-          chips={tabs.map((tab) => ({
-            id: tab.id,
-            label: chipLabel(tab),
-          }))}
-          activeId={activeTab?.id ?? ""}
-          onSelect={setActiveTabId}
-        />
+        <div ref={sentinelRef} className="mt-6 h-px" aria-hidden="true" />
+        <div
+          className={cn(
+            stickyUnderHeaderClassName,
+            "z-99 border-b border-transparent py-2",
+            stuck
+              ? "w-screen ms-[calc(50%-50vw)] border-neutral-200 bg-neutral-0/95 backdrop-blur-sm"
+              : directoryCardPadXNegClassName,
+          )}
+        >
+          <SalonLocationChips
+            role="tablist"
+            mobileAs="scroll"
+            scrollInsetClassName={
+              stuck ? pxGutterClassName : directoryCardPadXClassName
+            }
+            ariaLabel={location.title}
+            chips={tabs.map((tab) => ({
+              id: tab.id,
+              label: tab.label,
+            }))}
+            activeId={activeTab?.id ?? ""}
+            onSelect={setActiveTabId}
+          />
+        </div>
 
         <div className="relative mt-2 bg-neutral-0">
           <AnimatePresence mode="wait" initial={false}>

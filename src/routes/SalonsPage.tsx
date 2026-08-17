@@ -4,23 +4,7 @@ import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { PageIntro } from "../components/marketing/PageIntro";
 import { SalonsDirectory } from "../components/marketing/SalonsDirectory";
-import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
-
-function RevealSection({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const { ref, className: revealClassName } = useRevealOnScroll();
-  return (
-    <div ref={ref} className={cn(revealClassName, className)}>
-      {children}
-    </div>
-  );
-}
 
 export function SalonsPage() {
   return (
@@ -71,9 +55,10 @@ export function SalonsPage() {
           </ul>
         </PageIntro>
 
-        <RevealSection className="pb-[clamp(2.5rem,6vw,4rem)]">
+        {/* No translate here: transform on an ancestor breaks position:sticky. */}
+        <div className="pb-[clamp(2.5rem,6vw,4rem)]">
           <SalonsDirectory />
-        </RevealSection>
+        </div>
       </PageShell>
     </>
   );

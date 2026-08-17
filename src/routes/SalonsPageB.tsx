@@ -92,9 +92,10 @@ export function SalonsPageB() {
           </ul>
         </PageIntro>
 
-        <RevealSection className="pb-[clamp(2.5rem,6vw,4rem)]">
+        {/* No translate here: transform on an ancestor breaks position:sticky. */}
+        <div className="pb-[clamp(2.5rem,6vw,4rem)]">
           <SalonsTabsDirectory />
-        </RevealSection>
+        </div>
 
         <RevealSection className="pb-[clamp(2.5rem,6vw,4rem)]">
           <AdvisorCta

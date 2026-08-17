@@ -37,7 +37,7 @@ function HeaderSalonButton({
       aria-haspopup="dialog"
       aria-expanded={open}
       className={cn(
-        "group/salon hidden min-w-0 items-center gap-2.5 self-stretch rounded-xs px-3 text-start transition-colors duration-fast ease-out lg:flex",
+        "group/salon hidden min-w-0 items-center gap-2.5 self-stretch rounded-xs px-3 text-start transition-colors duration-fast ease-out sm:flex",
         "hover:bg-neutral-100",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
       )}
@@ -198,7 +198,7 @@ export function HeaderBar({
           </ul>
         </nav>
 
-        <div className="ms-auto flex h-full shrink-0 items-center gap-0.5 border-s border-neutral-200 ps-2 lg:ms-0 lg:gap-1 lg:ps-4">
+        <div className="ms-auto flex h-full min-w-0 items-center gap-0.5 border-s border-neutral-200 ps-2 lg:ms-0 lg:gap-1 lg:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton
             label="Szukaj"

@@ -68,7 +68,7 @@ export function SalonTabCard({
   return (
     <article
       className={cn(
-        "grid gap-6 border-b border-neutral-200 py-8 last:border-b-0 md:grid-cols-2 md:items-stretch md:gap-8 lg:gap-12",
+        "grid gap-0 border-b border-neutral-200 py-8 last:border-b-0 lg:grid-cols-2 lg:items-stretch lg:gap-12",
         className,
       )}
     >
@@ -83,7 +83,7 @@ export function SalonTabCard({
         </h3>
 
         <aside
-          className={cn(contactCardClassName, "mt-6")}
+          className={cn(contactCardClassName, "mt-6 max-lg:rounded-b-none")}
           aria-label={`Kontakt - ${salon.name}`}
         >
           <ContactCardBackdrop />
@@ -165,13 +165,14 @@ export function SalonTabCard({
               </a>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-3 border-t border-neutral-0/10 pt-5">
+            <div className="mt-5 flex w-full flex-col items-stretch gap-3 border-t border-neutral-0/10 pt-5 sm:flex-row sm:flex-wrap">
               <Button
                 as="button"
                 type="button"
                 variant="primary"
                 tone="onDark"
                 size="md"
+                className="w-full sm:w-auto"
                 onClick={onBook}
               >
                 {selected ? card.bookSelectedLabel : card.bookLabel}
@@ -182,6 +183,7 @@ export function SalonTabCard({
                 variant="secondary"
                 tone="onDark"
                 size="md"
+                className="w-full sm:w-auto"
               >
                 {card.salonPageLabel}
                 <i className="ph ph-arrow-right" aria-hidden="true" />
@@ -193,7 +195,7 @@ export function SalonTabCard({
 
       <Link
         to={salon.href}
-        className="relative block aspect-4/3 w-full overflow-hidden rounded-xs bg-neutral-100 md:aspect-auto md:min-h-full"
+        className="relative block aspect-4/3 w-full overflow-hidden rounded-xs bg-neutral-100 max-lg:rounded-t-none lg:aspect-auto lg:min-h-full"
         aria-label={`${card.imageAltPrefix} ${salon.name}`}
       >
         <img
