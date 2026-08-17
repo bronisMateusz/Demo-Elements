@@ -18,7 +18,7 @@ export const mainNavItems: NavItem[] = [
   { label: "Nowości", href: "#nowosci", iconClass: "ph ph-sparkle" },
   { label: "Outlet", href: "#outlet", iconClass: "ph ph-tag" },
   { label: "Bestsellery", href: "#bestsellery", iconClass: "ph ph-fire" },
-  { label: "Producenci", href: "#producenci", iconClass: "ph ph-buildings" },
+  { label: "Producenci", href: "/producenci", iconClass: "ph ph-buildings" },
 ];
 
 /** Mega-menu columns - layout inspired by OKA; links from eh-mega prototype. */
@@ -394,7 +394,7 @@ export type SalonOption = (typeof salonOptions)[number];
 
 export const favoritesNav = {
   label: "Schowek",
-  href: "#schowek",
+  href: "/schowek",
 } as const;
 
 export const utilityTagline = "Od pomysłu do gotowej łazienki";
@@ -448,7 +448,7 @@ export const footerColumns = [
       { label: "Nowości", href: "#nowosci" },
       { label: "Outlet", href: "#outlet" },
       { label: "Bestsellery", href: "#bestsellery" },
-      { label: "Producenci", href: "#producenci" },
+      { label: "Producenci", href: "/producenci" },
     ],
   },
   {

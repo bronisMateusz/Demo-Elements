@@ -1,28 +1,37 @@
 import { categoryPage, categoryRows } from "../../data/category";
 import { listingCuratedTiles, listingPage } from "../../data/listing";
+import {
+  featuredProducerBrands,
+  producerPage,
+  producerPageProducts,
+} from "../../data/producers";
 import { salonPage } from "../../data/salon";
 import { subcategoryPage, subcategoryTypes } from "../../data/subcategory";
 import { categorySeoBlocks } from "../../data/categorySeo";
+import { wishlistPage } from "../../data/wishlist";
 import { BlogArticleCarousel } from "../../components/marketing/BlogArticleCarousel";
+import { BrandHero } from "../../components/marketing/BrandHero";
+import { BrandSeriesGrid } from "../../components/marketing/BrandSeriesGrid";
 import { CategoryPromoBanner } from "../../components/marketing/CategoryPromoBanner";
 import { CategoryRows } from "../../components/marketing/CategoryRows";
-import { CtaBand } from "../../components/marketing/CtaBand";
-import { EditorialCarousel } from "../../components/marketing/EditorialCarousel";
 import { NewsCardGrid } from "../../components/marketing/NewsCardGrid";
 import { PageIntro } from "../../components/marketing/PageIntro";
+import { ProducersDirectory } from "../../components/marketing/ProducersDirectory";
 import { SeoExpandable } from "../../components/marketing/SeoExpandable";
 import { SubcategoryBento } from "../../components/marketing/SubcategoryBento";
+import { WishlistDirectory } from "../../components/marketing/WishlistDirectory";
 import { ListingCatalog } from "../../components/listing/ListingCatalog";
 import { ListingCuratedGrid } from "../../components/listing/ListingCuratedGrid";
+import { ProductCarouselCard } from "../../components/product/ProductCarouselCard";
 import { SalonHero } from "../../components/salon/SalonHero";
 import {
   SalonAbout,
   SalonExpo,
   SalonStats,
-  SalonUsps,
 } from "../../components/salon/SalonSections";
 import { Breadcrumbs } from "../../components/orientation/Breadcrumbs";
 import { Container } from "../../components/ui/Container";
+import { IconTile } from "../../components/ui/IconTile";
 import {
   libPreviewArticleClassName,
   libPreviewFullBleedWrapperClassName,
@@ -48,13 +57,11 @@ export const pageIntroModule: LibraryModule = {
       description: "Tytuł + lead jak na /kategoria.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
-          <Container size="content" className="py-4">
-            <Breadcrumbs
-              items={[...categoryPage.breadcrumbs]}
-              variant="top"
-              className="py-3 md:py-4"
-            />
-          </Container>
+          <Breadcrumbs
+            items={[...categoryPage.breadcrumbs]}
+            variant="top"
+            className="py-3 md:py-4"
+          />
           <PageIntro
             title={categoryPage.title}
             description={categoryPage.description}
@@ -155,6 +162,52 @@ export const categoryPromoBannerModule: LibraryModule = {
   ],
 };
 
+export const iconTileModule: LibraryModule = {
+  id: "5.14",
+  slug: "icon-tile",
+  title: "IconTile",
+  description:
+    "Kafelek z ikoną i etykietą. Opcjonalnie link (strzałka) i ctaLabel w rogu. Home kategorie i USP salonu.",
+  optionalProps: [
+    { name: "iconClass", type: "string", required: true },
+    { name: "label", type: "string", required: true },
+    { name: "text", type: "string" },
+    { name: "href", type: "string" },
+    {
+      name: "ctaLabel",
+      type: "string",
+      description: "CTA w rogu, gdy jest href.",
+    },
+  ],
+  variants: [
+    {
+      id: "salon-usps",
+      label: "Siatka USP",
+      description:
+        "Jak na /salon: trzy kafle statyczne i jeden z CTA „Więcej”.",
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <ul className="m-0 grid list-none grid-cols-2 gap-2 p-0 lg:grid-cols-4">
+            {salonPage.usps.items.map((item) => {
+              const cta = "cta" in item ? item.cta : undefined;
+              return (
+                <li key={item.title} className="min-h-0">
+                  <IconTile
+                    iconClass={item.iconClass}
+                    label={item.title}
+                    href={cta?.href}
+                    ctaLabel={cta?.label}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ),
+    },
+  ],
+};
+
 export const subcategoryBentoModule: LibraryModule = {
   id: "5.4",
   slug: "subcategory-bento",
@@ -182,7 +235,7 @@ export const editorialCarouselModule: LibraryModule = {
   slug: "editorial-carousel",
   title: "EditorialCarousel",
   description:
-    "Bleed karuzela editorial (aktualności / blog). Opcjonalna data i CTA „zobacz wszystkie”. NewsCardGrid i BlogArticleCarousel to cienkie aliasy.",
+    "Bleed karuzela editorial (aktualności / blog). NewsCardGrid i BlogArticleCarousel to cienkie aliasy - tu tylko dwa wyglądy: z datą i z CTA listingu.",
   variants: [
     {
       id: "news",
@@ -214,26 +267,6 @@ export const editorialCarouselModule: LibraryModule = {
         </div>
       ),
     },
-    {
-      id: "direct",
-      label: "EditorialCarousel",
-      description: "Bezpośrednie API z see-all.",
-      render: () => (
-        <div className={libPreviewFullBleedWrapperClassName}>
-          <EditorialCarousel
-            title={subcategoryPage.blog.title}
-            titleId="lib-editorial-title"
-            items={[...subcategoryPage.blog.articles]}
-            seeAll={{
-              label: subcategoryPage.blog.seeAllLabel,
-              href: subcategoryPage.blog.seeAllHref,
-            }}
-            a11yPrevLabel="Poprzednie artykuły"
-            a11yNextLabel="Następne artykuły"
-          />
-        </div>
-      ),
-    },
   ],
 };
 
@@ -251,31 +284,6 @@ export const seoExpandableModule: LibraryModule = {
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <SeoExpandable blocks={[...categorySeoBlocks]} />
-        </div>
-      ),
-    },
-  ],
-};
-
-export const ctaBandModule: LibraryModule = {
-  id: "5.7",
-  slug: "cta-band",
-  title: "CtaBand",
-  description:
-    "Prosty band CTA (tytuł, opis, primary/secondary) na warm tone - np. dopytanie o doradcę.",
-  variants: [
-    {
-      id: "default",
-      label: "Domyślny",
-      description: "Przykładowy band z dwoma akcjami.",
-      render: () => (
-        <div className={libPreviewFullBleedWrapperClassName}>
-          <CtaBand
-            title="Potrzebujesz pomocy doradcy?"
-            description="Umów wizytę w salonie albo wyślij pytanie - odpowiemy w 1 dzień roboczy."
-            primary={{ kind: "link", label: "Umów spotkanie", href: "/salony" }}
-            secondary={{ kind: "link", label: "Zadaj pytanie", href: "#" }}
-          />
         </div>
       ),
     },
@@ -307,18 +315,8 @@ export const salonSectionsModule: LibraryModule = {
   slug: "salon-sections",
   title: "SalonSections",
   description:
-    "Sekcje strony salonu (USP = IconTile, about, stats, expo). Aktualności = EditorialCarousel; magazyn = HomeMagazine; wizyta = AdvisorCta.",
+    "Sekcje strony salonu (about, stats, expo). USP = IconTile; aktualności = EditorialCarousel; magazyn = HomeMagazine; wizyta = AdvisorCta.",
   variants: [
-    {
-      id: "usps",
-      label: "USP",
-      description: "Kafelki korzyści + CTA tile (IconTile).",
-      render: () => (
-        <div className={libPreviewFullBleedWrapperClassName}>
-          <SalonUsps />
-        </div>
-      ),
-    },
     {
       id: "about",
       label: "O salonie",
@@ -388,15 +386,113 @@ export const listingPlpModule: LibraryModule = {
   ],
 };
 
+export const producersDirectoryModule: LibraryModule = {
+  id: "5.11",
+  slug: "producers-directory",
+  title: "ProducersDirectory",
+  description:
+    "Katalog producentów: intro + polecane, sticky indeks A-Z ze śledzeniem litery, grupy literowe i promo po D. Pełna strona: /producenci.",
+  variants: [
+    {
+      id: "full",
+      label: "Pełny katalog",
+      description: "Featured + A-Z + siatka marek.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <div className="py-8">
+            <ProducersDirectory featured={featuredProducerBrands.slice(0, 6)} />
+          </div>
+        </div>
+      ),
+    },
+  ],
+};
+
+export const brandPageModule: LibraryModule = {
+  id: "5.12",
+  slug: "brand-page",
+  title: "Strona producenta",
+  description:
+    "BrandHero + serie + produkty marki (demo Vigour). Pełna strona: /producent.",
+  variants: [
+    {
+      id: "hero",
+      label: "BrandHero",
+      description: "Logo, lead, CTA i media.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <BrandHero
+            title={producerPage.hero.title}
+            lead={producerPage.hero.lead}
+            askLabel={producerPage.hero.askLabel}
+            onAsk={() => undefined}
+            productsLabel={producerPage.hero.productsLabel}
+            productsHref={producerPage.hero.productsHref}
+            image={producerPage.hero.image}
+            logoSrc={producerPage.hero.logoSrc}
+          />
+        </div>
+      ),
+    },
+    {
+      id: "series-products",
+      label: "Serie + produkty",
+      description: "BrandSeriesGrid i siatka ProductCarouselCard.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <BrandSeriesGrid
+            title={producerPage.about.title}
+            series={producerPage.series}
+          />
+          <Container size="content" className="pb-10">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              {producerPageProducts.slice(0, 4).map((product) => (
+                <ProductCarouselCard key={product.id} product={product} />
+              ))}
+            </div>
+          </Container>
+        </div>
+      ),
+    },
+  ],
+};
+
+export const wishlistModule: LibraryModule = {
+  id: "5.13",
+  slug: "wishlist",
+  title: "Schowek",
+  description:
+    "Lead-gen wishlist: produkty/aranżacje, empty state i panel kosztorysu. Pełna strona: /schowek.",
+  variants: [
+    {
+      id: "live",
+      label: "Live (localStorage)",
+      description:
+        "Stan z ulubionych produktów w przeglądarce - dodaj SKU z listingu lub PDP.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <div className="py-8">
+            <PageIntro title={wishlistPage.title} />
+            <WishlistDirectory className="mt-4" />
+          </div>
+        </div>
+      ),
+    },
+  ],
+};
+
 export const category5Modules: LibraryModule[] = [
   pageIntroModule,
   categoryRowsModule,
   categoryPromoBannerModule,
+  iconTileModule,
   subcategoryBentoModule,
   editorialCarouselModule,
   seoExpandableModule,
-  ctaBandModule,
   salonHeroModule,
   salonSectionsModule,
   listingPlpModule,
+  producersDirectoryModule,
+  brandPageModule,
+  wishlistModule,
 ];

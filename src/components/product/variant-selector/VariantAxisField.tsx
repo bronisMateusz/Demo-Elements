@@ -1,6 +1,5 @@
 import type { ProductVariantAxis } from "../../../types/product";
 import { VariantChipGroup } from "./VariantChipGroup";
-import { VariantSwatchGroup } from "./VariantSwatchGroup";
 import { VariantThumbnailGroup } from "./VariantThumbnailGroup";
 
 type VariantAxisFieldProps = {
@@ -37,7 +36,6 @@ export function VariantAxisField({
       {axis.type === "thumbnail" ? (
         <VariantThumbnailGroup {...groupProps} />
       ) : null}
-      {axis.type === "swatch" ? <VariantSwatchGroup {...groupProps} /> : null}
 
       {selectedOption?.unavailableNote ? (
         <p className="mt-2 text-sm text-neutral-500">

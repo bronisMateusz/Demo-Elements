@@ -5,7 +5,11 @@ import {
   libCategoryIntroLedeClassName,
   libCategoryIntroTitleClassName,
 } from "../library/libStyles";
-import { getCategoryBySlug, getDefaultCategorySlug } from "../library/registry";
+import {
+  getCategoryBySlug,
+  getDefaultCategorySlug,
+  resolveCategorySlug,
+} from "../library/registry";
 
 export function LibraryIndexPage() {
   return <Navigate to={`/biblioteka/${getDefaultCategorySlug()}`} replace />;
@@ -13,7 +17,15 @@ export function LibraryIndexPage() {
 
 export function LibraryCategoryPage() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
-  const category = categorySlug ? getCategoryBySlug(categorySlug) : undefined;
+  const canonicalSlug = categorySlug
+    ? resolveCategorySlug(categorySlug)
+    : undefined;
+
+  if (categorySlug && canonicalSlug && categorySlug !== canonicalSlug) {
+    return <Navigate to={`/biblioteka/${canonicalSlug}`} replace />;
+  }
+
+  const category = canonicalSlug ? getCategoryBySlug(canonicalSlug) : undefined;
 
   if (!category) {
     return <Navigate to={`/biblioteka/${getDefaultCategorySlug()}`} replace />;

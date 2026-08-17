@@ -8,7 +8,7 @@ type HeaderSalonStripProps = {
   className?: string;
 };
 
-/** Mobile-only strip under the main bar - same copy/icon as desktop salon control. */
+/** Phone-only strip under the main bar - from sm the salon control sits in HeaderBar. */
 export function HeaderSalonStrip({
   onClick,
   open = false,
@@ -21,7 +21,7 @@ export function HeaderSalonStrip({
   return (
     <div
       className={cn(
-        "border-t border-neutral-200 bg-neutral-0 lg:hidden",
+        "border-t border-neutral-200 bg-neutral-0 sm:hidden",
         className,
       )}
     >

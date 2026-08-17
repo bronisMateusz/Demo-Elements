@@ -391,7 +391,7 @@ export const homeProductsSection = {
 export const homeBrands = {
   title: "Renomowane marki w naszej ofercie",
   seeAllLabel: "Zobacz wszystkie 300+ marek",
-  seeAllHref: "#producenci",
+  seeAllHref: "/producenci",
   /** Visible grid slots; pool below is larger so cells can rotate. */
   slotCount: 8,
   cycleIntervalMs: 7000,

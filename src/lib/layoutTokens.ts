@@ -16,9 +16,14 @@ export const HEADER_H_MOBILE_PX = 120;
 export const HEADER_UTILITY_PX = 44;
 export const HEADER_H_DESKTOP_PX = 116;
 export const LG_MIN_WIDTH_PX = 1024; // 64rem
+/** Keep in sync with Header conceal: utility stays visible near the top. */
+export const HEADER_UTILITY_CONCEAL_TOP_PX = 64;
+export const HEADER_UTILITY_CONCEAL_DELTA_PX = 6;
 
 /** Static class fragments - full literals so Tailwind can detect them. */
 export const pxGutterClassName = "px-[clamp(1.25rem,2.222vw,2.5rem)]";
+export const maxLgPxGutterClassName =
+  "max-lg:px-[clamp(1.25rem,2.222vw,2.5rem)]";
 export const pGutterClassName = "p-[clamp(1.25rem,2.222vw,2.5rem)]";
 export const mxNegGutterClassName = "-mx-[clamp(1.25rem,2.222vw,2.5rem)]";
 export const insetSGutterClassName = "inset-s-[clamp(1.25rem,2.222vw,2.5rem)]";
@@ -41,11 +46,13 @@ export const maxWContentClassName = "max-w-384";
 export const maxWWideClassName = "max-w-448";
 
 /**
- * Stick just under the full site header; when the utility strip conceals,
- * drop to bar height (`readHeaderOffsetPx`). Full literals for Tailwind.
+ * Stick just under the full site header. Mobile uses the live bar height
+ * (`--site-header-bar-height`, includes HeaderSalonStrip) so a 1px slit
+ * does not open under the chrome. lg+ is the utility + bar stack; when the
+ * utility strip conceals, drop to bar height. Full literals for Tailwind.
  */
 export const stickyUnderHeaderClassName =
-  "sticky top-29 transition-[top] duration-base ease-luxury header-concealed:top-18";
+  "sticky top-[calc(var(--site-header-bar-height,7.25rem)-1px)] transition-[top] duration-base ease-luxury lg:top-29 header-concealed:top-18";
 
 /**
  * Listing sidebar shell: stick under header with capped height.
@@ -78,18 +85,44 @@ export function readHeaderHeightPx(): number {
   return utilH + barOnly;
 }
 
-export function readHeaderOffsetPx(): number {
-  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
+export function readHeaderBarPx(): number {
   const bar = document.getElementById("siteHeaderBar");
   const barH = bar?.offsetHeight ?? 0;
-
+  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
   if (!isLg) {
     return barH > 0 ? barH : HEADER_H_MOBILE_PX;
   }
+  return barH > 0 ? barH : HEADER_BAR_PX;
+}
 
-  // Utility strip hidden - only the main menu bar remains.
-  if (document.documentElement.classList.contains("site-header-concealed")) {
-    return barH > 0 ? barH : HEADER_BAR_PX;
+export function readHeaderOffsetPx(): number {
+  return readHeaderOffsetForConcealStatePx(
+    document.documentElement.classList.contains("site-header-concealed"),
+  );
+}
+
+/** Header stack height for a known utility-strip state (lg+). */
+export function readHeaderOffsetForConcealStatePx(concealed: boolean): number {
+  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
+  if (!isLg || !concealed) {
+    return isLg ? readHeaderHeightPx() : readHeaderBarPx();
   }
-  return readHeaderHeightPx();
+  return readHeaderBarPx();
+}
+
+/**
+ * Utility strip follows scroll direction. Destination chrome can differ from
+ * the chrome at click time - predict it so scroll-to-section does not clip.
+ */
+export function predictHeaderUtilityConcealed(
+  fromY: number,
+  toY: number,
+): boolean {
+  if (!window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches) {
+    return false;
+  }
+  if (toY <= HEADER_UTILITY_CONCEAL_TOP_PX) return false;
+  if (toY > fromY + HEADER_UTILITY_CONCEAL_DELTA_PX) return true;
+  if (toY < fromY - HEADER_UTILITY_CONCEAL_DELTA_PX) return false;
+  return document.documentElement.classList.contains("site-header-concealed");
 }

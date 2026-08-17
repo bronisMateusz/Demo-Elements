@@ -7,10 +7,30 @@ import { Button } from "../ui/Button";
 import { Eyebrow } from "../ui/Eyebrow";
 import { TextRevealLead } from "../motion/TextRevealLead";
 
-export function HomeMagazine() {
+type HomeMagazineContent = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: {
+    src: string;
+    alt: string;
+    fit?: "cover" | "contain";
+  };
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+};
+
+type HomeMagazineProps = {
+  content?: HomeMagazineContent;
+};
+
+export function HomeMagazine({
+  content = homeMagazine,
+}: HomeMagazineProps = {}) {
   const { targetRef, sideInset } = useScrollExpandInset<HTMLElement>();
   const { id, eyebrow, title, description, image, primaryCta, secondaryCta } =
-    homeMagazine;
+    content;
 
   return (
     <section

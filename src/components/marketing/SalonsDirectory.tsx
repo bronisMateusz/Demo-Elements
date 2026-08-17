@@ -7,14 +7,15 @@ import {
   type SalonOption,
 } from "../../data/nav";
 import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
-import {
-  salonCountLabel,
-  salonDirectoryImageFor,
-  salonsPage,
-} from "../../data/salons";
+import { salonDirectoryImageFor, salonsPage } from "../../data/salons";
 import { distanceKm, formatDistanceKm } from "../../lib/geo";
 import { cn } from "../../lib/cn";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
+import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
+import {
+  maxLgPxGutterClassName,
+  stickyUnderHeaderClassName,
+} from "../../lib/layoutTokens";
 import { PolandSalonsMap } from "../layout/PolandSalonsMap";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
@@ -22,8 +23,6 @@ import { inputClassName } from "../ui/inputClassName";
 import { SalonLocationChips } from "./SalonLocationChips";
 
 type LocateStatus = "idle" | "loading" | "ready" | "error";
-
-const ALL_VOIV_CHIP_ID = "all";
 
 function cityLabelFor(salon: SalonOption): string {
   return (
@@ -57,12 +56,14 @@ export function SalonsDirectory() {
   const [locateStatus, setLocateStatus] = useState<LocateStatus>("idle");
   const [locateError, setLocateError] = useState<string | null>(null);
   const [view, setView] = useState<"list" | "map">("list");
-  const [focusedVoivId, setFocusedVoivId] = useState<string | null>(null);
-
   const voivGroups = useMemo(
     () => groupSalonCitiesByVoivodeship(presenceSalonCities),
     [],
   );
+  const [focusedVoivId, setFocusedVoivId] = useState<string | null>(
+    () => voivGroups[0]?.id ?? null,
+  );
+  const { stuck, sentinelRef } = useStickyUnderHeader();
 
   const salonByHref = useMemo(() => {
     return new Map<string, SalonOption>(
@@ -138,11 +139,6 @@ export function SalonsDirectory() {
       }))
       .filter((group) => group.count > 0);
   }, [queryMatchedHrefs, voivGroups]);
-
-  const allVoivCount = useMemo(
-    () => filteredVoivChips.reduce((sum, group) => sum + group.count, 0),
-    [filteredVoivChips],
-  );
 
   const locateNearestSalon = () => {
     if (!navigator.geolocation) {
@@ -307,6 +303,27 @@ export function SalonsDirectory() {
           />
         </div>
 
+        <div ref={sentinelRef} className="mt-6 h-px" aria-hidden="true" />
+        <div
+          className={cn(
+            stickyUnderHeaderClassName,
+            "z-99 border-b border-transparent max-lg:w-screen max-lg:ms-[calc(50%-50vw)]",
+            stuck && "border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
+          )}
+        >
+          <SalonLocationChips
+            mobileAs="scroll"
+            scrollInsetClassName={maxLgPxGutterClassName}
+            ariaLabel="Filtr województw"
+            chips={filteredVoivChips.map((group) => ({
+              id: group.id,
+              label: titleCaseVoiv(group.name),
+            }))}
+            activeId={focusedVoivId ?? ""}
+            onSelect={setFocusedVoivId}
+          />
+        </div>
+
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] xl:gap-10">
           {/* Stretch with the list so sticky has a tall containing block.
               Center with `top` only - translate would offset the map in normal flow too. */}
@@ -331,40 +348,10 @@ export function SalonsDirectory() {
           </div>
 
           <div className={cn(view === "map" && "max-lg:hidden")}>
-            <SalonLocationChips
-              className="mb-5"
-              mobileAs="select"
-              ariaLabel="Filtr województw"
-              chips={[
-                {
-                  id: ALL_VOIV_CHIP_ID,
-                  label: `${directory.allVoivLabel} · ${allVoivCount}`,
-                },
-                ...filteredVoivChips.map((group) => ({
-                  id: group.id,
-                  label: `${titleCaseVoiv(group.name)} · ${group.count}`,
-                })),
-              ]}
-              activeId={focusedVoivId ?? ALL_VOIV_CHIP_ID}
-              onSelect={(id) =>
-                setFocusedVoivId(id === ALL_VOIV_CHIP_ID ? null : id)
-              }
-            />
-
             <div className="flex flex-col gap-8">
               {visibleGroups.map((group) => (
-                <section
-                  key={group.id}
-                  aria-labelledby={`voiv-heading-${group.id}`}
-                >
-                  <h3
-                    id={`voiv-heading-${group.id}`}
-                    className="m-0 font-heading text-lg font-medium text-neutral-900"
-                  >
-                    {titleCaseVoiv(group.name)} ·{" "}
-                    {salonCountLabel(group.cities.length)}
-                  </h3>
-                  <ul className="mt-4 m-0 flex list-none flex-col gap-4 p-0">
+                <section key={group.id} aria-label={titleCaseVoiv(group.name)}>
+                  <ul className="m-0 flex list-none flex-col gap-4 p-0">
                     {group.cities.map((city) => {
                       const salon = salonByHref.get(city.href);
                       if (!salon) return null;
@@ -386,75 +373,72 @@ export function SalonsDirectory() {
                               decoding="async"
                             />
                           </div>
-                          <div className="flex min-w-0 flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
-                            <div className="min-w-0">
-                              <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
-                                {cityLabelFor(salon)}
-                              </p>
-                              <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
-                                {salon.address}
-                              </p>
+                          <div className="min-w-0">
+                            <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
+                              {cityLabelFor(salon)}
+                            </p>
+                            <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
+                              {salon.address}
+                            </p>
 
-                              <dl className="mt-3 mb-0 grid gap-2 text-sm">
-                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                                  <dt className="font-medium text-neutral-800">
-                                    {drawerCopy.phoneLabel}
-                                  </dt>
-                                  <dd className="m-0">
-                                    <a
-                                      href={telHref}
-                                      className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-gold-600 hover:decoration-gold-500"
-                                    >
-                                      {phone}
-                                    </a>
-                                  </dd>
-                                </div>
-                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                                  <dt className="font-medium text-neutral-800">
-                                    {drawerCopy.hoursLabel}
-                                  </dt>
-                                  <dd className="m-0 text-neutral-700">
-                                    {hours.map((line) => (
-                                      <span key={line} className="block">
-                                        {line}
-                                      </span>
-                                    ))}
-                                  </dd>
-                                </div>
-                              </dl>
-                            </div>
+                            <dl className="mt-3 mb-0 grid gap-2 text-sm">
+                              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                                <dt className="font-medium text-neutral-800">
+                                  {drawerCopy.phoneLabel}
+                                </dt>
+                                <dd className="m-0">
+                                  <a
+                                    href={telHref}
+                                    className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-gold-600 hover:decoration-gold-500"
+                                  >
+                                    {phone}
+                                  </a>
+                                </dd>
+                              </div>
+                              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                                <dt className="font-medium text-neutral-800">
+                                  {drawerCopy.hoursLabel}
+                                </dt>
+                                <dd className="m-0 text-neutral-700">
+                                  {hours.map((line) => (
+                                    <span key={line} className="block">
+                                      {line}
+                                    </span>
+                                  ))}
+                                </dd>
+                              </div>
+                            </dl>
+                          </div>
 
-                            <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:flex-wrap md:flex-col md:items-stretch">
-                              <Button
-                                href={salon.href}
-                                variant="primary"
-                                size="md"
-                                className="w-full sm:w-auto md:w-full"
-                              >
-                                {drawerCopy.contactLabel}
-                                <i
-                                  className="ph ph-arrow-right"
-                                  aria-hidden="true"
-                                />
-                              </Button>
-                              <Button
-                                as="button"
-                                type="button"
-                                variant="secondary"
-                                size="md"
-                                className={cn(
-                                  "w-full sm:w-auto md:w-full",
-                                  isSelected &&
-                                    "pointer-events-none opacity-70",
-                                )}
-                                onClick={() => select(salon.id)}
-                                disabled={isSelected}
-                              >
-                                {isSelected
-                                  ? drawerCopy.selectedLabel
-                                  : drawerCopy.selectLabel}
-                              </Button>
-                            </div>
+                          <div className="flex gap-2 sm:col-span-2">
+                            <Button
+                              href={salon.href}
+                              variant="primary"
+                              size="md"
+                              className="min-w-0 flex-1"
+                            >
+                              {drawerCopy.contactLabel}
+                              <i
+                                className="ph ph-arrow-right"
+                                aria-hidden="true"
+                              />
+                            </Button>
+                            <Button
+                              as="button"
+                              type="button"
+                              variant="secondary"
+                              size="md"
+                              className={cn(
+                                "min-w-0 flex-1",
+                                isSelected && "pointer-events-none opacity-70",
+                              )}
+                              onClick={() => select(salon.id)}
+                              disabled={isSelected}
+                            >
+                              {isSelected
+                                ? drawerCopy.selectedLabel
+                                : drawerCopy.selectLabel}
+                            </Button>
                           </div>
                         </li>
                       );

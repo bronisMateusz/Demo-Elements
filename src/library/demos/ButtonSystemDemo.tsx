@@ -201,7 +201,6 @@ export function ButtonIconsDemo() {
     "default",
     "hover",
     "focus",
-    "active",
     "disabled",
   ];
 

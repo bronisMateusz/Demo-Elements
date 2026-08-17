@@ -6,7 +6,11 @@ import {
   useState,
 } from "react";
 import { cn } from "../../lib/cn";
-import { LG_MIN_WIDTH_PX } from "../../lib/layoutTokens";
+import {
+  HEADER_UTILITY_CONCEAL_DELTA_PX,
+  HEADER_UTILITY_CONCEAL_TOP_PX,
+  LG_MIN_WIDTH_PX,
+} from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
 import { useInspirationProductsDrawerRequest } from "../../hooks/useInspirationProductsDrawer";
 import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
@@ -17,9 +21,6 @@ import { HeaderSalonStrip } from "./header/HeaderSalonStrip";
 import { HeaderUtility } from "./header/HeaderUtility";
 import { MobileDrawer } from "./MobileDrawer";
 import { SalonDrawer } from "./SalonDrawer";
-
-const TOP_ALWAYS_VISIBLE_PX = 64;
-const DIRECTION_DELTA_PX = 6;
 
 function syncSiteHeaderBarHeightVar() {
   const bar = document.getElementById("siteHeaderBar");
@@ -98,11 +99,11 @@ export function Header() {
         return;
       }
 
-      if (y <= TOP_ALWAYS_VISIBLE_PX) {
+      if (y <= HEADER_UTILITY_CONCEAL_TOP_PX) {
         setUtilityConcealed(false);
-      } else if (y > lastScrollY.current + DIRECTION_DELTA_PX) {
+      } else if (y > lastScrollY.current + HEADER_UTILITY_CONCEAL_DELTA_PX) {
         setUtilityConcealed(true);
-      } else if (y < lastScrollY.current - DIRECTION_DELTA_PX) {
+      } else if (y < lastScrollY.current - HEADER_UTILITY_CONCEAL_DELTA_PX) {
         setUtilityConcealed(false);
       }
 

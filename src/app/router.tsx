@@ -6,9 +6,12 @@ import {
   LibraryIndexPage,
 } from "../routes/LibraryCategoryPage";
 import { CategoryPage } from "../routes/CategoryPage";
+import { FavoritesPage } from "../routes/FavoritesPage";
 import { HomePage } from "../routes/HomePage";
 import { ListingPage } from "../routes/ListingPage";
 import { NotFoundPage } from "../routes/NotFoundPage";
+import { ProducerPage } from "../routes/ProducerPage";
+import { ProducersPage } from "../routes/ProducersPage";
 import { ProductDetailPage } from "../routes/ProductDetailPage";
 import { SalonPage } from "../routes/SalonPage";
 import { SalonsPage } from "../routes/SalonsPage";
@@ -38,6 +41,9 @@ export const router = createBrowserRouter(
         { path: "/salony", element: <SalonsPage /> },
         { path: "/salony-b", element: <SalonsPageB /> },
         { path: "/salony/:slug", element: <SalonPage /> },
+        { path: "/producenci", element: <ProducersPage /> },
+        { path: "/producent", element: <ProducerPage /> },
+        { path: "/schowek", element: <FavoritesPage /> },
         { path: "/kategoria", element: <CategoryPage /> },
         { path: "/podkategoria", element: <SubcategoryPage /> },
         { path: "/listing", element: <ListingPage /> },
