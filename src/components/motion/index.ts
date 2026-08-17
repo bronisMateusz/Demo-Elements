@@ -20,3 +20,4 @@ export type {
   MorphPopoverTriggerProps,
   MorphPopoverContentProps,
 } from "./MorphPopover";
+export { CenterMorphModal } from "./CenterMorphModal";

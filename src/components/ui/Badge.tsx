@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import {
   badgeClassName,
@@ -27,19 +28,26 @@ export function Badge({
   const classes = badgeClassName({ variant, size, className });
 
   if (href) {
+    const isInternalPath = href.startsWith("/") && !href.startsWith("//");
+    const linkClassName = cn(
+      classes,
+      "cursor-pointer no-underline",
+      "transition-[filter,opacity] duration-fast ease-out",
+      "hover:brightness-90 hover:opacity-90",
+      "active:brightness-85",
+      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+    );
+
+    if (isInternalPath) {
+      return (
+        <Link to={href} aria-label={ariaLabel} className={linkClassName}>
+          {children}
+        </Link>
+      );
+    }
+
     return (
-      <a
-        href={href}
-        aria-label={ariaLabel}
-        className={cn(
-          classes,
-          "cursor-pointer no-underline",
-          "transition-[filter,opacity] duration-fast ease-out",
-          "hover:brightness-90 hover:opacity-90",
-          "active:brightness-85",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-        )}
-      >
+      <a href={href} aria-label={ariaLabel} className={linkClassName}>
         {children}
       </a>
     );

@@ -19,6 +19,7 @@ import {
 import { PolandSalonsMap } from "../layout/PolandSalonsMap";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
+import { EmptyState } from "../ui/EmptyState";
 import { inputClassName } from "../ui/inputClassName";
 import { SalonLocationChips } from "./SalonLocationChips";
 
@@ -381,31 +382,19 @@ export function SalonsDirectory() {
 
           <div className={cn(view === "map" && "max-lg:hidden")}>
             {showEmptyResults ? (
-              <div
-                className="flex min-h-80 flex-col items-center justify-center rounded-xs border border-dashed border-neutral-300 px-6 py-14 text-center"
-                role="status"
-              >
-                <i
-                  className="ph ph-map-pin text-4xl text-neutral-400"
-                  aria-hidden="true"
-                />
-                <p className="mt-4 mb-0 font-heading text-h3 font-medium tracking-tight text-neutral-900">
-                  {directory.emptyTitle}
-                </p>
-                <p className="mt-3 mb-0 max-w-md font-body text-sm leading-relaxed text-neutral-600">
-                  {directory.emptyDescription}
-                </p>
-                <Button
-                  as="button"
-                  type="button"
-                  variant="primary"
-                  size="md"
-                  className="mt-8"
-                  onClick={() => setQuery("")}
-                >
-                  {directory.clearSearchLabel}
-                </Button>
-              </div>
+              <EmptyState
+                layout="panel"
+                iconClass="ph ph-map-pin"
+                title={directory.emptyTitle}
+                description={directory.emptyDescription}
+                className="min-h-80"
+                actions={[
+                  {
+                    label: directory.clearSearchLabel,
+                    onClick: () => setQuery(""),
+                  },
+                ]}
+              />
             ) : (
               <div className="flex flex-col gap-8">
                 {visibleGroups.map((group) => (

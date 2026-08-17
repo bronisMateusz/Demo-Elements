@@ -44,9 +44,7 @@ export function ProductBadges({
   );
   const displayBadges =
     isPromoPrice(price) && !hasPromoBadge ? [PROMO_BADGE, ...badges] : badges;
-  const href =
-    brandHref ??
-    (brand ? `#marka-${brand.toLowerCase().replace(/\s+/g, "-")}` : undefined);
+  const href = brandHref ?? (brand ? "/producent" : undefined);
 
   return (
     <div

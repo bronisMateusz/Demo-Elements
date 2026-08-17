@@ -4,6 +4,7 @@ import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { IconButton } from "../ui/IconButton";
+import { ArrangementFavoriteButton } from "./ArrangementFavoriteButton";
 import {
   inspirationGalleryCardClassName,
   inspirationGalleryCardMediaClassName,
@@ -23,6 +24,8 @@ type InspirationGalleryCardProps = {
   imageHidden?: boolean;
   onLightboxOpen?: () => void;
   onProductsOpen?: () => void;
+  /** When set, shows a bookmark control on the media. */
+  favoriteId?: string;
   className?: string;
 };
 
@@ -45,8 +48,8 @@ function CardMediaImage({
   const hoverScale =
     zoomHoverGroup === "card"
       ? cn(
-          "group-hover/card:scale-[1.05] group-focus-visible/card:scale-[1.05]",
-          "motion-reduce:group-hover/card:scale-100 motion-reduce:group-focus-visible/card:scale-100",
+          "group-hover/card:scale-[1.05] group-focus-within/card:scale-[1.05]",
+          "motion-reduce:group-hover/card:scale-100 motion-reduce:group-focus-within/card:scale-100",
         )
       : cn(
           "group-hover/insp:scale-[1.05] group-focus-visible/insp:scale-[1.05]",
@@ -93,11 +96,19 @@ export function InspirationGalleryCard({
   imageHidden = false,
   onLightboxOpen,
   onProductsOpen,
+  favoriteId,
   className,
 }: InspirationGalleryCardProps) {
   const alt = image.alt || title;
   const isLink = action === "link" && Boolean(href);
   const isProducts = action === "products";
+
+  const favoriteButton = favoriteId ? (
+    <ArrangementFavoriteButton
+      id={favoriteId}
+      className="absolute inset-e-3 top-3 z-2"
+    />
+  ) : null;
 
   const media = (
     <div ref={frameRef} className={inspirationGalleryCardMediaClassName()}>
@@ -164,6 +175,7 @@ export function InspirationGalleryCard({
           </div>
         </>
       )}
+      {favoriteButton}
     </div>
   );
 
@@ -182,23 +194,27 @@ export function InspirationGalleryCard({
   if (isLink && href) {
     const linkClassName = cn(
       inspirationGalleryCardClassName(className),
-      "group/card text-inherit no-underline",
+      "relative group/card text-inherit no-underline",
     );
+    const overlayClassName =
+      "absolute inset-0 z-1 text-inherit no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";
 
     if (href.startsWith("#") || href.startsWith("http")) {
       return (
-        <a href={href} className={linkClassName}>
+        <div className={linkClassName}>
+          <a href={href} className={overlayClassName} aria-label={title} />
           {media}
           {titleNode}
-        </a>
+        </div>
       );
     }
 
     return (
-      <Link to={href} className={linkClassName}>
+      <div className={linkClassName}>
+        <Link to={href} className={overlayClassName} aria-label={title} />
         {media}
         {titleNode}
-      </Link>
+      </div>
     );
   }
 

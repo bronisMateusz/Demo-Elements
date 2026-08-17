@@ -1,4 +1,3 @@
-import { cn } from "../../lib/cn";
 import type { MouseEvent } from "react";
 import { assetUrl } from "../../app/assets";
 import { favoritesTooltipCopy } from "../../data/favorites";
@@ -46,10 +45,7 @@ export function ProductFavoriteButton({
       className={iconButtonClassName({
         variant,
         active: isFavorite,
-        className: cn(
-          isFavorite && "text-gold-500 hover:text-gold-500",
-          className,
-        ),
+        className,
       })}
       aria-label={label}
       aria-pressed={isFavorite}

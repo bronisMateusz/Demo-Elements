@@ -391,6 +391,7 @@ export function InspirationGallery({
                   image={arrangement.image}
                   action={action}
                   href={arrangement.href}
+                  favoriteId={arrangement.id}
                   productCount={
                     arrangement.products?.length ?? arrangement.items.length
                   }

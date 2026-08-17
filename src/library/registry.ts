@@ -10,7 +10,9 @@ import {
   checkboxModule,
   iconButtonModule,
 } from "./modules/category-2-orientation";
+import { emptyStateModule, statusPagesModule } from "./modules/empty-state";
 import {
+  centerMorphModalModule,
   sharedLayoutBgModule,
   sharedLayoutUnderlineModule,
   textCascadeModule,
@@ -64,7 +66,7 @@ export const libraryCategories: LibraryCategory[] = [
     slug: "prymitywy",
     title: "Prymitywy",
     subtitle:
-      "Atomy UI - przyciski, badge, checkbox oraz motion (SharedLayout, TextCascade).",
+      "Atomy UI - przyciski, badge, checkbox oraz motion (SharedLayout, TextCascade, modal).",
     modules: [
       buttonModule,
       badgeModule,
@@ -74,11 +76,21 @@ export const libraryCategories: LibraryCategory[] = [
       sharedLayoutUnderlineModule,
       textCascadeModule,
       textRevealLeadModule,
+      centerMorphModalModule,
     ],
   },
   {
-    id: "cat-2",
+    id: "cat-empty",
     number: 2,
+    slug: "puste-stany",
+    title: "Puste stany",
+    subtitle:
+      "Empty z widoków (listing, schowek, salony) oraz strony 404, 403 i przerwa techniczna.",
+    modules: [emptyStateModule, statusPagesModule],
+  },
+  {
+    id: "cat-2",
+    number: 3,
     slug: "nawigacja",
     title: "Nawigacja",
     subtitle: "Shell i orientacja - header, footer, breadcrumbs.",
@@ -86,7 +98,7 @@ export const libraryCategories: LibraryCategory[] = [
   },
   {
     id: "cat-3",
-    number: 3,
+    number: 4,
     slug: "drawery",
     title: "Drawery",
     subtitle:
@@ -95,7 +107,7 @@ export const libraryCategories: LibraryCategory[] = [
   },
   {
     id: "cat-4",
-    number: 4,
+    number: 5,
     slug: "karty",
     title: "Karty",
     subtitle:
@@ -112,7 +124,7 @@ export const libraryCategories: LibraryCategory[] = [
   },
   {
     id: "cat-5",
-    number: 5,
+    number: 6,
     slug: "hero-i-cta",
     title: "Hero i CTA",
     subtitle: "Hero, intro strony oraz pasy i przyciski wezwania do działania.",
@@ -129,7 +141,7 @@ export const libraryCategories: LibraryCategory[] = [
   },
   {
     id: "cat-6",
-    number: 6,
+    number: 7,
     slug: "galerie",
     title: "Galerie",
     subtitle:
@@ -144,7 +156,7 @@ export const libraryCategories: LibraryCategory[] = [
   },
   {
     id: "cat-7",
-    number: 7,
+    number: 8,
     slug: "listingi",
     title: "Listingi",
     subtitle:
@@ -160,7 +172,7 @@ export const libraryCategories: LibraryCategory[] = [
   },
   {
     id: "cat-8",
-    number: 8,
+    number: 9,
     slug: "tresc",
     title: "Treść",
     subtitle: "Bloki treści - specyfikacja, SEO, about, salon i strona marki.",

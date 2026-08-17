@@ -212,11 +212,11 @@ export function ProducersDirectory({
   return (
     <div className={cn("flex flex-col", className)}>
       <Container size="content" className="pt-6 md:pt-8 lg:pt-10">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-start lg:gap-10 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-12">
-          <header className="min-w-0 lg:pt-2">
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-12">
+          <header className="min-w-0">
             <h1
               id="page-intro-title"
-              className="m-0 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900"
+              className="m-0 max-w-4xl font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900"
             >
               {producersPage.title}
             </h1>

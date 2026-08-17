@@ -4,7 +4,8 @@ import { cn } from "../../lib/cn";
 import { EASE_LUXURY } from "../../lib/motionEase";
 import type { ListingProduct } from "../../types/listing";
 import { ProductCarouselCard } from "../product/ProductCarouselCard";
-import { Button } from "../ui/Button";
+import { listingPage } from "../../data/listing";
+import { EmptyState } from "../ui/EmptyState";
 
 type ListingProductGridProps = {
   products: ListingProduct[];
@@ -28,31 +29,6 @@ function cardEnterTransition(index: number): Transition {
     opacity: { duration: 0.3, ease: EASE_LUXURY, delay },
     y: { duration: 0.36, ease: EASE_LUXURY, delay },
   };
-}
-
-function ListingEmptyState({
-  onClearFilters,
-}: {
-  onClearFilters?: () => void;
-}) {
-  return (
-    <div className="flex min-h-96 flex-col items-center justify-center px-5 py-16 text-center sm:px-8">
-      <p className="t-h2 mb-4">Brak produktów dla wybranych filtrów</p>
-      <p className="t-body mt-0 mb-8 max-w-md">
-        Spróbuj zmienić kryteria albo wyczyść filtry, aby zobaczyć pełną ofertę.
-      </p>
-      {onClearFilters ? (
-        <Button
-          as="button"
-          type="button"
-          variant="primary"
-          onClick={onClearFilters}
-        >
-          Wyczyść filtry
-        </Button>
-      ) : null}
-    </div>
-  );
 }
 
 export function ListingProductGrid({
@@ -88,7 +64,21 @@ export function ListingProductGrid({
           transition={fadeTransition}
         >
           {isEmpty ? (
-            <ListingEmptyState onClearFilters={onClearFilters} />
+            <EmptyState
+              layout="section"
+              title={listingPage.empty.title}
+              description={listingPage.empty.description}
+              actions={
+                onClearFilters
+                  ? [
+                      {
+                        label: listingPage.empty.actionLabel,
+                        onClick: onClearFilters,
+                      },
+                    ]
+                  : undefined
+              }
+            />
           ) : (
             <ul className="m-0 grid list-none grid-cols-1 gap-y-8 p-0 xs:grid-cols-2 xs:gap-x-3 sm:gap-x-4 md:grid-cols-3 md:gap-y-10">
               {products.map((product, index) => (

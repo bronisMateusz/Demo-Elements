@@ -74,6 +74,16 @@ export const prototypeSections: PrototypeSection[] = [
         to: "/404",
         iconClass: "ph ph-warning-circle",
       },
+      {
+        label: "403 - Brak dostępu",
+        to: "/403",
+        iconClass: "ph ph-lock-key",
+      },
+      {
+        label: "Przerwa techniczna",
+        to: "/przerwa",
+        iconClass: "ph ph-wrench",
+      },
     ],
   },
   {
@@ -88,6 +98,11 @@ export const prototypeSections: PrototypeSection[] = [
         label: "Prymitywy",
         to: "/biblioteka/prymitywy",
         iconClass: "ph ph-squares-four",
+      },
+      {
+        label: "Puste stany",
+        to: "/biblioteka/puste-stany",
+        iconClass: "ph ph-warning-circle",
       },
       {
         label: "Nawigacja",
