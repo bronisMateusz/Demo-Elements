@@ -71,15 +71,28 @@ export function SalonsDirectory() {
     );
   }, []);
 
+  const voivNameByHref = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const group of voivGroups) {
+      for (const city of group.cities) {
+        map.set(city.href, group.name.replace(/\u00AD/g, ""));
+      }
+    }
+    return map;
+  }, [voivGroups]);
+
   const filteredSalons = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     const base = normalized
-      ? salonOptions.filter(
-          (salon) =>
+      ? salonOptions.filter((salon) => {
+          const voivName = voivNameByHref.get(salon.href) ?? "";
+          return (
             salon.name.toLowerCase().includes(normalized) ||
             salon.address.toLowerCase().includes(normalized) ||
-            cityLabelFor(salon).toLowerCase().includes(normalized),
-        )
+            cityLabelFor(salon).toLowerCase().includes(normalized) ||
+            voivName.toLowerCase().includes(normalized)
+          );
+        })
       : [...salonOptions];
 
     if (!userCoords) {
@@ -100,7 +113,7 @@ export function SalonsDirectory() {
         ),
       }))
       .sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
-  }, [query, userCoords]);
+  }, [query, userCoords, voivNameByHref]);
 
   const nearestThree = useMemo(() => {
     if (!userCoords) return [];
@@ -112,6 +125,30 @@ export function SalonsDirectory() {
     if (!normalized) return null;
     return new Set<string>(filteredSalons.map(({ salon }) => salon.href));
   }, [filteredSalons, query]);
+
+  const filteredVoivChips = useMemo(() => {
+    return voivGroups
+      .map((group) => ({
+        id: group.id,
+        name: group.name,
+        count: group.cities.filter(
+          (city) => !queryMatchedHrefs || queryMatchedHrefs.has(city.href),
+        ).length,
+      }))
+      .filter((group) => group.count > 0);
+  }, [queryMatchedHrefs, voivGroups]);
+
+  const matchingVoivIds = useMemo(
+    () => filteredVoivChips.map((group) => group.id),
+    [filteredVoivChips],
+  );
+
+  const activeVoivId =
+    matchingVoivIds.length === 0
+      ? null
+      : focusedVoivId && matchingVoivIds.includes(focusedVoivId)
+        ? focusedVoivId
+        : matchingVoivIds[0];
 
   const visibleGroups = useMemo(() => {
     return voivGroups
@@ -125,20 +162,11 @@ export function SalonsDirectory() {
         return { ...group, cities };
       })
       .filter((group) => group.cities.length > 0)
-      .filter((group) => !focusedVoivId || group.id === focusedVoivId);
-  }, [focusedVoivId, queryMatchedHrefs, voivGroups]);
+      .filter((group) => !activeVoivId || group.id === activeVoivId);
+  }, [activeVoivId, queryMatchedHrefs, voivGroups]);
 
-  const filteredVoivChips = useMemo(() => {
-    return voivGroups
-      .map((group) => ({
-        id: group.id,
-        name: group.name,
-        count: group.cities.filter(
-          (city) => !queryMatchedHrefs || queryMatchedHrefs.has(city.href),
-        ).length,
-      }))
-      .filter((group) => group.count > 0);
-  }, [queryMatchedHrefs, voivGroups]);
+  const showEmptyResults =
+    query.trim().length > 0 && matchingVoivIds.length === 0;
 
   const locateNearestSalon = () => {
     if (!navigator.geolocation) {
@@ -304,25 +332,28 @@ export function SalonsDirectory() {
         </div>
 
         <div ref={sentinelRef} className="mt-6 h-px" aria-hidden="true" />
-        <div
-          className={cn(
-            stickyUnderHeaderClassName,
-            "z-99 border-b border-transparent max-lg:w-screen max-lg:ms-[calc(50%-50vw)]",
-            stuck && "border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
-          )}
-        >
-          <SalonLocationChips
-            mobileAs="scroll"
-            scrollInsetClassName={maxLgPxGutterClassName}
-            ariaLabel="Filtr województw"
-            chips={filteredVoivChips.map((group) => ({
-              id: group.id,
-              label: titleCaseVoiv(group.name),
-            }))}
-            activeId={focusedVoivId ?? ""}
-            onSelect={setFocusedVoivId}
-          />
-        </div>
+        {filteredVoivChips.length > 0 ? (
+          <div
+            className={cn(
+              stickyUnderHeaderClassName,
+              "z-99 border-b border-transparent max-lg:w-screen max-lg:ms-[calc(50%-50vw)]",
+              stuck &&
+                "border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
+            )}
+          >
+            <SalonLocationChips
+              mobileAs="scroll"
+              scrollInsetClassName={maxLgPxGutterClassName}
+              ariaLabel="Filtr województw"
+              chips={filteredVoivChips.map((group) => ({
+                id: group.id,
+                label: titleCaseVoiv(group.name),
+              }))}
+              activeId={activeVoivId ?? ""}
+              onSelect={setFocusedVoivId}
+            />
+          </div>
+        ) : null}
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] xl:gap-10">
           {/* Stretch with the list so sticky has a tall containing block.
@@ -338,8 +369,9 @@ export function SalonsDirectory() {
                 fluid
                 tone="onLight"
                 className="min-h-80 w-full"
-                focusedVoivId={focusedVoivId}
+                focusedVoivId={activeVoivId}
                 onVoivSelect={(voivId) => {
+                  setQuery("");
                   setFocusedVoivId(voivId);
                   setView("list");
                 }}
@@ -348,105 +380,137 @@ export function SalonsDirectory() {
           </div>
 
           <div className={cn(view === "map" && "max-lg:hidden")}>
-            <div className="flex flex-col gap-8">
-              {visibleGroups.map((group) => (
-                <section key={group.id} aria-label={titleCaseVoiv(group.name)}>
-                  <ul className="m-0 flex list-none flex-col gap-4 p-0">
-                    {group.cities.map((city) => {
-                      const salon = salonByHref.get(city.href);
-                      if (!salon) return null;
-                      const isSelected = selectedSalon?.id === salon.id;
-                      const phone = salon.phone;
-                      const telHref = `tel:${phone.replace(/\s+/g, "")}`;
-                      return (
-                        <li
-                          key={city.href}
-                          className="grid gap-4 rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 md:p-5"
-                        >
-                          <div className="relative aspect-square overflow-hidden rounded-xs bg-neutral-100">
-                            <img
-                              src={imageForSalon(salon.id)}
-                              alt=""
-                              aria-hidden="true"
-                              className="size-full object-cover"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
-                              {cityLabelFor(salon)}
-                            </p>
-                            <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
-                              {salon.address}
-                            </p>
-
-                            <dl className="mt-3 mb-0 grid gap-2 text-sm">
-                              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                                <dt className="font-medium text-neutral-800">
-                                  {drawerCopy.phoneLabel}
-                                </dt>
-                                <dd className="m-0">
-                                  <a
-                                    href={telHref}
-                                    className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-gold-600 hover:decoration-gold-500"
-                                  >
-                                    {phone}
-                                  </a>
-                                </dd>
-                              </div>
-                              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                                <dt className="font-medium text-neutral-800">
-                                  {drawerCopy.hoursLabel}
-                                </dt>
-                                <dd className="m-0 text-neutral-700">
-                                  {hours.map((line) => (
-                                    <span key={line} className="block">
-                                      {line}
-                                    </span>
-                                  ))}
-                                </dd>
-                              </div>
-                            </dl>
-                          </div>
-
-                          <div className="flex gap-2 sm:col-span-2">
-                            <Button
-                              href={salon.href}
-                              variant="primary"
-                              size="md"
-                              className="min-w-0 flex-1"
-                            >
-                              {drawerCopy.contactLabel}
-                              <i
-                                className="ph ph-arrow-right"
+            {showEmptyResults ? (
+              <div
+                className="flex min-h-80 flex-col items-center justify-center rounded-xs border border-dashed border-neutral-300 px-6 py-14 text-center"
+                role="status"
+              >
+                <i
+                  className="ph ph-map-pin text-4xl text-neutral-400"
+                  aria-hidden="true"
+                />
+                <p className="mt-4 mb-0 font-heading text-h3 font-medium tracking-tight text-neutral-900">
+                  {directory.emptyTitle}
+                </p>
+                <p className="mt-3 mb-0 max-w-md font-body text-sm leading-relaxed text-neutral-600">
+                  {directory.emptyDescription}
+                </p>
+                <Button
+                  as="button"
+                  type="button"
+                  variant="primary"
+                  size="md"
+                  className="mt-8"
+                  onClick={() => setQuery("")}
+                >
+                  {directory.clearSearchLabel}
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-8">
+                {visibleGroups.map((group) => (
+                  <section
+                    key={group.id}
+                    aria-label={titleCaseVoiv(group.name)}
+                  >
+                    <ul className="m-0 flex list-none flex-col gap-4 p-0">
+                      {group.cities.map((city) => {
+                        const salon = salonByHref.get(city.href);
+                        if (!salon) return null;
+                        const isSelected = selectedSalon?.id === salon.id;
+                        const phone = salon.phone;
+                        const telHref = `tel:${phone.replace(/\s+/g, "")}`;
+                        return (
+                          <li
+                            key={city.href}
+                            className="grid gap-4 rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 md:p-5"
+                          >
+                            <div className="relative aspect-square overflow-hidden rounded-xs bg-neutral-100">
+                              <img
+                                src={imageForSalon(salon.id)}
+                                alt=""
                                 aria-hidden="true"
+                                className="size-full object-cover"
+                                loading="lazy"
+                                decoding="async"
                               />
-                            </Button>
-                            <Button
-                              as="button"
-                              type="button"
-                              variant="secondary"
-                              size="md"
-                              className={cn(
-                                "min-w-0 flex-1",
-                                isSelected && "pointer-events-none opacity-70",
-                              )}
-                              onClick={() => select(salon.id)}
-                              disabled={isSelected}
-                            >
-                              {isSelected
-                                ? drawerCopy.selectedLabel
-                                : drawerCopy.selectLabel}
-                            </Button>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              ))}
-            </div>
+                            </div>
+                            <div className="min-w-0">
+                              <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
+                                {cityLabelFor(salon)}
+                              </p>
+                              <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
+                                {salon.address}
+                              </p>
+
+                              <dl className="mt-3 mb-0 grid gap-2 text-sm">
+                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                                  <dt className="font-medium text-neutral-800">
+                                    {drawerCopy.phoneLabel}
+                                  </dt>
+                                  <dd className="m-0">
+                                    <a
+                                      href={telHref}
+                                      className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-gold-600 hover:decoration-gold-500"
+                                    >
+                                      {phone}
+                                    </a>
+                                  </dd>
+                                </div>
+                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                                  <dt className="font-medium text-neutral-800">
+                                    {drawerCopy.hoursLabel}
+                                  </dt>
+                                  <dd className="m-0 text-neutral-700">
+                                    {hours.map((line) => (
+                                      <span key={line} className="block">
+                                        {line}
+                                      </span>
+                                    ))}
+                                  </dd>
+                                </div>
+                              </dl>
+                            </div>
+
+                            <div className="flex gap-2 sm:col-span-2">
+                              <Button
+                                href={salon.href}
+                                variant="primary"
+                                size="md"
+                                className="min-w-0 flex-1"
+                              >
+                                {drawerCopy.contactLabel}
+                                <i
+                                  className="ph ph-arrow-right"
+                                  aria-hidden="true"
+                                />
+                              </Button>
+                              <Button
+                                as="button"
+                                type="button"
+                                variant="secondary"
+                                size="md"
+                                className={cn(
+                                  "min-w-0 flex-1",
+                                  isSelected &&
+                                    "pointer-events-none opacity-70",
+                                )}
+                                onClick={() => select(salon.id)}
+                                disabled={isSelected}
+                              >
+                                {isSelected
+                                  ? drawerCopy.selectedLabel
+                                  : drawerCopy.selectLabel}
+                              </Button>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </Container>
