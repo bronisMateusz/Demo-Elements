@@ -394,7 +394,7 @@ export type SalonOption = (typeof salonOptions)[number];
 
 export const favoritesNav = {
   label: "Schowek",
-  href: "#schowek",
+  href: "/schowek",
 } as const;
 
 export const utilityTagline = "Od pomysłu do gotowej łazienki";

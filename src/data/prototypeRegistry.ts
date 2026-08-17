@@ -65,6 +65,11 @@ export const prototypeSections: PrototypeSection[] = [
         iconClass: "ph ph-factory",
       },
       {
+        label: "Schowek",
+        to: "/schowek",
+        iconClass: "ph ph-bookmark-simple",
+      },
+      {
         label: "404 - Strona nie znaleziona",
         to: "/404",
         iconClass: "ph ph-warning-circle",
