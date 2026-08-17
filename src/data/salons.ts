@@ -77,6 +77,10 @@ export const salonsPage = {
     listLabel: "Lista",
     mapLabel: "Mapa",
     allVoivLabel: "Wszystkie",
+    emptyTitle: "Brak salonów dla podanego zapytania",
+    emptyDescription:
+      "Spróbuj innej nazwy miasta albo kodu pocztowego, albo wyczyść wyszukiwanie.",
+    clearSearchLabel: "Wyczyść wyszukiwanie",
   },
 } as const;
 
