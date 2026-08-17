@@ -438,7 +438,8 @@ export const brandPageModule: LibraryModule = {
     {
       id: "series-products",
       label: "Serie + produkty",
-      description: "BrandSeriesGrid, BrandAbout (dekory) i siatka ProductCarouselCard.",
+      description:
+        "BrandSeriesGrid, BrandAbout (dekory) i siatka ProductCarouselCard.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <BrandSeriesGrid

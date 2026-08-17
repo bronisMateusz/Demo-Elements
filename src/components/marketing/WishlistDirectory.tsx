@@ -64,9 +64,8 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
   const reduce = useMotionReduced();
   const tabLayoutId = useId();
   const navRef = useRef<HTMLElement>(null);
-  const [activeSection, setActiveSection] = useState<WishlistSectionId>(
-    "schowek-produkty",
-  );
+  const [activeSection, setActiveSection] =
+    useState<WishlistSectionId>("schowek-produkty");
 
   const products = useMemo(
     () => resolveFavoriteProducts(productIds),
