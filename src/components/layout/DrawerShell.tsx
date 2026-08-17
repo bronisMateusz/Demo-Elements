@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../../lib/cn";
 import { EASE_LUXURY } from "../../lib/motionEase";
@@ -47,7 +48,11 @@ export function DrawerShell({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  // Portal past reveal `translate` ancestors so fixed covers the viewport
+  // above the sticky header instead of clipping under it.
+  return createPortal(
     <AnimatePresence>
       {open ? (
         <div
@@ -86,7 +91,8 @@ export function DrawerShell({
           </motion.div>
         </div>
       ) : null}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
 

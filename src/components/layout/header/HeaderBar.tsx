@@ -212,13 +212,9 @@ export function HeaderBar({
                 ? `${favoritesNav.label} (${favoritesCount})`
                 : favoritesNav.label
             }
-            iconClass={
-              favoritesCount > 0
-                ? "ph-fill ph-bookmark-simple"
-                : "ph ph-bookmark-simple"
-            }
+            iconClass="ph ph-bookmark-simple"
             variant="ghost"
-            className={cn("lg:hidden", favoritesCount > 0 && "text-gold-500")}
+            count={favoritesCount}
           />
           <IconButton
             label="Otwórz menu"

@@ -1,7 +1,11 @@
 import { useCallback, useSyncExternalStore } from "react";
+import {
+  defaultWishlistArrangementIds,
+  defaultWishlistProductIds,
+} from "../data/wishlist";
 
-const PRODUCT_KEY = "elements-product-favorites";
-const ARRANGEMENT_KEY = "elements-arrangement-favorites";
+const PRODUCT_KEY = "elements-product-favorites-v2";
+const ARRANGEMENT_KEY = "elements-arrangement-favorites-v2";
 
 type Listener = () => void;
 
@@ -11,17 +15,17 @@ function notify() {
   listeners.forEach((listener) => listener());
 }
 
-function readIds(key: string): string[] {
+function readIds(key: string, fallback: readonly string[]): string[] {
   try {
     const raw = localStorage.getItem(key);
-    if (!raw) return [];
+    if (raw === null) return [...fallback];
 
     const parsed: unknown = JSON.parse(raw);
     return Array.isArray(parsed)
       ? parsed.filter((entry): entry is string => typeof entry === "string")
-      : [];
+      : [...fallback];
   } catch {
-    return [];
+    return [...fallback];
   }
 }
 
@@ -48,13 +52,21 @@ function subscribe(listener: Listener) {
   };
 }
 
+function readProductIds() {
+  return readIds(PRODUCT_KEY, defaultWishlistProductIds);
+}
+
+function readArrangementIds() {
+  return readIds(ARRANGEMENT_KEY, defaultWishlistArrangementIds);
+}
+
 /** Stable string snapshot so useSyncExternalStore can bail out on equal data. */
 function getProductSnapshot() {
-  return readIds(PRODUCT_KEY).join("\0");
+  return readProductIds().join("\0");
 }
 
 function getArrangementSnapshot() {
-  return readIds(ARRANGEMENT_KEY).join("\0");
+  return readArrangementIds().join("\0");
 }
 
 function getServerSnapshot() {
@@ -75,7 +87,7 @@ export function useProductFavorites(sku: string) {
   const isFavorite = favorites.includes(sku);
 
   const toggle = useCallback(() => {
-    const current = readIds(PRODUCT_KEY);
+    const current = readProductIds();
     const next = current.includes(sku)
       ? current.filter((entry) => entry !== sku)
       : [...current, sku];
@@ -103,7 +115,7 @@ export function useArrangementFavorites(id: string) {
   const isFavorite = favorites.includes(id);
 
   const toggle = useCallback(() => {
-    const current = readIds(ARRANGEMENT_KEY);
+    const current = readArrangementIds();
     const next = current.includes(id)
       ? current.filter((entry) => entry !== id)
       : [...current, id];

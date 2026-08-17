@@ -441,7 +441,8 @@ export const brandPageModule: LibraryModule = {
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <BrandSeriesGrid
-            title={producerPage.about.title}
+            title={producerPage.seriesTitle}
+            description={producerPage.about.paragraphs}
             series={producerPage.series}
           />
           <Container size="content" className="pb-10">
@@ -462,13 +463,13 @@ export const wishlistModule: LibraryModule = {
   slug: "wishlist",
   title: "Schowek",
   description:
-    "Lead-gen wishlist: produkty/aranżacje, empty state i panel kosztorysu. Pełna strona: /schowek.",
+    "Lead-gen wishlist: zakładki przełączają widok produktów albo aranżacji, empty state i panel kosztorysu. Pełna strona: /schowek.",
   variants: [
     {
       id: "live",
       label: "Live (localStorage)",
       description:
-        "Stan z ulubionych produktów w przeglądarce - dodaj SKU z listingu lub PDP.",
+        "Stan z ulubionych w przeglądarce. Pusty store dostaje zestaw demo (produkty + aranżacje).",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <div className="py-8">

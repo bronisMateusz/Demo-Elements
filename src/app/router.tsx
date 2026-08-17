@@ -7,8 +7,10 @@ import {
 } from "../routes/LibraryCategoryPage";
 import { CategoryPage } from "../routes/CategoryPage";
 import { FavoritesPage } from "../routes/FavoritesPage";
+import { ForbiddenPage } from "../routes/ForbiddenPage";
 import { HomePage } from "../routes/HomePage";
 import { ListingPage } from "../routes/ListingPage";
+import { MaintenancePage } from "../routes/MaintenancePage";
 import { NotFoundPage } from "../routes/NotFoundPage";
 import { ProducerPage } from "../routes/ProducerPage";
 import { ProducersPage } from "../routes/ProducersPage";
@@ -56,6 +58,8 @@ export const router = createBrowserRouter(
           ],
         },
         { path: "/404", element: <NotFoundPage /> },
+        { path: "/403", element: <ForbiddenPage /> },
+        { path: "/przerwa", element: <MaintenancePage /> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { useProductFavorites } from "../../hooks/useProductFavorites";
@@ -78,10 +77,7 @@ function ArrangementProductRow({ product }: { product: RelatedProduct }) {
         }
         variant="elevated"
         active={isFavorite}
-        className={cn(
-          "shadow-subtle",
-          isFavorite && "border-gold-500 text-gold-500 hover:border-gold-500",
-        )}
+        className="shadow-subtle"
         onClick={toggle}
       />
     </li>

@@ -706,6 +706,12 @@ export const listingPage = {
     title: "Zobacz wyselekcjonowane produkty",
     description: "Najczęściej wybierane warianty i gotowe zestawienia.",
   },
+  empty: {
+    title: "Brak produktów dla wybranych filtrów",
+    description:
+      "Spróbuj zmienić kryteria albo wyczyść filtry, aby zobaczyć pełną ofertę.",
+    actionLabel: "Wyczyść filtry",
+  },
   inspiration: {
     title: "Poznaj nasze aranżacje i zainspiruj się",
     arrangements: homeInspiration.arrangements.map((item, index) => {

@@ -15,7 +15,7 @@ export type ProducerBrand = {
 };
 
 const brandLogoModules = import.meta.glob(
-  "../../assets/brands/*.{png,jpg,jpeg,webp,svg,gif}",
+  "../../assets/brands/*.{png,jpg,jpeg,png,svg,gif}",
   { eager: true, query: "?url", import: "default" },
 ) as Record<string, string>;
 
@@ -39,11 +39,10 @@ function slugifyBrand(name: string) {
 
 function brandOf(name: string): ProducerBrand {
   const slug = slugifyBrand(name);
-  const isVigour = slug === "vigour";
   return {
     name,
     slug,
-    href: isVigour ? "/producent" : "#",
+    href: "/producent",
     logoSrc: BRAND_LOGOS[slug],
   };
 }
@@ -322,27 +321,97 @@ export const producerPage = {
     productsLabel: "Zobacz produkty",
     productsHref: "#produkty",
     image: {
-      src: assetUrl("home/hero-elements.png"),
+      src: assetUrl("producers/vigour-hero.png"),
       alt: "Zdjęcie kluczowe marki Vigour - łazienka z ceramiką i armaturą",
       fit: "cover" as const,
-      focalPoint: { x: 50, y: 55 },
+      focalPoint: { x: 50, y: 50 },
     },
   },
   about: {
-    title: "Serie Vigour",
     paragraphs: [
       "Bez względu na to, czy chodzi o małą łazienkę przeznaczoną dla gości, łazienkę rodzinną, stylowy salon kąpielowy ze strefą SPA, czy też łazienkę dla osób starszych lub niepełnosprawnych, VIGOUR, korzystając ze swojego doświadczenia i bogatego asortymentu, ma dla Ciebie dobre rozwiązania dostosowane do Twoich potrzeb i budżetu.",
       "Produkty marki Vigour zobaczysz na żywo w ekspozycji w salonach Elements w całej Polsce - miejsce na tekst o dostępności, promocjach i szczególnych seriach marki (do uzupełnienia przez klienta).",
     ],
   },
+  seriesTitle: "Serie Vigour",
   series: [
+    {
+      id: "clivia",
+      name: "Clivia",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/clivia.png"),
+        alt: "Seria Vigour Clivia",
+        fit: "cover" as const,
+      },
+    },
     {
       id: "derby",
       name: "Derby",
       href: "#produkty",
       image: {
-        src: assetUrl("home/inspiration-warm-minimal.jpg"),
+        src: assetUrl("producers/series/derby.png"),
         alt: "Seria Vigour Derby",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "derby-plus",
+      name: "Derby Plus",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/derby-plus.png"),
+        alt: "Seria Vigour Derby Plus",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "derby-style",
+      name: "Derby Style",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/derby-style.png"),
+        alt: "Seria Vigour Derby Style",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "individual",
+      name: "Individual",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/individual.png"),
+        alt: "Seria Vigour Individual",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "individual-3-0",
+      name: "Individual 3.0",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/individual-3-0.png"),
+        alt: "Seria Vigour Individual 3.0",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "individual-4-0",
+      name: "Individual 4.0",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/individual-4-0.png"),
+        alt: "Seria Vigour Individual 4.0",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "meble",
+      name: "Meble do Vigour",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/meble.png"),
+        alt: "Meble do Vigour",
         fit: "cover" as const,
       },
     },
@@ -351,19 +420,8 @@ export const producerPage = {
       name: "One",
       href: "#produkty",
       image: {
-        src: assetUrl("home/inspiration-compact.jpg"),
+        src: assetUrl("producers/series/one.png"),
         alt: "Seria Vigour One",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 55 },
-      },
-    },
-    {
-      id: "individual",
-      name: "Individual 4.0",
-      href: "#produkty",
-      image: {
-        src: assetUrl("home/inspiration-walk-in.jpg"),
-        alt: "Seria Vigour Individual 4.0",
         fit: "cover" as const,
       },
     },
@@ -372,15 +430,23 @@ export const producerPage = {
       name: "Vogue",
       href: "#produkty",
       image: {
-        src: assetUrl("home/inspiration-deep-green.jpg"),
+        src: assetUrl("producers/series/vogue.png"),
         alt: "Seria Vigour Vogue",
+        fit: "cover" as const,
+      },
+    },
+    {
+      id: "white",
+      name: "White",
+      href: "#produkty",
+      image: {
+        src: assetUrl("producers/series/white.png"),
+        alt: "Seria Vigour White",
         fit: "cover" as const,
       },
     },
   ] satisfies BrandSeries[],
   productsTitle: "Produkty Vigour",
-  productsMoreLabel: "Zobacz więcej produktów",
-  productsMoreHref: "/listing",
   magazine: {
     ...homeMagazine,
     id: "magazyn-vigour",
@@ -448,15 +514,16 @@ export const producerPage = {
     title: "Zobacz Vigour na żywo w salonie",
     description:
       "Doradca pokaże serie Vigour na ekspozycji, porówna wykończenia i pomoże dobrać komplet do Twojej łazienki.",
-    askLabel: "Napisz do doradcy",
+    askLabel: "Znajdź salon",
+    askHref: "/salony",
     bookLabel: "Umów spotkanie",
   },
 } as const;
 
 /** Demo product grid on the brand page - reuse listing catalog shots. */
-export const producerPageProducts: RelatedProduct[] = listingProducts
-  .slice(0, 8)
-  .map((product) => ({
+export const producerPageProducts: RelatedProduct[] = listingProducts.map(
+  (product) => ({
     ...product,
     brand: "Vigour",
-  }));
+  }),
+);

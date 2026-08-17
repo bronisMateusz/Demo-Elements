@@ -6,23 +6,34 @@ import type { BrandSeries } from "../../data/producers";
 type BrandSeriesGridProps = {
   title: string;
   titleId?: string;
+  /** Optional lead under the title, before the series tiles. */
+  description?: readonly string[];
   series: readonly BrandSeries[];
   className?: string;
 };
 
+const seriesGridClassName = [
+  "mt-8 grid gap-5",
+  "max-md:auto-cols-[70%] max-md:grid-flow-col max-md:grid-cols-none",
+  "max-md:overflow-x-auto max-md:overscroll-x-contain max-md:snap-x max-md:snap-mandatory",
+  "max-md:scrollbar-none",
+  "md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+].join(" ");
+
+const seriesTileClassName =
+  "group flex max-md:snap-start flex-col gap-3 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";
+
 export function BrandSeriesGrid({
   title,
   titleId = "brand-series-title",
+  description,
   series,
   className,
 }: BrandSeriesGridProps) {
   return (
     <section
       aria-labelledby={titleId}
-      className={cn(
-        "border-t border-neutral-200 py-[clamp(2.5rem,6vw,4rem)]",
-        className,
-      )}
+      className={cn("py-[clamp(2.5rem,6vw,4rem)]", className)}
     >
       <Container size="content">
         <h2
@@ -31,13 +42,21 @@ export function BrandSeriesGrid({
         >
           {title}
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {description?.length ? (
+          <div className="mt-4 max-w-190 space-y-4">
+            {description.map((paragraph) => (
+              <p
+                key={paragraph.slice(0, 24)}
+                className="m-0 font-body text-ui leading-relaxed text-neutral-600 md:text-lg"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <div className={seriesGridClassName}>
           {series.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              className="group flex flex-col gap-3 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800"
-            >
+            <a key={item.id} href={item.href} className={seriesTileClassName}>
               <div className="relative aspect-4/3 overflow-hidden rounded-xs border border-neutral-200 bg-neutral-100 transition-[border-color] duration-fast ease-out group-hover:border-gold-500">
                 <img
                   src={item.image.src}

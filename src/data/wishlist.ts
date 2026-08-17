@@ -9,14 +9,11 @@ export const wishlistPage = {
     { label: "Strona główna", to: "/" },
     { label: "Schowek", current: true },
   ],
-  countLabel: (n: number) => (n === 1 ? "1 pozycja" : `${n} pozycji`),
   segments: {
     products: "Produkty",
     arrangements: "Aranżacje",
-    aria: "Sekcje schowka",
+    aria: "Widoki schowka",
   },
-  productsHeading: "Produkty",
-  arrangementsHeading: "Aranżacje",
   empty: {
     title: "Twój schowek jest pusty",
     description:
@@ -26,6 +23,20 @@ export const wishlistPage = {
     secondaryLabel: "Zobacz inspiracje",
     secondaryHref: "/#inspiracje",
   },
+  emptyProducts: {
+    title: "Brak produktów w schowku",
+    description:
+      "Dodawaj produkty przyciskiem „Dodaj do schowka” podczas przeglądania oferty.",
+    actionLabel: "Przeglądaj kategorie",
+    actionHref: "/kategoria",
+  },
+  emptyArrangements: {
+    title: "Brak aranżacji w schowku",
+    description:
+      "Zapisuj aranżacje z inspiracji, żeby zestawić je z produktami w jednym kosztorysie.",
+    actionLabel: "Zobacz inspiracje",
+    actionHref: "/#inspiracje",
+  },
   summary: {
     title: "Twoja lista",
     lead: 'Poproś salon o kosztorys całej listy, pobierz ją w PDF albo wyślij bliskim. Salon wskażesz w formularzu „Poproś o kosztorys".',
@@ -33,12 +44,30 @@ export const wishlistPage = {
     pdfLabel: "Pobierz PDF",
     shareLabel: "Udostępnij link",
     clearLabel: "Wyczyść schowek",
-    shareNote:
-      "Link demo do listy schowka - w docelowym systemie generowany per sesja.",
-    shareUrl: "elements-show.pl/schowek/8f2c-4d1a",
+    share: {
+      title: "Udostępnij link",
+      lead: "Wyślij listę bliskim albo pokaż ją doradcy w salonie.",
+      url: "elements-show.pl/schowek/8f2c-4d1a",
+      copyLabel: "Kopiuj",
+      copiedLabel: "Skopiowano",
+      note: "Link zawiera tylko listę pozycji - nie zawiera Twoich danych kontaktowych.",
+      closeLabel: "Zamknij",
+    },
     pdfHint: "Eksport PDF jest demonstracyjny w tej makiecie.",
   },
 } as const;
+
+/** Seeded into an empty browser store so /schowek has a demo bathroom set. */
+export const defaultWishlistProductIds = [
+  "promocje-montebianco-80",
+  "arr-pillow-basin",
+  "outlet-omnires-ottawa",
+  "promocje-trinnity-m16",
+  "arr-pillow-vanity",
+  "arr-pillow-tall",
+] as const;
+
+export const defaultWishlistArrangementIds = ["insp-2", "insp-4"] as const;
 
 /** Demo arrangements catalog for wishlist resolution (by id). */
 export const wishlistArrangementCatalog: InspirationArrangement[] =

@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { homeAdvisorCta } from "../data/home";
 import { producerPage, producerPageProducts } from "../data/producers";
 import { PageShell } from "../components/layout/PageShell";
@@ -13,8 +13,8 @@ import { BrandSeriesGrid } from "../components/marketing/BrandSeriesGrid";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { HomeMagazine } from "../components/home/HomeMagazine";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
+import { ListingPagination } from "../components/listing/ListingPagination";
 import { ProductCarouselCard } from "../components/product/ProductCarouselCard";
-import { Button } from "../components/ui/Button";
 import { Container } from "../components/ui/Container";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
@@ -41,11 +41,40 @@ const advisorContent: AdvisorCtaContent = {
   description: producerPage.cta.description,
   image: homeAdvisorCta.image,
   askLabel: producerPage.cta.askLabel,
+  askHref: producerPage.cta.askHref,
   bookLabel: producerPage.cta.bookLabel,
 };
 
+const PRODUCER_PRODUCTS_PAGE_SIZE = 12;
+
 export function ProducerPage() {
   const [askOpen, setAskOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const productsRef = useRef<HTMLElement>(null);
+
+  const totalCount = producerPageProducts.length;
+  const pageCount = Math.max(
+    1,
+    Math.ceil(totalCount / PRODUCER_PRODUCTS_PAGE_SIZE),
+  );
+  const safePage = Math.min(page, pageCount);
+  const shownCount = Math.min(
+    safePage * PRODUCER_PRODUCTS_PAGE_SIZE,
+    totalCount,
+  );
+  const pageProducts = useMemo(() => {
+    const start = (safePage - 1) * PRODUCER_PRODUCTS_PAGE_SIZE;
+    return producerPageProducts.slice(
+      start,
+      start + PRODUCER_PRODUCTS_PAGE_SIZE,
+    );
+  }, [safePage]);
+
+  const goToPage = (nextPage: number) => {
+    const clamped = Math.min(Math.max(1, nextPage), pageCount);
+    setPage(clamped);
+    productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <>
@@ -75,35 +104,19 @@ export function ProducerPage() {
         />
 
         <RevealSection>
-          <Container
-            size="content"
-            className="border-t border-neutral-200 py-[clamp(2.5rem,6vw,4rem)]"
-          >
-            <div className="max-w-190">
-              {producerPage.about.paragraphs.map((paragraph) => (
-                <p
-                  key={paragraph.slice(0, 24)}
-                  className="mt-0 mb-5 font-body text-ui leading-relaxed text-neutral-600 last:mb-0"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </Container>
-        </RevealSection>
-
-        <RevealSection>
           <BrandSeriesGrid
-            title={producerPage.about.title}
+            title={producerPage.seriesTitle}
+            description={producerPage.about.paragraphs}
             series={producerPage.series}
           />
         </RevealSection>
 
         <RevealSection>
           <section
+            ref={productsRef}
             id="produkty"
             aria-labelledby="producer-products-title"
-            className="border-t border-neutral-200 py-[clamp(2.5rem,6vw,4rem)]"
+            className="py-[clamp(2.5rem,6vw,4rem)]"
           >
             <Container size="content">
               <h2
@@ -113,20 +126,18 @@ export function ProducerPage() {
                 {producerPage.productsTitle}
               </h2>
               <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-12">
-                {producerPageProducts.map((product) => (
+                {pageProducts.map((product) => (
                   <ProductCarouselCard key={product.id} product={product} />
                 ))}
               </div>
-              <div className="mt-10 flex justify-center">
-                <Button
-                  href={producerPage.productsMoreHref}
-                  variant="secondary"
-                  size="lg"
-                >
-                  {producerPage.productsMoreLabel}
-                  <i className="ph ph-arrow-right" aria-hidden="true" />
-                </Button>
-              </div>
+              <ListingPagination
+                shownCount={shownCount}
+                totalCount={totalCount}
+                page={safePage}
+                pageCount={pageCount}
+                onShowMore={() => goToPage(safePage + 1)}
+                onPageChange={goToPage}
+              />
             </Container>
           </section>
         </RevealSection>
@@ -147,9 +158,8 @@ export function ProducerPage() {
           <AdvisorCta
             titleId="producer-advisor-title"
             content={advisorContent}
-            onAskOpen={() => setAskOpen(true)}
             onBookOpen={requestSalonDrawer}
-            primaryAction="ask"
+            primaryAction="book"
           />
         </RevealSection>
       </PageShell>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   useEffect,
   useState,
@@ -72,9 +73,9 @@ function BrandCycleCell({
   if (!brand) return null;
 
   return (
-    <a
+    <Link
       {...rest}
-      href={brand.href}
+      to={brand.href}
       onMouseEnter={onMouseEnter}
       className={cn(
         "group relative flex min-h-20 items-center justify-center px-4 py-6 no-underline",
@@ -109,7 +110,7 @@ function BrandCycleCell({
           </motion.span>
         </AnimatePresence>
       </span>
-    </a>
+    </Link>
   );
 }
 

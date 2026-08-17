@@ -1,4 +1,5 @@
 import { TextCascadeDemo, TextRevealLeadDemo } from "../demos/PrimitivesDemo";
+import { CenterMorphModalDemo } from "../demos/CenterMorphModalDemo";
 import {
   VariantChipGroupDemo,
   VariantThumbnailGroupDemo,
@@ -135,9 +136,39 @@ export const textRevealLeadModule: LibraryModule = {
   ],
 };
 
+export const centerMorphModalModule: LibraryModule = {
+  id: "2.12",
+  slug: "center-morph-modal",
+  title: "CenterMorphModal",
+  description:
+    "Modal rozkładany od środka (clip-path), jak beui center-morph-modal. Używany do udostępniania linku schowka. Pełna strona: /schowek.",
+  optionalProps: [
+    { name: "open", type: "boolean", required: true },
+    { name: "onClose", type: "() => void", required: true },
+    { name: "title", type: "string", required: true },
+    { name: "description", type: "string" },
+    { name: "closeLabel", type: "string", defaultValue: '"Zamknij"' },
+    { name: "children", type: "ReactNode" },
+  ],
+  variants: [
+    {
+      id: "share",
+      label: "Udostępnij link",
+      description:
+        "Kliknij przycisk, by otworzyć modal schowka. Escape i tło zamykają.",
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <CenterMorphModalDemo />
+        </div>
+      ),
+    },
+  ],
+};
+
 export const category2MotionModules: LibraryModule[] = [
   sharedLayoutBgModule,
   sharedLayoutUnderlineModule,
   textCascadeModule,
   textRevealLeadModule,
+  centerMorphModalModule,
 ];

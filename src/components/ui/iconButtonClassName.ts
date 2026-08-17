@@ -3,6 +3,7 @@ import { phosphorIconInFlexClassName } from "../../lib/phosphorIconInFlexClassNa
 import {
   btnAnimatedFillLightClassName,
   btnAnimatedFillStructureClassName,
+  btnAnimatedPreviewClassName,
 } from "./btnAnimatedClassName";
 
 export type IconButtonVariant =
@@ -61,10 +62,11 @@ export function iconButtonClassName({
   active = false,
   className,
 }: IconButtonClassNameOptions = {}) {
-  const activeClassName =
-    variant === "elevated"
-      ? active && "bg-neutral-0 text-neutral-900"
-      : active && "bg-neutral-100 text-neutral-900";
+  const activeClassName = !active
+    ? undefined
+    : animatedIconVariants.has(variant)
+      ? cn(btnAnimatedPreviewClassName(true), "text-neutral-0")
+      : "bg-neutral-100 text-neutral-900";
 
   return cn(
     animatedIconVariants.has(variant) ? iconButtonAnimated : iconButtonPlain,
