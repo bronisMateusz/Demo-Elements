@@ -6,8 +6,6 @@ import type { BrandSeries } from "../../data/producers";
 type BrandSeriesGridProps = {
   title: string;
   titleId?: string;
-  /** Optional lead under the title, before the series tiles. */
-  description?: readonly string[];
   series: readonly BrandSeries[];
   className?: string;
 };
@@ -26,7 +24,6 @@ const seriesTileClassName =
 export function BrandSeriesGrid({
   title,
   titleId = "brand-series-title",
-  description,
   series,
   className,
 }: BrandSeriesGridProps) {
@@ -42,18 +39,6 @@ export function BrandSeriesGrid({
         >
           {title}
         </h2>
-        {description?.length ? (
-          <div className="mt-4 max-w-190 space-y-4">
-            {description.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 24)}
-                className="m-0 font-body text-ui leading-relaxed text-neutral-600 md:text-lg"
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        ) : null}
         <div className={seriesGridClassName}>
           {series.map((item) => (
             <a key={item.id} href={item.href} className={seriesTileClassName}>

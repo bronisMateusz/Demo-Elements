@@ -10,6 +10,7 @@ import { subcategoryPage, subcategoryTypes } from "../../data/subcategory";
 import { categorySeoBlocks } from "../../data/categorySeo";
 import { wishlistPage } from "../../data/wishlist";
 import { BlogArticleCarousel } from "../../components/marketing/BlogArticleCarousel";
+import { BrandAbout } from "../../components/marketing/BrandAbout";
 import { BrandHero } from "../../components/marketing/BrandHero";
 import { BrandSeriesGrid } from "../../components/marketing/BrandSeriesGrid";
 import { CategoryPromoBanner } from "../../components/marketing/CategoryPromoBanner";
@@ -372,7 +373,7 @@ export const listingPlpModule: LibraryModule = {
     {
       id: "curated",
       label: "Wyselekcjonowane",
-      description: "ListingCuratedGrid (ImageBentoTile).",
+      description: "ListingCuratedGrid (kafelki jak /kategoria).",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <ListingCuratedGrid
@@ -437,14 +438,14 @@ export const brandPageModule: LibraryModule = {
     {
       id: "series-products",
       label: "Serie + produkty",
-      description: "BrandSeriesGrid i siatka ProductCarouselCard.",
+      description: "BrandSeriesGrid, BrandAbout (dekory) i siatka ProductCarouselCard.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <BrandSeriesGrid
             title={producerPage.seriesTitle}
-            description={producerPage.about.paragraphs}
             series={producerPage.series}
           />
+          <BrandAbout paragraphs={producerPage.about.paragraphs} />
           <Container size="content" className="pb-10">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               {producerPageProducts.slice(0, 4).map((product) => (
@@ -463,7 +464,7 @@ export const wishlistModule: LibraryModule = {
   slug: "wishlist",
   title: "Schowek",
   description:
-    "Lead-gen wishlist: zakładki przełączają widok produktów albo aranżacji, empty state i panel kosztorysu. Pełna strona: /schowek.",
+    "Lead-gen wishlist: produkty i aranżacje w jednej liście, sticky menu sekcji, empty state i panel kosztorysu. Pełna strona: /schowek.",
   variants: [
     {
       id: "live",

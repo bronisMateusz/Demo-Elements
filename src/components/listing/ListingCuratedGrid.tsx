@@ -1,6 +1,6 @@
 import { cn } from "../../lib/cn";
 import type { ListingCuratedTile } from "../../types/listing";
-import { ImageBentoTile } from "../marketing/ImageBentoTile";
+import { CategorySubTile } from "../marketing/CategorySubTile";
 import { Container } from "../ui/Container";
 import { Section } from "../structural/Section";
 import { TextRevealLead } from "../motion/TextRevealLead";
@@ -41,16 +41,16 @@ export function ListingCuratedGrid({
 
         <ul
           className={cn(
-            "m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-5",
+            "m-0 grid list-none gap-4 p-0 sm:gap-5",
+            "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
           )}
         >
           {tiles.map((tile) => (
             <li key={tile.label} className="min-w-0">
-              <ImageBentoTile
+              <CategorySubTile
                 label={tile.label}
                 href={tile.href}
                 image={tile.image}
-                className="aspect-4/3 min-h-36 w-full min-w-0"
               />
             </li>
           ))}
