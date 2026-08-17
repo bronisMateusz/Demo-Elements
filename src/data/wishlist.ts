@@ -12,7 +12,7 @@ export const wishlistPage = {
   segments: {
     products: "Produkty",
     arrangements: "Aranżacje",
-    aria: "Widoki schowka",
+    aria: "Sekcje schowka",
   },
   empty: {
     title: "Twój schowek jest pusty",

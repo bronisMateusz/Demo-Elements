@@ -9,6 +9,7 @@ import {
   type AdvisorCtaContent,
 } from "../components/marketing/AdvisorCta";
 import { BrandHero } from "../components/marketing/BrandHero";
+import { BrandAbout } from "../components/marketing/BrandAbout";
 import { BrandSeriesGrid } from "../components/marketing/BrandSeriesGrid";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { HomeMagazine } from "../components/home/HomeMagazine";
@@ -106,9 +107,12 @@ export function ProducerPage() {
         <RevealSection>
           <BrandSeriesGrid
             title={producerPage.seriesTitle}
-            description={producerPage.about.paragraphs}
             series={producerPage.series}
           />
+        </RevealSection>
+
+        <RevealSection>
+          <BrandAbout paragraphs={producerPage.about.paragraphs} />
         </RevealSection>
 
         <RevealSection>
@@ -146,11 +150,19 @@ export function ProducerPage() {
           <HomeMagazine content={producerPage.magazine} />
         </RevealSection>
 
-        <RevealSection className="border-t border-neutral-200 pb-[clamp(2rem,5vw,3rem)] md:pb-[clamp(2.5rem,6vw,4rem)]">
+        <RevealSection className="pb-[clamp(2rem,5vw,3rem)] md:pb-[clamp(2.5rem,6vw,4rem)]">
           <InspirationGallery
             arrangements={[...producerPage.arrangements]}
             title={producerPage.arrangementsTitle}
-            navPlacement="header"
+            navPlacement="footer"
+            seeMoreHref="#inspiracje"
+            seeMoreLabel="Zobacz więcej aranżacji"
+            endCap={{
+              label: "Kliknij poniżej",
+              title: "Pełna galeria aranżacji",
+              description:
+                "Zobacz więcej inspiracji i dobierz produkty Vigour do swojej łazienki.",
+            }}
           />
         </RevealSection>
 

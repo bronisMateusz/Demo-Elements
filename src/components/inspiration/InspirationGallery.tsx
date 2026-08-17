@@ -64,6 +64,12 @@ type InspirationGalleryProps = {
   onControlsChange?: (controls: InspirationGalleryControls) => void;
 };
 
+const DEFAULT_END_CAP = {
+  title: "Pełna galeria aranżacji",
+  description:
+    "Zobacz więcej inspiracji i dobierz produkty do swojej łazienki.",
+} as const;
+
 function cardActionFor(
   arrangement: InspirationArrangement,
 ): InspirationGalleryCardAction {
@@ -92,8 +98,8 @@ export function InspirationGallery({
   title = "Poznaj nasze aranżacje i zainspiruj się",
   titleId = "inspiration-gallery-title",
   navPlacement = "footer",
-  endCap,
-  seeMoreHref,
+  endCap = DEFAULT_END_CAP,
+  seeMoreHref = "#inspiracje",
   seeMoreLabel = "Zobacz więcej aranżacji",
   onControlsChange,
 }: InspirationGalleryProps) {
@@ -117,6 +123,8 @@ export function InspirationGallery({
   const arrangementCount = arrangements.length;
   const lastArrangementIndex = Math.max(0, arrangementCount - 1);
   const hasEndCap = Boolean(endCap);
+  const endCapLabel =
+    endCap?.label ?? (showFooterCta ? "Kliknij poniżej" : undefined);
 
   const registerImage = useCallback(
     (index: number, node: HTMLImageElement | null) => {
@@ -432,9 +440,9 @@ export function InspirationGallery({
                       {endCap.description}
                     </p>
                   ) : null}
-                  {endCap.label ? (
+                  {endCapLabel ? (
                     <p className="relative m-0 inline-flex items-center gap-2 font-body text-ui font-medium text-neutral-700">
-                      {endCap.label}
+                      {endCapLabel}
                       <i className="ph ph-arrow-down" aria-hidden="true" />
                     </p>
                   ) : null}

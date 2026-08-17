@@ -75,7 +75,7 @@ export const emptyStateModule: LibraryModule = {
       id: "wishlist-products",
       label: "Schowek - brak produktów",
       description:
-        "Widok Produkty na /schowek, gdy lista produktów jest pusta.",
+        "Sekcja Produkty na /schowek, gdy lista produktów jest pusta.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <EmptyState
@@ -97,7 +97,7 @@ export const emptyStateModule: LibraryModule = {
       id: "wishlist-arrangements",
       label: "Schowek - brak aranżacji",
       description:
-        "Widok Aranżacje na /schowek, gdy lista aranżacji jest pusta.",
+        "Sekcja Aranżacje na /schowek, gdy lista aranżacji jest pusta.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <EmptyState

@@ -41,13 +41,15 @@ export const inspirationGalleryModule: LibraryModule = {
     },
     {
       name: "endCap",
-      type: "{ label; title?; description? }",
+      type: "{ label?; title?; description? }",
+      defaultValue: '{ title: "Pełna galeria…", description: "…" }',
       description:
-        "Zaślepka na końcu toru (bez linku) - wskazuje dolne CTA sekcji.",
+        "Zaślepka na końcu toru - domyślnie włączona. Przy navPlacement=footer dopina „Kliknij poniżej” do CTA.",
     },
     {
       name: "seeMoreHref",
       type: "string",
+      defaultValue: '"#inspiracje"',
       description: "CTA pod torem (gdy navPlacement=footer).",
     },
     {

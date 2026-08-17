@@ -751,61 +751,32 @@ export const listingCuratedTiles: ListingCuratedTile[] = [
   {
     label: "Wiszące 40 cm",
     href: "/listing",
-    image: curatedImg("home/inspiration-compact.jpg", "Wiszące 40 cm", {
-      x: 50,
-      y: 55,
-    }),
+    image: curatedImg("listing/curated/wiszace-40.png", "Wiszące 40 cm"),
   },
   {
     label: "Wiszące 50 cm",
     href: "/listing",
-    image: curatedImg("category/subs/umywalkiwiszace.webp", "Wiszące 50 cm"),
+    image: curatedImg("listing/curated/wiszace-50.png", "Wiszące 50 cm"),
   },
   {
     label: "Wiszące 60 cm",
     href: "/listing",
-    image: curatedImg("home/categories/umywalki.png", "Wiszące 60 cm", {
-      x: 50,
-      y: 45,
-    }),
+    image: curatedImg("listing/curated/wiszace-60.png", "Wiszące 60 cm"),
   },
   {
     label: "Wiszące 80 cm",
     href: "/listing",
-    image: curatedImg("category/subs/umywalkimeblowe.webp", "Wiszące 80 cm"),
+    image: curatedImg("listing/curated/wiszace-80.png", "Wiszące 80 cm"),
   },
   {
     label: "Białe",
     href: "/listing",
-    image: curatedImg("category/subs/umywalkinablatowe.webp", "Białe"),
+    image: curatedImg("listing/curated/biale.png", "Białe"),
   },
   {
     label: "Czarne",
     href: "/listing",
-    image: curatedImg("home/inspiration-concrete-black.jpg", "Czarne"),
-  },
-  {
-    label: "Meblowe",
-    href: "/listing",
-    image: curatedImg("category/subs/umywalkizszafka.webp", "Meblowe"),
-  },
-  {
-    label: "Nablatowe",
-    href: "/listing",
-    image: curatedImg("category/subs/umywalkinablatowe.webp", "Nablatowe"),
-  },
-  {
-    label: "Kompaktowe",
-    href: "/listing",
-    image: curatedImg("home/inspiration-compact.jpg", "Kompaktowe", {
-      x: 50,
-      y: 55,
-    }),
-  },
-  {
-    label: "Premium",
-    href: "/listing",
-    image: curatedImg("home/inspiration-warm-palette.jpg", "Premium"),
+    image: curatedImg("listing/curated/czarne.png", "Czarne"),
   },
 ];
 
