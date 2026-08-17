@@ -275,48 +275,6 @@ html.elements-pause-motion .motion-fill-chevron {
   @apply transition-none;
 }
 
-@keyframes liquid-cta-drift {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  33% {
-    transform: translate(4%, -6%) scale(1.08);
-  }
-
-  66% {
-    transform: translate(-5%, 4%) scale(0.95);
-  }
-}
-
-.liquid-cta-blob {
-  @apply animate-[liquid-cta-drift_18s_var(--ease-luxury)_infinite];
-}
-
-@keyframes liquid-cta-swirl {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: translate(8%, -10%) rotate(10deg) scale(1.12);
-  }
-}
-
-.liquid-cta-blob-swirl {
-  @apply animate-[liquid-cta-swirl_22s_var(--ease-luxury)_infinite];
-}
-
-html.elements-pause-motion .liquid-cta-blob {
-  @apply animate-none;
-}
-
-html.elements-pause-motion .liquid-cta-blob-swirl {
-  @apply animate-none;
-}
-
 @keyframes home-hero-progress {
   from {
     transform: scaleX(0);

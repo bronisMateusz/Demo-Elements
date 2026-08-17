@@ -1,9 +1,8 @@
-import {
-  SharedLayoutBgDemo,
-  SharedLayoutBgSegmentDemo,
-  SharedLayoutUnderlineDemo,
-} from "../demos/MotionLayoutDemo";
 import { TextCascadeDemo, TextRevealLeadDemo } from "../demos/PrimitivesDemo";
+import {
+  VariantChipGroupDemo,
+  VariantThumbnailGroupDemo,
+} from "../demos/VariantSelectorDemo";
 import { libPreviewArticleClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
@@ -12,7 +11,7 @@ export const sharedLayoutBgModule: LibraryModule = {
   slug: "shared-layout-bg",
   title: "SharedLayoutBg",
   description:
-    "Przesuwane tło hover (layoutId) między elementami listy - port z beUI. Używane w chipach wariantów i segment control.",
+    "Przesuwane tło hover (layoutId) między chipami - ten sam wzorzec co VariantChipGroup na PDP: ciemny wybór, jasna pigułka hover, obrys after:border. Rodzic może dodać nad rzędem etykietę osi i aktualny wybór (np. „Szerokość: 80 cm”).",
   optionalProps: [
     {
       name: "children",
@@ -38,20 +37,10 @@ export const sharedLayoutBgModule: LibraryModule = {
       id: "chip-row",
       label: "Wiersz chipów",
       description:
-        "Hover przesuwa jasne tło między opcjami - wzorzec VariantChipGroup.",
+        "Jak na produkcie: wybrany chip jest ciemny, hover przesuwa pigułkę bg-neutral-300, nieaktywne mają obrys. Nad rzędem opcjonalna etykieta wyboru.",
       render: () => (
         <div className={libPreviewArticleClassName}>
-          <SharedLayoutBgDemo />
-        </div>
-      ),
-    },
-    {
-      id: "segment",
-      label: "Segment control",
-      description: "Pigułka w ramce - np. przełącznik widoku listy / siatki.",
-      render: () => (
-        <div className={libPreviewArticleClassName}>
-          <SharedLayoutBgSegmentDemo />
+          <VariantChipGroupDemo />
         </div>
       ),
     },
@@ -63,7 +52,7 @@ export const sharedLayoutUnderlineModule: LibraryModule = {
   slug: "shared-layout-underline",
   title: "SharedLayoutUnderline",
   description:
-    "Przesuwane podkreślenie hover (layoutId) między elementami. Aktywny stan ma własną linię; hover używa jaśniejszego odcienia.",
+    "Przesuwane podkreślenie hover (layoutId) między elementami. Aktywny stan ma własną linię; hover używa jaśniejszego odcienia. Rodzic może dodać nad rzędem etykietę osi i aktualny wybór (np. „Wykończenie: Biały mat”).",
   optionalProps: [
     {
       name: "children",
@@ -96,10 +85,10 @@ export const sharedLayoutUnderlineModule: LibraryModule = {
       id: "thumbnail-row",
       label: "Miniaturki wariantu",
       description:
-        "Jak VariantThumbnailGroup: hover = linia bg-neutral-900/40; wybrany = pełne bg-neutral-900. Kliknij, żeby zmienić aktywny.",
+        "Jak VariantThumbnailGroup na PDP: hover = linia bg-neutral-900/40; wybrany = pełne podkreślenie. Nad rzędem opcjonalna etykieta wyboru.",
       render: () => (
         <div className={libPreviewArticleClassName}>
-          <SharedLayoutUnderlineDemo />
+          <VariantThumbnailGroupDemo />
         </div>
       ),
     },

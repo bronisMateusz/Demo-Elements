@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { montebiancoVariants } from "../../data/products/montebianco-80";
 import {
-  ProductVariantSelector,
   VariantChipGroup,
   VariantThumbnailGroup,
 } from "../../components/product/variant-selector";
@@ -18,42 +17,42 @@ function useAxisSelection(defaultId: string) {
 
 export function VariantChipGroupDemo() {
   const { selectedId, onSelect } = useAxisSelection("80");
+  const selected = chipAxis.options.find((option) => option.id === selectedId);
 
   return (
-    <VariantChipGroup
-      options={chipAxis.options}
-      selectedId={selectedId}
-      axisLabel={chipAxis.label}
-      onSelect={onSelect}
-    />
+    <div>
+      <p className="mb-2 block text-sm text-neutral-900">
+        <span className="text-neutral-600">{chipAxis.label}:</span>{" "}
+        {selected ? <span>{selected.label}</span> : null}
+      </p>
+      <VariantChipGroup
+        options={chipAxis.options}
+        selectedId={selectedId}
+        axisLabel={chipAxis.label}
+        onSelect={onSelect}
+      />
+    </div>
   );
 }
 
 export function VariantThumbnailGroupDemo() {
   const { selectedId, onSelect } = useAxisSelection("white-mat");
-
-  return (
-    <VariantThumbnailGroup
-      options={thumbnailAxis.options}
-      selectedId={selectedId}
-      axisLabel={thumbnailAxis.label}
-      onSelect={onSelect}
-    />
-  );
-}
-
-export function ProductVariantSelectorDemo() {
-  const [selection, setSelection] = useState(
-    montebiancoVariants.defaultSelection,
+  const selected = thumbnailAxis.options.find(
+    (option) => option.id === selectedId,
   );
 
   return (
-    <ProductVariantSelector
-      variants={montebiancoVariants}
-      selection={selection}
-      onSelect={(axisId, optionId) =>
-        setSelection((current) => ({ ...current, [axisId]: optionId }))
-      }
-    />
+    <div>
+      <p className="mb-2 block text-sm text-neutral-900">
+        <span className="text-neutral-600">{thumbnailAxis.label}:</span>{" "}
+        {selected ? <span>{selected.label}</span> : null}
+      </p>
+      <VariantThumbnailGroup
+        options={thumbnailAxis.options}
+        selectedId={selectedId}
+        axisLabel={thumbnailAxis.label}
+        onSelect={onSelect}
+      />
+    </div>
   );
 }

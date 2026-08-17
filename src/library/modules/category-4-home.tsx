@@ -11,7 +11,6 @@ import { HomeBrands } from "../../components/home/HomeBrands";
 import { HomeCategories } from "../../components/home/HomeCategories";
 import { HomeCategoriesBento } from "../../components/home/HomeCategoriesBento";
 import { HomeHero } from "../../components/home/HomeHero";
-import { HomeInspiration } from "../../components/home/HomeInspiration";
 import { HomeMagazine } from "../../components/home/HomeMagazine";
 import { HomePartners } from "../../components/home/HomePartners";
 import { HomeProducts } from "../../components/home/HomeProducts";
@@ -24,7 +23,7 @@ export const inspirationGalleryModule: LibraryModule = {
   slug: "inspiration-gallery",
   title: "InspirationGallery",
   description:
-    "Wielokrotnego użytku galeria aranżacji - kafle 16/10, bleed ~2.1 karty. Akcje: link, „Pokaż produkty” (drawer) albo lightbox. Opcjonalnie endCap + seeMore CTA.",
+    "Galeria aranżacji - kafle 16/10, bleed ~2.1 karty. Akcje: link, „Pokaż produkty” (drawer) albo lightbox. ProductInspiration (PDP) i HomeInspiration składają ten sam chrome stopki; home przez navPlacement=none.",
   optionalProps: [
     {
       name: "arrangements",
@@ -65,9 +64,9 @@ export const inspirationGalleryModule: LibraryModule = {
   variants: [
     {
       id: "footer-see-more",
-      label: "Footer nav + seeMore",
+      label: "Stopka + CTA",
       description:
-        "Jak PDP: strzałki + indeks + CTA „Zobacz więcej aranżacji”; endCap na końcu toru.",
+        "Domyślny chrome (PDP / ProductInspiration): strzałki, indeks i „Zobacz więcej” pod torem; endCap na końcu.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <div className="py-8">
@@ -86,17 +85,6 @@ export const inspirationGalleryModule: LibraryModule = {
               }}
             />
           </div>
-        </div>
-      ),
-    },
-    {
-      id: "none-external",
-      label: "Nav u rodzica (home)",
-      description:
-        "navPlacement=none - HomeInspiration dokłada strzałki + CTA poza galerią.",
-      render: () => (
-        <div className={libPreviewFullBleedWrapperClassName}>
-          <HomeInspiration />
         </div>
       ),
     },

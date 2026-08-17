@@ -4,7 +4,6 @@ import { ProductBuyBox } from "../../components/product/ProductBuyBox";
 import { ProductCard } from "../../components/product/ProductCard";
 import { ProductCarousel } from "../../components/product/ProductCarousel";
 import { ProductGallery } from "../../components/product/ProductGallery";
-import { ProductInspiration } from "../../components/product/ProductInspiration";
 import { ProductPairWith } from "../../components/product/ProductPairWith";
 import { ProductSpecifications } from "../../components/product/ProductSpecifications";
 import { ProductVisualizationCTA } from "../../components/product/ProductVisualizationCTA";
@@ -14,15 +13,7 @@ import {
   ProductSalonCardEmptyDemo,
   ProductSalonCardSelectedDemo,
 } from "../demos/ProductSalonCardDemo";
-import {
-  ProductVariantSelectorDemo,
-  VariantChipGroupDemo,
-  VariantThumbnailGroupDemo,
-} from "../demos/VariantSelectorDemo";
-import {
-  libPreviewArticleClassName,
-  libPreviewFullBleedWrapperClassName,
-} from "../libStyles";
+import { libPreviewFullBleedWrapperClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
 export const productGalleryModule: LibraryModule = {
@@ -169,67 +160,6 @@ export const productSalonCardModule: LibraryModule = {
   ],
 };
 
-export const productVariantSelectorModule: LibraryModule = {
-  id: "3.6",
-  slug: "product-variant-selector",
-  title: "ProductVariantSelector",
-  description:
-    "Selektor osi wariantów PDP - chip (szerokość) i miniatura (wykończenie). Chip: SharedLayoutBg + layoutId wyboru. Miniatura: SharedLayoutUnderline na hover.",
-  optionalProps: [
-    { name: "variants", type: "ProductVariants", required: true },
-    { name: "selection", type: "Record<string, string>", required: true },
-    { name: "onSelect", type: "(axisId, optionId) => void", required: true },
-  ],
-  variants: [
-    {
-      id: "full",
-      label: "Pełny selektor",
-      description: "Obie osie Montebianco - chip + miniatura.",
-      render: () => (
-        <Container className="max-w-md py-8">
-          <div className={libPreviewArticleClassName}>
-            <ProductVariantSelectorDemo />
-          </div>
-        </Container>
-      ),
-    },
-    {
-      id: "chip",
-      label: "VariantChipGroup",
-      description:
-        "Segment z animowanym tłem wyboru i hover pill. Nieaktywne opcje mają border.",
-      render: () => (
-        <Container className="max-w-md py-8">
-          <div className={libPreviewArticleClassName}>
-            <p className="mb-3 block text-sm text-neutral-900">
-              <span className="text-neutral-600">Szerokość:</span> interaktywny
-              demo
-            </p>
-            <VariantChipGroupDemo />
-          </div>
-        </Container>
-      ),
-    },
-    {
-      id: "thumbnail",
-      label: "VariantThumbnailGroup",
-      description:
-        "Miniaturki bez gapu; aktywny = bg-muted + pełne podkreślenie; hover = jaśniejsza linia.",
-      render: () => (
-        <Container className="max-w-md py-8">
-          <div className={libPreviewArticleClassName}>
-            <p className="mb-3 block text-sm text-neutral-900">
-              <span className="text-neutral-600">Wykończenie:</span>{" "}
-              interaktywny demo
-            </p>
-            <VariantThumbnailGroupDemo />
-          </div>
-        </Container>
-      ),
-    },
-  ],
-};
-
 export const productPairWithModule: LibraryModule = {
   id: "3.7",
   slug: "product-pair-with",
@@ -253,59 +183,6 @@ export const productPairWithModule: LibraryModule = {
               title={montebianco80.seriesTitle}
               products={montebianco80.seriesProducts}
             />
-          </div>
-        </div>
-      ),
-    },
-  ],
-};
-
-export const productInspirationModule: LibraryModule = {
-  id: "3.8",
-  slug: "product-inspiration",
-  title: "ProductInspiration",
-  description:
-    "Thin wrapper InspirationGallery na PDP - hardcoduje endCap + seeMoreHref/seeMoreLabel („Zobacz więcej aranżacji”) przy navPlacement=footer.",
-  optionalProps: [
-    {
-      name: "arrangements",
-      type: "InspirationArrangement[]",
-      required: true,
-      description:
-        "href → karta-link; showProducts → drawer produktów; inaczej lightbox.",
-    },
-    {
-      name: "eyebrow",
-      type: "string",
-      defaultValue: '"Produkt w aranżacji"',
-    },
-    {
-      name: "title",
-      type: "string",
-      defaultValue: '"Inspiracje producenta"',
-    },
-    {
-      name: "navPlacement",
-      type: '"header" | "footer" | "none"',
-      defaultValue: '"footer"',
-    },
-    {
-      name: "endCap / seeMore*",
-      type: "hardcoded",
-      description:
-        "Wrapper ustawia endCap („Kliknij poniżej”) i CTA seeMore do #inspiracje.",
-    },
-  ],
-  variants: [
-    {
-      id: "default",
-      label: "Montebianco",
-      description:
-        "Mix: Pokaż produkty (drawer), link, zaślepka + CTA „Zobacz więcej aranżacji”.",
-      render: () => (
-        <div className={libPreviewFullBleedWrapperClassName}>
-          <div className="py-8">
-            <ProductInspiration arrangements={montebianco80.inspirations} />
           </div>
         </div>
       ),
@@ -442,9 +319,7 @@ export const category3Modules: LibraryModule[] = [
   productCardModule,
   productSpecsModule,
   productSalonCardModule,
-  productVariantSelectorModule,
   productPairWithModule,
-  productInspirationModule,
   askFabModule,
   productArchitectCtaModule,
   productVisualizationCtaModule,

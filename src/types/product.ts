@@ -38,7 +38,6 @@ export type ProductPrice = {
 export type ProductVariantOption = {
   id: string;
   label: string;
-  swatch?: string;
   image?: ProductImage;
   unavailable?: boolean;
   unavailableNote?: string;
@@ -47,7 +46,7 @@ export type ProductVariantOption = {
 export type ProductVariantAxis = {
   id: string;
   label: string;
-  type: "chip" | "swatch" | "thumbnail";
+  type: "chip" | "thumbnail";
   options: ProductVariantOption[];
 };
 

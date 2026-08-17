@@ -21,10 +21,3 @@ export type VariantThumbnailProps = {
   unavailable?: boolean;
   onClick: () => void;
 };
-
-export type VariantSwatchProps = {
-  label: string;
-  swatch: string;
-  selected: boolean;
-  onClick: () => void;
-};
