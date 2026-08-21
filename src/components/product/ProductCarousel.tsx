@@ -153,7 +153,7 @@ function ProductCarouselFooterNav({
       className={cn(
         "mt-8 flex items-center justify-center gap-3 md:mt-10",
         isBleed &&
-          "mx-auto w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)]",
+          "mx-auto w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)]",
       )}
     >
       <button
@@ -305,7 +305,7 @@ export function ProductCarousel({
           className={cn(
             "flex flex-wrap items-end justify-between gap-6",
             isBleed
-              ? "mx-auto mb-8 w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10"
+              ? "mx-auto mb-8 w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)] md:mb-10"
               : "mb-4",
           )}
         >

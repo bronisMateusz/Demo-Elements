@@ -60,4 +60,6 @@ export type ListingCuratedTile = {
   label: string;
   href: string;
   image: RelatedProduct["image"];
+  /** Large bento tile (2×2) - same mosaic as SubcategoryBento. */
+  featured?: boolean;
 };

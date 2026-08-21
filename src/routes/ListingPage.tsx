@@ -75,14 +75,6 @@ export function ListingPage() {
           />
         </RevealSection>
 
-        <RevealSection>
-          <ListingCuratedGrid
-            title={listingPage.curated.title}
-            description={listingPage.curated.description}
-            tiles={[...listingCuratedTiles]}
-          />
-        </RevealSection>
-
         <RevealSection className="pb-8 md:pb-10">
           <div id="inspiracje">
             <InspirationGallery
@@ -91,6 +83,14 @@ export function ListingPage() {
               titleId="listing-insp-title"
             />
           </div>
+        </RevealSection>
+
+        <RevealSection>
+          <ListingCuratedGrid
+            title={listingPage.curated.title}
+            description={listingPage.curated.description}
+            tiles={[...listingCuratedTiles]}
+          />
         </RevealSection>
 
         <RevealSection className="relative z-20">

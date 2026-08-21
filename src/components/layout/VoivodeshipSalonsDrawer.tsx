@@ -12,6 +12,7 @@ import {
 } from "../../data/polandVoivodeships";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { Button } from "../ui/Button";
+import { SalonHoursList } from "../salon/SalonHoursList";
 import { DrawerHeader, DrawerShell } from "./DrawerShell";
 
 type VoivodeshipSalonsDrawerProps = {
@@ -66,7 +67,7 @@ export function VoivodeshipSalonsDrawer({
         onClose={onClose}
       />
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(1.25rem,2.222vw,2.5rem)] py-5 md:py-6">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(0.75rem,2.222vw,2.5rem)] py-5 md:py-6">
         {salons.length === 0 ? (
           <p className="m-0 text-sm text-neutral-500">
             Brak salonów w tym województwie.
@@ -109,11 +110,7 @@ export function VoivodeshipSalonsDrawer({
                         {presenceVoivodeshipDrawerCopy.hoursLabel}
                       </dt>
                       <dd className="m-0 text-neutral-700">
-                        {hours.map((line) => (
-                          <span key={line} className="block">
-                            {line}
-                          </span>
-                        ))}
+                        <SalonHoursList hours={hours} />
                       </dd>
                     </div>
                   </dl>

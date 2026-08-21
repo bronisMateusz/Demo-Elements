@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
+import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
+import { Button } from "../ui/Button";
 import { Eyebrow } from "../ui/Eyebrow";
 
 type CategoryPromoBannerProps = {
@@ -28,16 +29,15 @@ export function CategoryPromoBanner({
   image,
   className,
 }: CategoryPromoBannerProps) {
-  const classNames = cn(
-    "group/promo grid overflow-hidden rounded-xs border border-neutral-800/10 bg-gold-100 no-underline",
-    "lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]",
-    "transition-[border-color] duration-base ease-out hover:border-gold-500",
-    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500",
-    className,
-  );
-
-  const body = (
-    <>
+  return (
+    <div
+      className={cn(
+        "group/promo grid overflow-hidden rounded-xs border border-neutral-800/10 bg-gold-100",
+        "lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]",
+        "transition-[border-color] duration-base ease-out hover:border-gold-500",
+        className,
+      )}
+    >
       <div className="relative min-h-52 overflow-hidden bg-neutral-100 max-lg:aspect-16/10 lg:min-h-72">
         <img
           src={image.src}
@@ -55,7 +55,7 @@ export function CategoryPromoBanner({
           className="pointer-events-none absolute inset-0 bg-radial-[at_100%_0%] from-gold-500/18 to-transparent to-55%"
           aria-hidden="true"
         />
-        <Eyebrow variant="gold" className="relative mb-0 text-gold-700">
+        <Eyebrow variant="gold" className="relative mb-0 text-neutral-700">
           {eyebrow}
         </Eyebrow>
         <p className="relative m-0 font-heading text-[clamp(1.25rem,2vw,1.75rem)] leading-[1.1] font-medium tracking-tight text-balance text-neutral-900">
@@ -64,30 +64,16 @@ export function CategoryPromoBanner({
         <p className="relative m-0 max-w-prose font-body text-sm leading-relaxed text-neutral-700 md:text-ui">
           {description}
         </p>
-        <span
-          className={cn(
-            "relative mt-1 inline-flex items-center gap-2 font-body text-sm font-medium text-gold-700",
-            "transition-[color,gap] duration-fast ease-out group-hover/promo:gap-3 group-hover/promo:text-neutral-900",
-          )}
+        <Button
+          href={href}
+          variant="primary"
+          size="lg"
+          className={cn("relative mt-1", splitMediaCtaButtonClassName)}
         >
           {label}
-          <i className="ph ph-arrow-right text-sm" aria-hidden="true" />
-        </span>
+          <i className="ph ph-arrow-right" aria-hidden="true" />
+        </Button>
       </div>
-    </>
-  );
-
-  if (href.startsWith("/") && href !== "#") {
-    return (
-      <Link to={href} className={classNames}>
-        {body}
-      </Link>
-    );
-  }
-
-  return (
-    <a href={href} className={classNames}>
-      {body}
-    </a>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ export function SalonDrawerDemo() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
+    <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
         Drawer wyboru salonu - wyszukiwanie, geolokalizacja i zapis wyboru
         (localStorage). Na mobile search siedzi w sticky footerze. Otwierany z
@@ -35,7 +35,7 @@ export function AskDrawerDemo() {
   const image = montebianco80.images[0];
 
   return (
-    <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
+    <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
         Formularz pytania o produkt - karta produktu, pola wymagane i wiadomość
         z prefillem. Wspólny DrawerShell.
@@ -67,7 +67,7 @@ export function InspirationProductsDrawerDemo() {
     homeInspiration.arrangements[0];
 
   return (
-    <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
+    <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
         Drawer produktów z aranżacji (chip „Pokaż produkty” w
         InspirationGallery). Montowany w Header - otwierany przez{" "}
@@ -94,9 +94,9 @@ export function MobileDrawerDemo() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col items-start gap-4 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8">
+    <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Menu mobilne (lg:hidden) - główna nawigacja z drill-down Produktów oraz
+        Menu mobilne (xl:hidden) - główna nawigacja z drill-down Produktów oraz
         linki z utility bar (strefy, blog, salony).
       </p>
       <Button

@@ -5,8 +5,6 @@ import type { ProducerBrand } from "../../data/producers";
 type BrandLogoTileProps = {
   brand: ProducerBrand;
   className?: string;
-  /** Stronger logo contrast - use on featured / dark panels. */
-  emphasized?: boolean;
   /** Brand name under the tile. Featured grid hides it. */
   showName?: boolean;
 };
@@ -17,15 +15,12 @@ type BrandLogoTileProps = {
 export function BrandLogoTile({
   brand,
   className,
-  emphasized = false,
   showName = true,
 }: BrandLogoTileProps) {
   const classNames = cn(
     "group flex flex-col items-center no-underline",
     showName && "gap-3",
-    emphasized
-      ? "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
-      : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
     className,
   );
 
@@ -33,19 +28,15 @@ export function BrandLogoTile({
     <>
       <div
         className={cn(
-          "flex h-21 w-full flex-col items-center justify-center gap-1.5 rounded-xs border border-neutral-200 bg-neutral-0 px-3",
+          "flex h-21 w-full flex-col items-center justify-center gap-1.5 rounded-xs border border-transparent bg-neutral-0 px-3",
           "transition-[border-color] duration-fast ease-out group-hover:border-gold-500",
-          emphasized && "shadow-subtle",
         )}
       >
         {brand.logoSrc ? (
           <img
             src={brand.logoSrc}
             alt=""
-            className={cn(
-              "max-h-10 max-w-full object-contain transition-opacity duration-fast ease-out group-hover:opacity-100",
-              emphasized ? "opacity-80" : "opacity-70",
-            )}
+            className="max-h-10 max-w-full object-contain"
             loading="lazy"
             decoding="async"
             draggable={false}
@@ -63,12 +54,7 @@ export function BrandLogoTile({
         )}
       </div>
       {showName ? (
-        <span
-          className={cn(
-            "text-center font-body text-xs font-light tracking-[0.12em] uppercase",
-            emphasized ? "text-neutral-300" : "text-neutral-500",
-          )}
-        >
+        <span className="text-center font-body text-xs font-light tracking-[0.12em] text-neutral-500 uppercase">
           {brand.name}
         </span>
       ) : null}

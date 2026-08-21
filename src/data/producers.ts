@@ -230,6 +230,7 @@ export const producersPage = {
   ],
   featuredLabel: "Polecani producenci",
   indexAria: "Indeks A-Z",
+  searchPlaceholder: "Szukaj producenta",
   emptyFilter:
     "Brak producentów dla wpisanej frazy. Sprawdź pisownię lub wyczyść wyszukiwarkę.",
   cta: {

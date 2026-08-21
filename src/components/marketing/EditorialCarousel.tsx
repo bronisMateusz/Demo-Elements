@@ -118,7 +118,7 @@ export function EditorialCarousel({
           className={productCarouselRootClassName({ layout: "bleed" })}
           aria-labelledby={titleId}
         >
-          <div className="mx-auto mb-8 w-full max-w-384 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mb-10">
+          <div className="mx-auto mb-8 w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)] md:mb-10">
             <TextRevealLead
               id={titleId}
               revealUnit="word"
@@ -227,7 +227,7 @@ export function EditorialCarousel({
           </Swiper>
 
           {itemCount > 1 || seeAll ? (
-            <div className="mx-auto mt-8 flex w-full max-w-384 flex-wrap items-center justify-center gap-x-6 gap-y-4 px-[clamp(1.25rem,2.222vw,2.5rem)] md:mt-10">
+            <div className="mx-auto mt-8 flex w-full max-w-384 flex-wrap items-center justify-center gap-x-6 gap-y-4 px-[clamp(0.75rem,2.222vw,2.5rem)] md:mt-10">
               {itemCount > 1 ? (
                 <div className="flex items-center gap-3">
                   <button

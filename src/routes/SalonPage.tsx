@@ -71,6 +71,9 @@ export function SalonPage() {
           <SalonAbout />
         </RevealSection>
         <RevealSection>
+          <SalonDesignStrip />
+        </RevealSection>
+        <RevealSection>
           <SalonStats />
         </RevealSection>
         <RevealSection>
@@ -92,13 +95,10 @@ export function SalonPage() {
           <SalonInspiration />
         </RevealSection>
         <RevealSection>
-          <SalonDesignStrip />
+          <SalonVisitCta onAskOpen={() => setAskOpen(true)} />
         </RevealSection>
         <RevealSection>
           <SalonDownloads />
-        </RevealSection>
-        <RevealSection>
-          <SalonVisitCta onAskOpen={() => setAskOpen(true)} />
         </RevealSection>
         <AdvisorAskDrawer
           open={askOpen}
@@ -108,8 +108,7 @@ export function SalonPage() {
       </PageShell>
 
       <FloatingAdvisorCta
-        label="Umów wizytę"
-        iconClass="ph ph-calendar-blank"
+        label="Napisz do doradcy"
         onClick={requestSalonDrawer}
       />
     </>

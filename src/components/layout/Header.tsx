@@ -9,7 +9,7 @@ import { cn } from "../../lib/cn";
 import {
   HEADER_UTILITY_CONCEAL_DELTA_PX,
   HEADER_UTILITY_CONCEAL_TOP_PX,
-  LG_MIN_WIDTH_PX,
+  XL_MIN_WIDTH_PX,
 } from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
 import { useInspirationProductsDrawerRequest } from "../../hooks/useInspirationProductsDrawer";
@@ -86,14 +86,14 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const lgQuery = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`);
+    const xlQuery = window.matchMedia(`(min-width: ${XL_MIN_WIDTH_PX}px)`);
 
     const onScroll = () => {
       const y = window.scrollY;
       setIsScrolled(y > 8);
 
-      // Utility strip exists only from lg up - never conceal the main bar on mobile.
-      if (!lgQuery.matches) {
+      // Utility strip exists only from xl up - never conceal the main bar below that.
+      if (!xlQuery.matches) {
         setUtilityConcealed(false);
         lastScrollY.current = y;
         return;
@@ -111,17 +111,17 @@ export function Header() {
     };
 
     const onBreakpointChange = () => {
-      if (!lgQuery.matches) setUtilityConcealed(false);
+      if (!xlQuery.matches) setUtilityConcealed(false);
       onScroll();
     };
 
     lastScrollY.current = window.scrollY;
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    lgQuery.addEventListener("change", onBreakpointChange);
+    xlQuery.addEventListener("change", onBreakpointChange);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      lgQuery.removeEventListener("change", onBreakpointChange);
+      xlQuery.removeEventListener("change", onBreakpointChange);
     };
   }, []);
 
@@ -138,7 +138,7 @@ export function Header() {
     <>
       <div
         id="siteHeaderUtility"
-        className="site-header-layer sticky top-0 z-102 hidden lg:block"
+        className="site-header-layer sticky top-0 z-102 hidden xl:block"
       >
         <HeaderUtility />
       </div>
@@ -146,7 +146,7 @@ export function Header() {
       <div
         id="siteHeaderBar"
         className={cn(
-          "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm lg:top-11",
+          "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm xl:top-11",
           isScrolled &&
             "bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}

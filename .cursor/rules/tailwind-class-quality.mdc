@@ -57,7 +57,7 @@ Prefer **named utilities** from theme over `[...]` when Tailwind / `suggestCanon
 - **`before:` / `after:`**: Tailwind already sets empty `content` when other `before:*` / `after:*` utilities are present. Do **not** add `before:content-['']` or `after:content-['']`. Keep `content-[...]` only when the value is real (e.g. `before:content-['/']`).
 - **CSS variables**: never `[var(--token)]` when a theme prop remains - use `(--token)` (e.g. rare remaining tokens). Prefer named utilities over custom focus/spacing aliases:
   - Focus: `outline-2 outline-offset-2` - do **not** invent `--spacing-focus-ring-*`
-  - Do **not** invent layout/leading theme tokens (`spacing-gutter`, `leading-heading`, `max-width-content`) - use spacing scale or clamp expressions (`px-[clamp(1.25rem,2.222vw,2.5rem)]`, `leading-[1.1]`, `max-w-384`). Shared clamp strings for JS probes live in `src/lib/layoutTokens.ts`.
+  - Do **not** invent layout/leading theme tokens (`spacing-gutter`, `leading-heading`, `max-width-content`) - use spacing scale or clamp expressions (`px-[clamp(0.75rem,2.222vw,2.5rem)]`, `leading-[1.1]`, `max-w-384`). Shared clamp strings for JS probes live in `src/lib/layoutTokens.ts`.
   - Keep `[...]` only for real expressions.
 - Brand tracking that used to override `tracking-wide`: use `tracking-[0.12em]` (Tailwind's `tracking-wide` is `0.025em`).
 - Sticky under concealed header: `header-concealed:` variant (see `app.css`).

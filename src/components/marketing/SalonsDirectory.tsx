@@ -12,15 +12,13 @@ import { distanceKm, formatDistanceKm } from "../../lib/geo";
 import { cn } from "../../lib/cn";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
-import {
-  maxLgPxGutterClassName,
-  stickyUnderHeaderClassName,
-} from "../../lib/layoutTokens";
+import { stickyUnderHeaderClassName } from "../../lib/layoutTokens";
 import { PolandSalonsMap } from "../layout/PolandSalonsMap";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { EmptyState } from "../ui/EmptyState";
 import { inputClassName } from "../ui/inputClassName";
+import { SalonHoursList } from "../salon/SalonHoursList";
 import { SalonLocationChips } from "./SalonLocationChips";
 
 type LocateStatus = "idle" | "loading" | "ready" | "error";
@@ -344,7 +342,6 @@ export function SalonsDirectory() {
           >
             <SalonLocationChips
               mobileAs="scroll"
-              scrollInsetClassName={maxLgPxGutterClassName}
               ariaLabel="Filtr województw"
               chips={filteredVoivChips.map((group) => ({
                 id: group.id,
@@ -365,7 +362,7 @@ export function SalonsDirectory() {
               view === "list" && "max-lg:hidden",
             )}
           >
-            <div className="lg:sticky lg:top-[max(8rem,calc(50svh-14rem))] header-concealed:lg:top-[max(5rem,calc(50svh-14rem))]">
+            <div className="lg:sticky lg:top-[max(5rem,calc(50svh-14rem))] xl:top-[max(8rem,calc(50svh-14rem))] header-concealed:xl:top-[max(5rem,calc(50svh-14rem))]">
               <PolandSalonsMap
                 fluid
                 tone="onLight"
@@ -451,11 +448,7 @@ export function SalonsDirectory() {
                                     {drawerCopy.hoursLabel}
                                   </dt>
                                   <dd className="m-0 text-neutral-700">
-                                    {hours.map((line) => (
-                                      <span key={line} className="block">
-                                        {line}
-                                      </span>
-                                    ))}
+                                    <SalonHoursList hours={hours} />
                                   </dd>
                                 </div>
                               </dl>

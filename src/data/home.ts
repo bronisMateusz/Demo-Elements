@@ -765,7 +765,7 @@ export const homePartners = {
         // Keep the face in frame - default center crop cuts the top of the head.
         focalPoint: { x: 55, y: 22 },
       },
-      href: "#strefa-architekta",
+      href: "/strefa-architekta",
       ctaLabel: "Przejdź do strefy architekta",
       benefits: [
         "Materiały do projektu - modele 3D, pliki CAD/DWG, tekstury i karty techniczne",

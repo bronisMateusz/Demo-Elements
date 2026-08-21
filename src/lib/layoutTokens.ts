@@ -1,6 +1,7 @@
 /** Layout lengths shared by class strings and JS probes (not CSS theme tokens). */
 
-export const GUTTER = "clamp(1.25rem,2.222vw,2.5rem)";
+/** Content gutter - 12px mobile floor, fluid mid, 40px desktop cap. */
+export const GUTTER = "clamp(0.75rem,2.222vw,2.5rem)";
 export const SECTION_SM = "clamp(2rem,5vw,3rem)";
 export const SECTION = "clamp(2.5rem,6vw,4rem)";
 export const CONTENT_MAX = "96rem";
@@ -16,21 +17,23 @@ export const HEADER_H_MOBILE_PX = 120;
 export const HEADER_UTILITY_PX = 44;
 export const HEADER_H_DESKTOP_PX = 116;
 export const LG_MIN_WIDTH_PX = 1024; // 64rem
+/** Desktop chrome: utility strip + full main nav (matches Tailwind `xl`). */
+export const XL_MIN_WIDTH_PX = 1280; // 80rem
 /** Keep in sync with Header conceal: utility stays visible near the top. */
 export const HEADER_UTILITY_CONCEAL_TOP_PX = 64;
 export const HEADER_UTILITY_CONCEAL_DELTA_PX = 6;
 
 /** Static class fragments - full literals so Tailwind can detect them. */
-export const pxGutterClassName = "px-[clamp(1.25rem,2.222vw,2.5rem)]";
+export const pxGutterClassName = "px-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const maxLgPxGutterClassName =
-  "max-lg:px-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const pGutterClassName = "p-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const mxNegGutterClassName = "-mx-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const insetSGutterClassName = "inset-s-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const insetEGutterClassName = "inset-e-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const insetXGutterClassName = "inset-x-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const topGutterClassName = "top-[clamp(1.25rem,2.222vw,2.5rem)]";
-export const bottomGutterClassName = "bottom-[clamp(1.25rem,2.222vw,2.5rem)]";
+  "max-lg:px-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const pGutterClassName = "p-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const mxNegGutterClassName = "-mx-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const insetSGutterClassName = "inset-s-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const insetEGutterClassName = "inset-e-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const insetXGutterClassName = "inset-x-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const topGutterClassName = "top-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const bottomGutterClassName = "bottom-[clamp(0.75rem,2.222vw,2.5rem)]";
 
 export const pySectionSmClassName = "py-[clamp(2rem,5vw,3rem)]";
 export const ptSectionSmClassName = "pt-[clamp(2rem,5vw,3rem)]";
@@ -48,11 +51,11 @@ export const maxWWideClassName = "max-w-448";
 /**
  * Stick just under the full site header. Mobile uses the live bar height
  * (`--site-header-bar-height`, includes HeaderSalonStrip) so a 1px slit
- * does not open under the chrome. lg+ is the utility + bar stack; when the
+ * does not open under the chrome. xl+ is the utility + bar stack; when the
  * utility strip conceals, drop to bar height. Full literals for Tailwind.
  */
 export const stickyUnderHeaderClassName =
-  "sticky top-[calc(var(--site-header-bar-height,7.25rem)-1px)] transition-[top] duration-base ease-luxury lg:top-29 header-concealed:top-18";
+  "sticky top-[calc(var(--site-header-bar-height,7.25rem)-1px)] transition-[top] duration-base ease-luxury xl:top-29 header-concealed:top-18";
 
 /**
  * Listing sidebar shell: stick under header with capped height.
@@ -70,11 +73,11 @@ export const stickyListingFiltersScrollClassName = [
 ].join(" ");
 
 export function readHeaderHeightPx(): number {
-  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
+  const isXl = window.matchMedia(`(min-width: ${XL_MIN_WIDTH_PX}px)`).matches;
   const bar = document.getElementById("siteHeaderBar");
   const barH = bar?.offsetHeight ?? 0;
 
-  if (!isLg) {
+  if (!isXl) {
     return barH > 0 ? barH : HEADER_H_MOBILE_PX;
   }
 
@@ -88,8 +91,8 @@ export function readHeaderHeightPx(): number {
 export function readHeaderBarPx(): number {
   const bar = document.getElementById("siteHeaderBar");
   const barH = bar?.offsetHeight ?? 0;
-  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
-  if (!isLg) {
+  const isXl = window.matchMedia(`(min-width: ${XL_MIN_WIDTH_PX}px)`).matches;
+  if (!isXl) {
     return barH > 0 ? barH : HEADER_H_MOBILE_PX;
   }
   return barH > 0 ? barH : HEADER_BAR_PX;
@@ -101,11 +104,11 @@ export function readHeaderOffsetPx(): number {
   );
 }
 
-/** Header stack height for a known utility-strip state (lg+). */
+/** Header stack height for a known utility-strip state (xl+). */
 export function readHeaderOffsetForConcealStatePx(concealed: boolean): number {
-  const isLg = window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches;
-  if (!isLg || !concealed) {
-    return isLg ? readHeaderHeightPx() : readHeaderBarPx();
+  const isXl = window.matchMedia(`(min-width: ${XL_MIN_WIDTH_PX}px)`).matches;
+  if (!isXl || !concealed) {
+    return isXl ? readHeaderHeightPx() : readHeaderBarPx();
   }
   return readHeaderBarPx();
 }
@@ -118,7 +121,7 @@ export function predictHeaderUtilityConcealed(
   fromY: number,
   toY: number,
 ): boolean {
-  if (!window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches) {
+  if (!window.matchMedia(`(min-width: ${XL_MIN_WIDTH_PX}px)`).matches) {
     return false;
   }
   if (toY <= HEADER_UTILITY_CONCEAL_TOP_PX) return false;

@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { AnimatedNumber } from "../motion/AnimatedNumber";
+import { AccordionCollapse } from "../motion/AccordionCollapse";
 import { PolandSalonsMap } from "./PolandSalonsMap";
 import { VoivodeshipSalonsDrawer } from "./VoivodeshipSalonsDrawer";
 import { cn } from "../../lib/cn";
@@ -13,8 +14,10 @@ import {
   presenceStats,
 } from "../../data/nav";
 import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
+
 /**
  * Dark pre-footer: stats strip, then salon finder with socials above the map.
+ * Mobile: city list accordion (closed by default); map + socials stay visible.
  */
 export function SiteSalonsPresence() {
   const voivGroups = useMemo(
@@ -22,8 +25,101 @@ export function SiteSalonsPresence() {
     [],
   );
   const [focusedVoivId, setFocusedVoivId] = useState<string | null>(null);
+  const [sectionOpen, setSectionOpen] = useState(false);
+  const panelId = useId();
 
   const closeVoivDrawer = () => setFocusedVoivId(null);
+
+  const voivList = (
+    <ul className="mt-8 mb-0 columns-2 list-none gap-x-6 p-0 md:columns-3 md:gap-x-8">
+      {voivGroups.map((group) => (
+        <li key={group.id} className="mb-6 min-w-0 break-inside-avoid">
+          <button
+            type="button"
+            className={cn(
+              "m-0 mb-1.5 block w-full text-start font-body text-2.75 font-medium tracking-[0.12em] wrap-break-word uppercase",
+              "text-neutral-500 transition-colors duration-fast ease-out hover:text-gold-400",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
+              focusedVoivId === group.id && "text-gold-400",
+            )}
+            onClick={() => setFocusedVoivId(group.id)}
+          >
+            {group.name}
+          </button>
+          <ul className="m-0 flex list-none flex-col p-0">
+            {group.cities.map((city) => (
+              <li key={city.href}>
+                <Link
+                  to={city.href}
+                  className={cn(
+                    "inline-flex min-h-11 w-fit items-center font-body text-sm text-neutral-300 no-underline underline-offset-2",
+                    "transition-colors duration-base ease-out hover:text-gold-400 hover:underline",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
+                  )}
+                >
+                  {city.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  );
+
+  const allSalonsCta = (
+    <div className="mt-8">
+      <Button
+        as="link"
+        href={presenceSalonsCopy.allSalonsHref}
+        variant="primary"
+        tone="onDark"
+        className="w-fit"
+      >
+        {presenceSalonsCopy.allSalonsLabel}
+        <span aria-hidden="true"> →</span>
+      </Button>
+    </div>
+  );
+
+  const mapColumn = (
+    <div className="flex min-w-0 flex-col gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-end">
+        <p className="m-0 font-body text-sm text-neutral-400">
+          {presenceSalonsCopy.socialLabel}
+        </p>
+        <ul
+          className="m-0 flex list-none items-center gap-1 p-0"
+          aria-label={presenceSalonsCopy.socialLabel}
+        >
+          {footerSocialLinks.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                className={cn(
+                  "inline-flex size-11 items-center justify-center text-neutral-400",
+                  "transition-colors duration-fast ease-out hover:text-gold-400",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
+                )}
+                aria-label={link.label}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i
+                  className={cn(link.iconClass, "text-2xl leading-none")}
+                  aria-hidden="true"
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <PolandSalonsMap
+        focusedVoivId={focusedVoivId}
+        onVoivSelect={setFocusedVoivId}
+      />
+    </div>
+  );
 
   return (
     <section
@@ -68,104 +164,69 @@ export function SiteSalonsPresence() {
 
       <Container
         size="content"
-        className="relative z-10 pt-8 pb-[clamp(2rem,5vw,3rem)] md:pt-10 md:pb-[clamp(2.5rem,6vw,4rem)]"
+        className={cn(
+          "relative z-10",
+          "py-3 md:pt-10 md:pb-[clamp(2.5rem,6vw,4rem)]",
+        )}
       >
-        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] xl:gap-16">
-          <div className="min-w-0">
-            <h2
-              id="presence-salons-title"
-              className="m-0 font-heading text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.1] font-medium text-neutral-0"
-            >
-              {presenceSalonsCopy.title}
-            </h2>
-            <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-400 md:text-ui">
-              {presenceSalonsCopy.description}
-            </p>
+        {/* Mobile: accordion for city list; map stays visible. */}
+        <button
+          type="button"
+          className={cn(
+            "flex w-full items-center justify-between gap-3 py-1 text-start md:hidden",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
+          )}
+          aria-expanded={sectionOpen}
+          aria-controls={panelId}
+          onClick={() => setSectionOpen((value) => !value)}
+        >
+          <span
+            id="presence-salons-title"
+            className="font-heading text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.1] font-medium text-neutral-0"
+          >
+            {presenceSalonsCopy.title}
+          </span>
+          <i
+            className={cn(
+              "ph ph-caret-down shrink-0 text-xl leading-none text-neutral-400 transition-transform duration-base ease-luxury",
+              sectionOpen && "rotate-180",
+            )}
+            aria-hidden="true"
+          />
+        </button>
 
-            <ul className="mt-8 mb-0 columns-2 list-none gap-x-6 p-0 md:columns-3 md:gap-x-8">
-              {voivGroups.map((group) => (
-                <li key={group.id} className="mb-6 min-w-0 break-inside-avoid">
-                  <button
-                    type="button"
-                    className={cn(
-                      "m-0 mb-1.5 block w-full text-start font-body text-2.75 font-medium tracking-[0.12em] wrap-break-word uppercase",
-                      "text-neutral-500 transition-colors duration-fast ease-out hover:text-gold-400",
-                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-                      focusedVoivId === group.id && "text-gold-400",
-                    )}
-                    onClick={() => setFocusedVoivId(group.id)}
-                  >
-                    {group.name}
-                  </button>
-                  <ul className="m-0 flex list-none flex-col p-0">
-                    {group.cities.map((city) => (
-                      <li key={city.href}>
-                        <Link
-                          to={city.href}
-                          className={cn(
-                            "inline-flex min-h-11 w-fit items-center font-body text-sm text-neutral-300 no-underline underline-offset-2",
-                            "transition-colors duration-base ease-out hover:text-gold-400 hover:underline",
-                            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-                          )}
-                        >
-                          {city.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
+        <AccordionCollapse
+          open={sectionOpen}
+          id={panelId}
+          className="md:hidden"
+          innerClassName="pt-4"
+        >
+          <p className="m-0 max-w-md text-sm leading-relaxed text-neutral-400">
+            {presenceSalonsCopy.description}
+          </p>
+          {voivList}
+          {allSalonsCta}
+        </AccordionCollapse>
 
-            <div className="mt-8">
-              <Button
-                as="link"
-                href={presenceSalonsCopy.allSalonsHref}
-                variant="primary"
-                tone="onDark"
-                className="w-fit"
+        <div className="mt-6 md:hidden">{mapColumn}</div>
+
+        {/* Desktop: always expanded */}
+        <div className="hidden md:block">
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] xl:gap-16">
+            <div className="min-w-0">
+              <h2
+                id="presence-salons-title-desktop"
+                className="m-0 font-heading text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.1] font-medium text-neutral-0"
               >
-                {presenceSalonsCopy.allSalonsLabel}
-                <span aria-hidden="true"> →</span>
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex min-w-0 flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-end">
-              <p className="m-0 font-body text-sm text-neutral-400">
-                {presenceSalonsCopy.socialLabel}
+                {presenceSalonsCopy.title}
+              </h2>
+              <p className="mt-3 mb-0 max-w-md text-sm leading-relaxed text-neutral-400 md:text-ui">
+                {presenceSalonsCopy.description}
               </p>
-              <ul
-                className="m-0 flex list-none items-center gap-1 p-0"
-                aria-label={presenceSalonsCopy.socialLabel}
-              >
-                {footerSocialLinks.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className={cn(
-                        "inline-flex size-11 items-center justify-center text-neutral-400",
-                        "transition-colors duration-fast ease-out hover:text-gold-400",
-                        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-                      )}
-                      aria-label={link.label}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i
-                        className={cn(link.iconClass, "text-2xl leading-none")}
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {voivList}
+              {allSalonsCta}
             </div>
-            <PolandSalonsMap
-              focusedVoivId={focusedVoivId}
-              onVoivSelect={setFocusedVoivId}
-            />
+            {mapColumn}
           </div>
         </div>
       </Container>

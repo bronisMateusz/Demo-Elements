@@ -4,9 +4,10 @@ import type { PdpSubnavItem } from "../constants/pdpSubnav";
 import {
   PDP_SUBNAV_HEIGHT_MOBILE_PX,
   PDP_SUBNAV_HEIGHT_PX,
+  PDP_SUBNAV_NAVIGATE_EVENT,
 } from "../constants/pdpSubnav";
 import {
-  LG_MIN_WIDTH_PX,
+  XL_MIN_WIDTH_PX,
   readHeaderHeightPx,
   readHeaderOffsetPx,
 } from "../lib/layoutTokens";
@@ -16,7 +17,7 @@ const SUBNAV_GAP_PX = 8;
 function readSubnavHeightPx() {
   const node = document.getElementById("pdpSubnav");
   if (node?.offsetHeight) return node.offsetHeight;
-  return window.matchMedia(`(min-width: ${LG_MIN_WIDTH_PX}px)`).matches
+  return window.matchMedia(`(min-width: ${XL_MIN_WIDTH_PX}px)`).matches
     ? PDP_SUBNAV_HEIGHT_PX
     : PDP_SUBNAV_HEIGHT_MOBILE_PX;
 }
@@ -93,6 +94,10 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (!element) return;
+
+    window.dispatchEvent(
+      new CustomEvent(PDP_SUBNAV_NAVIGATE_EVENT, { detail: { id } }),
+    );
 
     const top =
       element.getBoundingClientRect().top +

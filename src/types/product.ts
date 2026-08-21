@@ -146,13 +146,7 @@ export type Product = {
     secondaryLabel?: string;
     secondaryHref?: string;
   };
-  salonCard?: {
-    eyebrow: string;
-    description: string;
-    href: string;
-    label: string;
-  };
-  /** Optional promo strip under the PDP gallery carousel. */
+  /** Full-width collection promo strip above the PDP subnav. */
   galleryBanner?: {
     eyebrow: string;
     title: string;

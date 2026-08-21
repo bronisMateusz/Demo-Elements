@@ -1,6 +1,8 @@
 import { cn } from "../../lib/cn";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
+import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
+import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 
 type LocateImage = {
@@ -83,18 +85,18 @@ export function LocateCta({
             <p className="relative m-0 max-w-prose font-body text-sm leading-relaxed text-neutral-400">
               {description}
             </p>
-            <button
+            <Button
+              as="button"
               type="button"
-              className={cn(
-                "relative mt-1 inline-flex items-center gap-2 font-body text-sm font-medium text-gold-400",
-                "transition-[color,gap] duration-fast ease-out hover:gap-3 hover:text-gold-100",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-              )}
+              variant="primary"
+              tone="onDark"
+              size="lg"
+              className={cn("relative mt-1", splitMediaCtaButtonClassName)}
               onClick={onCtaClick}
             >
               {ctaLabel}
-              <i className="ph ph-arrow-right text-sm" aria-hidden="true" />
-            </button>
+              <i className="ph ph-arrow-right" aria-hidden="true" />
+            </Button>
           </div>
         </div>
       </Container>

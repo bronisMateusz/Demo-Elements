@@ -13,15 +13,18 @@ import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
 import { ProductDownloads } from "../components/product/ProductDownloads";
 import { ProductEditorial } from "../components/product/ProductEditorial";
 import { ProductHero } from "../components/product/ProductHero";
+import { ProductGalleryBanner } from "../components/product/ProductGalleryBanner";
 import { ProductInspiration } from "../components/product/ProductInspiration";
 import { ProductPairWith } from "../components/product/ProductPairWith";
 import { ProductRecommendations } from "../components/product/ProductRecommendations";
 import { ProductSpecifications } from "../components/product/ProductSpecifications";
 import { ProductVisualizationCTA } from "../components/product/ProductVisualizationCTA";
+import { Container } from "../components/ui/Container";
 import { montebianco80 } from "../data/products/montebianco-80";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { recordRecentlyViewedProduct } from "../hooks/useRecentlyViewedProducts";
 import { productToRelatedProduct } from "../lib/productToRelatedProduct";
+import { cn } from "../lib/cn";
 
 function RevealSection({ children }: { children: React.ReactNode }) {
   const { ref, className } = useRevealOnScroll();
@@ -63,6 +66,19 @@ export function ProductDetailPage() {
       >
         <ProductHero product={product} onAskOpen={() => setAskOpen(true)} />
 
+        {product.galleryBanner ? (
+          <Container size="wide" className="pb-4 md:pb-6">
+            <ProductGalleryBanner
+              eyebrow={product.galleryBanner.eyebrow}
+              title={product.galleryBanner.title}
+              description={product.galleryBanner.description}
+              href={product.galleryBanner.href}
+              label={product.galleryBanner.label}
+              image={product.galleryBanner.image}
+            />
+          </Container>
+        ) : null}
+
         <ProductSubnav items={subnavItems} />
 
         <RevealSection>
@@ -75,13 +91,20 @@ export function ProductDetailPage() {
         </RevealSection>
 
         <RevealSection>
-          <Section id="pdp-opis" className={pdpSectionScrollMarginClassName}>
+          <Section
+            id="pdp-opis"
+            className={cn(
+              pdpSectionScrollMarginClassName,
+              "py-4 md:py-[clamp(2.5rem,6vw,4rem)]",
+            )}
+          >
             <ProductEditorial
               eyebrow={product.editorial.eyebrow}
               title={product.editorial.title}
               lead={product.editorial.lead}
               paragraphs={product.editorial.paragraphs}
               features={product.editorial.features}
+              expandOnSectionId="pdp-opis"
             />
           </Section>
         </RevealSection>
@@ -89,16 +112,32 @@ export function ProductDetailPage() {
         <RevealSection>
           <Section
             id="pdp-specyfikacja"
-            tone="warm"
-            className={pdpSectionScrollMarginClassName}
+            className={cn(
+              pdpSectionScrollMarginClassName,
+              "bg-neutral-0 py-4 transition-colors duration-base ease-luxury",
+              "data-[expanded=true]:bg-neutral-100",
+              "md:bg-neutral-100 md:py-[clamp(2.5rem,6vw,4rem)]",
+            )}
           >
-            <ProductSpecifications specs={product.specifications} />
+            <ProductSpecifications
+              specs={product.specifications}
+              expandOnSectionId="pdp-specyfikacja"
+            />
           </Section>
         </RevealSection>
 
         <RevealSection>
-          <Section id="pdp-pliki" className={pdpSectionScrollMarginClassName}>
-            <ProductDownloads downloads={product.downloads} />
+          <Section
+            id="pdp-pliki"
+            className={cn(
+              pdpSectionScrollMarginClassName,
+              "py-4 md:py-[clamp(2.5rem,6vw,4rem)]",
+            )}
+          >
+            <ProductDownloads
+              downloads={product.downloads}
+              expandOnSectionId="pdp-pliki"
+            />
           </Section>
         </RevealSection>
 

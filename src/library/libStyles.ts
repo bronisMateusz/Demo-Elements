@@ -66,13 +66,13 @@ export const libModuleTitleClassName = "m-0 mb-4";
 export const libModuleDescClassName = "m-0 max-w-[72ch]";
 
 export const libModuleVariantsClassName =
-  "grid min-w-0 gap-8 overflow-x-clip bg-neutral-50 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8";
+  "grid min-w-0 gap-8 overflow-x-clip bg-neutral-50 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8";
 
 export const libVariantClassName =
   "min-w-0 max-w-full overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0 shadow-subtle";
 
 export const libVariantHeaderClassName =
-  "border-b border-neutral-200 border-s-2 border-s-gold-500 px-[clamp(1.25rem,2.222vw,2.5rem)] py-4";
+  "border-b border-neutral-200 border-s-2 border-s-gold-500 px-[clamp(0.75rem,2.222vw,2.5rem)] py-4";
 
 export const libVariantLabelClassName =
   "m-0 mb-1.5 font-heading text-ui text-neutral-900";
@@ -90,7 +90,7 @@ export function libVariantPreviewClassName({
 }
 
 export const libDevPanelClassName =
-  "border-t border-dashed border-neutral-200 px-[clamp(1.25rem,2.222vw,2.5rem)] py-4 text-sm leading-normal bg-neutral-100";
+  "border-t border-dashed border-neutral-200 px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 text-sm leading-normal bg-neutral-100";
 
 export const libDevPanelBlockClassName =
   "not-first:mt-4 not-first:border-t not-first:border-neutral-200 not-first:pt-4";
@@ -105,7 +105,7 @@ export const libPreviewFullBleedWrapperClassName =
   "w-full min-w-0 max-w-full overflow-x-clip";
 
 export const libPreviewArticleClassName =
-  "p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8";
+  "p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8";
 
 export const libPreviewChromeClassName =
   "grid min-h-12 place-items-center border-b border-dashed border-neutral-200 bg-neutral-0 px-8 py-3 text-sm text-neutral-600";
@@ -125,7 +125,7 @@ export const libBtnStateLabelClassName =
   "lib-btn-state-label text-xs font-medium tracking-[0.12em] uppercase text-neutral-500";
 
 export const libBtnDarkSurfaceClassName =
-  "rounded-xs bg-neutral-800 p-[clamp(1.25rem,2.222vw,2.5rem)] md:p-8";
+  "rounded-xs bg-neutral-800 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8";
 
 export type LibButtonPreviewState =
   "default" | "hover" | "focus" | "active" | "disabled";

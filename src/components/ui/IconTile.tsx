@@ -63,7 +63,8 @@ export function IconTile({
       </div>
       <span
         className={cn(
-          "mt-auto font-body text-sm leading-snug font-medium text-balance text-neutral-900 md:text-ui",
+          "font-body text-sm leading-snug font-medium text-balance text-neutral-900 md:text-ui",
+          !text && "mt-auto",
         )}
       >
         {label}

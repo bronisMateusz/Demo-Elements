@@ -49,7 +49,7 @@
   --color-badge-brand: #6c7f80; /* 108/127/128 - alias of slate-700 */
 
   /* Promo */
-  --color-promo: #c65438; /* 198/84/56 */
+  --color-promo: #c62828; /* 198/40/40 */
   --color-promo-muted: #faf6f6; /* 250/246/246 - same as neutral-100 */
 
   /* Typography — single family (General Sans); no licensed brand fonts */
@@ -110,6 +110,36 @@
     @apply m-0 overflow-x-clip bg-neutral-0 font-body text-base leading-[1.75] text-neutral-600 antialiased [text-rendering:optimizeLegibility];
   }
 
+  /* Slim brand scrollbar - warm neutrals; hidden where `scrollbar-none` is used. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-350) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-350);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-gold-400);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   /* Brand text selection - soft gold + dark text (readable on gold-500 primary too). */
   ::selection {
     @apply bg-gold-100 text-neutral-900;
@@ -152,8 +182,8 @@
 }
 
 @utility container {
-  /* OKA lyt-Container: full viewport width + fluid gutters (~40px desktop) */
-  @apply mx-auto w-full max-w-none px-[clamp(1.25rem,2.222vw,2.5rem)];
+  /* Full viewport width + fluid gutters (12px mobile → ~40px desktop). */
+  @apply mx-auto w-full max-w-none px-[clamp(0.75rem,2.222vw,2.5rem)];
 }
 
 @utility t-display {

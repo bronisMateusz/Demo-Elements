@@ -6,6 +6,7 @@ import { usePdpSubnav } from "../../hooks/usePdpSubnav";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
 import { SharedLayoutUnderline } from "../motion/SharedLayoutUnderline";
+import { HorizontalScrollTrack } from "../ui/HorizontalScrollTrack";
 
 type ProductSubnavProps = {
   items: PdpSubnavItem[];
@@ -81,19 +82,19 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
         ref={navRef}
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-[var(--site-header-bar-height,7.5rem)] z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm lg:top-29",
+          "pdp-subnav sticky top-[var(--site-header-bar-height,7.5rem)] z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm xl:top-29",
           stuck &&
             "is-stuck border-neutral-200 bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}
         aria-label="Sekcje strony produktu"
       >
-        <div
-          ref={scrollerRef}
-          className="container mx-auto max-w-384 overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        <HorizontalScrollTrack
+          className="mx-auto w-full max-w-384 px-1 sm:px-1.5"
+          scrollerRef={scrollerRef}
         >
           <LayoutGroup id="pdp-subnav-active">
             <SharedLayoutUnderline
-              className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"
+              className="mx-auto flex w-max min-w-full items-stretch justify-start gap-0 md:justify-center md:gap-1"
               lineClassName="h-0.5 bg-neutral-900/45"
               insetX={12}
               bottom={0}
@@ -134,7 +135,7 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
               })}
             </SharedLayoutUnderline>
           </LayoutGroup>
-        </div>
+        </HorizontalScrollTrack>
       </nav>
     </>
   );

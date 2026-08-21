@@ -60,7 +60,7 @@ export function HomeMagazine({
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-8 px-[clamp(1.25rem,2.222vw,2.5rem)] py-10 md:gap-10 md:py-12 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12 lg:py-14 xl:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-14 xl:py-16">
+        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-8 px-[clamp(0.75rem,2.222vw,2.5rem)] py-10 md:gap-10 md:py-12 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12 lg:py-14 xl:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-14 xl:py-16">
           <div className="min-w-0 lg:max-w-xl">
             <Eyebrow variant="gold" className="mb-3 text-gold-400">
               {eyebrow}
@@ -102,21 +102,13 @@ export function HomeMagazine({
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-72 pe-4 sm:max-w-80 sm:pe-5 lg:mx-0 lg:max-w-none">
-            <div
-              className="pointer-events-none absolute inset-0 origin-bottom-left translate-x-3.5 rotate-3 rounded-xs border border-neutral-200 bg-neutral-0 shadow-2"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute inset-0 origin-bottom-left translate-x-1.5 rotate-1 rounded-xs border border-neutral-200/70 bg-neutral-0 shadow-1"
-              aria-hidden="true"
-            />
+          <div className="relative mx-auto w-full max-w-72 sm:max-w-80 lg:mx-0 lg:max-w-none">
             <a
               href={primaryCta.href}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                "group relative z-10 block -rotate-2 overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0 shadow-2",
+                "group relative z-10 block overflow-hidden rounded-xs bg-neutral-0 shadow-2",
                 "outline-offset-4 transition-shadow duration-base ease-luxury",
                 "hover:shadow-[0_12px_40px_rgba(26,24,21,0.12)]",
                 "focus-visible:outline-2 focus-visible:outline-gold-500",

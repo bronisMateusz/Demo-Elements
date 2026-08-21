@@ -6,6 +6,10 @@ import { favoritesNav, mainNavItems, salonNav } from "../../../data/nav";
 import { useProductFavoritesCount } from "../../../hooks/useProductFavorites";
 import { useSelectedSalon } from "../../../hooks/useSelectedSalon";
 import { IconButton, IconLink } from "../../ui/IconButton";
+import {
+  btnAnimatedBaseClassName,
+  btnAnimatedFillLightClassName,
+} from "../../ui/btnAnimatedClassName";
 import { ProductsMegaMenu } from "./ProductsMegaMenu";
 
 type HeaderBarProps = {
@@ -37,25 +41,27 @@ function HeaderSalonButton({
       aria-haspopup="dialog"
       aria-expanded={open}
       className={cn(
-        "group/salon hidden min-w-0 items-center gap-2.5 self-stretch rounded-xs px-3 text-start transition-colors duration-fast ease-out sm:flex",
-        "hover:bg-neutral-100",
+        "group/salon hidden h-12 min-w-0 items-center gap-2.5 rounded-xs px-3 text-start sm:flex",
+        btnAnimatedBaseClassName,
+        btnAnimatedFillLightClassName,
+        "hover:text-neutral-0 focus-visible:text-neutral-0",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
       )}
     >
       <i
-        className="ph ph-map-pin shrink-0 text-xl leading-none text-neutral-800 transition-colors duration-fast ease-out group-hover/salon:text-gold-500"
+        className="ph ph-map-pin relative z-1 shrink-0 text-xl leading-none text-neutral-800 transition-colors duration-base ease-luxury group-hover/salon:text-neutral-0"
         aria-hidden="true"
       />
-      <span className="min-w-0">
-        <span className="block truncate font-body text-ui leading-[1.4] text-neutral-800 transition-colors duration-fast ease-out group-hover/salon:text-gold-500">
+      <span className="relative z-1 min-w-0">
+        <span className="block truncate font-body text-ui leading-[1.15] text-neutral-800 transition-colors duration-base ease-luxury group-hover/salon:text-neutral-0">
           {label}
         </span>
-        <span className="mt-0.5 block truncate text-xs leading-[1.4] text-neutral-500 transition-colors duration-fast ease-out group-hover/salon:text-neutral-700">
+        <span className="mt-0.5 block truncate text-xs leading-[1.15] text-neutral-500 transition-colors duration-base ease-luxury group-hover/salon:text-neutral-0">
           {note}
         </span>
       </span>
       <i
-        className="ph ph-caret-down shrink-0 text-xs leading-none text-neutral-500 transition-colors duration-fast ease-out group-hover/salon:text-gold-500"
+        className="ph ph-caret-down relative z-1 shrink-0 text-xs leading-none text-neutral-500 transition-colors duration-base ease-luxury group-hover/salon:text-neutral-0"
         aria-hidden="true"
       />
     </button>
@@ -124,7 +130,7 @@ export function HeaderBar({
       className="relative"
       onMouseLeave={scheduleCloseProducts}
     >
-      <div className="container flex h-14 items-center gap-3 lg:h-18 lg:gap-4 xl:gap-6">
+      <div className="container flex h-14 items-center gap-3 pe-0 xl:h-18 xl:gap-6 xl:pe-[clamp(0.75rem,2.222vw,2.5rem)]">
         <Link
           to="/"
           className="inline-flex shrink-0 items-center no-underline"
@@ -140,7 +146,7 @@ export function HeaderBar({
         </Link>
 
         <nav
-          className="hidden min-w-0 flex-1 self-stretch lg:block"
+          className="hidden min-w-0 flex-1 self-stretch xl:block"
           aria-label="Główne menu"
         >
           <ul className="m-0 flex h-full list-none items-stretch gap-1 xl:gap-2">
@@ -198,7 +204,7 @@ export function HeaderBar({
           </ul>
         </nav>
 
-        <div className="ms-auto flex h-full min-w-0 items-center gap-0.5 border-s border-neutral-200 ps-2 lg:ms-0 lg:gap-1 lg:ps-4">
+        <div className="ms-auto flex h-full min-w-0 items-center gap-0.5 border-s border-neutral-200 ps-2 xl:ms-0 xl:gap-1 xl:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton
             label="Szukaj"
@@ -220,7 +226,7 @@ export function HeaderBar({
             label="Otwórz menu"
             iconClass="ph ph-list"
             variant="ghost"
-            className="lg:hidden"
+            className="xl:hidden"
             onClick={onMenuToggle}
           />
         </div>
@@ -230,7 +236,7 @@ export function HeaderBar({
         </span>
       </div>
 
-      <div className="hidden lg:block" onMouseEnter={openProducts}>
+      <div className="hidden xl:block" onMouseEnter={openProducts}>
         <ProductsMegaMenu open={productsOpen} id={megaId} />
       </div>
     </div>

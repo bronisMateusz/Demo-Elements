@@ -22,7 +22,7 @@ See also `code-conventions.mdc` for token hygiene (prefer Tailwind defaults when
 Repeatable patterns → `@utility` or shared `*ClassName.ts`:
 
 - Typography helpers: `t-display`, `t-h1`, `t-body`, `t-ui`, …
-- Layout: `container` (fluid gutter via `px-[clamp(1.25rem,2.222vw,2.5rem)]`)
+- Layout: `container` (fluid gutter via `px-[clamp(0.75rem,2.222vw,2.5rem)]`)
 - Motion states: `.motion-fill-surface`, `.motion-fill-chevron` (minimal global CSS)
 
 Do not add `@theme` tokens for leading/tracking/gutter/section/header/max-width - use scale or `[…]` (see `layoutTokens.ts` for shared clamp strings used by JS).

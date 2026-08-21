@@ -14,7 +14,7 @@ export type CategorySubTileProps = {
   className?: string;
 };
 
-/** Square media + label below - same tile as /kategoria subcategory rows. */
+/** 4:3 media + label below - same aspect as ImageBentoTile / home categories. */
 export function CategorySubTile({
   label,
   href,
@@ -32,7 +32,7 @@ export function CategorySubTile({
     <>
       <div
         className={cn(
-          "relative aspect-square overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50",
+          "relative aspect-4/3 overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50",
           "transition-[border-color,background-color] duration-base ease-out",
           "group-hover/tile:border-gold-500 group-hover/tile:bg-gold-50",
         )}

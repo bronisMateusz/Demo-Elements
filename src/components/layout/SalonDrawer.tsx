@@ -20,7 +20,7 @@ type UserCoords = {
 
 type LocateStatus = "idle" | "loading" | "ready" | "error";
 
-const GUTTER_X = "px-[clamp(1.25rem,2.222vw,2.5rem)]";
+const GUTTER_X = "px-[clamp(0.75rem,2.222vw,2.5rem)]";
 
 function SalonSearchBlock({
   searchId,

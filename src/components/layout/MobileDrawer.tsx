@@ -22,7 +22,7 @@ type GroupFrame = { kind: "group"; href: string };
 type Frame = RootFrame | ProductsFrame | GroupFrame;
 
 const PANEL_DURATION_S = 0.32;
-const PANEL_PAD = "px-[clamp(1.25rem,2.222vw,2.5rem)] py-8";
+const PANEL_PAD = "px-[clamp(0.75rem,2.222vw,2.5rem)] py-8";
 const PANEL_SURFACE =
   "absolute inset-0 flex flex-col overflow-y-auto bg-neutral-0 " + PANEL_PAD;
 
@@ -107,7 +107,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
       onClose={handleClose}
       label="Menu nawigacji"
       closeLabel="Zamknij menu"
-      className="lg:hidden"
+      className="xl:hidden"
     >
       <DrawerHeader
         title={headerTitle}
@@ -177,34 +177,44 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
 
           <div className="mt-8 border-t border-neutral-200 pt-6">
             <nav aria-label="Strefy i skróty">
-              <ul className="flex list-none flex-col gap-1">
-                {utilityNavItems.map((item) => (
-                  <li
-                    key={item.href + item.label}
-                    className={cn(
-                      "dividerAfter" in item &&
-                        item.dividerAfter &&
-                        "mb-3 border-b border-neutral-200 pb-3",
-                    )}
-                  >
-                    <a
-                      href={item.href}
-                      className="flex items-center gap-3 py-3 font-body text-lg text-neutral-900 no-underline transition-colors hover:text-gold-500"
-                      onClick={handleClose}
-                    >
-                      {"iconClass" in item && item.iconClass ? (
-                        <i
-                          className={cn(
-                            item.iconClass,
-                            "text-xl leading-none text-gold-500",
-                          )}
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                      <span className="min-w-0 flex-1">{item.label}</span>
-                    </a>
-                  </li>
-                ))}
+              <ul className="m-0 flex list-none flex-col gap-1 p-0">
+                {utilityNavItems
+                  .filter((item) => "accent" in item && item.accent)
+                  .map((item) => (
+                    <li key={item.href + item.label}>
+                      <a
+                        href={item.href}
+                        className="flex items-center gap-3 py-3 font-body text-lg text-neutral-900 no-underline transition-colors hover:text-gold-500"
+                        onClick={handleClose}
+                      >
+                        {"iconClass" in item && item.iconClass ? (
+                          <i
+                            className={cn(
+                              item.iconClass,
+                              "text-xl leading-none text-gold-500",
+                            )}
+                            aria-hidden="true"
+                          />
+                        ) : null}
+                        <span className="min-w-0 flex-1">{item.label}</span>
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+              <ul className="m-0 mt-6 flex list-none flex-col gap-1 border-t border-neutral-200 p-0 pt-6">
+                {utilityNavItems
+                  .filter((item) => !("accent" in item && item.accent))
+                  .map((item) => (
+                    <li key={item.href + item.label}>
+                      <a
+                        href={item.href}
+                        className="flex items-center gap-3 py-3 font-body text-lg text-neutral-900 no-underline transition-colors hover:text-gold-500"
+                        onClick={handleClose}
+                      >
+                        <span className="min-w-0 flex-1">{item.label}</span>
+                      </a>
+                    </li>
+                  ))}
               </ul>
             </nav>
           </div>

@@ -66,10 +66,10 @@ export function productCarouselNavClassName({
           "absolute top-[36%] z-2 hidden -translate-y-1/2 shadow-subtle md:inline-flex",
           placement === "prev" &&
             (isBleed
-              ? "inset-s-[clamp(1.25rem,2.222vw,2.5rem)]"
+              ? "inset-s-[clamp(0.75rem,2.222vw,2.5rem)]"
               : "-inset-s-2 md:-inset-s-4"),
           placement === "next" &&
-            (isBleed ? "inset-e-[clamp(1.25rem,2.222vw,2.5rem)]" : "inset-e-4"),
+            (isBleed ? "inset-e-[clamp(0.75rem,2.222vw,2.5rem)]" : "inset-e-4"),
         ),
     disabled && "pointer-events-none opacity-35",
   );

@@ -55,7 +55,7 @@ export function ListingFiltersDrawer({
           </Button>
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto px-[clamp(1.25rem,2.222vw,2.5rem)] py-6">
+      <div className="min-h-0 flex-1 overflow-y-auto px-[clamp(0.75rem,2.222vw,2.5rem)] py-6">
         <ListingFilters
           state={state}
           onChange={onChange}
@@ -66,7 +66,7 @@ export function ListingFiltersDrawer({
           showClear={false}
         />
       </div>
-      <div className="shrink-0 border-t border-neutral-200 bg-neutral-0 px-[clamp(1.25rem,2.222vw,2.5rem)] pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div className="shrink-0 border-t border-neutral-200 bg-neutral-0 px-[clamp(0.75rem,2.222vw,2.5rem)] pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <Button
           as="button"
           type="button"
