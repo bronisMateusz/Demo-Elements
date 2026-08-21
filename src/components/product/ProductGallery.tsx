@@ -19,6 +19,7 @@ import {
   lockLightboxScroll,
 } from "../../hooks/useSiteChrome";
 import type { ProductImage } from "../../types/product";
+import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { IconButton } from "../ui/IconButton";
 import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "./ProductGalleryLightboxFlyer";
@@ -34,136 +35,154 @@ type GalleryThumbnailRailProps = {
   images: ProductImage[];
   activeIndex: number;
   onSelect: (index: number) => void;
+  className?: string;
 };
 
+/** Horizontal strip - same pattern as the lightbox thumbs. */
 function GalleryThumbnailRail({
   images,
   activeIndex,
   onSelect,
+  className,
 }: GalleryThumbnailRailProps) {
+  const thumbsRef = useRef<HTMLDivElement | null>(null);
+  const reduce = useMotionReduced();
+
+  useEffect(() => {
+    const root = thumbsRef.current;
+    if (!root) return;
+    const active = root.querySelector<HTMLElement>("[aria-current='true']");
+    active?.scrollIntoView({
+      behavior: reduce ? "auto" : "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [activeIndex, reduce]);
+
   return (
     <div
-      className="hidden h-full w-14 shrink-0 flex-col xl:flex"
+      ref={thumbsRef}
+      className={cn(
+        "flex max-w-full gap-2 overflow-x-auto",
+        "scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+        className,
+      )}
       aria-label="Miniatury galerii"
     >
-      <div
-        className="mx-auto min-h-4 w-px flex-1 bg-neutral-200"
-        aria-hidden="true"
-      />
+      {images.map((image, index) => {
+        const isActive = index === activeIndex;
 
-      <div className="flex flex-col justify-end gap-2">
-        {images.map((image, index) => {
-          const isActive = index === activeIndex;
-
-          return (
-            <button
-              key={image.src}
-              type="button"
-              className={cn(
-                "relative aspect-square w-full cursor-pointer overflow-hidden rounded-xs border bg-neutral-0 transition-[opacity,border-color] duration-base ease-out",
-                isActive
-                  ? "border-neutral-900 opacity-100"
-                  : "border-neutral-200 opacity-55 hover:opacity-100",
-              )}
-              aria-label={`Przejdź do zdjęcia ${index + 1}`}
-              aria-current={isActive ? "true" : undefined}
-              onClick={() => onSelect(index)}
-            >
-              <img
-                src={image.src}
-                alt=""
-                className="absolute inset-0 size-full object-cover"
-                style={{ objectPosition: productImageObjectPosition(image) }}
-                loading="lazy"
-                draggable={false}
-              />
-            </button>
-          );
-        })}
-      </div>
+        return (
+          <button
+            key={image.src}
+            type="button"
+            className={cn(
+              "size-14 shrink-0 overflow-hidden rounded-xs border bg-neutral-50 transition-[border-color,opacity] duration-fast ease-out",
+              isActive
+                ? "border-neutral-900 opacity-100"
+                : "border-transparent opacity-70 hover:opacity-100",
+            )}
+            aria-label={`Przejdź do zdjęcia ${index + 1}`}
+            aria-current={isActive ? "true" : undefined}
+            onClick={() => onSelect(index)}
+          >
+            <img
+              src={image.src}
+              alt=""
+              className="size-full object-cover"
+              style={{ objectPosition: productImageObjectPosition(image) }}
+              loading="lazy"
+              draggable={false}
+            />
+          </button>
+        );
+      })}
     </div>
   );
 }
 
-type GalleryControlsProps = {
+function GalleryCounter({
+  activeIndex,
+  count,
+  className,
+}: {
+  activeIndex: number;
+  count: number;
+  className?: string;
+}) {
+  return (
+    <p
+      className={cn(
+        "m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle",
+        className,
+      )}
+      aria-live="polite"
+    >
+      {activeIndex + 1}
+      <span className="text-neutral-400"> / {count}</span>
+    </p>
+  );
+}
+
+type GalleryNavButtonsProps = {
   activeIndex: number;
   count: number;
   onPrev: () => void;
   onNext: () => void;
-  onZoom: () => void;
+  onZoom?: () => void;
+  showZoom?: boolean;
+  className?: string;
 };
 
-function GalleryPagination({
-  activeIndex,
-  count,
-}: {
-  activeIndex: number;
-  count: number;
-}) {
-  if (count <= 1) return null;
-
-  return (
-    <div className="pointer-events-none absolute bottom-4 inset-s-4 z-2 xl:hidden">
-      <p
-        className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
-        aria-live="polite"
-      >
-        {activeIndex + 1}
-        <span className="text-neutral-400"> / {count}</span>
-      </p>
-    </div>
-  );
-}
-
-function GalleryControls({
+function GalleryNavButtons({
   activeIndex,
   count,
   onPrev,
   onNext,
   onZoom,
-}: GalleryControlsProps) {
+  showZoom = false,
+  className,
+}: GalleryNavButtonsProps) {
   const atStart = activeIndex <= 0;
   const atEnd = activeIndex >= count - 1;
 
   return (
-    <>
-      <GalleryPagination activeIndex={activeIndex} count={count} />
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex justify-end px-4">
-        <div className="pointer-events-auto flex gap-1">
-          {/* Zoom is redundant on mobile - tap the image opens the lightbox. */}
-          <IconButton
-            label="Powiększ zdjęcie"
-            iconClass="ph ph-magnifying-glass-plus"
-            variant="elevated"
-            className="hidden shadow-subtle lg:inline-flex"
-            onClick={onZoom}
-          />
-          <IconButton
-            label="Poprzednie zdjęcie"
-            iconClass="ph ph-caret-left"
-            variant="elevated"
-            className={cn(
-              "shadow-subtle",
-              atStart && "pointer-events-none opacity-35",
-            )}
-            onClick={atStart ? undefined : onPrev}
-          />
-          <IconButton
-            label="Następne zdjęcie"
-            iconClass="ph ph-caret-right"
-            variant="elevated"
-            className={cn(
-              "shadow-subtle",
-              atEnd && "pointer-events-none opacity-35",
-            )}
-            onClick={atEnd ? undefined : onNext}
-          />
-        </div>
-      </div>
-    </>
+    <div className={cn("flex gap-1", className)}>
+      {showZoom && onZoom ? (
+        <IconButton
+          label="Powiększ zdjęcie"
+          iconClass="ph ph-magnifying-glass-plus"
+          variant="elevated"
+          className="shadow-subtle"
+          onClick={onZoom}
+        />
+      ) : null}
+      <IconButton
+        label="Poprzednie zdjęcie"
+        iconClass="ph ph-caret-left"
+        variant="elevated"
+        className={cn(
+          "shadow-subtle",
+          atStart && "pointer-events-none opacity-35",
+        )}
+        onClick={atStart ? undefined : onPrev}
+      />
+      <IconButton
+        label="Następne zdjęcie"
+        iconClass="ph ph-caret-right"
+        variant="elevated"
+        className={cn(
+          "shadow-subtle",
+          atEnd && "pointer-events-none opacity-35",
+        )}
+        onClick={atEnd ? undefined : onNext}
+      />
+    </div>
   );
 }
+
+/** Short galleries keep thumbs; longer sets fall back to a counter (lightbox rule). */
+const GALLERY_THUMB_STRIP_MAX = 6;
 
 function GallerySlideContent({
   image,
@@ -248,6 +267,7 @@ export function ProductGallery({
 
   const isMulti = images.length > 1;
   const fillViewport = layout === "viewport";
+  const useThumbStrip = isMulti && images.length <= GALLERY_THUMB_STRIP_MAX;
 
   const registerSlideImage = useCallback(
     (index: number, node: HTMLImageElement | null) => {
@@ -423,27 +443,20 @@ export function ProductGallery({
     <div
       className={cn(
         "min-w-0",
-        fillViewport &&
-          "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
+        fillViewport && "flex flex-col pb-2 lg:h-full lg:min-h-0 lg:pb-8",
       )}
     >
       <div
         className={cn(
-          "flex gap-4 lg:gap-6",
-          fillViewport && "lg:min-h-0 lg:flex-1",
+          "flex flex-col gap-3",
+          fillViewport && "lg:min-h-0 lg:flex-1 lg:gap-4",
         )}
         aria-label="Galeria produktu"
       >
-        <GalleryThumbnailRail
-          images={images}
-          activeIndex={activeIndex}
-          onSelect={goToSlide}
-        />
-
         <div
           className={cn(
-            "relative min-w-0 flex-1 overflow-x-clip",
-            fillViewport && "lg:flex lg:h-full lg:min-h-0 lg:flex-col",
+            "relative min-w-0 overflow-x-clip",
+            fillViewport && "lg:flex lg:min-h-0 lg:flex-1 lg:flex-col",
           )}
         >
           <Swiper
@@ -504,27 +517,46 @@ export function ProductGallery({
             aria-hidden
           />
 
-          <GalleryControls
+          {/* Mobile: counter + arrows over the stage (no thumb strip). */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex items-end justify-between gap-3 px-4 lg:hidden">
+            <GalleryCounter
+              activeIndex={activeIndex}
+              count={images.length}
+              className="pointer-events-auto"
+            />
+            <GalleryNavButtons
+              activeIndex={activeIndex}
+              count={images.length}
+              onPrev={goToPrev}
+              onNext={goToNext}
+              className="pointer-events-auto"
+            />
+          </div>
+        </div>
+
+        {/* Desktop: thumbs (or counter) + controls on one row. */}
+        <div className="hidden min-w-0 shrink-0 items-center justify-between gap-3 lg:flex">
+          {useThumbStrip ? (
+            <GalleryThumbnailRail
+              images={images}
+              activeIndex={activeIndex}
+              onSelect={goToSlide}
+              className="min-w-0 flex-1"
+            />
+          ) : (
+            <GalleryCounter activeIndex={activeIndex} count={images.length} />
+          )}
+          <GalleryNavButtons
             activeIndex={activeIndex}
             count={images.length}
             onPrev={goToPrev}
             onNext={goToNext}
             onZoom={openZoom}
+            showZoom
+            className="shrink-0"
           />
         </div>
       </div>
-
-      <p
-        className={cn(
-          "text-sm text-neutral-500",
-          fillViewport
-            ? "mt-3 hidden shrink-0 xl:mt-0 xl:block"
-            : "mt-3 hidden xl:block",
-        )}
-        aria-live="polite"
-      >
-        Zdjęcie {activeIndex + 1} z {images.length}
-      </p>
 
       {lightboxOpen && lightboxOrigin ? (
         <ProductGalleryLightbox

@@ -23,6 +23,7 @@ import { ProductCarouselCard } from "../product/ProductCarouselCard";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { EmptyState } from "../ui/EmptyState";
+import { HorizontalScrollTrack } from "../ui/HorizontalScrollTrack";
 
 type WishlistSectionId = "schowek-produkty" | "schowek-aranzacje";
 
@@ -38,10 +39,10 @@ const wishlistSections: {
 ];
 
 const sectionScrollMtClassName =
-  "scroll-mt-[calc(var(--site-header-bar-height,7.25rem)+var(--wishlist-subnav-height,2.75rem)+0.5rem)] lg:scroll-mt-[calc(7.25rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)] header-concealed:lg:scroll-mt-[calc(4.5rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)]";
+  "scroll-mt-[calc(var(--site-header-bar-height,7.25rem)+var(--wishlist-subnav-height,2.75rem)+0.5rem)] xl:scroll-mt-[calc(7.25rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)] header-concealed:xl:scroll-mt-[calc(4.5rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)]";
 
 const asideStickyClassName =
-  "lg:sticky lg:top-[calc(7.25rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)] header-concealed:lg:top-[calc(4.5rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)]";
+  "lg:sticky lg:top-[calc(var(--site-header-bar-height,7.25rem)+var(--wishlist-subnav-height,2.75rem)+0.5rem)] xl:top-[calc(7.25rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)] header-concealed:xl:top-[calc(4.5rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)]";
 
 type WishlistDirectoryProps = {
   className?: string;
@@ -164,7 +165,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
           )}
         >
           <Container size="content">
-            <div className="min-w-0 overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <HorizontalScrollTrack activeKey={activeSection}>
               <LayoutGroup id={`wishlist-tabs-${tabLayoutId}`}>
                 <SharedLayoutUnderline
                   className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"
@@ -206,7 +207,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
                   })}
                 </SharedLayoutUnderline>
               </LayoutGroup>
-            </div>
+            </HorizontalScrollTrack>
           </Container>
         </nav>
       ) : null}
@@ -319,7 +320,8 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
             className={cn(
               "rounded-xs border border-neutral-200 bg-neutral-0 p-5",
               !isEmpty && asideStickyClassName,
-              isEmpty && "lg:sticky lg:top-33 header-concealed:lg:top-22",
+              isEmpty &&
+                "lg:sticky lg:top-33 xl:top-33 header-concealed:xl:top-22",
             )}
           >
             <h2 className="m-0 font-heading text-h4 font-medium tracking-tight text-neutral-900">

@@ -158,7 +158,10 @@ export const salonCardCopy = {
   addressColumnLabel: "Adres",
   hoursColumnLabel: "Godziny otwarcia",
   askLabel: "Wyślij pytanie do salonu",
-  defaultHours: ["PN - PT 10:00 - 18:00", "SOB 10:00 - 14:00"],
+  defaultHours: [
+    { days: "PN - PT", time: "10:00 - 18:00" },
+    { days: "SOB", time: "10:00 - 14:00" },
+  ],
 } as const;
 
 /** Salon points - live data from elements-show.pl/salony?showall=1. */
@@ -400,21 +403,27 @@ export const favoritesNav = {
 export const utilityTagline = "Od pomysłu do gotowej łazienki";
 
 export const utilityNavItems = [
+  { label: "Konfigurator kabin", href: "#konfigurator-kabin" },
+  { label: "Blog", href: "#blog" },
+  { label: "Salony i kontakt", href: "/salony" },
   {
     label: "Strefa architekta",
-    href: "#strefa-architekta",
+    href: "/strefa-architekta",
     iconClass: "ph ph-cube",
+    accent: true,
   },
   {
     label: "Strefa instalatora",
     href: "#strefa-instalatora",
     iconClass: "ph ph-wrench",
-    dividerAfter: true,
+    accent: true,
   },
-  { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
-  { label: "Konfigurator kabin", href: "#konfigurator-kabin" },
-  { label: "Blog", href: "#blog" },
-  { label: "Salony i kontakt", href: "/salony" },
+  {
+    label: "Obsługa inwestycji",
+    href: "#obsluga-inwestycji",
+    iconClass: "ph ph-buildings",
+    accent: true,
+  },
 ] as const;
 
 export const footerBrand = {
@@ -453,7 +462,7 @@ export const footerColumns = [
   },
   {
     links: [
-      { label: "Strefa architekta", href: "#strefa-architekta" },
+      { label: "Strefa architekta", href: "/strefa-architekta" },
       { label: "Strefa instalatora", href: "#strefa-instalatora" },
       { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
       { label: "Konfigurator kabin", href: "#konfigurator-kabin" },

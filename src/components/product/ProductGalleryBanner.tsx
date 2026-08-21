@@ -13,7 +13,7 @@ type ProductGalleryBannerProps = {
   className?: string;
 };
 
-/** Slim optional promo strip under the PDP gallery. */
+/** Full-width collection promo strip (PDP, above subnav). */
 export function ProductGalleryBanner({
   eyebrow,
   title,

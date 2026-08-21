@@ -49,6 +49,8 @@ type InspirationGalleryProps = {
   eyebrow?: string;
   title?: string;
   titleId?: string;
+  /** Optional lead under the title. */
+  description?: string;
   /** `header` - beside title; `footer` - under the track (default); `none` - parent owns nav. */
   navPlacement?: "header" | "footer" | "none";
   /** Trailing hint slide - fills the empty peek beside the last card (not a link). */
@@ -97,6 +99,7 @@ export function InspirationGallery({
   eyebrow = "Inspiracje",
   title = "Poznaj nasze aranżacje i zainspiruj się",
   titleId = "inspiration-gallery-title",
+  description,
   navPlacement = "footer",
   endCap = DEFAULT_END_CAP,
   seeMoreHref = "#inspiracje",
@@ -307,6 +310,11 @@ export function InspirationGallery({
             >
               {title}
             </TextRevealLead>
+            {description ? (
+              <p className="mt-4 mb-0 max-w-prose font-body text-ui leading-relaxed text-neutral-600 md:text-lg">
+                {description}
+              </p>
+            ) : null}
           </div>
 
           {showHeaderNav ? (

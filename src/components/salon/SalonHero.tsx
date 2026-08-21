@@ -1,33 +1,18 @@
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
-import { salonCardCopy } from "../../data/nav";
+import { salonOptions } from "../../data/nav";
 import { salonPage } from "../../data/salon";
-import { cn } from "../../lib/cn";
+import { salonDirectionsHref } from "../../data/salons";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
-
-const contactCardClassName = cn(
-  "group/contact relative overflow-hidden rounded-xs border border-neutral-800/10 bg-neutral-900",
-  "px-6 py-7 sm:px-8 sm:py-8",
-);
-
-function ContactCardBackdrop() {
-  return (
-    <>
-      <div
-        className="pointer-events-none absolute inset-0 bg-radial-[at_0%_0%] from-gold-500/22 to-transparent to-58%"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 inset-e-0 w-1/3 bg-radial-[at_100%_50%] from-gold-50/7 to-transparent to-70%"
-        aria-hidden="true"
-      />
-    </>
-  );
-}
+import { SalonContactPanel } from "./SalonContactPanel";
 
 export function SalonHero() {
   const { hero } = salonPage;
+  const bydgoszczSalon = salonOptions.find((salon) => salon.id === "bydgoszcz");
+  const directionsHref = bydgoszczSalon
+    ? salonDirectionsHref(bydgoszczSalon)
+    : undefined;
 
   return (
     <section
@@ -53,93 +38,19 @@ export function SalonHero() {
             />
           </div>
 
-          <aside
-            className={cn(
-              contactCardClassName,
-              "order-3 min-w-0 lg:col-start-1 lg:row-start-2",
-            )}
-            aria-label="Kontakt z salonem"
-          >
-            <ContactCardBackdrop />
-            <div className="relative flex flex-col">
-              <div className="border-b border-neutral-0/10 pb-4">
-                <div className="grid grid-cols-1 gap-4 text-sm leading-relaxed text-neutral-400 sm:grid-cols-2">
-                  <div>
-                    <p className="m-0 mb-1.5 font-medium text-neutral-0">
-                      {salonCardCopy.addressColumnLabel}
-                    </p>
-                    <p className="m-0">{hero.address}</p>
-                  </div>
-                  <div>
-                    <p className="m-0 mb-1.5 font-medium text-neutral-0">
-                      {salonCardCopy.hoursColumnLabel}
-                    </p>
-                    {hero.hours.map((line) => (
-                      <p key={line} className="m-0">
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {hero.phoneGroups.map((group) => (
-                <div
-                  key={group.label}
-                  className="border-b border-neutral-0/10 py-4"
-                >
-                  <p className="m-0 font-body text-xs tracking-[0.08em] text-neutral-400 uppercase">
-                    {group.label}
-                  </p>
-                  <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-2.5 p-0 sm:grid-cols-2">
-                    {group.phones.map((phone) => (
-                      <li key={phone.href}>
-                        <a
-                          href={phone.href}
-                          className={cn(
-                            "inline-flex items-center gap-2 font-body text-sm font-medium text-neutral-0 no-underline tabular-nums",
-                            "transition-colors duration-fast ease-out hover:text-gold-400",
-                            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-                          )}
-                        >
-                          <i
-                            className="ph ph-phone text-base leading-none"
-                            aria-hidden="true"
-                          />
-                          <span>{phone.label}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
-              <div className="pt-4">
-                <p className="m-0 font-body text-xs tracking-[0.08em] text-neutral-400 uppercase">
-                  E-mail
-                </p>
-                <a
-                  href={hero.emailHref}
-                  className={cn(
-                    "mt-3 inline-flex items-center gap-2 font-body text-sm font-medium text-gold-400 no-underline",
-                    "transition-colors duration-fast ease-out hover:text-gold-100",
-                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-0",
-                  )}
-                >
-                  <i
-                    className="ph ph-envelope-simple text-base leading-none"
-                    aria-hidden="true"
-                  />
-                  <span>{hero.email}</span>
-                </a>
-              </div>
-
-              <div className="mt-5 border-t border-neutral-0/10 pt-5">
+          <SalonContactPanel
+            className="order-3 min-w-0 lg:col-start-1 lg:row-start-2"
+            address={hero.address}
+            hours={hero.hours}
+            phoneGroups={hero.phoneGroups}
+            email={hero.email}
+            emailHref={hero.emailHref}
+            actions={
+              <>
                 <Button
                   as="button"
                   type="button"
                   variant="primary"
-                  tone="onDark"
                   size="md"
                   full
                   className="sm:w-auto"
@@ -147,9 +58,22 @@ export function SalonHero() {
                 >
                   {hero.bookLabel}
                 </Button>
-              </div>
-            </div>
-          </aside>
+                {directionsHref ? (
+                  <Button
+                    href={directionsHref}
+                    variant="secondary"
+                    size="md"
+                    full
+                    className="sm:w-auto"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {hero.directionsLabel}
+                  </Button>
+                ) : null}
+              </>
+            }
+          />
         </div>
       </Container>
     </section>

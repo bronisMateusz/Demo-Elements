@@ -3,7 +3,10 @@ export type PdpSubnavItem = {
   label: string;
 };
 
-/** Full sticky site header height (utility + bar on lg+, bar only below). */
+/** Fired by `scrollToSection` so sections (e.g. downloads accordion) can react. */
+export const PDP_SUBNAV_NAVIGATE_EVENT = "pdp-subnav:navigate";
+
+/** Full sticky site header height (utility + bar on xl+, bar only below). */
 export const PDP_HEADER_HEIGHT_PX = 116;
 export const PDP_HEADER_BAR_HEIGHT_PX = 72;
 /** Sticky subnav row height - mobile `min-h-11`, desktop `min-h-14.5`. Prefer live measure. */
@@ -24,4 +27,4 @@ export function buildPdpSubnavItems(): PdpSubnavItem[] {
 }
 
 export const pdpSectionScrollMarginClassName =
-  "scroll-mt-[calc(var(--site-header-bar-height,7.5rem)+var(--pdp-subnav-height,2.75rem)+0.5rem)] lg:scroll-mt-45.5 header-concealed:lg:scroll-mt-34.5";
+  "scroll-mt-[calc(var(--site-header-bar-height,7.5rem)+var(--pdp-subnav-height,2.75rem)+0.5rem)] xl:scroll-mt-45.5 header-concealed:xl:scroll-mt-34.5";

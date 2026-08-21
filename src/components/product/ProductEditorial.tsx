@@ -1,9 +1,12 @@
+import { useId } from "react";
 import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../structural/SectionHeader";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductFeature } from "../../types/product";
+import { usePdpSectionAccordion } from "../../hooks/usePdpSectionAccordion";
+import { AccordionCollapse } from "../motion/AccordionCollapse";
 
 type ProductEditorialProps = {
   eyebrow: string;
@@ -11,6 +14,11 @@ type ProductEditorialProps = {
   lead: string;
   paragraphs: string[];
   features: ProductFeature[];
+  /**
+   * When set, mobile accordion opens when the PDP subnav navigates to this
+   * section id (or the URL hash matches). Closed by default on mobile.
+   */
+  expandOnSectionId?: string;
 };
 
 function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
@@ -60,7 +68,56 @@ export function ProductEditorial({
   lead,
   paragraphs,
   features,
+  expandOnSectionId,
 }: ProductEditorialProps) {
+  const panelId = useId();
+  const { open, setOpen, accordionEnabled } =
+    usePdpSectionAccordion(expandOnSectionId);
+
+  const body = (
+    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
+      <div className="min-w-0 lg:sticky lg:top-[var(--site-header-bar-height,7.25rem)] xl:top-47.5 header-concealed:xl:top-36.5 lg:self-start">
+        {accordionEnabled ? (
+          <div className="mb-8 hidden md:block">
+            <SectionHeader
+              eyebrow={eyebrow}
+              title={title}
+              titleId="editorial-title-desktop"
+              className="mb-0"
+            />
+          </div>
+        ) : (
+          <SectionHeader
+            eyebrow={eyebrow}
+            title={title}
+            titleId="editorial-title"
+            className="mb-8"
+          />
+        )}
+        {accordionEnabled ? (
+          <h2 className="mb-6 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900 md:hidden">
+            {title}
+          </h2>
+        ) : null}
+        <div className="space-y-6">
+          <p className="mb-3 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
+            {lead}
+          </p>
+          {paragraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)} className="t-body-lg max-w-prose">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
+      <ul className="flex list-none flex-col gap-6 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-s lg:pt-0 lg:ps-12">
+        {features.map((feature) => (
+          <ProductFeatureItem key={feature.title} feature={feature} />
+        ))}
+      </ul>
+    </div>
+  );
+
   return (
     <section
       aria-labelledby="editorial-title"
@@ -76,34 +133,47 @@ export function ProductEditorial({
       />
 
       <Container size="content" className="relative z-10">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
-          <div className="min-w-0 lg:sticky lg:top-47.5 header-concealed:lg:top-36.5 lg:self-start">
-            <SectionHeader
-              eyebrow={eyebrow}
-              title={title}
-              titleId="editorial-title"
-              className="mb-8"
-            />
-            <div className="space-y-6">
-              <p className="mb-3 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
-                {lead}
-              </p>
-              {paragraphs.map((paragraph) => (
-                <p
-                  key={paragraph.slice(0, 32)}
-                  className="t-body-lg max-w-prose"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-          <ul className="flex list-none flex-col gap-6 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-s lg:pt-0 lg:ps-12">
-            {features.map((feature) => (
-              <ProductFeatureItem key={feature.title} feature={feature} />
-            ))}
-          </ul>
-        </div>
+        {accordionEnabled ? (
+          <>
+            <button
+              type="button"
+              className={cn(
+                "flex w-full items-center justify-between gap-3 py-1 text-start md:hidden",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+              )}
+              aria-expanded={open}
+              aria-controls={panelId}
+              onClick={() => setOpen((value) => !value)}
+            >
+              <span
+                id="editorial-title"
+                className="font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
+              >
+                {eyebrow}
+              </span>
+              <i
+                className={cn(
+                  "ph ph-caret-down shrink-0 text-xl leading-none text-neutral-500 transition-transform duration-base ease-luxury",
+                  open && "rotate-180",
+                )}
+                aria-hidden="true"
+              />
+            </button>
+
+            <div className="hidden md:block">{body}</div>
+
+            <AccordionCollapse
+              open={open}
+              id={panelId}
+              className="md:hidden"
+              innerClassName="pt-4"
+            >
+              {body}
+            </AccordionCollapse>
+          </>
+        ) : (
+          body
+        )}
       </Container>
     </section>
   );

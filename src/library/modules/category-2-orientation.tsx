@@ -111,7 +111,7 @@ export const buttonModule: LibraryModule = {
       id: "hierarchy",
       label: "Hierarchia wariantów",
       description:
-        "Primary = solid gold, Secondary = białe tło + border w kolorze tekstu, Gold = outline akcent, Ghost = transparent, Tertiary = link. Hover: czarny fill (jasne) / biały fill (tone=onDark).",
+        "Primary = solid gold, Secondary = białe tło + border w kolorze tekstu, Gold = outline akcent, Ghost = transparent, Tertiary = link. Hover: czarny fill (jasne) / biały fill (tone=onDark, poza Secondary).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonHierarchyDemo />
@@ -219,7 +219,7 @@ export const buttonModule: LibraryModule = {
       id: "on-dark",
       label: "Tone · onDark",
       description:
-        "Primary (solid gold) i Secondary (glass) na ciemnej powierzchni; hover = biały fill.",
+        "Primary (solid gold) i Secondary (solid white) na ciemnej powierzchni; hover = biały fill (primary) / czarny fill (secondary).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonOnDarkDemo />

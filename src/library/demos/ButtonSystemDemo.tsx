@@ -359,8 +359,8 @@ export function ButtonOnDarkDemo() {
   return (
     <div className="grid max-w-xl gap-3">
       <p className="m-0 text-sm text-neutral-600">
-        tone=&quot;onDark&quot; - Primary (gold) i Secondary (glass); hover =
-        biały fill.
+        tone=&quot;onDark&quot; - Primary (gold) i Secondary (solid white);
+        hover = biały fill (primary) / czarny fill (secondary).
       </p>
       <div className={libBtnDarkSurfaceClassName}>
         <div className={libBtnRowClassName}>
@@ -398,6 +398,8 @@ export function ButtonAskRowDemo() {
       <ProductAskRow
         lead="Interesuje Cię ten produkt?"
         actionLabel="Zadaj pytanie"
+        secondaryLabel="Obejrzyj w salonie"
+        secondaryHref="/salony"
         onAskOpen={() => undefined}
       />
     </div>

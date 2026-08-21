@@ -18,6 +18,7 @@ import { ProductDetailPage } from "../routes/ProductDetailPage";
 import { SalonPage } from "../routes/SalonPage";
 import { SalonsPage } from "../routes/SalonsPage";
 import { SalonsPageB } from "../routes/SalonsPageB";
+import { ArchitectZonePage } from "../routes/ArchitectZonePage";
 import { SubcategoryPage } from "../routes/SubcategoryPage";
 
 function getRouterBasename() {
@@ -45,6 +46,7 @@ export const router = createBrowserRouter(
         { path: "/salony/:slug", element: <SalonPage /> },
         { path: "/producenci", element: <ProducersPage /> },
         { path: "/producent", element: <ProducerPage /> },
+        { path: "/strefa-architekta", element: <ArchitectZonePage /> },
         { path: "/schowek", element: <FavoritesPage /> },
         { path: "/kategoria", element: <CategoryPage /> },
         { path: "/podkategoria", element: <SubcategoryPage /> },

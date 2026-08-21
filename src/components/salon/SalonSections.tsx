@@ -94,7 +94,7 @@ export function SalonAbout() {
 
       <Container size="content" className="relative z-10">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-20">
-          <div className="min-w-0 lg:sticky lg:top-47.5 header-concealed:lg:top-36.5 lg:self-start">
+          <div className="min-w-0 lg:sticky lg:top-[var(--site-header-bar-height,7.25rem)] xl:top-47.5 header-concealed:xl:top-36.5 lg:self-start">
             <SectionHeader
               eyebrow={about.eyebrow}
               title={about.title}

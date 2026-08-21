@@ -751,6 +751,7 @@ export const listingCuratedTiles: ListingCuratedTile[] = [
   {
     label: "Wiszące 40 cm",
     href: "/listing",
+    featured: true,
     image: curatedImg("listing/curated/wiszace-40.png", "Wiszące 40 cm"),
   },
   {

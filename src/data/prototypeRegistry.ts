@@ -65,6 +65,11 @@ export const prototypeSections: PrototypeSection[] = [
         iconClass: "ph ph-factory",
       },
       {
+        label: "Strefa architekta",
+        to: "/strefa-architekta",
+        iconClass: "ph ph-cube",
+      },
+      {
         label: "Schowek",
         to: "/schowek",
         iconClass: "ph ph-bookmark-simple",

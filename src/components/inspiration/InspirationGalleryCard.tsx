@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
-import { Button } from "../ui/Button";
+import { buttonClassName } from "../ui/buttonClassName";
 import { IconButton } from "../ui/IconButton";
 import { ArrangementFavoriteButton } from "./ArrangementFavoriteButton";
 import {
@@ -48,11 +48,11 @@ function CardMediaImage({
   const hoverScale =
     zoomHoverGroup === "card"
       ? cn(
-          "group-hover/card:scale-[1.05] group-focus-within/card:scale-[1.05]",
+          "group-hover/card:scale-[1.07] group-focus-within/card:scale-[1.07]",
           "motion-reduce:group-hover/card:scale-100 motion-reduce:group-focus-within/card:scale-100",
         )
       : cn(
-          "group-hover/insp:scale-[1.05] group-focus-visible/insp:scale-[1.05]",
+          "group-hover/insp:scale-[1.07] group-focus-visible/insp:scale-[1.07]",
           "motion-reduce:group-hover/insp:scale-100 motion-reduce:group-focus-visible/insp:scale-100",
         );
 
@@ -131,21 +131,25 @@ export function InspirationGalleryCard({
               alt={alt}
               imageRef={imageRef}
               imageHidden={imageHidden}
-              zoomOnHover={false}
+              zoomOnHover
+              zoomHoverGroup="card"
             />
           </div>
           <div className="pointer-events-none absolute inset-x-0 bottom-4 z-2 flex justify-end px-4">
-            <Button
-              as="button"
-              type="button"
-              variant="secondary"
-              size="sm"
-              className="pointer-events-auto shadow-subtle"
-              onClick={onProductsOpen}
+            <span
+              className={buttonClassName({
+                variant: "secondary",
+                size: "sm",
+                className: cn(
+                  "shadow-subtle",
+                  "group-hover/card:border-neutral-800 group-hover/card:text-neutral-0 group-hover/card:before:scale-y-100",
+                  "group-focus-within/card:border-neutral-800 group-focus-within/card:text-neutral-0 group-focus-within/card:before:scale-y-100",
+                ),
+              })}
             >
               <i className="ph ph-list" aria-hidden="true" />
               Pokaż produkty ({productCount})
-            </Button>
+            </span>
           </div>
         </>
       ) : (
@@ -180,21 +184,13 @@ export function InspirationGalleryCard({
   );
 
   const titleNode = (
-    <h3
-      className={cn(
-        inspirationGalleryCardTitleClassName(),
-        isLink &&
-          "transition-colors duration-fast ease-out group-hover/card:text-gold-500",
-      )}
-    >
-      {title}
-    </h3>
+    <h3 className={inspirationGalleryCardTitleClassName()}>{title}</h3>
   );
 
   if (isLink && href) {
     const linkClassName = cn(
       inspirationGalleryCardClassName(className),
-      "relative group/card text-inherit no-underline",
+      "relative group/card cursor-pointer text-inherit no-underline",
     );
     const overlayClassName =
       "absolute inset-0 z-1 text-inherit no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";
@@ -215,6 +211,26 @@ export function InspirationGalleryCard({
         {media}
         {titleNode}
       </div>
+    );
+  }
+
+  if (isProducts) {
+    return (
+      <article
+        className={cn(
+          inspirationGalleryCardClassName(className),
+          "group/card relative cursor-pointer",
+        )}
+      >
+        <button
+          type="button"
+          className="absolute inset-0 z-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800"
+          onClick={onProductsOpen}
+          aria-label={`Pokaż produkty (${productCount}): ${title}`}
+        />
+        {media}
+        {titleNode}
+      </article>
     );
   }
 

@@ -8,7 +8,6 @@ export const salonSubnavItems: PdpSubnavItem[] = [
   { id: "wystawa", label: "Ekspozycja" },
   { id: "aktualnosci", label: "Aktualności" },
   { id: "warto-zobaczyc", label: "Warto zobaczyć" },
-  { id: "wizyta", label: "Umów wizytę" },
 ];
 
 export const salonPage = {
@@ -24,8 +23,12 @@ export const salonPage = {
     titleLead: "Salon łazienek",
     titleStrong: "Elements Bydgoszcz",
     address: "ul. Hermana Frankego 1, Bydgoszcz",
-    hours: ["PN - PT 08:30 - 17:00", "SOB 09:00 - 14:00"],
+    hours: [
+      { days: "PN - PT", time: "08:30 - 17:00" },
+      { days: "SOB", time: "09:00 - 14:00" },
+    ],
     bookLabel: "Umów spotkanie",
+    directionsLabel: "Jak dojechać",
     email: "bydgoszcz@elements-show.pl",
     emailHref: "mailto:bydgoszcz@elements-show.pl",
     phoneGroups: [

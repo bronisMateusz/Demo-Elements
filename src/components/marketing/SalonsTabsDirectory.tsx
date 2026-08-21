@@ -20,18 +20,15 @@ import { Container } from "../ui/Container";
 import { SalonLocationChips } from "./SalonLocationChips";
 import { SalonTabCard } from "./SalonTabCard";
 
-type GroupBy = "voivodeship" | "city";
+export type SalonsGroupBy = "voivodeship" | "city";
 
 type TabChip = {
   id: string;
   label: string;
-  salonIds: string[];
+  salonIds: SalonOption["id"][];
 };
 
 const FADE_S = 0.22;
-
-const directoryCardPadXClassName = "px-4 sm:px-6 md:px-8";
-const directoryCardPadXNegClassName = "-mx-4 sm:-mx-6 md:-mx-8";
 
 function titleCaseVoiv(name: string): string {
   const plain = name.replace(/\u00AD/g, "");
@@ -45,7 +42,7 @@ function titleCaseVoiv(name: string): string {
 
 function buildVoivTabs(): TabChip[] {
   const groups = groupSalonCitiesByVoivodeship(presenceSalonCities);
-  const byHref = new Map<string, string>(
+  const byHref = new Map<string, SalonOption["id"]>(
     salonOptions.map((salon) => [salon.href, salon.id]),
   );
 
@@ -84,37 +81,43 @@ function buildCityTabs(): TabChip[] {
     .sort((a, b) => collator.compare(a.label, b.label));
 }
 
-export function SalonsTabsDirectory({ className }: { className?: string }) {
+type SalonsTabsDirectoryProps = {
+  groupBy?: SalonsGroupBy;
+  className?: string;
+};
+
+export function SalonsTabsDirectory({
+  groupBy = "voivodeship",
+  className,
+}: SalonsTabsDirectoryProps) {
   const { location } = salonsPageB;
   const reduceMotion = useMotionReduced();
   const { select, salon: selectedSalon } = useSelectedSalon();
-  const [groupBy, setGroupBy] = useState<GroupBy>("voivodeship");
 
   const voivTabs = useMemo(() => buildVoivTabs(), []);
   const cityTabs = useMemo(() => buildCityTabs(), []);
   const tabs = groupBy === "voivodeship" ? voivTabs : cityTabs;
 
   const [activeTabId, setActiveTabId] = useState(() => voivTabs[0]?.id ?? "");
+
   const resolvedTabId = tabs.some((tab) => tab.id === activeTabId)
     ? activeTabId
     : (tabs[0]?.id ?? "");
-
   const activeTab = tabs.find((tab) => tab.id === resolvedTabId) ?? tabs[0];
+
+  const salonsById = useMemo(
+    () => new Map(salonOptions.map((salon) => [salon.id, salon])),
+    [],
+  );
+
   const visibleSalons = useMemo(() => {
     if (!activeTab) return [];
-    const byId = new Map<string, SalonOption>(
-      salonOptions.map((salon) => [salon.id, salon]),
-    );
-    return activeTab.salonIds.flatMap((id) => {
-      const salon = byId.get(id);
-      return salon ? [salon] : [];
-    });
-  }, [activeTab]);
+    return activeTab.salonIds
+      .map((id) => salonsById.get(id))
+      .filter((salon): salon is NonNullable<typeof salon> => Boolean(salon));
+  }, [activeTab, salonsById]);
 
-  const resultsKey = activeTab
-    ? `${groupBy}:${activeTab.id}`
-    : `${groupBy}:empty`;
-
+  const resultsKey = `${groupBy}:${resolvedTabId}`;
   const fadeTransition = reduceMotion
     ? { duration: 0 }
     : { duration: FADE_S, ease: EASE_LUXURY };
@@ -123,69 +126,36 @@ export function SalonsTabsDirectory({ className }: { className?: string }) {
 
   return (
     <Container size="content" className={cn("mainview", className)}>
-      <div className="rounded-xs border border-neutral-200 bg-neutral-0 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-          <div className="min-w-0">
-            <h2
-              id="salons-tabs-title"
-              className="m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
-            >
-              {location.title}
-            </h2>
-          </div>
+      <div ref={sentinelRef} className="h-px" aria-hidden="true" />
+      <div
+        className={cn(
+          stickyUnderHeaderClassName,
+          "z-99 border-b border-transparent",
+          stuck &&
+            "w-screen ms-[calc(50%-50vw)] border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+        )}
+      >
+        <SalonLocationChips
+          role="tablist"
+          mobileAs="scroll"
+          scrollInsetClassName={stuck ? pxGutterClassName : undefined}
+          ariaLabel={location.title}
+          chips={tabs.map((tab) => ({
+            id: tab.id,
+            label: tab.label,
+          }))}
+          activeId={activeTab?.id ?? ""}
+          onSelect={setActiveTabId}
+        />
+      </div>
 
-          <SalonLocationChips
-            className="shrink-0"
-            mobileAs="chips"
-            stretchOnMobile
-            size="lg"
-            ariaLabel={location.groupByAria}
-            chips={[
-              { id: "voivodeship", label: location.groupByVoiv },
-              { id: "city", label: location.groupByCity },
-            ]}
-            activeId={groupBy}
-            onSelect={(id) => {
-              const value = id as GroupBy;
-              setGroupBy(value);
-              const nextTabs = value === "voivodeship" ? voivTabs : cityTabs;
-              setActiveTabId(nextTabs[0]?.id ?? "");
-            }}
-          />
-        </div>
-
-        <div ref={sentinelRef} className="mt-6 h-px" aria-hidden="true" />
-        <div
-          className={cn(
-            stickyUnderHeaderClassName,
-            "z-99 border-b border-transparent py-2",
-            stuck
-              ? "w-screen ms-[calc(50%-50vw)] border-neutral-200 bg-neutral-0/95 backdrop-blur-sm"
-              : directoryCardPadXNegClassName,
-          )}
-        >
-          <SalonLocationChips
-            role="tablist"
-            mobileAs="scroll"
-            scrollInsetClassName={
-              stuck ? pxGutterClassName : directoryCardPadXClassName
-            }
-            ariaLabel={location.title}
-            chips={tabs.map((tab) => ({
-              id: tab.id,
-              label: tab.label,
-            }))}
-            activeId={activeTab?.id ?? ""}
-            onSelect={setActiveTabId}
-          />
-        </div>
-
-        <div className="relative mt-2 bg-neutral-0">
+      <div className="mt-4 rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:mt-6 sm:p-6 md:p-8">
+        <div className="relative bg-neutral-0">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={resultsKey}
               role="tabpanel"
-              aria-labelledby="salons-tabs-title"
+              aria-label={activeTab?.label ?? location.title}
               initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={

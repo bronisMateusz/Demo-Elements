@@ -13,7 +13,7 @@ export function productFixedBarClassName({
   return cn(
     "fixed inset-x-0 bottom-0 z-90 transition-transform duration-base ease-luxury",
     // Cap width on wide screens so product info and CTAs stay close.
-    "lg:inset-x-auto lg:bottom-5 lg:inset-s-1/2 lg:w-[min(calc(100%-2*clamp(1.25rem,2.222vw,2.5rem)),96rem)] lg:-translate-x-1/2",
+    "lg:inset-x-auto lg:bottom-5 lg:inset-s-1/2 lg:w-[min(calc(100%-2*clamp(0.75rem,2.222vw,2.5rem)),96rem)] lg:-translate-x-1/2",
     visible
       ? "translate-y-0"
       : "pointer-events-none translate-y-[calc(100%+1.25rem)]",

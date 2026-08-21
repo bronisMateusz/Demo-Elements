@@ -44,7 +44,7 @@ function HeroSlideContent({ slide }: { slide: HomeHeroSlide }) {
         >
           {title}
         </TitleTag>
-        <p className="mt-4 mb-0 max-w-lg text-ui leading-relaxed text-neutral-200 md:text-lg">
+        <p className="mt-4 mb-0 max-w-xl text-ui leading-relaxed text-neutral-200 md:text-lg">
           {lead}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -225,7 +225,7 @@ export function HomeHero() {
               draggable={false}
             />
             <div
-              className="pointer-events-none absolute inset-0 bg-linear-to-t from-neutral-900/90 via-neutral-900/45 to-neutral-900/20"
+              className="pointer-events-none absolute inset-0 bg-linear-to-t from-neutral-900/80 via-neutral-900/35 to-neutral-900/10"
               aria-hidden="true"
             />
             <HeroSlideContent slide={activeSlide} />
@@ -239,9 +239,9 @@ export function HomeHero() {
             <button
               type="button"
               className={iconButtonClassName({
-                variant: "default",
+                variant: "ghost",
                 className:
-                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 md:w-14",
+                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 bg-transparent shadow-none md:w-14",
               })}
               aria-label="Poprzedni baner"
               onClick={goPrev}
@@ -360,9 +360,9 @@ export function HomeHero() {
             <button
               type="button"
               className={iconButtonClassName({
-                variant: "default",
+                variant: "ghost",
                 className:
-                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 md:w-14",
+                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 bg-transparent shadow-none md:w-14",
               })}
               aria-label="Następny baner"
               onClick={goNext}

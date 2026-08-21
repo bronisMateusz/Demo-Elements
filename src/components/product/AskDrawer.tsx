@@ -37,7 +37,8 @@ export function AskDrawer({
   productImage,
 }: AskDrawerProps) {
   const nameId = useId();
-  const contactId = useId();
+  const phoneId = useId();
+  const emailId = useId();
   const postalId = useId();
   const messageId = useId();
   const consentId = useId();
@@ -74,7 +75,7 @@ export function AskDrawer({
         onClose={handleClose}
       />
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(1.25rem,2.222vw,2.5rem)] py-4 md:py-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 md:py-8">
         {submitted ? (
           <div className="rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-6">
             <p className="m-0 font-heading text-xl text-neutral-900">
@@ -137,18 +138,36 @@ export function AskDrawer({
             </div>
 
             <div>
-              <label className={labelClassName} htmlFor={contactId}>
-                {askDrawerCopy.contactLabel}
+              <label className={labelClassName} htmlFor={phoneId}>
+                {askDrawerCopy.phoneLabel}
                 <RequiredMark />
               </label>
               <input
-                id={contactId}
-                name="contact"
-                type="text"
+                id={phoneId}
+                name="phone"
+                type="tel"
+                required
+                aria-required="true"
+                autoComplete="tel"
+                inputMode="tel"
+                placeholder={askDrawerCopy.phonePlaceholder}
+                className={inputClassName}
+              />
+            </div>
+
+            <div>
+              <label className={labelClassName} htmlFor={emailId}>
+                {askDrawerCopy.emailLabel}
+                <RequiredMark />
+              </label>
+              <input
+                id={emailId}
+                name="email"
+                type="email"
                 required
                 aria-required="true"
                 autoComplete="email"
-                placeholder={askDrawerCopy.contactPlaceholder}
+                placeholder={askDrawerCopy.emailPlaceholder}
                 className={inputClassName}
               />
             </div>

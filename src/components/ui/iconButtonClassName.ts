@@ -3,7 +3,6 @@ import { phosphorIconInFlexClassName } from "../../lib/phosphorIconInFlexClassNa
 import {
   btnAnimatedFillLightClassName,
   btnAnimatedFillStructureClassName,
-  btnAnimatedPreviewClassName,
 } from "./btnAnimatedClassName";
 
 export type IconButtonVariant =
@@ -62,11 +61,11 @@ export function iconButtonClassName({
   active = false,
   className,
 }: IconButtonClassNameOptions = {}) {
-  const activeClassName = !active
-    ? undefined
-    : animatedIconVariants.has(variant)
-      ? cn(btnAnimatedPreviewClassName(true), "text-neutral-0")
-      : "bg-neutral-100 text-neutral-900";
+  // Active = white plate + dark icon (filled glyph supplied by the caller).
+  // Keep the rising hover fill; do not lock `before:scale-y-100` like a pressed dark state.
+  const activeClassName = active
+    ? "border-neutral-800 bg-neutral-0 text-neutral-900"
+    : undefined;
 
   return cn(
     animatedIconVariants.has(variant) ? iconButtonAnimated : iconButtonPlain,

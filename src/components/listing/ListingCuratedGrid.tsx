@@ -1,6 +1,6 @@
 import { cn } from "../../lib/cn";
 import type { ListingCuratedTile } from "../../types/listing";
-import { CategorySubTile } from "../marketing/CategorySubTile";
+import { ImageBentoTile } from "../marketing/ImageBentoTile";
 import { Container } from "../ui/Container";
 import { Section } from "../structural/Section";
 import { TextRevealLead } from "../motion/TextRevealLead";
@@ -12,12 +12,18 @@ type ListingCuratedGridProps = {
   tiles: ListingCuratedTile[];
 };
 
+/** Same mosaic / aspect ratios as SubcategoryBento and HomeCategoriesBento. */
 export function ListingCuratedGrid({
   title,
   titleId = "listing-curated-title",
   description,
   tiles,
 }: ListingCuratedGridProps) {
+  const featured = tiles.find((tile) => tile.featured) ?? tiles[0];
+  const rest = tiles.filter((tile) => tile !== featured);
+
+  if (!featured) return null;
+
   return (
     <Section ariaLabelledby={titleId}>
       <Container size="content">
@@ -41,16 +47,26 @@ export function ListingCuratedGrid({
 
         <ul
           className={cn(
-            "m-0 grid list-none gap-4 p-0 sm:gap-5",
-            "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+            "m-0 grid list-none grid-cols-2 gap-2 p-0 sm:gap-3",
+            "md:grid-cols-4 md:grid-rows-[repeat(3,minmax(0,auto))]",
           )}
         >
-          {tiles.map((tile) => (
-            <li key={tile.label} className="min-w-0">
-              <CategorySubTile
+          <li className="col-span-2 row-span-2">
+            <ImageBentoTile
+              label={featured.label}
+              href={featured.href}
+              image={featured.image}
+              featured
+              className="aspect-4/3 md:aspect-auto md:h-full md:min-h-0"
+            />
+          </li>
+          {rest.map((tile) => (
+            <li key={tile.label}>
+              <ImageBentoTile
                 label={tile.label}
                 href={tile.href}
                 image={tile.image}
+                className="aspect-4/3"
               />
             </li>
           ))}

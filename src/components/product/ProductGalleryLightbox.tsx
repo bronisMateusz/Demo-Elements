@@ -474,7 +474,7 @@ function LightboxControls({
         ease: EASE_OUT,
       }}
     >
-      <div className="absolute top-[clamp(1.25rem,2.222vw,2.5rem)] inset-s-[clamp(1.25rem,2.222vw,2.5rem)]">
+      <div className="absolute top-[clamp(0.75rem,2.222vw,2.5rem)] inset-s-[clamp(0.75rem,2.222vw,2.5rem)]">
         <IconButton
           label={isZoomed ? "Pomniejsz" : "Powiększ"}
           iconClass={
@@ -488,7 +488,7 @@ function LightboxControls({
         />
       </div>
 
-      <div className="absolute top-[clamp(1.25rem,2.222vw,2.5rem)] inset-e-[clamp(1.25rem,2.222vw,2.5rem)]">
+      <div className="absolute top-[clamp(0.75rem,2.222vw,2.5rem)] inset-e-[clamp(0.75rem,2.222vw,2.5rem)]">
         <IconButton
           label="Zamknij"
           iconClass="ph ph-x"
@@ -501,7 +501,7 @@ function LightboxControls({
       {hasMultiple ? (
         <>
           {/* Arrows float over the image (desktop). Mobile: swipe + thumbs/counter. */}
-          <div className="pointer-events-none absolute inset-y-0 inset-s-[clamp(1.25rem,2.222vw,2.5rem)] hidden items-center md:flex">
+          <div className="pointer-events-none absolute inset-y-0 inset-s-[clamp(0.75rem,2.222vw,2.5rem)] hidden items-center md:flex">
             <IconButton
               label="Poprzednie zdjęcie"
               iconClass="ph ph-caret-left"
@@ -510,7 +510,7 @@ function LightboxControls({
               onClick={onPrev}
             />
           </div>
-          <div className="pointer-events-none absolute inset-y-0 inset-e-[clamp(1.25rem,2.222vw,2.5rem)] hidden items-center md:flex">
+          <div className="pointer-events-none absolute inset-y-0 inset-e-[clamp(0.75rem,2.222vw,2.5rem)] hidden items-center md:flex">
             <IconButton
               label="Następne zdjęcie"
               iconClass="ph ph-caret-right"
@@ -521,7 +521,7 @@ function LightboxControls({
           </div>
 
           {useThumbStrip ? (
-            <div className="absolute inset-x-[clamp(1.25rem,2.222vw,2.5rem)] bottom-[clamp(1.25rem,2.222vw,2.5rem)] flex justify-center">
+            <div className="absolute inset-x-[clamp(0.75rem,2.222vw,2.5rem)] bottom-[clamp(0.75rem,2.222vw,2.5rem)] flex justify-center">
               <div
                 ref={thumbsRef}
                 className={cn(
@@ -560,7 +560,7 @@ function LightboxControls({
               </div>
             </div>
           ) : (
-            <div className="absolute inset-x-[clamp(1.25rem,2.222vw,2.5rem)] bottom-[clamp(1.25rem,2.222vw,2.5rem)] flex justify-center">
+            <div className="absolute inset-x-[clamp(0.75rem,2.222vw,2.5rem)] bottom-[clamp(0.75rem,2.222vw,2.5rem)] flex justify-center">
               <p
                 className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-4 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
                 aria-live="polite"

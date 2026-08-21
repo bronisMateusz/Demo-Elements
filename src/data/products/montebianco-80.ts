@@ -262,12 +262,8 @@ export const montebianco80: Product = {
     lead: "Interesuje Cię ten produkt?",
     actionLabel: "Zadaj pytanie",
     href: "#kontakt",
-  },
-  salonCard: {
-    eyebrow: "Obejrzyj na żywo",
-    description: "Wybierz najbliższy salon Elements i umów się na prezentację.",
-    href: "/salony",
-    label: "Wybierz swój salon",
+    secondaryLabel: "Obejrzyj w salonie",
+    secondaryHref: "/salony",
   },
   galleryBanner: {
     eyebrow: "Kolekcja Montebianco",
@@ -367,7 +363,7 @@ export const montebianco80: Product = {
     title: "Projektujesz zawodowo?",
     description:
       "W naszej Strefie architekta znajdziesz katalogi, tekstury, modele 3D i inne przydatne pliki.",
-    href: "#strefa-architekta",
+    href: "/strefa-architekta",
     label: "Przejdź do strefy architekta",
     eyebrow: "Strefa architekta",
     image: {
@@ -478,9 +474,9 @@ export const montebianco80: Product = {
     note: "Bezpłatna wizualizacja · Bez zobowiązań",
     eyebrow: "Wizualizacja",
     image: {
-      src: assetUrl("home/inspiration-warm-minimal.jpg"),
-      alt: "Wizualizacja jasnej łazienki w ciepłych tonach",
-      focalPoint: { x: 50, y: 45 },
+      src: assetUrl("home/about-salon.jpg"),
+      alt: "Salon Elements - rozmowa z doradcą",
+      focalPoint: { x: 50, y: 40 },
     },
     secondary: {
       href: "/salony",

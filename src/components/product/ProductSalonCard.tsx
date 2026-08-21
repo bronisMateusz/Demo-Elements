@@ -6,6 +6,7 @@ import {
   useSelectedSalon,
 } from "../../hooks/useSelectedSalon";
 import { Eyebrow } from "../ui/Eyebrow";
+import { SalonHoursList } from "../salon/SalonHoursList";
 
 type ProductSalonCardProps = {
   eyebrow: string;
@@ -140,11 +141,7 @@ export function ProductSalonCard({
                   <p className="m-0 mb-1.5 font-medium text-neutral-0">
                     {salonCardCopy.hoursColumnLabel}
                   </p>
-                  {hours.map((line) => (
-                    <p key={line} className="m-0">
-                      {line}
-                    </p>
-                  ))}
+                  <SalonHoursList hours={hours} />
                 </div>
               </div>
             ) : null}

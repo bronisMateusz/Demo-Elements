@@ -85,6 +85,8 @@ type ProductPriceBlockProps = {
     href: string;
     lead: string;
     actionLabel: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
     onAskOpen?: () => void;
   };
 };
@@ -155,6 +157,8 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
               href={askCta.href}
               lead={askCta.lead}
               actionLabel={askCta.actionLabel}
+              secondaryLabel={askCta.secondaryLabel}
+              secondaryHref={askCta.secondaryHref}
               onAskOpen={askCta.onAskOpen}
             />
           </div>

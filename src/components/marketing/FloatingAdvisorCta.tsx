@@ -21,9 +21,9 @@ const floatingAdvisorCtaShellClassName = ({
   className?: string;
 }) =>
   cn(
-    "fixed inset-x-0 bottom-0 z-90 px-[clamp(1.25rem,2.222vw,2.5rem)] pb-4",
+    "fixed inset-x-0 bottom-0 z-90 px-[clamp(0.75rem,2.222vw,2.5rem)] pb-4",
     "transition-transform duration-base ease-luxury",
-    "sm:inset-x-auto sm:bottom-5 sm:inset-e-[clamp(1.25rem,2.222vw,2.5rem)] sm:w-auto sm:px-0 sm:pb-0",
+    "sm:inset-x-auto sm:bottom-5 sm:inset-e-[clamp(0.75rem,2.222vw,2.5rem)] sm:w-auto sm:px-0 sm:pb-0",
     visible
       ? "translate-y-0"
       : "pointer-events-none translate-y-[calc(100%+1.25rem)]",

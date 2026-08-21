@@ -373,7 +373,7 @@ export const listingPlpModule: LibraryModule = {
     {
       id: "curated",
       label: "Wyselekcjonowane",
-      description: "ListingCuratedGrid (kafelki jak /kategoria).",
+      description: "ListingCuratedGrid - bento jak SubcategoryBento / home.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <ListingCuratedGrid
@@ -392,7 +392,7 @@ export const producersDirectoryModule: LibraryModule = {
   slug: "producers-directory",
   title: "ProducersDirectory",
   description:
-    "Katalog producentów: intro + polecane, sticky indeks A-Z ze śledzeniem litery, grupy literowe i promo po D. Pełna strona: /producenci.",
+    "Katalog producentów: intro + polecane, sticky indeks A-Z ze śledzeniem litery i wyszukiwarką, grupy literowe i promo po D. Pełna strona: /producenci.",
   variants: [
     {
       id: "full",

@@ -129,6 +129,19 @@ export const salonsPageB = {
     askLabel: "Napisz do doradcy",
     bookLabel: "Umów spotkanie",
   },
+  architectCta: {
+    eyebrow: "Strefa architekta",
+    title: "Jesteś architektem, projektujesz wnętrza?",
+    description: "Skontaktuj się z nami i nawiąż współpracę z Salonem Elements",
+    href: "/strefa-architekta",
+    label: "Przejdź do strefy architekta",
+    image: {
+      src: assetUrl("products/montebianco/03-room.jpg"),
+      alt: "Łazienka z kolekcją Montebianco - aranżacja dla architektów",
+      focalPoint: { x: 50, y: 55 },
+    },
+    video: "video/architect-cta.mp4",
+  },
 } as const;
 
 export type SalonPhoneGroup = {

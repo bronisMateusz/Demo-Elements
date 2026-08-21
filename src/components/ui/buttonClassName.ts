@@ -80,13 +80,15 @@ export function buttonClassName({
     tone === "onDark" && buttonVariantsOnDark[variant]
       ? buttonVariantsOnDark[variant]
       : buttonVariants[variant];
+  // Secondary onDark is a solid white plate - use dark fill / focus like default secondary.
+  const useOnDarkChrome = tone === "onDark" && variant !== "secondary";
   const fillToneClassName = isAnimated
-    ? tone === "onDark"
+    ? useOnDarkChrome
       ? btnAnimatedFillOnDarkClassName
       : btnAnimatedFillLightClassName
     : undefined;
   const focusOutline = isAnimated
-    ? tone === "onDark"
+    ? useOnDarkChrome
       ? "focus-visible:outline-neutral-0"
       : "focus-visible:outline-neutral-800"
     : undefined;

@@ -3,8 +3,6 @@ import { cn } from "../../lib/cn";
 import type { Product } from "../../types/product";
 import { ProductBadges, ProductPriceBlock } from "./ProductBuyBoxParts";
 import { ProductFavoriteButton } from "./ProductFavoriteButton";
-import { ProductGalleryBanner } from "./ProductGalleryBanner";
-import { ProductSalonCard } from "./ProductSalonCard";
 import { ProductVariantSelector } from "./variant-selector";
 
 type ProductBuyBoxProps = {
@@ -19,8 +17,6 @@ type ProductBuyBoxProps = {
     | "variants"
     | "price"
     | "cta"
-    | "salonCard"
-    | "galleryBanner"
   >;
   onAskOpen?: () => void;
 };
@@ -110,29 +106,11 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
           href: product.cta.href,
           lead: askLead,
           actionLabel: askAction,
+          secondaryLabel: product.cta.secondaryLabel,
+          secondaryHref: product.cta.secondaryHref,
           onAskOpen,
         }}
       />
-
-      {product.salonCard ? (
-        <ProductSalonCard
-          className="mt-6 lg:mt-8"
-          {...product.salonCard}
-          onAskOpen={onAskOpen}
-        />
-      ) : null}
-
-      {product.galleryBanner ? (
-        <ProductGalleryBanner
-          className="mt-6 lg:hidden"
-          eyebrow={product.galleryBanner.eyebrow}
-          title={product.galleryBanner.title}
-          description={product.galleryBanner.description}
-          href={product.galleryBanner.href}
-          label={product.galleryBanner.label}
-          image={product.galleryBanner.image}
-        />
-      ) : null}
     </div>
   );
 }

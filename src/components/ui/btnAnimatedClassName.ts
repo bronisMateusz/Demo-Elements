@@ -36,11 +36,9 @@ export const btnAnimatedPrimaryOnDarkClassName = cn(
   "hover:border-neutral-0 hover:text-neutral-900 focus-visible:border-neutral-0 focus-visible:text-neutral-900",
 );
 
-/** Glass secondary for dark / liquid CTA surfaces. */
-export const btnAnimatedSecondaryOnDarkClassName = cn(
-  "border-neutral-0/45 bg-neutral-0/10 text-neutral-0 backdrop-blur-sm",
-  "hover:border-neutral-0 hover:text-neutral-900 focus-visible:border-neutral-0 focus-visible:text-neutral-900",
-);
+/** Secondary on dark surfaces - same solid white plate as default secondary. */
+export const btnAnimatedSecondaryOnDarkClassName =
+  btnAnimatedSecondaryClassName;
 
 /** Outline gold accent (not primary). */
 export const btnAnimatedGoldClassName = cn(

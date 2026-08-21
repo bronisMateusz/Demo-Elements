@@ -20,6 +20,7 @@ import {
 import { productCarouselBleedWrapperClassName } from "../product/productCarouselClassName";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
 import { Button } from "../ui/Button";
+import { HorizontalScrollTrack } from "../ui/HorizontalScrollTrack";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 
 const PANEL_TRANSITION = { duration: 0.3, ease: EASE_LUXURY } as const;
@@ -68,48 +69,51 @@ export function HomeProducts() {
         <div
           role="tablist"
           aria-label="Kategorie produktów"
-          className="mt-6 min-w-0 overflow-x-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="mt-6 min-w-0"
         >
-          <LayoutGroup id="home-product-tabs-active">
-            <SharedLayoutUnderline
-              className="w-max min-w-full flex-nowrap gap-2 border-b border-neutral-200"
-              lineClassName="h-0.5 bg-gold-500/45"
-              insetX={12}
-              bottom={0}
-            >
-              {homeProductTabs.map((entry) => {
-                const selected = entry.id === activeTab;
-                return (
-                  <button
-                    key={entry.id}
-                    type="button"
-                    role="tab"
-                    id={`home-product-tab-${entry.id}`}
-                    aria-selected={selected}
-                    aria-controls={`home-product-panel-${entry.id}`}
-                    tabIndex={selected ? 0 : -1}
-                    className={cn(
-                      "shrink-0 px-3 py-2.5 font-body text-sm font-medium transition-colors duration-fast",
-                      selected
-                        ? "text-neutral-900"
-                        : "text-neutral-500 hover:text-neutral-800",
-                    )}
-                    onClick={() => selectTab(entry.id)}
-                  >
-                    {selected ? (
-                      <motion.span
-                        layoutId="home-product-tab-active-line"
-                        className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-gold-500"
-                        transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
-                        aria-hidden="true"
-                      />
-                    ) : null}
-                    {entry.label}
-                  </button>
-                );
-              })}
-            </SharedLayoutUnderline>
-          </LayoutGroup>
+          <HorizontalScrollTrack activeKey={activeTab}>
+            <LayoutGroup id="home-product-tabs-active">
+              <SharedLayoutUnderline
+                className="w-max min-w-full flex-nowrap gap-2 border-b border-neutral-200"
+                lineClassName="h-0.5 bg-gold-500/45"
+                insetX={12}
+                bottom={0}
+              >
+                {homeProductTabs.map((entry) => {
+                  const selected = entry.id === activeTab;
+                  return (
+                    <button
+                      key={entry.id}
+                      type="button"
+                      role="tab"
+                      id={`home-product-tab-${entry.id}`}
+                      aria-selected={selected}
+                      aria-current={selected ? "true" : undefined}
+                      aria-controls={`home-product-panel-${entry.id}`}
+                      tabIndex={selected ? 0 : -1}
+                      className={cn(
+                        "relative shrink-0 px-3 py-2.5 font-body text-sm font-medium transition-colors duration-fast",
+                        selected
+                          ? "text-neutral-900"
+                          : "text-neutral-500 hover:text-neutral-800",
+                      )}
+                      onClick={() => selectTab(entry.id)}
+                    >
+                      {selected ? (
+                        <motion.span
+                          layoutId="home-product-tab-active-line"
+                          className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-gold-500"
+                          transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                      {entry.label}
+                    </button>
+                  );
+                })}
+              </SharedLayoutUnderline>
+            </LayoutGroup>
+          </HorizontalScrollTrack>
         </div>
       </Container>
 
