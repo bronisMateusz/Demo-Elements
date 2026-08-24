@@ -5,6 +5,7 @@ import { salonPage, salonSubnavItems } from "../data/salon";
 import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { ProductSubnav } from "../components/product/ProductSubnav";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { SalonHero } from "../components/salon/SalonHero";
@@ -61,45 +62,47 @@ export function SalonPage() {
       >
         <SalonHero />
         <ProductSubnav items={salonSubnavItems} />
-        <RevealSection>
-          <SalonUsps />
-        </RevealSection>
-        <RevealSection>
-          <HomeMagazine />
-        </RevealSection>
-        <RevealSection>
-          <SalonAbout />
-        </RevealSection>
-        <RevealSection>
-          <SalonDesignStrip />
-        </RevealSection>
-        <RevealSection>
-          <SalonStats />
-        </RevealSection>
-        <RevealSection>
-          <HomeBrands
-            id="marki"
-            title={salonPage.brands.title}
-            description={salonPage.brands.description}
-            showSeeAll={false}
-            className={pdpSectionScrollMarginClassName}
-          />
-        </RevealSection>
-        <RevealSection>
-          <SalonExpo />
-        </RevealSection>
-        <RevealSection className={pdpSectionScrollMarginClassName}>
-          <SalonNews />
-        </RevealSection>
-        <RevealSection>
-          <SalonInspiration />
-        </RevealSection>
-        <RevealSection>
-          <SalonVisitCta onAskOpen={() => setAskOpen(true)} />
-        </RevealSection>
-        <RevealSection>
-          <SalonDownloads />
-        </RevealSection>
+        <PageSectionStack>
+          <RevealSection>
+            <SalonUsps />
+          </RevealSection>
+          <RevealSection>
+            <HomeMagazine />
+          </RevealSection>
+          <RevealSection>
+            <SalonAbout />
+          </RevealSection>
+          <RevealSection>
+            <SalonDesignStrip />
+          </RevealSection>
+          <RevealSection>
+            <SalonStats />
+          </RevealSection>
+          <RevealSection>
+            <HomeBrands
+              id="marki"
+              title={salonPage.brands.title}
+              description={salonPage.brands.description}
+              showSeeAll={false}
+              className={pdpSectionScrollMarginClassName}
+            />
+          </RevealSection>
+          <RevealSection>
+            <SalonExpo />
+          </RevealSection>
+          <RevealSection className={pdpSectionScrollMarginClassName}>
+            <SalonNews />
+          </RevealSection>
+          <RevealSection>
+            <SalonInspiration />
+          </RevealSection>
+          <RevealSection>
+            <SalonVisitCta onAskOpen={() => setAskOpen(true)} />
+          </RevealSection>
+          <RevealSection>
+            <SalonDownloads />
+          </RevealSection>
+        </PageSectionStack>
         <AdvisorAskDrawer
           open={askOpen}
           onClose={() => setAskOpen(false)}

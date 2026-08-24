@@ -267,27 +267,22 @@ html.lightbox-closing #siteHeaderBar {
 }
 
 #pdpSubnav {
-  @apply transition-[translate,border-color,background-color,top] duration-base ease-luxury;
+  @apply transition-[border-color,background-color,top] duration-base ease-luxury;
 }
 
 /* Reveal (scroll up): utility returns with the stack. */
 html:not(.site-header-concealed) #siteHeaderUtility,
-html:not(.site-header-concealed) #siteHeaderBar,
-html:not(.site-header-concealed) #pdpSubnav.is-stuck {
+html:not(.site-header-concealed) #siteHeaderBar {
   @apply delay-0;
 }
 
 /* Conceal (scroll down): whole sticky stack slides up by utility height.
-   Utility leaves the viewport; bar/subnav keep sticky `top` and move via translate.
+   Utility leaves the viewport; bar keeps sticky `top` and moves via translate.
    Only on lg+ - utility is `hidden` below lg, so translating would hide the main bar.
-   Only translate the PDP subnav while it is actually stuck - otherwise scroll-up
-   reveal of the utility strip would nudge the in-flow subnav. */
+   PDP subnav follows via `header-concealed:xl:top-18` (not translate) so it does not
+   jump when `is-stuck` flips while the utility strip is already concealed. */
 html.site-header-concealed #siteHeaderUtility,
 html.site-header-concealed #siteHeaderBar {
-  @apply lg:-translate-y-11 delay-0;
-}
-
-html.site-header-concealed #pdpSubnav.is-stuck {
   @apply lg:-translate-y-11 delay-0;
 }
 

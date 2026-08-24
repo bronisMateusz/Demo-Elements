@@ -21,6 +21,8 @@ import {
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
+import { Section } from "../components/structural/Section";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
 
@@ -69,57 +71,59 @@ export function SubcategoryPage() {
           />
         }
       >
-        <PageIntro
-          title={subcategoryPage.title}
-          description={subcategoryPage.description}
-          className="pt-6 pb-10 md:pt-8 md:pb-12 lg:pt-10 lg:pb-14"
-        />
-
-        <RevealSection>
-          <SubcategoryBento tiles={[...subcategoryTypes]} />
-        </RevealSection>
-
-        <RevealSection>
-          <LocateCta
-            slogan={subcategoryPage.locate.slogan}
-            title={subcategoryPage.locate.title}
-            description={subcategoryPage.locate.description}
-            ctaLabel={subcategoryPage.locate.ctaLabel}
-            image={subcategoryPage.locate.image}
+        <PageSectionStack>
+          <PageIntro
+            title={subcategoryPage.title}
+            description={subcategoryPage.description}
+            className="pt-6 md:pt-8 lg:pt-10"
           />
-        </RevealSection>
 
-        <RevealSection className="pb-8 md:pb-10">
-          <div id="inspiracje">
-            <InspirationGallery
-              arrangements={[...subcategoryPage.inspiration.arrangements]}
-              title={subcategoryPage.inspiration.title}
-              titleId="sub-insp-title"
+          <RevealSection>
+            <SubcategoryBento tiles={[...subcategoryTypes]} />
+          </RevealSection>
+
+          <RevealSection>
+            <LocateCta
+              slogan={subcategoryPage.locate.slogan}
+              title={subcategoryPage.locate.title}
+              description={subcategoryPage.locate.description}
+              ctaLabel={subcategoryPage.locate.ctaLabel}
+              image={subcategoryPage.locate.image}
             />
-          </div>
-        </RevealSection>
+          </RevealSection>
 
-        <RevealSection>
-          <BlogArticleCarousel
-            title={subcategoryPage.blog.title}
-            articles={[...subcategoryPage.blog.articles]}
-            seeAllLabel={subcategoryPage.blog.seeAllLabel}
-            seeAllHref={subcategoryPage.blog.seeAllHref}
-          />
-        </RevealSection>
+          <RevealSection>
+            <Section id="inspiracje" ariaLabelledby="sub-insp-title">
+              <InspirationGallery
+                arrangements={[...subcategoryPage.inspiration.arrangements]}
+                title={subcategoryPage.inspiration.title}
+                titleId="sub-insp-title"
+              />
+            </Section>
+          </RevealSection>
 
-        <RevealSection className="relative z-20">
-          <AdvisorCta
-            titleId="subcategory-advisor-cta-title"
-            content={subcategoryAdvisorContent}
-            primaryAction="book"
-            onBookOpen={requestSalonDrawer}
-          />
-        </RevealSection>
+          <RevealSection>
+            <BlogArticleCarousel
+              title={subcategoryPage.blog.title}
+              articles={[...subcategoryPage.blog.articles]}
+              seeAllLabel={subcategoryPage.blog.seeAllLabel}
+              seeAllHref={subcategoryPage.blog.seeAllHref}
+            />
+          </RevealSection>
 
-        <RevealSection className="relative z-0">
-          <SeoExpandable blocks={[...subcategorySeoBlocks]} />
-        </RevealSection>
+          <RevealSection className="relative z-20">
+            <AdvisorCta
+              titleId="subcategory-advisor-cta-title"
+              content={subcategoryAdvisorContent}
+              primaryAction="book"
+              onBookOpen={requestSalonDrawer}
+            />
+          </RevealSection>
+
+          <RevealSection className="relative z-0">
+            <SeoExpandable blocks={[...subcategorySeoBlocks]} />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
 
       <FloatingAdvisorCta

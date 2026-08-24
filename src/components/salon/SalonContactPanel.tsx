@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
 import { salonCardCopy } from "../../data/nav";
 import { cn } from "../../lib/cn";
+import {
+  salonContactEyebrowClassName,
+  salonContactLinkClassName,
+  salonContactLinkOffsetClassName,
+} from "./salonContactLinkClassName";
 import { SalonHoursList, type SalonHoursRow } from "./SalonHoursList";
 
 export type SalonContactPhone = {
@@ -25,18 +30,6 @@ type SalonContactPanelProps = {
   className?: string;
   "aria-label"?: string;
 };
-
-const phoneLinkClassName = cn(
-  "inline-flex items-center gap-2 font-body text-sm font-medium text-neutral-900 no-underline tabular-nums",
-  "transition-colors duration-fast ease-out hover:text-gold-600",
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-);
-
-const emailLinkClassName = cn(
-  "mt-3 inline-flex items-center gap-2 font-body text-sm font-medium text-gold-600 no-underline",
-  "transition-colors duration-fast ease-out hover:text-gold-500",
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-);
 
 /** Shared salon contact block - light surface, no dividers (hero + listing). */
 export function SalonContactPanel({
@@ -80,7 +73,7 @@ export function SalonContactPanel({
             <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-2.5 p-0 sm:grid-cols-3">
               {group.phones.map((phone) => (
                 <li key={phone.href}>
-                  <a href={phone.href} className={phoneLinkClassName}>
+                  <a href={phone.href} className={salonContactLinkClassName}>
                     <i
                       className="ph ph-phone text-base leading-none"
                       aria-hidden="true"
@@ -102,7 +95,7 @@ export function SalonContactPanel({
               <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-2.5 p-0">
                 {sidePhoneGroup.phones.map((phone) => (
                   <li key={phone.href}>
-                    <a href={phone.href} className={phoneLinkClassName}>
+                    <a href={phone.href} className={salonContactLinkClassName}>
                       <i
                         className="ph ph-phone text-base leading-none"
                         aria-hidden="true"
@@ -115,10 +108,8 @@ export function SalonContactPanel({
             </div>
           ) : null}
           <div className="sm:self-end">
-            <p className="m-0 font-body text-xs tracking-[0.08em] text-neutral-500 uppercase">
-              E-mail
-            </p>
-            <a href={emailHref} className={emailLinkClassName}>
+            <p className={salonContactEyebrowClassName}>E-mail</p>
+            <a href={emailHref} className={salonContactLinkOffsetClassName}>
               <i
                 className="ph ph-envelope-simple text-base leading-none"
                 aria-hidden="true"

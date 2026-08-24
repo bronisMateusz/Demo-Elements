@@ -16,10 +16,13 @@ import { HomeMagazine } from "../components/home/HomeMagazine";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
 import { ListingPagination } from "../components/listing/ListingPagination";
 import { ProductCarouselCard } from "../components/product/ProductCarouselCard";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { Container } from "../components/ui/Container";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { cn } from "../lib/cn";
+import { sectionPaddingClassName } from "../lib/layoutTokens";
+import { Section } from "../components/structural/Section";
 
 function RevealSection({
   children,
@@ -104,76 +107,84 @@ export function ProducerPage() {
           logoSrc={producerPage.hero.logoSrc}
         />
 
-        <RevealSection>
-          <BrandSeriesGrid
-            title={producerPage.seriesTitle}
-            series={producerPage.series}
-          />
-        </RevealSection>
+        <PageSectionStack>
+          <RevealSection>
+            <BrandSeriesGrid
+              title={producerPage.seriesTitle}
+              series={producerPage.series}
+            />
+          </RevealSection>
 
-        <RevealSection>
-          <BrandAbout paragraphs={producerPage.about.paragraphs} />
-        </RevealSection>
+          <RevealSection>
+            <BrandAbout paragraphs={producerPage.about.paragraphs} />
+          </RevealSection>
 
-        <RevealSection>
-          <section
-            ref={productsRef}
-            id="produkty"
-            aria-labelledby="producer-products-title"
-            className="py-[clamp(2.5rem,6vw,4rem)]"
-          >
-            <Container size="content">
-              <h2
-                id="producer-products-title"
-                className="m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
-              >
-                {producerPage.productsTitle}
-              </h2>
-              <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-12">
-                {pageProducts.map((product) => (
-                  <ProductCarouselCard key={product.id} product={product} />
-                ))}
-              </div>
-              <ListingPagination
-                shownCount={shownCount}
-                totalCount={totalCount}
-                page={safePage}
-                pageCount={pageCount}
-                onShowMore={() => goToPage(safePage + 1)}
-                onPageChange={goToPage}
+          <RevealSection>
+            <section
+              ref={productsRef}
+              id="produkty"
+              aria-labelledby="producer-products-title"
+              className={sectionPaddingClassName}
+            >
+              <Container size="content">
+                <h2
+                  id="producer-products-title"
+                  className="m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900"
+                >
+                  {producerPage.productsTitle}
+                </h2>
+                <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-12">
+                  {pageProducts.map((product) => (
+                    <ProductCarouselCard key={product.id} product={product} />
+                  ))}
+                </div>
+                <ListingPagination
+                  shownCount={shownCount}
+                  totalCount={totalCount}
+                  page={safePage}
+                  pageCount={pageCount}
+                  onShowMore={() => goToPage(safePage + 1)}
+                  onPageChange={goToPage}
+                />
+              </Container>
+            </section>
+          </RevealSection>
+
+          <RevealSection>
+            <HomeMagazine content={producerPage.magazine} />
+          </RevealSection>
+
+          <RevealSection>
+            <Section
+              ariaLabelledby="producer-insp-title"
+              id="inspiracje"
+            >
+              <InspirationGallery
+                arrangements={[...producerPage.arrangements]}
+                title={producerPage.arrangementsTitle}
+                titleId="producer-insp-title"
+                navPlacement="footer"
+                seeMoreHref="#inspiracje"
+                seeMoreLabel="Zobacz więcej aranżacji"
+                endCap={{
+                  label: "Kliknij poniżej",
+                  title: "Pełna galeria aranżacji",
+                  description:
+                    "Zobacz więcej inspiracji i dobierz produkty Vigour do swojej łazienki.",
+                }}
               />
-            </Container>
-          </section>
-        </RevealSection>
+            </Section>
+          </RevealSection>
 
-        <RevealSection>
-          <HomeMagazine content={producerPage.magazine} />
-        </RevealSection>
-
-        <RevealSection className="pb-[clamp(2rem,5vw,3rem)] md:pb-[clamp(2.5rem,6vw,4rem)]">
-          <InspirationGallery
-            arrangements={[...producerPage.arrangements]}
-            title={producerPage.arrangementsTitle}
-            navPlacement="footer"
-            seeMoreHref="#inspiracje"
-            seeMoreLabel="Zobacz więcej aranżacji"
-            endCap={{
-              label: "Kliknij poniżej",
-              title: "Pełna galeria aranżacji",
-              description:
-                "Zobacz więcej inspiracji i dobierz produkty Vigour do swojej łazienki.",
-            }}
-          />
-        </RevealSection>
-
-        <RevealSection>
-          <AdvisorCta
-            titleId="producer-advisor-title"
-            content={advisorContent}
-            onBookOpen={requestSalonDrawer}
-            primaryAction="book"
-          />
-        </RevealSection>
+          <RevealSection>
+            <AdvisorCta
+              titleId="producer-advisor-title"
+              content={advisorContent}
+              onBookOpen={requestSalonDrawer}
+              primaryAction="book"
+            />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
 
       <AdvisorAskDrawer

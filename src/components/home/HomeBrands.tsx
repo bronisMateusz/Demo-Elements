@@ -154,7 +154,8 @@ export function HomeBrands({
 
         <SharedLayoutBg
           className={cn(
-            "mt-8 grid w-full grid-cols-2 md:mt-10",
+            "grid w-full grid-cols-2",
+            "mt-8 md:mt-10",
             "sm:grid-cols-3 md:grid-cols-4",
           )}
           pillClassName="rounded-none bg-neutral-100"

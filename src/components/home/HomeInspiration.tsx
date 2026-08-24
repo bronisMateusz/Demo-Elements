@@ -6,6 +6,7 @@ import {
   InspirationGallery,
   type InspirationGalleryControls,
 } from "../inspiration/InspirationGallery";
+import { Section } from "../structural/Section";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
@@ -18,7 +19,7 @@ export function HomeInspiration() {
   const showNav = count > 1;
 
   return (
-    <div className="pb-[clamp(2rem,5vw,3rem)] md:pb-[clamp(2.5rem,6vw,4rem)]">
+    <Section ariaLabelledby="inspiration-gallery-title">
       <InspirationGallery
         arrangements={homeInspiration.arrangements}
         eyebrow={homeInspiration.eyebrow}
@@ -91,6 +92,6 @@ export function HomeInspiration() {
           <i className="ph ph-arrow-right" aria-hidden="true" />
         </Button>
       </Container>
-    </div>
+    </Section>
   );
 }

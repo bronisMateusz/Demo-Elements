@@ -22,7 +22,7 @@ type ProductHeroProps = {
 export function ProductHero({ product, onAskOpen }: ProductHeroProps) {
   return (
     <section
-      className="pb-[clamp(2rem,5vw,3rem)] md:pb-[clamp(2.5rem,6vw,4rem)]"
+      className="pb-4 md:pb-6"
       aria-label="Prezentacja produktu"
     >
       <Container size="wide" className="overflow-visible">
@@ -30,7 +30,7 @@ export function ProductHero({ product, onAskOpen }: ProductHeroProps) {
             lg–xl: narrower buy column; shared column gap from lg (same rhythm as xl). */}
         <div className="grid gap-4 overflow-visible lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-start lg:gap-x-12 xl:grid-cols-2 xl:gap-x-12">
           {/* Stack (mobile + tablet): full-bleed gallery; lg+: sticky column. */}
-          <div className="min-w-0 max-lg:-mx-[clamp(0.75rem,2.222vw,2.5rem)] lg:sticky lg:top-[var(--site-header-bar-height,7.25rem)] lg:h-[calc(100svh-var(--site-header-bar-height,7.25rem))] lg:overflow-x-clip xl:top-29 xl:h-[calc(100svh-7.25rem)]">
+          <div className="min-w-0 max-lg:-mx-[clamp(0.75rem,2.222vw,2.5rem)] lg:sticky lg:top-(--site-header-bar-height,7.25rem) lg:h-[calc(100svh-var(--site-header-bar-height,7.25rem))] lg:overflow-x-clip xl:top-29 xl:h-[calc(100svh-7.25rem)]">
             <ProductGallery images={product.images} layout="viewport" />
           </div>
 

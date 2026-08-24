@@ -15,6 +15,8 @@ import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { HomeAdvisorCta } from "../components/home/HomeAdvisorCta";
 import { ListingCatalog } from "../components/listing/ListingCatalog";
 import { ListingCuratedGrid } from "../components/listing/ListingCuratedGrid";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
+import { Section } from "../components/structural/Section";
 import { Container } from "../components/ui/Container";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
@@ -53,56 +55,58 @@ export function ListingPage() {
           />
         }
       >
-        <PageIntro
-          title={listingPage.title}
-          description={listingPage.description}
-          className="pt-6 pb-6 md:pt-8 md:pb-8 lg:pt-10 lg:pb-10"
-        />
-
-        <section aria-label="Lista produktów" className="pb-10 md:pb-14">
-          <Container size="content">
-            <ListingCatalog />
-          </Container>
-        </section>
-
-        <RevealSection>
-          <LocateCta
-            slogan={listingPage.locate.slogan}
-            title={listingPage.locate.title}
-            description={listingPage.locate.description}
-            ctaLabel={listingPage.locate.ctaLabel}
-            image={listingPage.locate.image}
+        <PageSectionStack>
+          <PageIntro
+            title={listingPage.title}
+            description={listingPage.description}
+            className="pt-6 md:pt-8 lg:pt-10"
           />
-        </RevealSection>
 
-        <RevealSection className="pb-8 md:pb-10">
-          <div id="inspiracje">
-            <InspirationGallery
-              arrangements={[...listingPage.inspiration.arrangements]}
-              title={listingPage.inspiration.title}
-              titleId="listing-insp-title"
+          <section aria-label="Lista produktów">
+            <Container size="content">
+              <ListingCatalog />
+            </Container>
+          </section>
+
+          <RevealSection>
+            <LocateCta
+              slogan={listingPage.locate.slogan}
+              title={listingPage.locate.title}
+              description={listingPage.locate.description}
+              ctaLabel={listingPage.locate.ctaLabel}
+              image={listingPage.locate.image}
             />
-          </div>
-        </RevealSection>
+          </RevealSection>
 
-        <RevealSection>
-          <ListingCuratedGrid
-            title={listingPage.curated.title}
-            description={listingPage.curated.description}
-            tiles={[...listingCuratedTiles]}
-          />
-        </RevealSection>
+          <RevealSection>
+            <Section id="inspiracje" ariaLabelledby="listing-insp-title">
+              <InspirationGallery
+                arrangements={[...listingPage.inspiration.arrangements]}
+                title={listingPage.inspiration.title}
+                titleId="listing-insp-title"
+              />
+            </Section>
+          </RevealSection>
 
-        <RevealSection className="relative z-20">
-          <HomeAdvisorCta
-            titleId="listing-advisor-cta-title"
-            onPrimaryClick={() => setAskOpen(true)}
-          />
-        </RevealSection>
+          <RevealSection>
+            <ListingCuratedGrid
+              title={listingPage.curated.title}
+              description={listingPage.curated.description}
+              tiles={[...listingCuratedTiles]}
+            />
+          </RevealSection>
 
-        <RevealSection className="relative z-0">
-          <SeoExpandable blocks={[...listingSeoBlocks]} />
-        </RevealSection>
+          <RevealSection className="relative z-20">
+            <HomeAdvisorCta
+              titleId="listing-advisor-cta-title"
+              onPrimaryClick={() => setAskOpen(true)}
+            />
+          </RevealSection>
+
+          <RevealSection className="relative z-0">
+            <SeoExpandable blocks={[...listingSeoBlocks]} />
+          </RevealSection>
+        </PageSectionStack>
 
         <AdvisorAskDrawer
           open={askOpen}

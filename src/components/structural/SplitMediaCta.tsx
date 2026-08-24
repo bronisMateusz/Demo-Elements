@@ -225,10 +225,7 @@ export function SplitMediaCta({
       <section
         id={id}
         aria-labelledby={titleId}
-        className={
-          className ??
-          "py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
-        }
+        className={className}
       >
         <Container size="content">
           <article className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0">
@@ -272,9 +269,7 @@ export function SplitMediaCta({
       id={id}
       ref={targetRef}
       aria-labelledby={titleId}
-      className={
-        className ?? "py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]"
-      }
+      className={className}
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"

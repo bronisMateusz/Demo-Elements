@@ -74,47 +74,68 @@ export function ProductEditorial({
   const { open, setOpen, accordionEnabled } =
     usePdpSectionAccordion(expandOnSectionId);
 
-  const body = (
-    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
-      <div className="min-w-0 lg:sticky lg:top-[var(--site-header-bar-height,7.25rem)] xl:top-47.5 header-concealed:xl:top-36.5 lg:self-start">
-        {accordionEnabled ? (
-          <div className="mb-8 hidden md:block">
-            <SectionHeader
-              eyebrow={eyebrow}
-              title={title}
-              titleId="editorial-title-desktop"
-              className="mb-0"
-            />
-          </div>
-        ) : (
-          <SectionHeader
-            eyebrow={eyebrow}
-            title={title}
-            titleId="editorial-title"
-            className="mb-8"
-          />
-        )}
-        {accordionEnabled ? (
-          <h2 className="mb-6 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900 md:hidden">
-            {title}
-          </h2>
-        ) : null}
-        <div className="space-y-6">
-          <p className="mb-3 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
-            {lead}
-          </p>
-          {paragraphs.map((paragraph) => (
-            <p key={paragraph.slice(0, 32)} className="t-body-lg max-w-prose">
-              {paragraph}
-            </p>
-          ))}
-        </div>
+  const header = accordionEnabled ? (
+    <>
+      <div className="mb-8 hidden md:block">
+        <SectionHeader
+          eyebrow={eyebrow}
+          title={title}
+          titleId="editorial-title-desktop"
+          className="mb-0"
+        />
       </div>
-      <ul className="flex list-none flex-col gap-6 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-s lg:pt-0 lg:ps-12">
-        {features.map((feature) => (
-          <ProductFeatureItem key={feature.title} feature={feature} />
-        ))}
-      </ul>
+      <h2 className="mb-6 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900 md:hidden">
+        {title}
+      </h2>
+    </>
+  ) : (
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      titleId="editorial-title"
+      className="mb-8"
+    />
+  );
+
+  const copy = (
+    <div className="space-y-6">
+      <p className="mb-3 max-w-prose font-body text-lg leading-relaxed font-medium text-neutral-900 md:text-xl">
+        {lead}
+      </p>
+      {paragraphs.map((paragraph) => (
+        <p key={paragraph.slice(0, 32)} className="t-body-lg max-w-prose">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  );
+
+  const featuresList = (
+    <ul className="flex list-none flex-col gap-6 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-s lg:pt-0 lg:ps-12">
+      {features.map((feature) => (
+        <ProductFeatureItem key={feature.title} feature={feature} />
+      ))}
+    </ul>
+  );
+
+  // Desktop: header alone in row 1; lead + features share row 2 so the feature
+  // column starts at the lead baseline (empty cell keeps row 1 height = header).
+  const body = (
+    <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-x-20">
+      <div className="min-w-0 lg:col-start-1 lg:row-start-1">{header}</div>
+      <div
+        className="hidden lg:col-start-2 lg:row-start-1 lg:block"
+        aria-hidden="true"
+      />
+      <div
+        className={cn(
+          "min-w-0 lg:col-start-1 lg:row-start-2",
+          "lg:sticky lg:top-[var(--site-header-bar-height,7.25rem)] xl:top-47.5 header-concealed:xl:top-36.5 lg:self-start",
+        )}
+      >
+        {copy}
+      </div>
+      <div className="min-w-0 lg:col-start-2 lg:row-start-2">{featuresList}</div>
     </div>
   );
 

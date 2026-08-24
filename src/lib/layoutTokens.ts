@@ -45,6 +45,24 @@ export const mdPySectionClassName = "md:py-[clamp(2.5rem,6vw,4rem)]";
 export const mdPtSectionClassName = "md:pt-[clamp(2.5rem,6vw,4rem)]";
 export const mdPbSectionClassName = "md:pb-[clamp(2.5rem,6vw,4rem)]";
 
+/** Canonical page-section vertical padding (mobile + md). Use this as the only outer rhythm. */
+export const sectionPaddingClassName = [
+  pySectionSmClassName,
+  mdPySectionClassName,
+].join(" ");
+
+/** Top-only section padding - e.g. footer-adjacent bands that keep a tight bottom. */
+export const sectionTopPaddingClassName = [
+  ptSectionSmClassName,
+  mdPtSectionClassName,
+].join(" ");
+
+/** Bottom-only section padding - e.g. page intros before the next content block. */
+export const sectionBottomPaddingClassName = [
+  pbSectionSmClassName,
+  mdPbSectionClassName,
+].join(" ");
+
 export const maxWContentClassName = "max-w-384";
 export const maxWWideClassName = "max-w-448";
 

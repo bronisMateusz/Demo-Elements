@@ -2,12 +2,16 @@ import { useId, useState } from "react";
 import { pdpSectionScrollMarginClassName } from "../../constants/pdpSubnav";
 import { architectZonePage } from "../../data/architectZone";
 import { salonOptions } from "../../data/nav";
-import { cn } from "../../lib/cn";
+import {
+  salonContactEyebrowClassName,
+  salonContactLinkOffsetClassName,
+} from "../salon/salonContactLinkClassName";
 import { Section } from "../structural/Section";
+import { SectionHeader } from "../structural/SectionHeader";
 import { Container } from "../ui/Container";
 import { EmptyState } from "../ui/EmptyState";
-import { inputClassName } from "../ui/inputClassName";
-import { SectionHeader } from "../structural/SectionHeader";
+import { EyebrowSygnet } from "../ui/Eyebrow";
+import { ListSelect } from "../ui/ListSelect";
 
 const { guardian } = architectZonePage;
 
@@ -42,66 +46,65 @@ export function ArchitectGuardian() {
             >
               {guardian.selectLabel}
             </label>
-            <div className="relative">
-              <i
-                className="ph ph-map-pin-line pointer-events-none absolute inset-s-4 top-1/2 z-1 -translate-y-1/2 text-lg text-neutral-500"
-                aria-hidden="true"
-              />
-              <select
-                id={selectId}
-                value={salonId}
-                onChange={(event) => setSalonId(event.target.value)}
-                className={cn(
-                  inputClassName,
-                  "cursor-pointer appearance-none ps-11 pe-10",
-                )}
-              >
-                <option value="">{guardian.selectPlaceholder}</option>
-                {salonOptions.map((salon) => (
-                  <option key={salon.id} value={salon.id}>
-                    {salon.name}
-                  </option>
-                ))}
-              </select>
-              <i
-                className="ph ph-caret-down pointer-events-none absolute inset-e-4 top-1/2 -translate-y-1/2 text-base text-neutral-500"
-                aria-hidden="true"
-              />
-            </div>
+            <ListSelect
+              id={selectId}
+              value={salonId}
+              onChange={setSalonId}
+              placeholder={guardian.selectPlaceholder}
+              leadingIconClass="ph ph-map-pin-line"
+              aria-label={guardian.selectLabel}
+              options={salonOptions.map((salon) => ({
+                value: salon.id,
+                label: salon.name,
+              }))}
+            />
           </div>
 
           <div className="min-w-0">
             {showContact && selectedSalon ? (
-              <div className="flex h-full flex-col justify-center rounded-xs border border-neutral-200 bg-neutral-50 px-6 py-8">
-                <p className="m-0 font-body text-xs font-medium uppercase tracking-[0.12em] text-neutral-500">
-                  {selectedSalon.name}
-                </p>
-                <p className="mt-3 mb-0 font-heading text-h3 font-medium tracking-tight text-neutral-900">
-                  {guardian.contact.name}
-                </p>
-                <p className="mt-1 mb-0 font-body text-sm text-neutral-600">
+              <div className="flex h-full min-h-65 flex-col justify-center">
+                <p className="m-0 inline-flex items-center gap-2 font-body text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
+                  <EyebrowSygnet />
                   {guardian.contact.role}
                 </p>
-                <ul className="mt-6 mb-0 flex list-none flex-col gap-3 p-0">
-                  <li>
-                    <a
-                      href={guardian.contact.phoneHref}
-                      className="inline-flex items-center gap-2 font-body text-ui text-neutral-900 no-underline hover:text-gold-700"
-                    >
-                      <i className="ph ph-phone" aria-hidden="true" />
-                      {guardian.contact.phone}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={guardian.contact.emailHref}
-                      className="inline-flex items-center gap-2 font-body text-ui text-neutral-900 no-underline hover:text-gold-700"
-                    >
-                      <i className="ph ph-envelope-simple" aria-hidden="true" />
-                      {guardian.contact.email}
-                    </a>
-                  </li>
-                </ul>
+                <h3 className="mt-3 mb-0 font-heading text-h3 font-medium tracking-tight text-neutral-900">
+                  {selectedSalon.name}
+                </h3>
+
+                <div
+                  className="relative mt-6 flex flex-col gap-5"
+                  aria-label={`Opiekun architekta - ${selectedSalon.name}`}
+                >
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
+                    <div className="sm:self-end">
+                      <p className={salonContactEyebrowClassName}>Telefon</p>
+                      <a
+                        href={guardian.contact.phoneHref}
+                        className={salonContactLinkOffsetClassName}
+                      >
+                        <i
+                          className="ph ph-phone text-base leading-none"
+                          aria-hidden="true"
+                        />
+                        <span>{guardian.contact.phone}</span>
+                      </a>
+                    </div>
+                    <div className="sm:self-end">
+                      <p className={salonContactEyebrowClassName}>E-mail</p>
+                      <a
+                        href={guardian.contact.emailHref}
+                        className={salonContactLinkOffsetClassName}
+                      >
+                        <i
+                          className="ph ph-envelope-simple text-base leading-none"
+                          aria-hidden="true"
+                        />
+                        <span>{guardian.contact.email}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
                 <p className="mt-6 mb-0 max-w-prose font-body text-sm leading-relaxed text-neutral-600">
                   {guardian.contactNote}
                 </p>
@@ -112,7 +115,7 @@ export function ArchitectGuardian() {
                 iconClass="ph ph-map-pin-line"
                 title="Wybierz salon"
                 description={guardian.emptyTitle}
-                className="h-full min-h-56"
+                className="h-full min-h-65"
               />
             )}
           </div>

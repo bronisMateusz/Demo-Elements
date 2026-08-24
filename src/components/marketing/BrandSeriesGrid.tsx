@@ -1,4 +1,5 @@
 import { cn } from "../../lib/cn";
+import { sectionPaddingClassName } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Container } from "../ui/Container";
 import type { BrandSeries } from "../../data/producers";
@@ -30,7 +31,7 @@ export function BrandSeriesGrid({
   return (
     <section
       aria-labelledby={titleId}
-      className={cn("py-[clamp(2.5rem,6vw,4rem)]", className)}
+      className={cn(sectionPaddingClassName, className)}
     >
       <Container size="content">
         <h2
