@@ -4,16 +4,22 @@ import type {
   ArchitectDownloadGroup,
 } from "../../data/architectDownloads";
 import { cn } from "../../lib/cn";
+import { sectionPaddingClassName } from "../../lib/layoutTokens";
 import { AccordionCollapse } from "../motion/AccordionCollapse";
 import { SharedLayoutBg } from "../motion/SharedLayoutBg";
 import { SectionHeader } from "../structural/SectionHeader";
 import { Container } from "../ui/Container";
+import {
+  CatalogDatabaseCta,
+  type CatalogDatabaseCtaContent,
+} from "./CatalogDatabaseCta";
 
 type ArchitectDownloadsProps = {
   groups: readonly ArchitectDownloadGroup[];
   title: string;
   titleId?: string;
   description?: string;
+  catalogCta?: CatalogDatabaseCtaContent;
   className?: string;
 };
 
@@ -57,13 +63,17 @@ export function ArchitectDownloads({
   title,
   titleId = "architect-downloads-title",
   description,
+  catalogCta,
   className,
 }: ArchitectDownloadsProps) {
   const baseId = useId();
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section aria-labelledby={titleId} className={className}>
+    <section
+      aria-labelledby={titleId}
+      className={cn(sectionPaddingClassName, className)}
+    >
       <Container size="content">
         <SectionHeader
           title={title}
@@ -119,6 +129,13 @@ export function ArchitectDownloads({
             );
           })}
         </div>
+
+        {catalogCta ? (
+          <CatalogDatabaseCta
+            {...catalogCta}
+            className="mt-6 sm:mt-8"
+          />
+        ) : null}
       </Container>
     </section>
   );

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "../../lib/cn";
+import { sectionBottomPaddingClassName } from "../../lib/layoutTokens";
 import { Container } from "../ui/Container";
 
 type PageIntroProps = {
@@ -23,7 +24,7 @@ export function PageIntro({
   className,
 }: PageIntroProps) {
   return (
-    <div className={cn("pb-2 md:pb-4", className)}>
+    <div className={cn(sectionBottomPaddingClassName, className)}>
       <Container size="content">
         {breadcrumbs}
         <div

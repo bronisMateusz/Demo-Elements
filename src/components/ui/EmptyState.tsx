@@ -25,7 +25,7 @@ const layoutClassName: Record<EmptyStateLayout, string> = {
   section:
     "flex min-h-96 flex-col items-center justify-center px-5 py-16 text-center sm:px-8",
   panel:
-    "flex flex-col items-center justify-center rounded-xs border border-dashed border-neutral-300 px-6 py-14 text-center",
+    "flex flex-col items-center justify-center rounded-xs border border-neutral-200 bg-neutral-50 px-6 py-14 text-center",
 };
 
 export function EmptyState({

@@ -13,6 +13,7 @@ import { HomePartners } from "../components/home/HomePartners";
 import { HomeProducts } from "../components/home/HomeProducts";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { cn } from "../lib/cn";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 
@@ -46,33 +47,35 @@ export function HomePage() {
 
       <PageShell>
         <HomeHero />
-        <RevealSection>
-          <HomeCategoriesBento />
-        </RevealSection>
-        <RevealSection>
-          <HomeProducts />
-        </RevealSection>
-        <RevealSection>
-          <HomeBrands />
-        </RevealSection>
-        <RevealSection>
-          <HomeAppointment />
-        </RevealSection>
-        <RevealSection>
-          <HomeInspiration />
-        </RevealSection>
-        <RevealSection>
-          <HomeMagazine />
-        </RevealSection>
-        <RevealSection>
-          <HomePartners />
-        </RevealSection>
-        <RevealSection className="relative z-20">
-          <HomeAdvisorCta onPrimaryClick={() => setAskOpen(true)} />
-        </RevealSection>
-        <RevealSection className="relative z-0">
-          <HomeAbout />
-        </RevealSection>
+        <PageSectionStack>
+          <RevealSection>
+            <HomeCategoriesBento />
+          </RevealSection>
+          <RevealSection>
+            <HomeProducts />
+          </RevealSection>
+          <RevealSection>
+            <HomeBrands />
+          </RevealSection>
+          <RevealSection>
+            <HomeAppointment />
+          </RevealSection>
+          <RevealSection>
+            <HomeInspiration />
+          </RevealSection>
+          <RevealSection>
+            <HomeMagazine />
+          </RevealSection>
+          <RevealSection>
+            <HomePartners />
+          </RevealSection>
+          <RevealSection className="relative z-20">
+            <HomeAdvisorCta onPrimaryClick={() => setAskOpen(true)} />
+          </RevealSection>
+          <RevealSection className="relative z-0">
+            <HomeAbout />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
 
       <FloatingAdvisorCta

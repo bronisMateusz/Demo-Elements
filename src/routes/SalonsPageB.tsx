@@ -12,6 +12,7 @@ import {
 import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
 import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
 
@@ -52,42 +53,44 @@ export function SalonsPageB() {
           />
         }
       >
-        <PageIntro
-          title={salonsPageB.title}
-          className="pt-6 md:pt-8 lg:pt-10"
-          actions={
-            <SalonLocationChips
-              className="shrink-0"
-              mobileAs="chips"
-              stretchOnMobile
-              size="lg"
-              ariaLabel={location.groupByAria}
-              chips={[
-                { id: "voivodeship", label: location.groupByVoiv },
-                { id: "city", label: location.groupByCity },
-              ]}
-              activeId={groupBy}
-              onSelect={(id) => setGroupBy(id as SalonsGroupBy)}
-            />
-          }
-        />
-
-        {/* No translate here: transform on an ancestor breaks position:sticky. */}
-        <div className="pb-[clamp(2.5rem,6vw,4rem)]">
-          <SalonsTabsDirectory groupBy={groupBy} />
-        </div>
-
-        <RevealSection className="pb-[clamp(2.5rem,6vw,4rem)]">
-          <ProductArchitectCTA
-            title={architectCta.title}
-            description={architectCta.description}
-            href={architectCta.href}
-            label={architectCta.label}
-            eyebrow={architectCta.eyebrow}
-            image={architectCta.image}
-            video={architectCta.video}
+        <PageSectionStack>
+          <PageIntro
+            title={salonsPageB.title}
+            className="pt-6 md:pt-8 lg:pt-10"
+            actions={
+              <SalonLocationChips
+                className="shrink-0"
+                mobileAs="chips"
+                stretchOnMobile
+                size="lg"
+                ariaLabel={location.groupByAria}
+                chips={[
+                  { id: "voivodeship", label: location.groupByVoiv },
+                  { id: "city", label: location.groupByCity },
+                ]}
+                activeId={groupBy}
+                onSelect={(id) => setGroupBy(id as SalonsGroupBy)}
+              />
+            }
           />
-        </RevealSection>
+
+          {/* No translate here: transform on an ancestor breaks position:sticky. */}
+          <div>
+            <SalonsTabsDirectory groupBy={groupBy} />
+          </div>
+
+          <RevealSection>
+            <ProductArchitectCTA
+              title={architectCta.title}
+              description={architectCta.description}
+              href={architectCta.href}
+              label={architectCta.label}
+              eyebrow={architectCta.eyebrow}
+              image={architectCta.image}
+              video={architectCta.video}
+            />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
 
       <FloatingAdvisorCta

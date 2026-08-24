@@ -37,7 +37,7 @@ export function HomeMagazine({
       ref={targetRef}
       id={id}
       aria-labelledby="home-magazine-title"
-      className="overflow-x-clip py-[clamp(2.5rem,6vw,4rem)] md:py-[clamp(3rem,7vw,5rem)]"
+      className="overflow-x-clip"
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"

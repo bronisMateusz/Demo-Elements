@@ -13,6 +13,7 @@ import { SeoExpandable } from "../components/marketing/SeoExpandable";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { HomeAdvisorCta } from "../components/home/HomeAdvisorCta";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
 
@@ -50,35 +51,37 @@ export function CategoryPage() {
           />
         }
       >
-        <PageIntro
-          title={categoryPage.title}
-          description={categoryPage.description}
-          className="pt-6 pb-10 md:pt-8 md:pb-12 lg:pt-10 lg:pb-14"
-        />
-
-        <RevealSection className="pb-10 md:pb-12">
-          <CategoryRows
-            rows={categoryRows}
-            locate={{
-              slogan: categoryPage.locate.slogan,
-              title: categoryPage.locate.title,
-              description: categoryPage.locate.description,
-              ctaLabel: categoryPage.locate.ctaLabel,
-              image: categoryPage.locate.image,
-            }}
+        <PageSectionStack>
+          <PageIntro
+            title={categoryPage.title}
+            description={categoryPage.description}
+            className="pt-6 md:pt-8 lg:pt-10"
           />
-        </RevealSection>
 
-        <RevealSection className="relative z-20">
-          <HomeAdvisorCta
-            titleId="category-advisor-cta-title"
-            onPrimaryClick={() => setAskOpen(true)}
-          />
-        </RevealSection>
+          <RevealSection>
+            <CategoryRows
+              rows={categoryRows}
+              locate={{
+                slogan: categoryPage.locate.slogan,
+                title: categoryPage.locate.title,
+                description: categoryPage.locate.description,
+                ctaLabel: categoryPage.locate.ctaLabel,
+                image: categoryPage.locate.image,
+              }}
+            />
+          </RevealSection>
 
-        <RevealSection className="relative z-0">
-          <SeoExpandable blocks={[...categorySeoBlocks]} />
-        </RevealSection>
+          <RevealSection className="relative z-20">
+            <HomeAdvisorCta
+              titleId="category-advisor-cta-title"
+              onPrimaryClick={() => setAskOpen(true)}
+            />
+          </RevealSection>
+
+          <RevealSection className="relative z-0">
+            <SeoExpandable blocks={[...categorySeoBlocks]} />
+          </RevealSection>
+        </PageSectionStack>
 
         <AdvisorAskDrawer
           open={askOpen}

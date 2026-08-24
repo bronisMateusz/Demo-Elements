@@ -45,7 +45,7 @@ export const architectZonePage = {
       "Twój bezpośredni kontakt w tym salonie. Odezwij się od razu - telefonicznie lub mailowo. Odpowiadamy w 1 dzień roboczy.",
     contact: {
       name: "Anna Kowalska",
-      role: "Opiekun architektów",
+      role: "Opiekun architekta",
       phone: "+48 510 023 038",
       phoneHref: "tel:+48510023038",
       email: "architekci@elements-show.pl",
@@ -126,6 +126,12 @@ export const architectZonePage = {
     title: "Inspiracje z projektów architektów",
     description:
       "Wizualizacje w dziale Inspiracje to realne realizacje architektów współpracujących z Elements - gotowa baza pomysłów dla Ciebie i Twoich klientów.",
+    promo: {
+      iconClass: "ph ph-megaphone",
+      title: "Promujemy Twoje projekty",
+      description:
+        "Realizacje naszych architektów partnerskich prezentujemy w dziale Inspiracje - to dodatkowa ekspozycja Twojej pracy i źródło nowych klientów.",
+    },
     arrangements: homeInspiration.arrangements.map((item, index) => ({
       ...item,
       id: `az-insp-${index + 1}`,
@@ -162,6 +168,20 @@ export const architectZonePage = {
     title: "Chmura architekta ELEMENTS",
     description:
       "Dla wybranych produktów dostępnych tylko w Salonach Elements udostępniamy bazę modeli CAD. Dołącz do grona architektów korzystających z zasobów 3D i przyspiesz swoją pracę dzięki naszym plikom.",
+    catalogCta: {
+      slogan: ["Katalogi i materiały", "do Twojego projektu"] as const,
+      title: "Zobacz pełną bazę katalogów",
+      description:
+        "Foldery producentów, karty techniczne, deklaracje i certyfikaty - w jednym miejscu online. Pobieraj to, czego potrzebujesz do pracy z klientem.",
+      ctaLabel: "Przejdź do bazy",
+      href: "https://www.elements-show.pl/do-pobrania",
+      image: {
+        src: assetUrl("home/architect-catalog-cta.jpg"),
+        alt: "Architekt omawia plan domu z klientem nad rzutami",
+        fit: "cover" as const,
+        focalPoint: { x: 50, y: 55 },
+      },
+    },
   },
   blog: {
     id: "aktualnosci",

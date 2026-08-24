@@ -19,6 +19,7 @@ import { BlogArticleCarousel } from "../components/marketing/BlogArticleCarousel
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
 import { ProductSubnav } from "../components/product/ProductSubnav";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { PromoSplitCta } from "../components/structural/PromoSplitCta";
 import { Section } from "../components/structural/Section";
 import { TextRevealLead } from "../components/motion/TextRevealLead";
@@ -29,6 +30,7 @@ import { architectDownloadGroups } from "../data/architectDownloads";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
+import { sectionPaddingClassName } from "../lib/layoutTokens";
 
 const page = architectZonePage;
 
@@ -138,117 +140,120 @@ export function ArchitectZonePage() {
 
         <ProductSubnav items={architectZoneSubnavItems} />
 
-        <RevealSection>
-          <ArchitectGuardian />
-        </RevealSection>
+        <PageSectionStack>
+          <RevealSection>
+            <ArchitectGuardian />
+          </RevealSection>
 
-        <RevealSection>
-          <ArchitectIconGrid
-            id={page.benefits.id}
-            titleId="architect-benefits-title"
-            title={page.benefits.title}
-            items={page.benefits.items}
-            columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-          />
-        </RevealSection>
-
-        <RevealSection>
-          <PromoSplitCta
-            titleId="architect-invite-title"
-            variant="card"
-            eyebrow={page.inviteSalon.eyebrow}
-            title={page.inviteSalon.title}
-            description={page.inviteSalon.description}
-            items={page.inviteSalon.items}
-            image={page.inviteSalon.image}
-            video={page.inviteSalon.video}
-          />
-        </RevealSection>
-
-        <RevealSection>
-          <PromoSplitCta
-            titleId="architect-loyalty-title"
-            variant="card"
-            mediaPosition="end"
-            eyebrow={page.loyalty.eyebrow}
-            title={page.loyalty.title}
-            description={page.loyalty.description}
-            image={page.loyalty.image}
-            primary={{
-              href: page.loyalty.ctaHref,
-              label: page.loyalty.ctaLabel,
-            }}
-          />
-        </RevealSection>
-
-        <RevealSection className={pdpSectionScrollMarginClassName}>
-          <div id={page.inspiration.id}>
-            <InspirationGallery
-              arrangements={[...page.inspiration.arrangements]}
-              title={page.inspiration.title}
-              description={page.inspiration.description}
-              titleId="architect-insp-title"
+          <RevealSection>
+            <ArchitectIconGrid
+              id={page.benefits.id}
+              titleId="architect-benefits-title"
+              title={page.benefits.title}
+              items={page.benefits.items}
+              columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
             />
-          </div>
-        </RevealSection>
+          </RevealSection>
 
-        <RevealSection>
-          <ArchitectIconGrid
-            id={page.process.id}
-            titleId="architect-process-title"
-            title={page.process.title}
-            items={page.process.items}
-            columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-          />
-        </RevealSection>
-
-        <RevealSection className={pdpSectionScrollMarginClassName}>
-          <div id={page.downloads.id}>
-            <ArchitectDownloads
-              title={page.downloads.title}
-              titleId="architect-downloads-title"
-              description={page.downloads.description}
-              groups={architectDownloadGroups}
+          <RevealSection>
+            <PromoSplitCta
+              titleId="architect-invite-title"
+              variant="card"
+              eyebrow={page.inviteSalon.eyebrow}
+              title={page.inviteSalon.title}
+              description={page.inviteSalon.description}
+              items={page.inviteSalon.items}
+              image={page.inviteSalon.image}
+              video={page.inviteSalon.video}
             />
-          </div>
-        </RevealSection>
+          </RevealSection>
 
-        <RevealSection
-          className={cn(
-            pdpSectionScrollMarginClassName,
-            "py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]",
-          )}
-        >
-          <SiteNewsletter
-            eyebrow={page.newsletter.eyebrow}
-            title={page.newsletter.title}
-            description={page.newsletter.description}
-            imageSrc={page.newsletter.image.src}
-            imageAlt={page.newsletter.image.alt}
-          />
-        </RevealSection>
-
-        <RevealSection className={pdpSectionScrollMarginClassName}>
-          <div id={page.blog.id}>
-            <BlogArticleCarousel
-              title={page.blog.title}
-              articles={[...page.blog.articles]}
-              seeAllLabel={page.blog.seeAllLabel}
-              seeAllHref={page.blog.seeAllHref}
+          <RevealSection>
+            <PromoSplitCta
+              titleId="architect-loyalty-title"
+              variant="card"
+              mediaPosition="end"
+              eyebrow={page.loyalty.eyebrow}
+              title={page.loyalty.title}
+              description={page.loyalty.description}
+              image={page.loyalty.image}
+              primary={{
+                href: page.loyalty.ctaHref,
+                label: page.loyalty.ctaLabel,
+              }}
             />
-          </div>
-        </RevealSection>
+          </RevealSection>
 
-        <RevealSection className="relative z-20">
-          <AdvisorCta
-            titleId="architect-advisor-cta-title"
-            content={advisorContent}
-            primaryAction="ask"
-            onAskOpen={() => setAskOpen(true)}
-            onBookOpen={requestSalonDrawer}
-            className={pdpSectionScrollMarginClassName}
-          />
-        </RevealSection>
+          <RevealSection className={pdpSectionScrollMarginClassName}>
+            <Section
+              id={page.inspiration.id}
+              ariaLabelledby="architect-insp-title"
+            >
+              <InspirationGallery
+                arrangements={[...page.inspiration.arrangements]}
+                title={page.inspiration.title}
+                description={page.inspiration.description}
+                promo={page.inspiration.promo}
+                titleId="architect-insp-title"
+              />
+            </Section>
+          </RevealSection>
+
+          <RevealSection>
+            <ArchitectIconGrid
+              id={page.process.id}
+              titleId="architect-process-title"
+              title={page.process.title}
+              items={page.process.items}
+              columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            />
+          </RevealSection>
+
+          <RevealSection className={pdpSectionScrollMarginClassName}>
+            <div id={page.downloads.id}>
+              <ArchitectDownloads
+                title={page.downloads.title}
+                titleId="architect-downloads-title"
+                description={page.downloads.description}
+                catalogCta={page.downloads.catalogCta}
+                groups={architectDownloadGroups}
+              />
+            </div>
+          </RevealSection>
+
+          <RevealSection className={pdpSectionScrollMarginClassName}>
+            <SiteNewsletter
+              eyebrow={page.newsletter.eyebrow}
+              title={page.newsletter.title}
+              description={page.newsletter.description}
+              imageSrc={page.newsletter.image.src}
+              imageAlt={page.newsletter.image.alt}
+              className={sectionPaddingClassName}
+            />
+          </RevealSection>
+
+          <RevealSection className={pdpSectionScrollMarginClassName}>
+            <div id={page.blog.id}>
+              <BlogArticleCarousel
+                title={page.blog.title}
+                articles={[...page.blog.articles]}
+                seeAllLabel={page.blog.seeAllLabel}
+                seeAllHref={page.blog.seeAllHref}
+              />
+            </div>
+          </RevealSection>
+
+          <RevealSection className="relative z-20">
+            <AdvisorCta
+              titleId="architect-advisor-cta-title"
+              content={advisorContent}
+              primaryAction="ask"
+              onAskOpen={() => setAskOpen(true)}
+              onBookOpen={requestSalonDrawer}
+              className={pdpSectionScrollMarginClassName}
+            />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
 
       <FloatingAdvisorCta

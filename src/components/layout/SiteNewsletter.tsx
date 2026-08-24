@@ -1,4 +1,5 @@
 import { cn } from "../../lib/cn";
+import { sectionTopPaddingClassName } from "../../lib/layoutTokens";
 import { assetUrl } from "../../app/assets";
 import { Button } from "../ui/Button";
 import { footerNewsletterCopy } from "../../data/nav";
@@ -23,7 +24,11 @@ const DEFAULT_DESCRIPTION =
   "Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na wydarzenia Elements.";
 const DEFAULT_IMAGE = assetUrl("products/montebianco/03-room.jpg");
 
-/** Standalone newsletter band - extracted from the footer shell. */
+/**
+ * Newsletter band above the footer. Default spacing: full section top,
+ * tight bottom so it reads as part of the footer chrome (not a page section).
+ * Pass `sectionPaddingClassName` when used mid-page (e.g. architect zone).
+ */
 export function SiteNewsletter({
   eyebrow = "Newsletter",
   title = DEFAULT_TITLE,
@@ -38,7 +43,15 @@ export function SiteNewsletter({
   const { targetRef, sideInset } = useScrollExpandInset();
 
   return (
-    <section aria-label="Newsletter" className={cn("relative z-10", className)}>
+    <section
+      aria-label="Newsletter"
+      className={cn(
+        "relative z-10",
+        sectionTopPaddingClassName,
+        "pb-4 md:pb-6",
+        className,
+      )}
+    >
       <div ref={targetRef} className="relative pb-0">
         <motion.div
           className="relative min-h-70 overflow-hidden rounded-xs shadow-2 md:min-h-80"

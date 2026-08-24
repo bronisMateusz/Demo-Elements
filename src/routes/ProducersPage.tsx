@@ -8,6 +8,7 @@ import {
   type AdvisorCtaContent,
 } from "../components/marketing/AdvisorCta";
 import { ProducersDirectory } from "../components/marketing/ProducersDirectory";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { cn } from "../lib/cn";
@@ -57,19 +58,21 @@ export function ProducersPage() {
           />
         }
       >
-        {/* No translate here: transform on an ancestor breaks position:sticky. */}
-        <div className="pb-[clamp(2.5rem,6vw,4rem)]">
-          <ProducersDirectory />
-        </div>
+        <PageSectionStack>
+          {/* No translate here: transform on an ancestor breaks position:sticky. */}
+          <div>
+            <ProducersDirectory />
+          </div>
 
-        <RevealSection>
-          <AdvisorCta
-            titleId="producers-advisor-title"
-            content={advisorContent}
-            onBookOpen={requestSalonDrawer}
-            primaryAction="book"
-          />
-        </RevealSection>
+          <RevealSection>
+            <AdvisorCta
+              titleId="producers-advisor-title"
+              content={advisorContent}
+              onBookOpen={requestSalonDrawer}
+              primaryAction="book"
+            />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
     </>
   );

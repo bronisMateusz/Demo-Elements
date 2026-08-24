@@ -16,6 +16,7 @@ import { BrandMotif } from "../brand/BrandMotif";
 import { TextRevealLead } from "../motion/TextRevealLead";
 import { ProductGalleryLightbox } from "../product/ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "../product/ProductGalleryLightboxFlyer";
+import { SectionPromoCallout } from "../structural/SectionPromoCallout";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
@@ -63,6 +64,12 @@ type InspirationGalleryProps = {
   /** Footer CTA under the track (same pattern as home inspirations). */
   seeMoreHref?: string;
   seeMoreLabel?: string;
+  /** Optional callout between the header and project track. */
+  promo?: {
+    iconClass: string;
+    title: string;
+    description: string;
+  };
   onControlsChange?: (controls: InspirationGalleryControls) => void;
 };
 
@@ -104,6 +111,7 @@ export function InspirationGallery({
   endCap = DEFAULT_END_CAP,
   seeMoreHref = "#inspiracje",
   seeMoreLabel = "Zobacz więcej aranżacji",
+  promo,
   onControlsChange,
 }: InspirationGalleryProps) {
   const gutterPx = useGutterPx();
@@ -297,7 +305,16 @@ export function InspirationGallery({
       />
 
       <Container size="content" className="relative z-10">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
+        <div
+          className={cn(
+            "mb-8 flex flex-col gap-6 text-start md:mb-10",
+            promo
+              ? "xl:flex-row xl:items-end xl:justify-between xl:gap-8"
+              : showHeaderNav
+                ? "md:flex-row md:items-end md:justify-between"
+                : "items-start",
+          )}
+        >
           <div className="min-w-0 max-w-2xl">
             <Eyebrow className="mb-3">{eyebrow}</Eyebrow>
             <TextRevealLead
@@ -317,7 +334,12 @@ export function InspirationGallery({
             ) : null}
           </div>
 
-          {showHeaderNav ? (
+          {promo ? (
+            <SectionPromoCallout
+              {...promo}
+              className="w-full min-w-0 xl:min-w-80 xl:flex-1"
+            />
+          ) : showHeaderNav ? (
             <div className="flex items-center gap-4">
               <p className="m-0 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
                 {formatSlideIndex(activeIndex, arrangements.length)}

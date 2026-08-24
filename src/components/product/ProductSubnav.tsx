@@ -82,7 +82,7 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
         ref={navRef}
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-[var(--site-header-bar-height,7.5rem)] z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm xl:top-29",
+          "pdp-subnav sticky top-[var(--site-header-bar-height,7.5rem)] z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm xl:top-29 header-concealed:xl:top-18",
           stuck &&
             "is-stuck border-neutral-200 bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
         )}

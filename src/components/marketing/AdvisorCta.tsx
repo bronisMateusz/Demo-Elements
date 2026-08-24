@@ -196,10 +196,7 @@ export function AdvisorCta({
       description={content.description}
       note={content.note}
       image={content.image}
-      className={cn(
-        "relative z-10 isolate py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]",
-        className,
-      )}
+      className={cn("relative z-10 isolate", className)}
       actions={actions}
     />
   );

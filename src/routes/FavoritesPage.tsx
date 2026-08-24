@@ -4,6 +4,7 @@ import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { PageIntro } from "../components/marketing/PageIntro";
 import { WishlistDirectory } from "../components/marketing/WishlistDirectory";
+import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
 
@@ -39,14 +40,16 @@ export function FavoritesPage() {
           />
         }
       >
-        <PageIntro
-          title={wishlistPage.title}
-          className="pt-6 pb-0 md:pt-8 lg:pt-10"
-        />
+        <PageSectionStack>
+          <PageIntro
+            title={wishlistPage.title}
+            className="pt-6 md:pt-8 lg:pt-10"
+          />
 
-        <RevealSection className="pb-[clamp(2.5rem,6vw,4rem)]">
-          <WishlistDirectory className="mt-2" />
-        </RevealSection>
+          <RevealSection>
+            <WishlistDirectory />
+          </RevealSection>
+        </PageSectionStack>
       </PageShell>
     </>
   );

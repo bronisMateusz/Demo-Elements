@@ -3,7 +3,7 @@ import { SiteSalonsPresence } from "./SiteSalonsPresence";
 
 export function Footer() {
   return (
-    <footer className="mt-16" role="contentinfo">
+    <footer role="contentinfo">
       <SiteSalonsPresence />
       <div className="bg-neutral-50">
         <FooterMain />

@@ -1,6 +1,7 @@
 import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
 import { cn } from "../../lib/cn";
+import { sectionPaddingClassName } from "../../lib/layoutTokens";
 
 type BrandAboutProps = {
   paragraphs: readonly string[];
@@ -21,7 +22,8 @@ export function BrandAbout({
     <section
       aria-label={ariaLabel}
       className={cn(
-        "relative overflow-visible py-[clamp(2.5rem,6vw,4rem)]",
+        "relative overflow-visible",
+        sectionPaddingClassName,
         className,
       )}
     >

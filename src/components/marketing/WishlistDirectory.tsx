@@ -12,6 +12,7 @@ import { isMotionPaused } from "../../lib/a11yPreferences";
 import { cn } from "../../lib/cn";
 import {
   readHeaderOffsetPx,
+  sectionBottomPaddingClassName,
   stickyUnderHeaderClassName,
 } from "../../lib/layoutTokens";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
@@ -67,6 +68,8 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
   const navRef = useRef<HTMLElement>(null);
   const [activeSection, setActiveSection] =
     useState<WishlistSectionId>("schowek-produkty");
+  const scrollingToRef = useRef<WishlistSectionId | null>(null);
+  const scrollLockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const products = useMemo(
     () => resolveFavoriteProducts(productIds),
@@ -111,24 +114,47 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
     if (isEmpty) return;
 
     const updateActive = () => {
+      // Ignore spy while a tab click is still scrolling into place.
+      if (scrollingToRef.current) return;
+
       const offset = readWishlistScrollOffsetPx(navRef.current);
       let current: WishlistSectionId = "schowek-produkty";
+
       for (const section of wishlistSections) {
         const element = document.getElementById(section.id);
         if (!element) continue;
-        if (element.getBoundingClientRect().top <= offset) {
+        if (element.getBoundingClientRect().top <= offset + 2) {
           current = section.id;
         }
       }
+
+      // Last section often cannot reach the sticky line when the page is short -
+      // once the document is scrolled to the bottom, keep the last tab active.
+      const last = wishlistSections[wishlistSections.length - 1];
+      if (last) {
+        const nearBottom =
+          window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 48;
+        if (nearBottom) {
+          current = last.id;
+        }
+      }
+
       setActiveSection(current);
     };
 
     updateActive();
     window.addEventListener("scroll", updateActive, { passive: true });
     window.addEventListener("resize", updateActive);
+    window.addEventListener("scrollend", updateActive);
     return () => {
       window.removeEventListener("scroll", updateActive);
       window.removeEventListener("resize", updateActive);
+      window.removeEventListener("scrollend", updateActive);
+      if (scrollLockTimerRef.current) {
+        clearTimeout(scrollLockTimerRef.current);
+        scrollLockTimerRef.current = null;
+      }
     };
   }, [isEmpty, products.length, arrangements.length]);
 
@@ -136,17 +162,36 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
     const element = document.getElementById(id);
     if (!element) return;
 
+    scrollingToRef.current = id;
+    setActiveSection(id);
+
     const top =
       element.getBoundingClientRect().top +
       window.scrollY -
-      readWishlistScrollOffsetPx(navRef.current) +
-      1;
+      readWishlistScrollOffsetPx(navRef.current);
 
     window.scrollTo({
       top,
       behavior: isMotionPaused() ? "auto" : "smooth",
     });
-    setActiveSection(id);
+
+    const clearLock = () => {
+      scrollingToRef.current = null;
+      if (scrollLockTimerRef.current) {
+        clearTimeout(scrollLockTimerRef.current);
+        scrollLockTimerRef.current = null;
+      }
+    };
+
+    const onScrollEnd = () => {
+      clearLock();
+      window.removeEventListener("scrollend", onScrollEnd);
+    };
+    window.addEventListener("scrollend", onScrollEnd, { once: true });
+
+    // Fallback when scrollend is missing or smooth scroll is interrupted.
+    if (scrollLockTimerRef.current) clearTimeout(scrollLockTimerRef.current);
+    scrollLockTimerRef.current = setTimeout(clearLock, 800);
 
     if (history.replaceState) {
       history.replaceState(null, "", `#${id}`);
@@ -154,7 +199,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
   };
 
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn("w-full", sectionBottomPaddingClassName, className)}>
       {!isEmpty ? (
         <nav
           ref={navRef}
