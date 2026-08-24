@@ -135,7 +135,9 @@ export function ProductEditorial({
       >
         {copy}
       </div>
-      <div className="min-w-0 lg:col-start-2 lg:row-start-2">{featuresList}</div>
+      <div className="min-w-0 lg:col-start-2 lg:row-start-2">
+        {featuresList}
+      </div>
     </div>
   );
 

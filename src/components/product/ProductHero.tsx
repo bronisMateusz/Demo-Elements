@@ -21,10 +21,7 @@ type ProductHeroProps = {
 
 export function ProductHero({ product, onAskOpen }: ProductHeroProps) {
   return (
-    <section
-      className="pb-4 md:pb-6"
-      aria-label="Prezentacja produktu"
-    >
+    <section className="pb-4 md:pb-6" aria-label="Prezentacja produktu">
       <Container size="wide" className="overflow-visible">
         {/* Tablet stacks like mobile; desktop (lg+) is two sticky columns.
             lg–xl: narrower buy column; shared column gap from lg (same rhythm as xl). */}

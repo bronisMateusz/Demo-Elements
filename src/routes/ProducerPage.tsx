@@ -155,10 +155,7 @@ export function ProducerPage() {
           </RevealSection>
 
           <RevealSection>
-            <Section
-              ariaLabelledby="producer-insp-title"
-              id="inspiracje"
-            >
+            <Section ariaLabelledby="producer-insp-title" id="inspiracje">
               <InspirationGallery
                 arrangements={[...producerPage.arrangements]}
                 title={producerPage.arrangementsTitle}

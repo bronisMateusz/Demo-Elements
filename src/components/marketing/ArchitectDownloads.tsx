@@ -131,10 +131,7 @@ export function ArchitectDownloads({
         </div>
 
         {catalogCta ? (
-          <CatalogDatabaseCta
-            {...catalogCta}
-            className="mt-6 sm:mt-8"
-          />
+          <CatalogDatabaseCta {...catalogCta} className="mt-6 sm:mt-8" />
         ) : null}
       </Container>
     </section>
