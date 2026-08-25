@@ -9,9 +9,12 @@ import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
 import { salonCityChipLabel, salonsPageB } from "../../data/salons";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
+import { isMotionPaused } from "../../lib/a11yPreferences";
 import { cn } from "../../lib/cn";
 import {
   pxGutterClassName,
+  readHeaderOffsetPx,
+  sectionBottomPaddingClassName,
   stickyUnderHeaderClassName,
 } from "../../lib/layoutTokens";
 import { EASE_LUXURY } from "../../lib/motionEase";
@@ -125,8 +128,29 @@ export function SalonsTabsDirectory({
 
   const { stuck, sentinelRef } = useStickyUnderHeader();
 
+  const selectTab = (id: string) => {
+    setActiveTabId(id);
+
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    // Pin the sticky voivodeship bar under the header so the new list starts in view.
+    const top =
+      sentinel.getBoundingClientRect().top +
+      window.scrollY -
+      readHeaderOffsetPx();
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: isMotionPaused() ? "auto" : "smooth",
+    });
+  };
+
   return (
-    <Container size="content" className={className}>
+    <Container
+      size="content"
+      className={cn(sectionBottomPaddingClassName, className)}
+    >
       <div ref={sentinelRef} className="h-px" aria-hidden="true" />
       <div
         className={cn(
@@ -146,7 +170,7 @@ export function SalonsTabsDirectory({
             label: tab.label,
           }))}
           activeId={activeTab?.id ?? ""}
-          onSelect={setActiveTabId}
+          onSelect={selectTab}
         />
       </div>
 
