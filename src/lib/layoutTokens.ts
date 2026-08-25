@@ -28,7 +28,7 @@ export const pxGutterClassName = "px-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const maxLgPxGutterClassName =
   "max-lg:px-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const pGutterClassName = "p-[clamp(0.75rem,2.222vw,2.5rem)]";
-export const mxNegGutterClassName = "-mx-[clamp(0.75rem,2.222vw,2.5rem)]";
+export const mxNegGutterClassName = "mx-[-clamp(0.75rem,2.222vw,2.5rem)]";
 export const insetSGutterClassName = "inset-s-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const insetEGutterClassName = "inset-e-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const insetXGutterClassName = "inset-x-[clamp(0.75rem,2.222vw,2.5rem)]";

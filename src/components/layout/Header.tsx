@@ -147,8 +147,7 @@ export function Header() {
         id="siteHeaderBar"
         className={cn(
           "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm xl:top-11",
-          isScrolled &&
-            "bg-[color-mix(in_oklch,var(--color-neutral-0)_92%,transparent)]",
+          isScrolled && "bg-neutral-0/92",
         )}
       >
         <header id="siteHeader">

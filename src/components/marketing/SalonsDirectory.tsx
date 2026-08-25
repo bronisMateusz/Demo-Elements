@@ -307,7 +307,7 @@ export function SalonsDirectory() {
         </section>
       ) : null}
 
-      <Container size="content" className="mainview">
+      <Container size="content">
         <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
           <h2
             id="salons-directory-title"

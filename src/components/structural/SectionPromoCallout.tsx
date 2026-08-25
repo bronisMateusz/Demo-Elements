@@ -25,7 +25,10 @@ export function SectionPromoCallout({
       )}
     >
       <i
-        className={cn(iconClass, "shrink-0 text-3xl leading-none text-neutral-900")}
+        className={cn(
+          iconClass,
+          "shrink-0 text-3xl leading-none text-neutral-900",
+        )}
         aria-hidden="true"
       />
       <div className="min-w-0">

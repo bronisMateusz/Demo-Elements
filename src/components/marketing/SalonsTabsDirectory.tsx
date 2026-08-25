@@ -8,7 +8,6 @@ import {
 import { groupSalonCitiesByVoivodeship } from "../../data/polandVoivodeships";
 import { salonCityChipLabel, salonsPageB } from "../../data/salons";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
-import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
 import { cn } from "../../lib/cn";
 import {
@@ -84,15 +83,17 @@ function buildCityTabs(): TabChip[] {
 type SalonsTabsDirectoryProps = {
   groupBy?: SalonsGroupBy;
   className?: string;
+  /** Opens booking / ask flow for the chosen salon (drawer). */
+  onBookSalon?: (salon: SalonOption) => void;
 };
 
 export function SalonsTabsDirectory({
   groupBy = "voivodeship",
   className,
+  onBookSalon,
 }: SalonsTabsDirectoryProps) {
   const { location } = salonsPageB;
   const reduceMotion = useMotionReduced();
-  const { select, salon: selectedSalon } = useSelectedSalon();
 
   const voivTabs = useMemo(() => buildVoivTabs(), []);
   const cityTabs = useMemo(() => buildCityTabs(), []);
@@ -125,7 +126,7 @@ export function SalonsTabsDirectory({
   const { stuck, sentinelRef } = useStickyUnderHeader();
 
   return (
-    <Container size="content" className={cn("mainview", className)}>
+    <Container size="content" className={className}>
       <div ref={sentinelRef} className="h-px" aria-hidden="true" />
       <div
         className={cn(
@@ -171,8 +172,7 @@ export function SalonsTabsDirectory({
                     <SalonTabCard
                       key={salon.id}
                       salon={salon}
-                      selected={selectedSalon?.id === salon.id}
-                      onBook={() => select(salon.id)}
+                      onBook={() => onBookSalon?.(salon)}
                     />
                   ))}
                 </div>

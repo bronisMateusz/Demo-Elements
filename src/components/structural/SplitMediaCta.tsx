@@ -222,11 +222,7 @@ export function SplitMediaCta({
 
   if (isCard) {
     return (
-      <section
-        id={id}
-        aria-labelledby={titleId}
-        className={className}
-      >
+      <section id={id} aria-labelledby={titleId} className={className}>
         <Container size="content">
           <article className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0">
             <div className="grid md:grid-cols-2 md:items-stretch">
