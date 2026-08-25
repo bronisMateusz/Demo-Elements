@@ -90,7 +90,7 @@ export function salonCountLabel(count: number): string {
   return `${count} salonów`;
 }
 
-/** Alternate tabs listing (`/salony-b`) - copy + card helpers. */
+/** Alternate tabs listing - default at `/salony` (legacy A at `/salony-a`). */
 export const salonsPageB = {
   title: "Salony Elements",
   description:
@@ -117,7 +117,6 @@ export const salonsPageB = {
     hoursLabel: "Godziny otwarcia",
     emailLabel: "E-mail",
     bookLabel: "Umów spotkanie",
-    bookSelectedLabel: "Wybrany",
     salonPageLabel: "Przejdź do strony salonu",
     imageAltPrefix: "Zdjęcie salonu",
   },

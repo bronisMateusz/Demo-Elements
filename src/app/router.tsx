@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../components/routing/RootLayout";
 import { LibraryLayout } from "../library/LibraryLayout";
 import {
@@ -41,8 +41,9 @@ export const router = createBrowserRouter(
         { path: "/", element: <HomePage /> },
         { path: "/produkt", element: <ProductDetailPage /> },
         { path: "/salon", element: <SalonPage /> },
-        { path: "/salony", element: <SalonsPage /> },
-        { path: "/salony-b", element: <SalonsPageB /> },
+        { path: "/salony", element: <SalonsPageB /> },
+        { path: "/salony-a", element: <SalonsPage /> },
+        { path: "/salony-b", element: <Navigate to="/salony" replace /> },
         { path: "/salony/:slug", element: <SalonPage /> },
         { path: "/producenci", element: <ProducersPage /> },
         { path: "/producent", element: <ProducerPage /> },

@@ -130,7 +130,7 @@ export function ProductEditorial({
       <div
         className={cn(
           "min-w-0 lg:col-start-1 lg:row-start-2",
-          "lg:sticky lg:top-[var(--site-header-bar-height,7.25rem)] xl:top-47.5 header-concealed:xl:top-36.5 lg:self-start",
+          "lg:sticky lg:top-(--site-header-bar-height,7.25rem) xl:top-47.5 header-concealed:xl:top-36.5 lg:self-start",
         )}
       >
         {copy}

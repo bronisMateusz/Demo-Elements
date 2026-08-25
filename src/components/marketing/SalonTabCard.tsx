@@ -13,17 +13,11 @@ import { SalonContactPanel } from "../salon/SalonContactPanel";
 
 type SalonTabCardProps = {
   salon: SalonOption;
-  selected?: boolean;
   onBook: () => void;
   className?: string;
 };
 
-export function SalonTabCard({
-  salon,
-  selected = false,
-  onBook,
-  className,
-}: SalonTabCardProps) {
+export function SalonTabCard({ salon, onBook, className }: SalonTabCardProps) {
   const { card } = salonsPageB;
   const imageSrc = salonDirectoryImageFor(salon.id);
   const phoneGroups = salonTabPhoneGroups(salon, {
@@ -94,7 +88,7 @@ export function SalonTabCard({
                 className="w-full sm:w-auto"
                 onClick={onBook}
               >
-                {selected ? card.bookSelectedLabel : card.bookLabel}
+                {card.bookLabel}
               </Button>
               <Button
                 as="link"

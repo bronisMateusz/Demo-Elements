@@ -31,16 +31,17 @@ function RevealSection({
   );
 }
 
-/** Alternate salon listing - tabs by voivodeship / city (makieta salony-b). */
+/** Alternate salon listing - tabs by voivodeship / city (canonical `/salony`). */
 export function SalonsPageB() {
   const [askOpen, setAskOpen] = useState(false);
+  const [askTopic, setAskTopic] = useState("Salony Elements");
   const [groupBy, setGroupBy] = useState<SalonsGroupBy>("voivodeship");
   const { location, architectCta } = salonsPageB;
 
   return (
     <>
       <Helmet>
-        <title>{salonsPageB.title} (B) - Elements</title>
+        <title>{salonsPageB.title} - Elements</title>
         <meta name="description" content={salonsPageB.description} />
       </Helmet>
 
@@ -76,7 +77,13 @@ export function SalonsPageB() {
 
           {/* No translate here: transform on an ancestor breaks position:sticky. */}
           <div>
-            <SalonsTabsDirectory groupBy={groupBy} />
+            <SalonsTabsDirectory
+              groupBy={groupBy}
+              onBookSalon={(salon) => {
+                setAskTopic(salon.name);
+                setAskOpen(true);
+              }}
+            />
           </div>
 
           <RevealSection>
@@ -95,13 +102,16 @@ export function SalonsPageB() {
 
       <FloatingAdvisorCta
         label={salonsPageB.advisor.askLabel}
-        onClick={() => setAskOpen(true)}
+        onClick={() => {
+          setAskTopic("Salony Elements");
+          setAskOpen(true);
+        }}
       />
 
       <AdvisorAskDrawer
         open={askOpen}
         onClose={() => setAskOpen(false)}
-        topicTitle="Salony Elements"
+        topicTitle={askTopic}
       />
     </>
   );

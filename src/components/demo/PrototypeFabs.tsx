@@ -17,13 +17,13 @@ const menuItemActiveClass =
 const sectionTitleClassName =
   "m-0 px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-neutral-500";
 
-/** Exact path match; `/salony` also covers salon detail slugs. */
+/** Exact path match; `/salony` listing is exact only - details use `/salony/:slug`. */
 function isPrototypePathActive(pathname: string, to: string) {
   if (to === "/") return pathname === "/";
   if (to === "/salony") {
-    return pathname === "/salony" || pathname.startsWith("/salony/");
+    return pathname === "/salony";
   }
-  return pathname === to;
+  return pathname === to || pathname.startsWith(`${to}/`);
 }
 
 function PrototypeMenuLink({

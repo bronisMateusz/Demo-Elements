@@ -32,12 +32,12 @@ export const prototypeSections: PrototypeSection[] = [
       {
         label: "Salony",
         to: "/salony",
-        iconClass: "ph ph-map-trifold",
+        iconClass: "ph ph-rows",
       },
       {
-        label: "Salony B (zakładki)",
-        to: "/salony-b",
-        iconClass: "ph ph-rows",
+        label: "Salony A (katalog)",
+        to: "/salony-a",
+        iconClass: "ph ph-map-trifold",
       },
       {
         label: "Kategoria",
