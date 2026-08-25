@@ -23,10 +23,16 @@ export const askDrawerCopy = {
   submitLabel: "Wyślij zapytanie",
   footerNote:
     "Na podstawie kodu pocztowego skierujemy zapytanie do najbliższego salonu.",
+  footerNoteWithSalon:
+    "Zapytanie trafia bezpośrednio do doradcy w salonie {salon}.",
+  altContactTitle: "Wolisz inną formę kontaktu?",
+  altCallTitle: "Zadzwoń do doradcy",
+  altVisitTitle: "Przyjdź do salonu",
   successTitle: "Dziękujemy",
   successMessage:
     "Twoja wiadomość została przyjęta. Skontaktujemy się wkrótce.",
   closeLabel: "Zamknij",
+  salonEmptyHint: "Wskaż salon, do którego trafi zapytanie.",
 } as const;
 
 /** Strip catalog prefix (e.g. `KBN: `) for UI matching the eh prototype. */
@@ -38,4 +44,9 @@ export function buildAskMessage(title: string, sku: string) {
   return askDrawerCopy.messageTemplate
     .replace("{title}", title)
     .replace("{sku}", formatAskSku(sku));
+}
+
+export function buildAskFooterNote(salonName: string | null | undefined) {
+  if (!salonName) return askDrawerCopy.footerNote;
+  return askDrawerCopy.footerNoteWithSalon.replace("{salon}", salonName);
 }

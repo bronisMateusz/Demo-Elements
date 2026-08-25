@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { salonsPageB } from "../data/salons";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
+import { BookAppointmentDrawer } from "../components/marketing/BookAppointmentDrawer";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { PageIntro } from "../components/marketing/PageIntro";
 import { SalonLocationChips } from "../components/marketing/SalonLocationChips";
@@ -14,6 +15,7 @@ import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
+import { useSelectedSalon } from "../hooks/useSelectedSalon";
 import { cn } from "../lib/cn";
 
 function RevealSection({
@@ -35,7 +37,9 @@ function RevealSection({
 export function SalonsPageB() {
   const [askOpen, setAskOpen] = useState(false);
   const [askTopic, setAskTopic] = useState("Salony Elements");
+  const [bookOpen, setBookOpen] = useState(false);
   const [groupBy, setGroupBy] = useState<SalonsGroupBy>("voivodeship");
+  const { select } = useSelectedSalon();
   const { location, architectCta } = salonsPageB;
 
   return (
@@ -80,8 +84,8 @@ export function SalonsPageB() {
             <SalonsTabsDirectory
               groupBy={groupBy}
               onBookSalon={(salon) => {
-                setAskTopic(salon.name);
-                setAskOpen(true);
+                select(salon.id);
+                setBookOpen(true);
               }}
             />
           </div>
@@ -112,6 +116,11 @@ export function SalonsPageB() {
         open={askOpen}
         onClose={() => setAskOpen(false)}
         topicTitle={askTopic}
+      />
+
+      <BookAppointmentDrawer
+        open={bookOpen}
+        onClose={() => setBookOpen(false)}
       />
     </>
   );

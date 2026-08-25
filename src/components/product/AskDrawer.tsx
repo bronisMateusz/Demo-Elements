@@ -1,11 +1,28 @@
 import { useCallback, useId, useState, type FormEvent } from "react";
 import { cn } from "../../lib/cn";
-import { askDrawerCopy, buildAskMessage, formatAskSku } from "../../data/ask";
+import {
+  askDrawerCopy,
+  buildAskFooterNote,
+  buildAskMessage,
+  formatAskSku,
+} from "../../data/ask";
+import { salonCardCopy } from "../../data/nav";
+import { salonTelHref } from "../../data/salons";
+import {
+  requestSalonDrawer,
+  useSelectedSalon,
+} from "../../hooks/useSelectedSalon";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { DrawerHeader, DrawerShell } from "../layout/DrawerShell";
+import { DrawerSalonSummary } from "../layout/DrawerSalonSummary";
 import { Checkbox } from "../motion/Checkbox";
+import { SalonHoursList } from "../salon/SalonHoursList";
+import {
+  salonContactEyebrowClassName,
+  salonContactLinkOffsetClassName,
+} from "../salon/salonContactLinkClassName";
 import { inputClassName } from "../ui/inputClassName";
 
 type AskDrawerProps = {
@@ -36,6 +53,7 @@ export function AskDrawer({
   productSku,
   productImage,
 }: AskDrawerProps) {
+  const { salon } = useSelectedSalon();
   const nameId = useId();
   const phoneId = useId();
   const emailId = useId();
@@ -95,159 +113,222 @@ export function AskDrawer({
             </Button>
           </div>
         ) : (
-          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-            <div className="flex gap-3 rounded-xs border border-neutral-200 bg-neutral-50 p-3">
-              <div className="size-14 shrink-0 overflow-hidden bg-neutral-0">
-                <img
-                  src={productImage.src}
-                  alt=""
-                  className="size-full object-cover"
-                  style={{
-                    objectPosition: productImageObjectPosition(productImage),
-                  }}
-                  width={56}
-                  height={56}
-                  draggable={false}
+          <>
+            <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+              <div className="flex gap-3 rounded-xs border border-neutral-200 bg-neutral-50 p-3">
+                <div className="size-14 shrink-0 overflow-hidden bg-neutral-0">
+                  <img
+                    src={productImage.src}
+                    alt=""
+                    className="size-full object-cover"
+                    style={{
+                      objectPosition: productImageObjectPosition(productImage),
+                    }}
+                    width={56}
+                    height={56}
+                    draggable={false}
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="m-0 font-body text-ui font-medium leading-snug text-neutral-900">
+                    {productTitle}
+                  </p>
+                  <p className="mt-1 mb-0 text-sm text-neutral-500">
+                    {productBrand} · {displaySku}
+                  </p>
+                </div>
+              </div>
+
+              <DrawerSalonSummary
+                salon={salon}
+                onChangeSalon={requestSalonDrawer}
+                emptyHint={askDrawerCopy.salonEmptyHint}
+              />
+
+              <div>
+                <label className={labelClassName} htmlFor={nameId}>
+                  {askDrawerCopy.nameLabel}
+                  <RequiredMark />
+                </label>
+                <input
+                  id={nameId}
+                  name="name"
+                  type="text"
+                  required
+                  aria-required="true"
+                  autoComplete="given-name"
+                  placeholder={askDrawerCopy.namePlaceholder}
+                  className={inputClassName}
                 />
               </div>
-              <div className="min-w-0">
-                <p className="m-0 font-body text-ui font-medium leading-snug text-neutral-900">
-                  {productTitle}
-                </p>
-                <p className="mt-1 mb-0 text-sm text-neutral-500">
-                  {productBrand} · {displaySku}
-                </p>
+
+              <div>
+                <label className={labelClassName} htmlFor={phoneId}>
+                  {askDrawerCopy.phoneLabel}
+                  <RequiredMark />
+                </label>
+                <input
+                  id={phoneId}
+                  name="phone"
+                  type="tel"
+                  required
+                  aria-required="true"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  placeholder={askDrawerCopy.phonePlaceholder}
+                  className={inputClassName}
+                />
               </div>
-            </div>
 
-            <div>
-              <label className={labelClassName} htmlFor={nameId}>
-                {askDrawerCopy.nameLabel}
-                <RequiredMark />
-              </label>
-              <input
-                id={nameId}
-                name="name"
-                type="text"
+              <div>
+                <label className={labelClassName} htmlFor={emailId}>
+                  {askDrawerCopy.emailLabel}
+                  <RequiredMark />
+                </label>
+                <input
+                  id={emailId}
+                  name="email"
+                  type="email"
+                  required
+                  aria-required="true"
+                  autoComplete="email"
+                  placeholder={askDrawerCopy.emailPlaceholder}
+                  className={inputClassName}
+                />
+              </div>
+
+              <div>
+                <label className={labelClassName} htmlFor={postalId}>
+                  {askDrawerCopy.postalLabel}
+                  <RequiredMark />
+                  <span className="font-normal text-neutral-500">
+                    {" "}
+                    · {askDrawerCopy.postalHint}
+                  </span>
+                </label>
+                <input
+                  id={postalId}
+                  name="postal"
+                  type="text"
+                  required
+                  aria-required="true"
+                  autoComplete="postal-code"
+                  inputMode="numeric"
+                  placeholder={askDrawerCopy.postalPlaceholder}
+                  className={inputClassName}
+                />
+              </div>
+
+              <div>
+                <label className={labelClassName} htmlFor={messageId}>
+                  {askDrawerCopy.messageLabel}
+                  <RequiredMark />
+                </label>
+                <textarea
+                  id={messageId}
+                  name="message"
+                  required
+                  aria-required="true"
+                  rows={4}
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                  className={cn(
+                    inputClassName,
+                    "h-auto min-h-28 resize-y py-3 leading-relaxed",
+                  )}
+                />
+              </div>
+
+              <Checkbox
+                id={consentId}
+                name="consent"
                 required
-                aria-required="true"
-                autoComplete="given-name"
-                placeholder={askDrawerCopy.namePlaceholder}
-                className={inputClassName}
-              />
-            </div>
-
-            <div>
-              <label className={labelClassName} htmlFor={phoneId}>
-                {askDrawerCopy.phoneLabel}
-                <RequiredMark />
-              </label>
-              <input
-                id={phoneId}
-                name="phone"
-                type="tel"
-                required
-                aria-required="true"
-                autoComplete="tel"
-                inputMode="tel"
-                placeholder={askDrawerCopy.phonePlaceholder}
-                className={inputClassName}
-              />
-            </div>
-
-            <div>
-              <label className={labelClassName} htmlFor={emailId}>
-                {askDrawerCopy.emailLabel}
-                <RequiredMark />
-              </label>
-              <input
-                id={emailId}
-                name="email"
-                type="email"
-                required
-                aria-required="true"
-                autoComplete="email"
-                placeholder={askDrawerCopy.emailPlaceholder}
-                className={inputClassName}
-              />
-            </div>
-
-            <div>
-              <label className={labelClassName} htmlFor={postalId}>
-                {askDrawerCopy.postalLabel}
-                <RequiredMark />
-                <span className="font-normal text-neutral-500">
-                  {" "}
-                  · {askDrawerCopy.postalHint}
-                </span>
-              </label>
-              <input
-                id={postalId}
-                name="postal"
-                type="text"
-                required
-                aria-required="true"
-                autoComplete="postal-code"
-                inputMode="numeric"
-                placeholder={askDrawerCopy.postalPlaceholder}
-                className={inputClassName}
-              />
-            </div>
-
-            <div>
-              <label className={labelClassName} htmlFor={messageId}>
-                {askDrawerCopy.messageLabel}
-                <RequiredMark />
-              </label>
-              <textarea
-                id={messageId}
-                name="message"
-                required
-                aria-required="true"
-                rows={4}
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-                className={cn(
-                  inputClassName,
-                  "h-auto min-h-28 resize-y py-3 leading-relaxed",
-                )}
-              />
-            </div>
-
-            <Checkbox
-              id={consentId}
-              name="consent"
-              required
-              checked={consent}
-              onCheckedChange={setConsent}
-              className="text-sm leading-relaxed text-neutral-600"
-            >
-              {askDrawerCopy.consent}{" "}
-              <a
-                href={askDrawerCopy.privacyHref}
-                className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
-                onClick={(event) => event.stopPropagation()}
+                checked={consent}
+                onCheckedChange={setConsent}
+                className="text-sm leading-relaxed text-neutral-600"
               >
-                {askDrawerCopy.privacyLabel}
-              </a>
-              .{" "}
-              <a
-                href={askDrawerCopy.marketingHref}
-                className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
-                onClick={(event) => event.stopPropagation()}
+                {askDrawerCopy.consent}{" "}
+                <a
+                  href={askDrawerCopy.privacyHref}
+                  className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  {askDrawerCopy.privacyLabel}
+                </a>
+                .{" "}
+                <a
+                  href={askDrawerCopy.marketingHref}
+                  className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  {askDrawerCopy.marketingLabel} ›
+                </a>
+              </Checkbox>
+
+              <Button
+                as="button"
+                type="submit"
+                variant="primary"
+                size="lg"
+                full
               >
-                {askDrawerCopy.marketingLabel} ›
-              </a>
-            </Checkbox>
+                {askDrawerCopy.submitLabel}
+              </Button>
 
-            <Button as="button" type="submit" variant="primary" size="lg" full>
-              {askDrawerCopy.submitLabel}
-            </Button>
+              <p className="m-0 text-start text-xs leading-relaxed text-neutral-500">
+                {buildAskFooterNote(salon?.name)}
+              </p>
+            </form>
 
-            <p className="m-0 text-center text-xs leading-relaxed text-neutral-500">
-              {askDrawerCopy.footerNote}
-            </p>
-          </form>
+            {salon ? (
+              <div className="mt-6 border-t border-neutral-200 pt-6 pb-2">
+                <p className="m-0 font-body text-sm font-medium tracking-[0.12em] text-neutral-900 uppercase">
+                  {askDrawerCopy.altContactTitle}
+                </p>
+
+                <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
+                  <div>
+                    <p className={salonContactEyebrowClassName}>
+                      {askDrawerCopy.altCallTitle}
+                    </p>
+                    <a
+                      href={salonTelHref(salon.phone)}
+                      className={salonContactLinkOffsetClassName}
+                    >
+                      <i
+                        className="ph ph-phone text-base leading-none"
+                        aria-hidden="true"
+                      />
+                      <span>{salon.phone}</span>
+                    </a>
+                    <SalonHoursList
+                      hours={salonCardCopy.defaultHours}
+                      className="mt-1.5 text-sm text-neutral-500"
+                    />
+                  </div>
+
+                  <div>
+                    <p className={salonContactEyebrowClassName}>
+                      {askDrawerCopy.altVisitTitle}
+                    </p>
+                    <a
+                      href={salon.href}
+                      className={salonContactLinkOffsetClassName}
+                    >
+                      <i
+                        className="ph ph-map-pin text-base leading-none"
+                        aria-hidden="true"
+                      />
+                      <span>{salon.name}</span>
+                    </a>
+                    <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
+                      {salon.address}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </>
         )}
       </div>
     </DrawerShell>
