@@ -23,11 +23,21 @@ import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { IconButton } from "../ui/IconButton";
 import { ProductGalleryLightbox } from "./ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "./ProductGalleryLightboxFlyer";
+import {
+  productGalleryViewportShellClassName,
+  productGalleryViewportImageClassName,
+  productGalleryViewportSlideClassName,
+  productGalleryViewportStageAreaClassName,
+  productGalleryViewportStageButtonClassName,
+  productGalleryViewportStageClassName,
+  productGalleryViewportStageSoloClassName,
+  productGalleryViewportSwiperClassName,
+} from "./productGalleryClassName";
 import "swiper/css";
 
 type ProductGalleryProps = {
   images: ProductImage[];
-  /** On PDP hero - fills the sticky desktop column from lg (viewport − header − peek). */
+  /** On PDP hero - mobile capped stage; desktop fills viewport minus header (max). */
   layout?: "default" | "viewport";
 };
 
@@ -141,10 +151,11 @@ function GalleryNavButtons({
   onNext,
   onZoom,
   showZoom = false,
+  loop = false,
   className,
-}: GalleryNavButtonsProps) {
-  const atStart = activeIndex <= 0;
-  const atEnd = activeIndex >= count - 1;
+}: GalleryNavButtonsProps & { loop?: boolean }) {
+  const atStart = !loop && activeIndex <= 0;
+  const atEnd = !loop && activeIndex >= count - 1;
 
   return (
     <div className={cn("flex gap-1", className)}>
@@ -191,6 +202,7 @@ function GallerySlideContent({
   registerImage,
   isHidden = false,
   fillViewport = false,
+  viewportStageClassName = productGalleryViewportStageClassName,
 }: {
   image: ProductImage;
   index: number;
@@ -198,6 +210,7 @@ function GallerySlideContent({
   registerImage: (index: number, node: HTMLImageElement | null) => void;
   isHidden?: boolean;
   fillViewport?: boolean;
+  viewportStageClassName?: string;
 }) {
   const handleOpen = (event: MouseEvent<HTMLButtonElement>) => {
     const img = event.currentTarget.querySelector("img");
@@ -216,17 +229,15 @@ function GallerySlideContent({
   };
 
   return (
-    <figure className="m-0 size-full">
+    <figure className="m-0 h-full">
       <button
         type="button"
         className={cn(
           "relative w-full cursor-crosshair overflow-hidden bg-neutral-0",
           fillViewport
             ? cn(
-                // Stack (mobile/tablet): capped height so the gallery does not dominate the viewport.
-                "flex h-[min(56svh,28rem)] w-full items-center justify-center",
-                "md:h-[min(52svh,32rem)]",
-                "lg:aspect-auto lg:h-full lg:min-h-0",
+                productGalleryViewportStageButtonClassName,
+                viewportStageClassName,
               )
             : "block aspect-4/5 lg:aspect-3/4 lg:max-h-[min(36rem,70svh)]",
         )}
@@ -238,8 +249,9 @@ function GallerySlideContent({
           src={image.src}
           alt={image.alt}
           className={cn(
-            "size-full",
-            productImageFitClassName(image),
+            fillViewport
+              ? productGalleryViewportImageClassName
+              : cn("size-full", productImageFitClassName(image)),
             isHidden && "opacity-0",
           )}
           style={{ objectPosition: productImageObjectPosition(image) }}
@@ -352,18 +364,19 @@ export function ProductGallery({
   };
 
   const goToSlide = (index: number) => {
-    swiperRef.current?.slideTo(index);
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+    if (isMulti) swiper.slideToLoop(index);
+    else swiper.slideTo(index);
     setActiveIndex(index);
   };
 
   const goToPrev = () => {
-    if (activeIndex <= 0) return;
-    goToSlide(activeIndex - 1);
+    swiperRef.current?.slidePrev();
   };
 
   const goToNext = () => {
-    if (activeIndex >= images.length - 1) return;
-    goToSlide(activeIndex + 1);
+    swiperRef.current?.slideNext();
   };
 
   const openZoom = () => {
@@ -386,7 +399,11 @@ export function ProductGallery({
   // closing fly-back targets the slide the user is actually leaving from.
   const handleLightboxIndexChange = (index: number) => {
     setLightboxIndex(index);
-    swiperRef.current?.slideTo(index, 0);
+    const swiper = swiperRef.current;
+    if (swiper) {
+      if (isMulti) swiper.slideToLoop(index, 0);
+      else swiper.slideTo(index, 0);
+    }
     setActiveIndex(index);
   };
 
@@ -407,12 +424,17 @@ export function ProductGallery({
         className={cn(
           "min-w-0",
           fillViewport &&
-            "flex flex-col gap-3 pb-2 lg:h-full lg:min-h-0 lg:gap-8 lg:pb-8",
+            cn(
+              "flex min-h-0 flex-col gap-3 lg:gap-8",
+              productGalleryViewportShellClassName,
+            ),
         )}
       >
         <div
           aria-label="Galeria produktu"
-          className={fillViewport ? "lg:h-full lg:min-h-0" : undefined}
+          className={
+            fillViewport ? productGalleryViewportStageAreaClassName : undefined
+          }
         >
           <GallerySlideContent
             image={image}
@@ -421,6 +443,7 @@ export function ProductGallery({
             registerImage={registerSlideImage}
             isHidden={lightboxClosing && lightboxIndex === 0}
             fillViewport={fillViewport}
+            viewportStageClassName={productGalleryViewportStageSoloClassName}
           />
         </div>
 
@@ -443,40 +466,42 @@ export function ProductGallery({
     <div
       className={cn(
         "min-w-0",
-        fillViewport && "flex flex-col pb-2 lg:h-full lg:min-h-0 lg:pb-8",
+        fillViewport &&
+          cn("flex min-h-0 flex-col", productGalleryViewportShellClassName),
       )}
     >
       <div
         className={cn(
-          "flex flex-col gap-3",
-          fillViewport && "lg:min-h-0 lg:flex-1 lg:gap-4",
+          "flex min-h-0 flex-col gap-3",
+          fillViewport &&
+            cn("lg:gap-4", productGalleryViewportStageAreaClassName),
         )}
         aria-label="Galeria produktu"
       >
         <div
           className={cn(
             "relative min-w-0 overflow-x-clip",
-            fillViewport && "lg:flex lg:min-h-0 lg:flex-1 lg:flex-col",
+            fillViewport && productGalleryViewportStageAreaClassName,
           )}
         >
           <Swiper
             className={cn(
-              "min-w-0 w-full overflow-x-clip",
-              /* Isolate the transform layer so a 1px compositing fringe does not show beside the stage. */
-              "[&_.swiper-slide]:backface-hidden",
               fillViewport
                 ? cn(
-                    "h-[min(56svh,28rem)] [&_.swiper-slide]:h-full",
-                    "md:h-[min(52svh,32rem)]",
-                    "lg:h-full lg:min-h-0 lg:flex-1",
-                    "lg:[&_.swiper-slide]:flex lg:[&_.swiper-slide]:h-full lg:[&_.swiper-slide]:items-center",
+                    "min-w-0 w-full overflow-x-clip",
+                    "[&_.swiper-slide]:backface-hidden",
+                    productGalleryViewportSwiperClassName,
                   )
-                : "max-h-[calc(100svh-4.5rem-3rem)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
+                : cn(
+                    "min-w-0 w-full overflow-x-clip [&_.swiper-slide]:backface-hidden",
+                    "max-h-[calc(100svh-4.5rem-3rem)] lg:max-h-[min(36rem,70svh)] [&_.swiper-slide]:h-auto",
+                  ),
             )}
             direction="horizontal"
             slidesPerView={1}
             spaceBetween={0}
             speed={480}
+            loop={isMulti}
             roundLengths
             resistanceRatio={0}
             modules={[Mousewheel, Keyboard, A11y]}
@@ -494,11 +519,18 @@ export function ProductGallery({
               swiperRef.current = swiper;
             }}
             onSlideChange={(swiper) => {
-              setActiveIndex(swiper.activeIndex);
+              setActiveIndex(swiper.realIndex);
             }}
           >
             {images.map((image, index) => (
-              <SwiperSlide key={image.src}>
+              <SwiperSlide
+                key={image.src}
+                className={
+                  fillViewport
+                    ? productGalleryViewportSlideClassName
+                    : undefined
+                }
+              >
                 <GallerySlideContent
                   image={image}
                   index={index}
@@ -529,6 +561,7 @@ export function ProductGallery({
               count={images.length}
               onPrev={goToPrev}
               onNext={goToNext}
+              loop={isMulti}
               className="pointer-events-auto"
             />
           </div>
@@ -553,6 +586,7 @@ export function ProductGallery({
             onNext={goToNext}
             onZoom={openZoom}
             showZoom
+            loop={isMulti}
             className="shrink-0"
           />
         </div>

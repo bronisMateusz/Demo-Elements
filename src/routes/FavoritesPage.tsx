@@ -5,23 +5,7 @@ import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { PageIntro } from "../components/marketing/PageIntro";
 import { WishlistDirectory } from "../components/marketing/WishlistDirectory";
 import { PageSectionStack } from "../components/structural/PageSectionStack";
-import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
-import { cn } from "../lib/cn";
-
-function RevealSection({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const { ref, className: revealClassName } = useRevealOnScroll();
-  return (
-    <div ref={ref} className={cn(revealClassName, className)}>
-      {children}
-    </div>
-  );
-}
+import { pageHeaderClusterClassName } from "../lib/layoutTokens";
 
 export function FavoritesPage() {
   return (
@@ -40,15 +24,16 @@ export function FavoritesPage() {
           />
         }
       >
-        <PageSectionStack>
-          <PageIntro
-            title={wishlistPage.title}
-            className="pt-6 md:pt-8 lg:pt-10"
-          />
-
-          <RevealSection>
+        <PageSectionStack flushTop>
+          {/* One stack child: intro + directory share subnav-to-content rhythm. */}
+          <div className={pageHeaderClusterClassName}>
+            <PageIntro
+              title={wishlistPage.title}
+              description={wishlistPage.description}
+            />
+            {/* No transform wrapper: it breaks position:sticky on the subnav. */}
             <WishlistDirectory />
-          </RevealSection>
+          </div>
         </PageSectionStack>
       </PageShell>
     </>

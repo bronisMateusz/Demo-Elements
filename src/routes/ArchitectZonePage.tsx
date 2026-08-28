@@ -30,7 +30,6 @@ import { architectDownloadGroups } from "../data/architectDownloads";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
-import { sectionPaddingClassName } from "../lib/layoutTokens";
 
 const page = architectZonePage;
 
@@ -223,12 +222,12 @@ export function ArchitectZonePage() {
 
           <RevealSection className={pdpSectionScrollMarginClassName}>
             <SiteNewsletter
+              embedded
               eyebrow={page.newsletter.eyebrow}
               title={page.newsletter.title}
               description={page.newsletter.description}
               imageSrc={page.newsletter.image.src}
               imageAlt={page.newsletter.image.alt}
-              className={sectionPaddingClassName}
             />
           </RevealSection>
 

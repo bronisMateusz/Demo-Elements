@@ -51,11 +51,10 @@ export function CategoryPage() {
           />
         }
       >
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           <PageIntro
             title={categoryPage.title}
             description={categoryPage.description}
-            className="pt-6 md:pt-8 lg:pt-10"
           />
 
           <RevealSection>

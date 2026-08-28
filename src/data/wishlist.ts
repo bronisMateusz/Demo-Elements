@@ -3,6 +3,8 @@ import { homeInspiration } from "./home";
 
 export const wishlistPage = {
   title: "Schowek",
+  description:
+    "Zbieraj produkty i aranżacje w jednym miejscu - poproś salon o wspólny kosztorys.",
   metaDescription:
     "Zbieraj produkty i aranżacje w jednym miejscu, a potem poproś salon o wspólny kosztorys.",
   breadcrumbs: [

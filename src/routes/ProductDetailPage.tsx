@@ -76,8 +76,7 @@ export function ProductDetailPage() {
             image={product.galleryBanner.image}
           />
         ) : null}
-
-        <ProductSubnav items={subnavItems} />
+        <ProductSubnav items={subnavItems} followsBlock />
 
         <PageSectionStack>
           <RevealSection>
@@ -90,13 +89,7 @@ export function ProductDetailPage() {
           </RevealSection>
 
           <RevealSection>
-            <Section
-              id="pdp-opis"
-              className={cn(
-                pdpSectionScrollMarginClassName,
-                "py-4 md:py-[clamp(2.5rem,6vw,4rem)]",
-              )}
-            >
+            <Section id="pdp-opis" className={pdpSectionScrollMarginClassName}>
               <ProductEditorial
                 eyebrow={product.editorial.eyebrow}
                 title={product.editorial.title}
@@ -126,13 +119,7 @@ export function ProductDetailPage() {
           </RevealSection>
 
           <RevealSection>
-            <Section
-              id="pdp-pliki"
-              className={cn(
-                pdpSectionScrollMarginClassName,
-                "py-4 md:py-[clamp(2.5rem,6vw,4rem)]",
-              )}
-            >
+            <Section id="pdp-pliki" className={pdpSectionScrollMarginClassName}>
               <ProductDownloads
                 downloads={product.downloads}
                 expandOnSectionId="pdp-pliki"

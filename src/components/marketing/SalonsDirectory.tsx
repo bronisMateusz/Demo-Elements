@@ -12,7 +12,11 @@ import { distanceKm, formatDistanceKm } from "../../lib/geo";
 import { cn } from "../../lib/cn";
 import { useSelectedSalon } from "../../hooks/useSelectedSalon";
 import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
-import { stickyUnderHeaderClassName } from "../../lib/layoutTokens";
+import {
+  sectionMarginYClassName,
+  SECTION_MARGIN_BLOCK_PX,
+  stickyUnderHeaderClassName,
+} from "../../lib/layoutTokens";
 import { PolandSalonsMap } from "../layout/PolandSalonsMap";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
@@ -62,7 +66,9 @@ export function SalonsDirectory() {
   const [focusedVoivId, setFocusedVoivId] = useState<string | null>(
     () => voivGroups[0]?.id ?? null,
   );
-  const { stuck, sentinelRef } = useStickyUnderHeader();
+  const { stuck, sentinelRef } = useStickyUnderHeader({
+    stickyMarginTopPx: SECTION_MARGIN_BLOCK_PX,
+  });
 
   const salonByHref = useMemo(() => {
     return new Map<string, SalonOption>(
@@ -200,8 +206,8 @@ export function SalonsDirectory() {
   const drawerCopy = presenceVoivodeshipDrawerCopy;
 
   return (
-    <div className="flex flex-col gap-10 md:gap-12">
-      <Container size="content">
+    <div className="flex flex-col gap-0">
+      <Container size="content" className="my-12">
         <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-5 md:p-7">
           <h2 className="m-0 font-heading text-h3 leading-[1.15] font-medium tracking-tight text-neutral-900">
             {find.title}
@@ -257,7 +263,7 @@ export function SalonsDirectory() {
       </Container>
 
       {nearestThree.length > 0 ? (
-        <section id="nearby-results">
+        <section id="nearby-results" className="mb-12">
           <Container size="content">
             <h2 className="m-0 font-heading text-h3 leading-[1.15] font-medium tracking-tight text-neutral-900">
               {nearby.title}
@@ -330,14 +336,15 @@ export function SalonsDirectory() {
           />
         </div>
 
-        <div ref={sentinelRef} className="mt-6 h-px" aria-hidden="true" />
+        <div ref={sentinelRef} className="h-px" aria-hidden="true" />
         {filteredVoivChips.length > 0 ? (
           <div
             className={cn(
               stickyUnderHeaderClassName,
-              "z-99 border-b border-transparent max-lg:w-screen max-lg:ms-[calc(50%-50vw)]",
+              sectionMarginYClassName,
+              "z-99 max-lg:w-screen max-lg:ms-[calc(50%-50vw)]",
               stuck &&
-                "border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
+                "border-b border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
             )}
           >
             <SalonLocationChips
@@ -353,7 +360,7 @@ export function SalonsDirectory() {
           </div>
         ) : null}
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] xl:gap-10">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] xl:gap-10">
           {/* Stretch with the list so sticky has a tall containing block.
               Center with `top` only - translate would offset the map in normal flow too. */}
           <div
@@ -399,96 +406,98 @@ export function SalonsDirectory() {
                     key={group.id}
                     aria-label={titleCaseVoiv(group.name)}
                   >
-                    <ul className="m-0 flex list-none flex-col gap-4 p-0">
-                      {group.cities.map((city) => {
-                        const salon = salonByHref.get(city.href);
-                        if (!salon) return null;
-                        const isSelected = selectedSalon?.id === salon.id;
-                        const phone = salon.phone;
-                        const telHref = `tel:${phone.replace(/\s+/g, "")}`;
-                        return (
-                          <li
-                            key={city.href}
-                            className="grid gap-4 rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 md:p-5"
-                          >
-                            <div className="relative aspect-square overflow-hidden rounded-xs bg-neutral-100">
-                              <img
-                                src={imageForSalon(salon.id)}
-                                alt=""
-                                aria-hidden="true"
-                                className="size-full object-cover"
-                                loading="lazy"
-                                decoding="async"
-                              />
-                            </div>
-                            <div className="min-w-0">
-                              <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
-                                {cityLabelFor(salon)}
-                              </p>
-                              <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
-                                {salon.address}
-                              </p>
-
-                              <dl className="mt-3 mb-0 grid gap-2 text-sm">
-                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                                  <dt className="font-medium text-neutral-800">
-                                    {drawerCopy.phoneLabel}
-                                  </dt>
-                                  <dd className="m-0">
-                                    <a
-                                      href={telHref}
-                                      className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-gold-600 hover:decoration-gold-500"
-                                    >
-                                      {phone}
-                                    </a>
-                                  </dd>
-                                </div>
-                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                                  <dt className="font-medium text-neutral-800">
-                                    {drawerCopy.hoursLabel}
-                                  </dt>
-                                  <dd className="m-0 text-neutral-700">
-                                    <SalonHoursList hours={hours} />
-                                  </dd>
-                                </div>
-                              </dl>
-                            </div>
-
-                            <div className="flex gap-2 sm:col-span-2">
-                              <Button
-                                href={salon.href}
-                                variant="primary"
-                                size="md"
-                                className="min-w-0 flex-1"
-                              >
-                                {drawerCopy.contactLabel}
-                                <i
-                                  className="ph ph-arrow-right"
+                    <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:p-6 md:p-8">
+                      <ul className="m-0 flex list-none flex-col p-0">
+                        {group.cities.map((city) => {
+                          const salon = salonByHref.get(city.href);
+                          if (!salon) return null;
+                          const isSelected = selectedSalon?.id === salon.id;
+                          const phone = salon.phone;
+                          const telHref = `tel:${phone.replace(/\s+/g, "")}`;
+                          return (
+                            <li
+                              key={city.href}
+                              className="grid gap-4 border-b border-neutral-200 py-8 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5"
+                            >
+                              <div className="relative aspect-square overflow-hidden rounded-xs bg-neutral-100">
+                                <img
+                                  src={imageForSalon(salon.id)}
+                                  alt=""
                                   aria-hidden="true"
+                                  className="size-full object-cover"
+                                  loading="lazy"
+                                  decoding="async"
                                 />
-                              </Button>
-                              <Button
-                                as="button"
-                                type="button"
-                                variant="secondary"
-                                size="md"
-                                className={cn(
-                                  "min-w-0 flex-1",
-                                  isSelected &&
-                                    "pointer-events-none opacity-70",
-                                )}
-                                onClick={() => select(salon.id)}
-                                disabled={isSelected}
-                              >
-                                {isSelected
-                                  ? drawerCopy.selectedLabel
-                                  : drawerCopy.selectLabel}
-                              </Button>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                              </div>
+                              <div className="min-w-0">
+                                <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
+                                  {cityLabelFor(salon)}
+                                </p>
+                                <p className="mt-1.5 mb-0 text-sm leading-relaxed text-neutral-600">
+                                  {salon.address}
+                                </p>
+
+                                <dl className="mt-3 mb-0 grid gap-2 text-sm">
+                                  <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                                    <dt className="font-medium text-neutral-800">
+                                      {drawerCopy.phoneLabel}
+                                    </dt>
+                                    <dd className="m-0">
+                                      <a
+                                        href={telHref}
+                                        className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-gold-600 hover:decoration-gold-500"
+                                      >
+                                        {phone}
+                                      </a>
+                                    </dd>
+                                  </div>
+                                  <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                                    <dt className="font-medium text-neutral-800">
+                                      {drawerCopy.hoursLabel}
+                                    </dt>
+                                    <dd className="m-0 text-neutral-700">
+                                      <SalonHoursList hours={hours} />
+                                    </dd>
+                                  </div>
+                                </dl>
+                              </div>
+
+                              <div className="flex gap-2 sm:col-span-2">
+                                <Button
+                                  href={salon.href}
+                                  variant="primary"
+                                  size="md"
+                                  className="min-w-0 flex-1"
+                                >
+                                  {drawerCopy.contactLabel}
+                                  <i
+                                    className="ph ph-arrow-right"
+                                    aria-hidden="true"
+                                  />
+                                </Button>
+                                <Button
+                                  as="button"
+                                  type="button"
+                                  variant="secondary"
+                                  size="md"
+                                  className={cn(
+                                    "min-w-0 flex-1",
+                                    isSelected &&
+                                      "pointer-events-none opacity-70",
+                                  )}
+                                  onClick={() => select(salon.id)}
+                                  disabled={isSelected}
+                                >
+                                  {isSelected
+                                    ? drawerCopy.selectedLabel
+                                    : drawerCopy.selectLabel}
+                                </Button>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
                   </section>
                 ))}
               </div>

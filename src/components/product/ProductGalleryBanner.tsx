@@ -1,5 +1,5 @@
 import { cn } from "../../lib/cn";
-import { sectionBottomPaddingClassName } from "../../lib/layoutTokens";
+import { sectionMarginYClassName } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductImage } from "../../types/product";
 import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
@@ -115,7 +115,7 @@ export function ProductGalleryBanner({
   return (
     <section
       aria-labelledby={titleId}
-      className={cn(sectionBottomPaddingClassName, className)}
+      className={cn(sectionMarginYClassName, className)}
     >
       <Container size="content">{card}</Container>
     </section>

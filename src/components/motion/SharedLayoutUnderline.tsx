@@ -12,13 +12,14 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/cn";
+import { internalSubnavHoverLineClassName } from "../../lib/layoutTokens";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
 
 export type SharedLayoutUnderlineProps = {
   children: ReactNode;
   className?: string;
-  /** Tailwind classes on the moving line. */
+  /** Tailwind classes on the hover preview line. */
   lineClassName?: string;
   /** Horizontal inset of the line relative to each item (px). Default 0. */
   insetX?: number;
@@ -29,7 +30,7 @@ export type SharedLayoutUnderlineProps = {
 export function SharedLayoutUnderline({
   children,
   className,
-  lineClassName = "bg-neutral-900",
+  lineClassName = internalSubnavHoverLineClassName,
   insetX = 0,
   bottom = 0,
   onMouseLeave,
@@ -39,7 +40,11 @@ export function SharedLayoutUnderline({
   const uid = useId();
   const reduce = useMotionReduced();
   const lineStyle = { left: insetX, right: insetX, bottom };
-  const lineClass = cn("pointer-events-none absolute h-px", lineClassName);
+  const hoverLineClassName = cn(
+    "pointer-events-none absolute z-30 h-px",
+    lineClassName,
+  );
+  const hoverLayoutId = `shared-underline-hover-${uid}`;
 
   return (
     <LayoutGroup id={`shared-underline-${uid}`}>
@@ -63,7 +68,7 @@ export function SharedLayoutUnderline({
             }>;
             const childKey = el.key ? String(el.key) : `item-${index}`;
             const hoverable = el.props["data-hoverable"] !== false;
-            const isHovered = hoveredKey === childKey;
+            const isHovered = hoverable && hoveredKey === childKey;
 
             return cloneElement(
               el,
@@ -78,9 +83,9 @@ export function SharedLayoutUnderline({
               <>
                 {isHovered ? (
                   <motion.span
-                    layoutId={`shared-underline-${uid}`}
+                    layoutId={hoverLayoutId}
                     transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
-                    className={cn(lineClass, "z-30")}
+                    className={hoverLineClassName}
                     style={lineStyle}
                     aria-hidden="true"
                   />

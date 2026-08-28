@@ -32,8 +32,7 @@ export function CategoryPromoBanner({
   return (
     <div
       className={cn(
-        "group/promo grid overflow-hidden rounded-xs border border-neutral-800/10 bg-gold-100",
-        "lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]",
+        "group/promo grid overflow-hidden rounded-xs border border-neutral-800/10 bg-gold-100 lg:grid-cols-2",
         "transition-[border-color] duration-base ease-out hover:border-gold-500",
         className,
       )}

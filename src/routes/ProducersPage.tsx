@@ -58,7 +58,7 @@ export function ProducersPage() {
           />
         }
       >
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           {/* No translate here: transform on an ancestor breaks position:sticky. */}
           <div>
             <ProducersDirectory />

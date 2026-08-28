@@ -10,6 +10,7 @@ import {
   XL_MIN_WIDTH_PX,
   readHeaderHeightPx,
   readHeaderOffsetPx,
+  SECTION_MARGIN_BLOCK_PX,
 } from "../lib/layoutTokens";
 
 const SUBNAV_GAP_PX = 8;
@@ -26,7 +27,11 @@ function readSubnavScrollOffsetPx() {
   return readHeaderOffsetPx() + readSubnavHeightPx() + SUBNAV_GAP_PX;
 }
 
-export function usePdpSubnav(items: PdpSubnavItem[]) {
+export function usePdpSubnav(
+  items: PdpSubnavItem[],
+  options: { stickyMarginTopPx?: number } = {},
+) {
+  const { stickyMarginTopPx = SECTION_MARGIN_BLOCK_PX } = options;
   const sectionIds = items.map((item) => item.id);
   const [activeId, setActiveId] = useState(() => items[0]?.id ?? "");
   const [stuck, setStuck] = useState(false);
@@ -40,9 +45,10 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
     // or concealing the header flips stuck on/off and the chrome flickers.
     const observe = () => {
       const headerH = readHeaderHeightPx();
+      const rootTop = headerH + stickyMarginTopPx;
       const observer = new IntersectionObserver(
         ([entry]) => setStuck(!entry.isIntersecting),
-        { threshold: 0, rootMargin: `-${headerH}px 0px 0px 0px` },
+        { threshold: 0, rootMargin: `-${rootTop}px 0px 0px 0px` },
       );
       observer.observe(sentinel);
       return observer;
@@ -59,7 +65,7 @@ export function usePdpSubnav(items: PdpSubnavItem[]) {
       observer.disconnect();
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [stickyMarginTopPx]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("pdp-subnav-stuck", stuck);

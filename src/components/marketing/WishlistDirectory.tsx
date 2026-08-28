@@ -2,20 +2,24 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { LayoutGroup, motion } from "motion/react";
 import { resolveFavoriteProducts } from "../../data/favoriteProductCatalog";
 import { wishlistArrangementCatalog, wishlistPage } from "../../data/wishlist";
-import { useMotionReduced } from "../../hooks/useMotionReduced";
 import {
   clearAllFavorites,
   useFavoriteArrangementIds,
   useFavoriteProductIds,
 } from "../../hooks/useProductFavorites";
+import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
 import { isMotionPaused } from "../../lib/a11yPreferences";
 import { cn } from "../../lib/cn";
 import {
+  internalSubnavActiveLineClassName,
+  internalSubnavHoverLineClassName,
+  internalSubnavLinkClassName,
+  internalSubnavMarginBottomClassName,
   readHeaderOffsetPx,
-  sectionBottomPaddingClassName,
   stickyUnderHeaderClassName,
 } from "../../lib/layoutTokens";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
+import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { InspirationGalleryCard } from "../inspiration/InspirationGalleryCard";
 import { AdvisorAskDrawer } from "../marketing/AdvisorAskDrawer";
 import { ShareLinkModal } from "../marketing/ShareLinkModal";
@@ -31,6 +35,9 @@ type WishlistSectionId = "schowek-produkty" | "schowek-aranzacje";
 const SECTION_GAP_PX = 8;
 const NAV_FALLBACK_PX = 44;
 
+const sectionTitleClassName =
+  "m-0 font-heading text-h2 leading-[1.1] font-medium tracking-tight text-neutral-900";
+
 const wishlistSections: {
   id: WishlistSectionId;
   label: string;
@@ -44,6 +51,8 @@ const sectionScrollMtClassName =
 
 const asideStickyClassName =
   "lg:sticky lg:top-[calc(var(--site-header-bar-height,7.25rem)+var(--wishlist-subnav-height,2.75rem)+0.5rem)] xl:top-[calc(7.25rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)] header-concealed:xl:top-[calc(4.5rem+var(--wishlist-subnav-height,2.75rem)+0.5rem)]";
+
+const wishlistSubnavLinkClassName = internalSubnavLinkClassName;
 
 type WishlistDirectoryProps = {
   className?: string;
@@ -65,6 +74,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
   const [shareOpen, setShareOpen] = useState(false);
   const reduce = useMotionReduced();
   const tabLayoutId = useId();
+  const { stuck, sentinelRef } = useStickyUnderHeader();
   const navRef = useRef<HTMLElement>(null);
   const [activeSection, setActiveSection] =
     useState<WishlistSectionId>("schowek-produkty");
@@ -199,65 +209,69 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
   };
 
   return (
-    <div className={cn("w-full", sectionBottomPaddingClassName, className)}>
+    <div className={cn("w-full", className)}>
       {!isEmpty ? (
-        <nav
-          ref={navRef}
-          aria-label={wishlistPage.segments.aria}
-          className={cn(
-            stickyUnderHeaderClassName,
-            "z-20 w-full border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
-          )}
-        >
-          <Container size="content">
-            <HorizontalScrollTrack activeKey={activeSection}>
-              <LayoutGroup id={`wishlist-tabs-${tabLayoutId}`}>
-                <SharedLayoutUnderline
-                  className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"
-                  lineClassName="h-0.5 bg-neutral-900/45"
-                  insetX={12}
-                  bottom={0}
-                >
-                  {wishlistSections.map((section) => {
-                    const selected = section.id === activeSection;
-                    return (
-                      <a
-                        key={section.id}
-                        href={`#${section.id}`}
-                        aria-current={selected ? "true" : undefined}
-                        className={cn(
-                          "relative inline-flex min-h-11 items-center px-3 py-2 font-body text-sm leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out md:min-h-14.5 md:px-4 md:py-3 md:text-ui",
-                          "hover:text-neutral-900",
-                          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-                          selected && "text-neutral-900",
-                        )}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          scrollToSection(section.id);
-                        }}
-                      >
-                        {selected ? (
-                          <motion.span
-                            layoutId={`wishlist-tab-active-line-${tabLayoutId}`}
-                            className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-neutral-900 md:inset-x-4"
-                            transition={
-                              reduce ? { duration: 0 } : SPRING_LAYOUT
-                            }
-                            aria-hidden="true"
-                          />
-                        ) : null}
-                        {section.label}
-                      </a>
-                    );
-                  })}
-                </SharedLayoutUnderline>
-              </LayoutGroup>
-            </HorizontalScrollTrack>
-          </Container>
-        </nav>
+        <>
+          <div ref={sentinelRef} className="h-px" aria-hidden="true" />
+          <nav
+            ref={navRef}
+            aria-label={wishlistPage.segments.aria}
+            className={cn(
+              stickyUnderHeaderClassName,
+              internalSubnavMarginBottomClassName,
+              "z-20 w-full",
+              stuck &&
+                "border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+            )}
+          >
+            <Container size="content">
+              <HorizontalScrollTrack activeKey={activeSection}>
+                <LayoutGroup id={`wishlist-tabs-${tabLayoutId}`}>
+                  <SharedLayoutUnderline
+                    className="mx-auto flex w-max min-w-full items-stretch justify-center gap-0 md:gap-1"
+                    lineClassName={internalSubnavHoverLineClassName}
+                    insetX={12}
+                    bottom={0}
+                  >
+                    {wishlistSections.map((section) => {
+                      const selected = section.id === activeSection;
+                      return (
+                        <a
+                          key={section.id}
+                          href={`#${section.id}`}
+                          aria-current={selected ? "true" : undefined}
+                          className={cn(
+                            wishlistSubnavLinkClassName,
+                            selected ? "text-neutral-900" : "text-neutral-600",
+                          )}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            scrollToSection(section.id);
+                          }}
+                        >
+                          {selected ? (
+                            <motion.span
+                              layoutId={`wishlist-tab-active-line-${tabLayoutId}`}
+                              className={internalSubnavActiveLineClassName}
+                              transition={
+                                reduce ? { duration: 0 } : SPRING_LAYOUT
+                              }
+                              aria-hidden="true"
+                            />
+                          ) : null}
+                          {section.label}
+                        </a>
+                      );
+                    })}
+                  </SharedLayoutUnderline>
+                </LayoutGroup>
+              </HorizontalScrollTrack>
+            </Container>
+          </nav>
+        </>
       ) : null}
 
-      <Container size="content" className="mt-8">
+      <Container size="content">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] lg:items-start lg:gap-10">
           <div className="min-w-0">
             {isEmpty ? (
@@ -287,7 +301,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
                 >
                   <h2
                     id="schowek-produkty-title"
-                    className="m-0 font-heading text-h4 font-medium tracking-tight text-neutral-900"
+                    className={sectionTitleClassName}
                   >
                     {wishlistPage.segments.products}
                   </h2>
@@ -324,7 +338,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
                 >
                   <h2
                     id="schowek-aranzacje-title"
-                    className="m-0 font-heading text-h4 font-medium tracking-tight text-neutral-900"
+                    className={sectionTitleClassName}
                   >
                     {wishlistPage.segments.arrangements}
                   </h2>
@@ -369,7 +383,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
                 "lg:sticky lg:top-33 xl:top-33 header-concealed:xl:top-22",
             )}
           >
-            <h2 className="m-0 font-heading text-h4 font-medium tracking-tight text-neutral-900">
+            <h2 className={sectionTitleClassName}>
               {wishlistPage.summary.title}
             </h2>
             <p className="mt-3 mb-0 font-body text-sm leading-relaxed text-neutral-600">
@@ -388,35 +402,35 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
                 <i className="ph ph-chat-circle" aria-hidden="true" />
                 {wishlistPage.summary.quoteLabel}
               </Button>
-              <div className="flex flex-col gap-2">
-                <Button
-                  as="button"
-                  type="button"
-                  variant="secondary"
-                  full
-                  disabled={isEmpty}
-                  onClick={() => {
-                    window.alert(wishlistPage.summary.pdfHint);
-                  }}
-                >
-                  <i className="ph ph-download-simple" aria-hidden="true" />
-                  {wishlistPage.summary.pdfLabel}
-                </Button>
-                <Button
-                  as="button"
-                  type="button"
-                  variant="secondary"
-                  full
-                  disabled={isEmpty}
-                  onClick={() => setShareOpen(true)}
-                >
-                  <i className="ph ph-share-network" aria-hidden="true" />
-                  {wishlistPage.summary.shareLabel}
-                </Button>
-              </div>
+              <Button
+                as="button"
+                type="button"
+                variant="secondary"
+                size="lg"
+                full
+                disabled={isEmpty}
+                onClick={() => {
+                  window.alert(wishlistPage.summary.pdfHint);
+                }}
+              >
+                <i className="ph ph-download-simple" aria-hidden="true" />
+                {wishlistPage.summary.pdfLabel}
+              </Button>
+              <Button
+                as="button"
+                type="button"
+                variant="secondary"
+                size="lg"
+                full
+                disabled={isEmpty}
+                onClick={() => setShareOpen(true)}
+              >
+                <i className="ph ph-share-network" aria-hidden="true" />
+                {wishlistPage.summary.shareLabel}
+              </Button>
               <button
                 type="button"
-                className="group mt-1 inline-flex w-full cursor-pointer items-center justify-center gap-1.5 border-0 bg-transparent p-0 font-body text-sm text-neutral-600 hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-40"
+                className="group inline-flex w-full cursor-pointer items-center justify-center gap-1.5 border-0 bg-transparent p-0 font-body text-sm text-neutral-600 hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-40"
                 disabled={isEmpty}
                 onClick={() => clearAllFavorites()}
               >

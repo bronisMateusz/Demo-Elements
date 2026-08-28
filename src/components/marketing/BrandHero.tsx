@@ -1,4 +1,5 @@
 import { cn } from "../../lib/cn";
+import { pageIntroHeroTopPaddingClassName } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
@@ -34,13 +35,15 @@ export function BrandHero({
   className,
 }: BrandHeroProps) {
   return (
-    <section
-      aria-labelledby={titleId}
-      className={cn("pt-6 pb-8 md:pt-8 md:pb-10 lg:pt-10", className)}
-    >
+    <section aria-labelledby={titleId} className={className}>
       <Container size="content">
         <div className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
-          <div className="order-1 min-w-0 lg:col-start-1">
+          <div
+            className={cn(
+              "order-1 min-w-0 lg:col-start-1",
+              pageIntroHeroTopPaddingClassName,
+            )}
+          >
             {logoSrc ? (
               <img
                 src={logoSrc}

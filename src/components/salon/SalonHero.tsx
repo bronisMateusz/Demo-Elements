@@ -2,6 +2,8 @@ import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { salonOptions } from "../../data/nav";
 import { salonPage } from "../../data/salon";
 import { salonDirectionsHref } from "../../data/salons";
+import { pageIntroHeroTopPaddingClassName } from "../../lib/layoutTokens";
+import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
@@ -15,16 +17,15 @@ export function SalonHero() {
     : undefined;
 
   return (
-    <section
-      id="o-salonie-top"
-      aria-labelledby="salon-hero-title"
-      className="pt-6 pb-8 md:pt-8 md:pb-10 lg:pt-10"
-    >
+    <section id="o-salonie-top" aria-labelledby="salon-hero-title">
       <Container size="content">
         <div className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
           <h1
             id="salon-hero-title"
-            className="order-1 m-0 min-w-0 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900 lg:col-start-1 lg:row-start-1"
+            className={cn(
+              "order-1 m-0 min-w-0 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900 lg:col-start-1 lg:row-start-1",
+              pageIntroHeroTopPaddingClassName,
+            )}
           >
             {hero.titleLead} {hero.titleStrong}
           </h1>

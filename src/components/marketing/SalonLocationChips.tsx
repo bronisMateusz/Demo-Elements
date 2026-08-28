@@ -127,9 +127,9 @@ function ChipRow({
 
   const row = (
     <SharedLayoutUnderline
-      className="w-max flex-nowrap justify-start gap-0"
+      className="w-max flex-nowrap justify-start gap-3 md:gap-4"
       lineClassName="h-0.5 bg-neutral-900/45"
-      insetX={12}
+      insetX={0}
       bottom={0}
     >
       {chips.map((chip) => {
@@ -145,7 +145,7 @@ function ChipRow({
             aria-current={active ? "true" : undefined}
             className={cn(
               "relative inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap border-0 bg-transparent font-body leading-none",
-              "min-h-11 px-3 py-2 text-sm md:min-h-14.5 md:px-4 md:py-3 md:text-ui",
+              "min-h-11 py-2 text-sm md:min-h-14.5 md:py-3 md:text-ui",
               "transition-colors duration-fast ease-out hover:text-neutral-900",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
               active ? "text-neutral-900" : "text-neutral-600",
@@ -158,7 +158,7 @@ function ChipRow({
             {active ? (
               <motion.span
                 layoutId={selectedLayoutId}
-                className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-neutral-900 md:inset-x-4"
+                className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-0.5 bg-neutral-900"
                 transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
                 aria-hidden="true"
               />

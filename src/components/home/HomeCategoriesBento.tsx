@@ -12,11 +12,7 @@ export function HomeCategoriesBento() {
   if (!featured) return null;
 
   return (
-    <Section
-      ariaLabelledby="home-categories-bento-title"
-      tone="muted"
-      id="kategorie-bento"
-    >
+    <Section ariaLabelledby="home-categories-bento-title" id="kategorie-bento">
       <Container size="content">
         <TextRevealLead
           id="home-categories-bento-title"

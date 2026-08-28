@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
 import { cn } from "../../lib/cn";
-import { sectionPaddingClassName } from "../../lib/layoutTokens";
 
 export type SectionTone = "default" | "muted" | "warm";
 
@@ -29,7 +28,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={ariaLabelledby}
-      className={cn(sectionPaddingClassName, sectionTones[tone], className)}
+      className={cn(sectionTones[tone], className)}
     >
       {children}
     </section>
