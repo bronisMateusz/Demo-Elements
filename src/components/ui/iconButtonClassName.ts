@@ -1,5 +1,5 @@
 import { cn } from "../../lib/cn";
-import { phosphorIconInFlexClassName } from "../../lib/phosphorIconInFlexClassName";
+import { phosphorIconInFlexClassName, phosphorIconGlyphClassName } from "../../lib/phosphorIconInFlexClassName";
 import {
   btnAnimatedFillLightClassName,
   btnAnimatedFillStructureClassName,
@@ -15,9 +15,9 @@ type IconButtonClassNameOptions = {
 };
 
 const iconButtonBase = cn(
-  "icon-btn inline-flex size-12 min-size-12 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800",
+  "icon-btn inline-flex size-11 min-size-11 shrink-0 items-center justify-center rounded-xs border border-transparent bg-transparent text-neutral-800",
   phosphorIconInFlexClassName,
-  "[&_i]:text-xl",
+  phosphorIconGlyphClassName,
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
 );
 

@@ -91,7 +91,7 @@ export function AskFab({
               variant="secondary"
               size="lg"
               className={cn(
-                "shrink-0 max-lg:h-11 max-lg:aspect-square max-lg:px-0 lg:h-13",
+                "shrink-0 max-lg:h-11 max-lg:aspect-square max-lg:px-0 lg:h-11",
                 isFavorite &&
                   "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
               )}
@@ -117,7 +117,7 @@ export function AskFab({
               type="button"
               variant="primary"
               size="lg"
-              className="min-w-0 flex-1 max-lg:h-11 max-lg:px-5 lg:h-13 lg:flex-none"
+              className="min-w-0 flex-1 max-lg:h-11 max-lg:px-5 lg:h-11 lg:flex-none"
               ariaLabel={askLabel}
               onClick={() => setAskOpen(true)}
             >

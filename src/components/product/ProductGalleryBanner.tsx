@@ -17,13 +17,6 @@ type ProductGalleryBannerProps = {
   className?: string;
 };
 
-/** Split eyebrow into LocateCta-style two-line slogan when it has 2+ words. */
-function sloganLines(eyebrow: string): [string, string | null] {
-  const parts = eyebrow.trim().split(/\s+/).filter(Boolean);
-  if (parts.length < 2) return [eyebrow, null];
-  return [parts.slice(0, -1).join(" "), parts[parts.length - 1]!];
-}
-
 /** Collection promo band (PDP, above subnav) - same split layout as LocateCta. */
 export function ProductGalleryBanner({
   eyebrow,
@@ -35,17 +28,15 @@ export function ProductGalleryBanner({
   image,
   className,
 }: ProductGalleryBannerProps) {
-  const [sloganLead, sloganTail] = sloganLines(eyebrow);
-
   const card = (
     <div
       className={cn(
-        "group/banner grid overflow-hidden rounded-xs border border-neutral-800/10 bg-neutral-900",
+        "group/banner grid overflow-hidden rounded-xs bg-neutral-900",
         image && "lg:grid-cols-[0.82fr_1.18fr]",
       )}
     >
       {image ? (
-        <div className="relative flex min-h-44 items-center px-6 py-8 md:min-h-52 md:px-10 md:py-10">
+        <div className="relative min-h-44 md:min-h-52">
           <img
             src={image.src}
             alt=""
@@ -56,19 +47,6 @@ export function ProductGalleryBanner({
             decoding="async"
             draggable={false}
           />
-          <div
-            className="absolute inset-0 bg-neutral-950/55"
-            aria-hidden="true"
-          />
-          <p className="relative z-10 m-0 max-w-[18ch] font-body text-sm font-semibold tracking-[0.06em] text-neutral-0 uppercase md:text-base">
-            {sloganLead}
-            {sloganTail ? (
-              <>
-                <br />
-                {sloganTail}
-              </>
-            ) : null}
-          </p>
         </div>
       ) : null}
 

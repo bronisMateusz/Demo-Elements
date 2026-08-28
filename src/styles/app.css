@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Regular Phosphor glyphs - Light stroke (Phosphor regular uses !important). */
+i.ph:not(.ph-fill) {
+  font-family: "Phosphor-Light" !important;
+}
+
 /* ---------- Elements design tokens → Tailwind theme ---------------- */
 @theme {
   /* ---------- Elements brand colors (full RGB list → tokens) ---------- */

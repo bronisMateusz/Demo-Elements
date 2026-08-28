@@ -1,5 +1,5 @@
 import { cn } from "../../lib/cn";
-import { phosphorIconInFlexClassName } from "../../lib/phosphorIconInFlexClassName";
+import { phosphorIconInFlexClassName, phosphorIconGlyphClassName } from "../../lib/phosphorIconInFlexClassName";
 import {
   btnAnimatedBaseClassName,
   btnAnimatedFillLightClassName,
@@ -32,9 +32,10 @@ const animatedVariants = new Set<ButtonVariant>([
 ]);
 
 const buttonBase = cn(
-  "inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xs border font-body font-medium text-ui leading-none tracking-normal no-underline whitespace-nowrap cursor-pointer active:translate-y-px disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2",
+  "inline-flex items-center justify-center gap-2 h-11 px-8 rounded-xs border font-body font-normal text-ui leading-none tracking-normal no-underline whitespace-nowrap cursor-pointer active:translate-y-px disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2",
   phosphorIconInFlexClassName,
-  "[&>span]:leading-none [&_i]:text-[1.125em]",
+  phosphorIconGlyphClassName,
+  "[&>span]:leading-none",
 );
 
 const buttonBasePlain = cn(
@@ -46,9 +47,9 @@ const buttonBasePlain = cn(
 const buttonBaseAnimated = cn(buttonBase, btnAnimatedBaseClassName);
 
 const buttonSizes: Record<ButtonSize, string> = {
-  sm: "h-12 px-5 text-sm",
+  sm: "px-5 text-sm",
   md: "",
-  lg: "h-13 px-10",
+  lg: "px-10",
 };
 
 const buttonVariants: Record<ButtonVariant, string> = {

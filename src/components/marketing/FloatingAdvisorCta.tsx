@@ -57,7 +57,7 @@ export function FloatingAdvisorCta({
         type="button"
         variant="primary"
         size="lg"
-        className="w-full shadow-2 sm:w-auto sm:h-13"
+        className="w-full shadow-2 sm:w-auto sm:h-11"
         ariaLabel={ariaLabel ?? label}
         onClick={onClick}
       >
