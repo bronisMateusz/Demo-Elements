@@ -1,5 +1,5 @@
 import { cn } from "../../lib/cn";
-import { sectionTopPaddingClassName } from "../../lib/layoutTokens";
+import { sectionMarginYClassName } from "../../lib/layoutTokens";
 import { assetUrl } from "../../app/assets";
 import { Button } from "../ui/Button";
 import { footerNewsletterCopy } from "../../data/nav";
@@ -16,6 +16,8 @@ type SiteNewsletterProps = {
   /** Asset path under `assets/` or full URL from `assetUrl()`. */
   imageSrc?: string;
   imageAlt?: string;
+  /** When true, vertical rhythm comes from PageSectionStack (no outer my). */
+  embedded?: boolean;
   className?: string;
 };
 
@@ -25,9 +27,8 @@ const DEFAULT_DESCRIPTION =
 const DEFAULT_IMAGE = assetUrl("products/montebianco/03-room.jpg");
 
 /**
- * Newsletter band above the footer. Default spacing: full section top,
- * tight bottom so it reads as part of the footer chrome (not a page section).
- * Pass `sectionPaddingClassName` when used mid-page (e.g. architect zone).
+ * Newsletter band above the footer. Default: symmetric section margin (my).
+ * Pass `embedded` when rendered inside PageSectionStack (e.g. architect zone).
  */
 export function SiteNewsletter({
   eyebrow = "Newsletter",
@@ -35,6 +36,7 @@ export function SiteNewsletter({
   description = DEFAULT_DESCRIPTION,
   imageSrc = DEFAULT_IMAGE,
   imageAlt = "",
+  embedded = false,
   className,
 }: SiteNewsletterProps = {}) {
   const consentId = useId();
@@ -47,8 +49,7 @@ export function SiteNewsletter({
       aria-label="Newsletter"
       className={cn(
         "relative z-10",
-        sectionTopPaddingClassName,
-        "pb-4 md:pb-6",
+        !embedded && sectionMarginYClassName,
         className,
       )}
     >

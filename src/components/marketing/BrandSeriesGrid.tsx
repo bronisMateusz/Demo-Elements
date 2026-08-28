@@ -1,5 +1,3 @@
-import { cn } from "../../lib/cn";
-import { sectionPaddingClassName } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Container } from "../ui/Container";
 import type { BrandSeries } from "../../data/producers";
@@ -12,7 +10,7 @@ type BrandSeriesGridProps = {
 };
 
 const seriesGridClassName = [
-  "mt-8 grid gap-5",
+  "mt-12 grid gap-5",
   "max-md:auto-cols-[70%] max-md:grid-flow-col max-md:grid-cols-none",
   "max-md:overflow-x-auto max-md:overscroll-x-contain max-md:snap-x max-md:snap-mandatory",
   "max-md:scrollbar-none",
@@ -29,10 +27,7 @@ export function BrandSeriesGrid({
   className,
 }: BrandSeriesGridProps) {
   return (
-    <section
-      aria-labelledby={titleId}
-      className={cn(sectionPaddingClassName, className)}
-    >
+    <section aria-labelledby={titleId} className={className}>
       <Container size="content">
         <h2
           id={titleId}

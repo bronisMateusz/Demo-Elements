@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "../../lib/cn";
-import { sectionBottomPaddingClassName } from "../../lib/layoutTokens";
+import { pageIntroHeroTopPaddingClassName } from "../../lib/layoutTokens";
 import { Container } from "../ui/Container";
 
 type PageIntroProps = {
@@ -24,11 +24,12 @@ export function PageIntro({
   className,
 }: PageIntroProps) {
   return (
-    <div className={cn(sectionBottomPaddingClassName, className)}>
+    <div className={className}>
       <Container size="content">
         {breadcrumbs}
         <div
           className={cn(
+            pageIntroHeroTopPaddingClassName,
             actions &&
               "flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6",
           )}

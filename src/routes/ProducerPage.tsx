@@ -21,7 +21,6 @@ import { Container } from "../components/ui/Container";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { cn } from "../lib/cn";
-import { sectionPaddingClassName } from "../lib/layoutTokens";
 import { Section } from "../components/structural/Section";
 
 function RevealSection({
@@ -124,7 +123,6 @@ export function ProducerPage() {
               ref={productsRef}
               id="produkty"
               aria-labelledby="producer-products-title"
-              className={sectionPaddingClassName}
             >
               <Container size="content">
                 <h2

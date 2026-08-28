@@ -71,11 +71,10 @@ export function SubcategoryPage() {
           />
         }
       >
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           <PageIntro
             title={subcategoryPage.title}
             description={subcategoryPage.description}
-            className="pt-6 md:pt-8 lg:pt-10"
           />
 
           <RevealSection>

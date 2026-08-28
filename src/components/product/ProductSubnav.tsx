@@ -5,11 +5,20 @@ import type { PdpSubnavItem } from "../../constants/pdpSubnav";
 import { usePdpSubnav } from "../../hooks/usePdpSubnav";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
+import {
+  internalSubnavActiveLineClassName,
+  internalSubnavHoverLineClassName,
+  internalSubnavLinkClassName,
+  internalSubnavMarginBottomClassName,
+  internalSubnavMarginClassName,
+} from "../../lib/layoutTokens";
 import { SharedLayoutUnderline } from "../motion/SharedLayoutUnderline";
 import { HorizontalScrollTrack } from "../ui/HorizontalScrollTrack";
 
 type ProductSubnavProps = {
   items: PdpSubnavItem[];
+  /** When a preceding block already has bottom margin (e.g. gallery banner). */
+  followsBlock?: boolean;
 };
 
 function syncPdpSubnavHeightVar(node: HTMLElement | null) {
@@ -20,8 +29,16 @@ function syncPdpSubnavHeightVar(node: HTMLElement | null) {
   );
 }
 
-export function ProductSubnav({ items }: ProductSubnavProps) {
-  const { activeId, stuck, sentinelRef, scrollToSection } = usePdpSubnav(items);
+export function ProductSubnav({
+  items,
+  followsBlock = false,
+}: ProductSubnavProps) {
+  const { activeId, stuck, sentinelRef, scrollToSection } = usePdpSubnav(
+    items,
+    {
+      stickyMarginTopPx: followsBlock ? 0 : undefined,
+    },
+  );
   const reduce = useMotionReduced();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -82,19 +99,24 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
         ref={navRef}
         id="pdpSubnav"
         className={cn(
-          "pdp-subnav sticky top-(--site-header-bar-height,7.5rem) z-99 border-b border-transparent bg-neutral-0/95 backdrop-blur-sm xl:top-29 header-concealed:xl:top-18",
-          stuck && "is-stuck border-neutral-200 bg-neutral-0/92",
+          followsBlock
+            ? internalSubnavMarginBottomClassName
+            : internalSubnavMarginClassName,
+          "pdp-subnav sticky top-(--site-header-bar-height,7.5rem) z-99 border-b border-transparent xl:top-29 header-concealed:xl:top-18",
+          stuck &&
+            "is-stuck border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
         )}
         aria-label="Sekcje strony produktu"
       >
         <HorizontalScrollTrack
           className="mx-auto w-full max-w-384 px-1 sm:px-1.5"
           scrollerRef={scrollerRef}
+          activeKey={activeId}
         >
           <LayoutGroup id="pdp-subnav-active">
             <SharedLayoutUnderline
               className="mx-auto flex w-max min-w-full items-stretch justify-start gap-0 md:justify-center md:gap-1"
-              lineClassName="h-0.5 bg-neutral-900/45"
+              lineClassName={internalSubnavHoverLineClassName}
               insetX={12}
               bottom={0}
             >
@@ -109,10 +131,9 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
                     }}
                     href={`#${item.id}`}
                     className={cn(
-                      "relative inline-flex min-h-11 items-center px-3 py-2 font-body text-sm leading-none text-neutral-600 no-underline transition-colors duration-fast ease-out md:min-h-14.5 md:px-4 md:py-3 md:text-ui",
-                      "hover:text-neutral-900",
-                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+                      internalSubnavLinkClassName,
                       isActive && "text-neutral-900",
+                      !isActive && "text-neutral-600",
                     )}
                     aria-current={isActive ? "true" : undefined}
                     onClick={(event) => {
@@ -123,7 +144,7 @@ export function ProductSubnav({ items }: ProductSubnavProps) {
                     {isActive ? (
                       <motion.span
                         layoutId="pdp-subnav-active-line"
-                        className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-neutral-900 md:inset-x-4"
+                        className={internalSubnavActiveLineClassName}
                         transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
                         aria-hidden="true"
                       />

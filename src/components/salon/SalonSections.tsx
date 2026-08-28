@@ -85,11 +85,11 @@ export function SalonAbout() {
     >
       <BrandMotif
         name="circle-beige"
-        className="absolute -top-24 -inset-e-20 size-[min(70vw,28rem)] opacity-40 max-md:hidden"
+        className="pointer-events-none absolute -top-24 -inset-e-20 -z-10 size-[min(70vw,28rem)] opacity-40 max-md:hidden"
       />
       <BrandMotif
         name="arc-light"
-        className="absolute -bottom-8 -inset-s-16 size-[min(50vw,18rem)] opacity-50 max-md:hidden"
+        className="pointer-events-none absolute -bottom-8 -inset-s-16 -z-10 size-[min(50vw,18rem)] opacity-50 max-md:hidden"
       />
 
       <Container size="content" className="relative z-10">
@@ -128,7 +128,7 @@ export function SalonStats() {
       id={stats.id}
       ariaLabelledby="salon-stats-title"
       tone="warm"
-      className={pdpSectionScrollMarginClassName}
+      className={cn(pdpSectionScrollMarginClassName, "py-12")}
     >
       <Container size="content">
         <h2
@@ -279,7 +279,6 @@ export function SalonExpo() {
     <Section
       id={expo.id}
       ariaLabelledby="salon-expo-title"
-      tone="muted"
       className={pdpSectionScrollMarginClassName}
     >
       <Container size="content">

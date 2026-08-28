@@ -25,6 +25,13 @@ type CategoryRowsProps = {
   locate?: LocateConfig;
 };
 
+function categoryRowBlockClassName(followedByMoreInSection: boolean) {
+  return cn(
+    "border-b border-neutral-200 pb-12",
+    followedByMoreInSection && "mb-12",
+  );
+}
+
 function CategoryHeading({
   name,
   href,
@@ -86,65 +93,74 @@ function CategoryHeading({
 }
 
 export function CategoryRows({ rows, locate }: CategoryRowsProps) {
+  const lastRowIndex = rows.length - 1;
+
   return (
     <section id="kategorie" aria-label="Kategorie produktów">
-      {rows.map((row, index) => (
-        <Fragment key={row.name}>
-          <Container size="content">
-            <div
-              className={cn(
-                "border-b border-neutral-200 py-10 md:py-12",
-                index === 0 && "pt-0 md:pt-0",
-              )}
-            >
-              <CategoryHeading
-                name={row.name}
-                href={row.href}
-                seeAllLabel={row.seeAllLabel}
-              />
+      {rows.map((row, rowIndex) => {
+        const hasMoreRows = rowIndex < lastRowIndex;
 
-              <ul
-                className={cn(
-                  "mt-8 mb-0 list-none grid gap-4 p-0 sm:mt-10 sm:gap-5",
-                  "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+        return (
+          <Fragment key={row.name}>
+            <Container size="content">
+              <div
+                className={categoryRowBlockClassName(
+                  Boolean(row.banner || row.locateAfter || hasMoreRows),
                 )}
               >
-                {row.subs.map((sub) => (
-                  <li key={sub.label} className="min-w-0">
-                    <CategorySubTile {...sub} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Container>
-
-          {row.banner ? (
-            <Container size="content">
-              <div className="border-b border-neutral-200 py-[clamp(2rem,5vw,3rem)] md:py-[clamp(2.5rem,6vw,4rem)]">
-                <CategoryPromoBanner
-                  eyebrow={row.banner.eyebrow}
-                  title={row.banner.title}
-                  description={row.banner.description}
-                  href={row.banner.href}
-                  label={row.banner.label}
-                  image={row.banner.image}
+                <CategoryHeading
+                  name={row.name}
+                  href={row.href}
+                  seeAllLabel={row.seeAllLabel}
                 />
+
+                <ul
+                  className={cn(
+                    "mt-8 mb-0 list-none grid gap-4 p-0 sm:mt-10 sm:gap-5",
+                    "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+                  )}
+                >
+                  {row.subs.map((sub) => (
+                    <li key={sub.label} className="min-w-0">
+                      <CategorySubTile {...sub} />
+                    </li>
+                  ))}
+                </ul>
               </div>
             </Container>
-          ) : null}
 
-          {row.locateAfter && locate ? (
-            <LocateCta
-              slogan={locate.slogan}
-              title={locate.title}
-              description={locate.description}
-              ctaLabel={locate.ctaLabel}
-              image={locate.image}
-              className="border-b border-neutral-200"
-            />
-          ) : null}
-        </Fragment>
-      ))}
+            {row.banner ? (
+              <Container size="content">
+                <div
+                  className={categoryRowBlockClassName(
+                    Boolean(row.locateAfter || hasMoreRows),
+                  )}
+                >
+                  <CategoryPromoBanner
+                    eyebrow={row.banner.eyebrow}
+                    title={row.banner.title}
+                    description={row.banner.description}
+                    href={row.banner.href}
+                    label={row.banner.label}
+                    image={row.banner.image}
+                  />
+                </div>
+              </Container>
+            ) : null}
+
+            {row.locateAfter && locate ? (
+              <LocateCta
+                slogan={locate.slogan}
+                title={locate.title}
+                description={locate.description}
+                ctaLabel={locate.ctaLabel}
+                image={locate.image}
+                className={categoryRowBlockClassName(hasMoreRows)}
+              />
+            ) : null}
+          </Fragment>
+        );
+      })}
     </section>
   );
 }

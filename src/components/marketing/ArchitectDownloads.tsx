@@ -4,7 +4,6 @@ import type {
   ArchitectDownloadGroup,
 } from "../../data/architectDownloads";
 import { cn } from "../../lib/cn";
-import { sectionPaddingClassName } from "../../lib/layoutTokens";
 import { AccordionCollapse } from "../motion/AccordionCollapse";
 import { SharedLayoutBg } from "../motion/SharedLayoutBg";
 import { SectionHeader } from "../structural/SectionHeader";
@@ -70,10 +69,7 @@ export function ArchitectDownloads({
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section
-      aria-labelledby={titleId}
-      className={cn(sectionPaddingClassName, className)}
-    >
+    <section aria-labelledby={titleId} className={className}>
       <Container size="content">
         <SectionHeader
           title={title}

@@ -1,4 +1,5 @@
 import { cn } from "../../lib/cn";
+import { sectionMarginYClassName } from "../../lib/layoutTokens";
 import { Button, type ButtonSize, type ButtonVariant } from "./Button";
 
 export type EmptyStateAction = {
@@ -21,7 +22,10 @@ type EmptyStateProps = {
 };
 
 const layoutClassName: Record<EmptyStateLayout, string> = {
-  page: "flex min-h-[50vh] flex-col items-center justify-center py-24 text-center",
+  page: cn(
+    "flex min-h-80 flex-col items-center justify-center text-center",
+    sectionMarginYClassName,
+  ),
   section:
     "flex min-h-96 flex-col items-center justify-center px-5 py-16 text-center sm:px-8",
   panel:

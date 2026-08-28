@@ -1,8 +1,7 @@
-import { LayoutGroup, motion } from "motion/react";
 import { useEffect, useId, useRef, useState } from "react";
+import { LayoutGroup, motion } from "motion/react";
 import { CategoryPromoBanner } from "./CategoryPromoBanner";
 import { BrandLogoTile } from "./BrandLogoTile";
-import { MotionFieldGroup } from "../motion/MotionFieldGroup";
 import { SharedLayoutUnderline } from "../motion/SharedLayoutUnderline";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
@@ -11,12 +10,18 @@ import { inputClassName } from "../ui/inputClassName";
 import { productFixedBarClassName } from "../ui/productFixedBarClassName";
 import { cn } from "../../lib/cn";
 import {
+  internalSubnavActiveLineClassName,
+  internalSubnavHoverLineClassName,
+  internalSubnavLinkClassName,
+  pageIntroHeroTopPaddingClassName,
   pxGutterClassName,
+  sectionMarginTopClassName,
+  sectionMarginYClassName,
   stickyUnderHeaderClassName,
 } from "../../lib/layoutTokens";
-import { SPRING_LAYOUT } from "../../lib/motionEase";
 import { useBrandAzNav } from "../../hooks/useBrandAzNav";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
+import { SPRING_LAYOUT } from "../../lib/motionEase";
 import {
   featuredProducerBrands,
   groupBrandsByLetter,
@@ -29,13 +34,6 @@ import {
 
 const letterSectionScrollMtClassName =
   "scroll-mt-[calc(7.25rem+var(--brand-az-nav-height,3.75rem)+1rem)] header-concealed:scroll-mt-[calc(4.5rem+var(--brand-az-nav-height,3.75rem)+1rem)]";
-
-const letterLinkClassName = cn(
-  "relative inline-flex shrink-0 items-center justify-center border-0 bg-transparent font-body leading-none no-underline",
-  "min-h-11 min-w-11 px-3 py-2 text-sm md:min-h-14.5 md:px-4 md:py-3 md:text-ui",
-  "transition-colors duration-fast ease-out",
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-);
 
 function BrandSearchField({
   id,
@@ -51,7 +49,10 @@ function BrandSearchField({
   inputClassName?: string;
 }) {
   return (
-    <label htmlFor={id} className={cn("relative min-w-0", className)}>
+    <label
+      htmlFor={id}
+      className={cn("relative flex min-w-0 items-center", className)}
+    >
       <span className="sr-only">{producersPage.searchPlaceholder}</span>
       <i
         className="ph ph-magnifying-glass pointer-events-none absolute inset-s-3 top-1/2 -translate-y-1/2 text-base text-neutral-400"
@@ -76,6 +77,7 @@ type BrandAzIndexProps = {
   onSelect: (letter: string) => void;
   query: string;
   onQueryChange: (value: string) => void;
+  stuck?: boolean;
   className?: string;
 };
 
@@ -85,89 +87,88 @@ function BrandAzIndex({
   onSelect,
   query,
   onQueryChange,
+  stuck = false,
   className,
 }: BrandAzIndexProps) {
-  const selectedLayoutId = useId();
   const desktopSearchId = useId();
+  const activeLineLayoutId = useId();
   const reduce = useMotionReduced();
 
   return (
     <div
       className={cn(
         "flex items-center gap-3 sm:gap-4",
+        stuck && "lg:gap-5",
         pxGutterClassName,
         className,
       )}
     >
       <nav aria-label={producersPage.indexAria} className="min-w-0 flex-1">
-        <LayoutGroup id={`brand-az-${selectedLayoutId}`}>
-          <MotionFieldGroup>
-            <HorizontalScrollTrack activeKey={activeLetter}>
-              <SharedLayoutUnderline
-                className="w-max flex-nowrap justify-start gap-0"
-                lineClassName="h-0.5 bg-neutral-900/45"
-                insetX={12}
-                bottom={0}
-              >
-                {producerAlphabet.map((letter) => {
-                  const available = lettersWithBrands.has(letter);
-                  const selected = available && activeLetter === letter;
+        <HorizontalScrollTrack activeKey={activeLetter}>
+          <LayoutGroup id={`brand-az-active-${activeLineLayoutId}`}>
+            <SharedLayoutUnderline
+              className="flex w-max flex-nowrap items-stretch justify-start gap-0 md:gap-1"
+              lineClassName={internalSubnavHoverLineClassName}
+              insetX={12}
+              bottom={0}
+            >
+              {producerAlphabet.map((letter) => {
+                const available = lettersWithBrands.has(letter);
+                const selected = available && activeLetter === letter;
 
-                  if (!available) {
-                    return (
-                      <span
-                        key={letter}
-                        className={cn(
-                          letterLinkClassName,
-                          "pointer-events-none text-neutral-300",
-                        )}
-                        aria-hidden="true"
-                      >
-                        {letter}
-                      </span>
-                    );
-                  }
-
+                if (!available) {
                   return (
-                    <a
+                    <span
                       key={letter}
-                      href={`#letter-${letter}`}
-                      aria-current={selected ? "true" : undefined}
                       className={cn(
-                        letterLinkClassName,
-                        "hover:text-neutral-900",
-                        selected ? "text-neutral-900" : "text-neutral-600",
+                        internalSubnavLinkClassName,
+                        "pointer-events-none text-neutral-300",
                       )}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        onSelect(letter);
-                        if (event.detail > 0) event.currentTarget.blur();
-                      }}
+                      aria-hidden="true"
                     >
-                      {selected ? (
-                        <motion.span
-                          layoutId={selectedLayoutId}
-                          className="pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-neutral-900 md:inset-x-4"
-                          transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
-                          aria-hidden="true"
-                        />
-                      ) : null}
                       {letter}
-                    </a>
+                    </span>
                   );
-                })}
-              </SharedLayoutUnderline>
-            </HorizontalScrollTrack>
-          </MotionFieldGroup>
-        </LayoutGroup>
+                }
+
+                return (
+                  <a
+                    key={letter}
+                    href={`#letter-${letter}`}
+                    aria-current={selected ? "true" : undefined}
+                    className={cn(
+                      internalSubnavLinkClassName,
+                      selected ? "text-neutral-900" : "text-neutral-600",
+                    )}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      onSelect(letter);
+                      if (event.detail > 0) event.currentTarget.blur();
+                    }}
+                  >
+                    {selected ? (
+                      <motion.span
+                        layoutId={`brand-az-active-line-${activeLineLayoutId}`}
+                        className={internalSubnavActiveLineClassName}
+                        transition={reduce ? { duration: 0 } : SPRING_LAYOUT}
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                    {letter}
+                  </a>
+                );
+              })}
+            </SharedLayoutUnderline>
+          </LayoutGroup>
+        </HorizontalScrollTrack>
       </nav>
 
       <BrandSearchField
         id={desktopSearchId}
         query={query}
         onQueryChange={onQueryChange}
-        className="hidden w-52 shrink-0 lg:block lg:w-60"
-        inputClassName="h-12 text-sm"
+        className="hidden w-52 shrink-0 lg:flex lg:w-60"
+        inputClassName="h-11 text-sm"
       />
     </div>
   );
@@ -259,9 +260,9 @@ export function ProducersDirectory({
         className,
       )}
     >
-      <Container size="content" className="pt-6 md:pt-8 lg:pt-10">
+      <Container size="content">
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-12">
-          <header className="min-w-0">
+          <header className={cn("min-w-0", pageIntroHeroTopPaddingClassName)}>
             <h1
               id="page-intro-title"
               className="m-0 max-w-4xl font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900"
@@ -280,17 +281,14 @@ export function ProducersDirectory({
       </Container>
 
       <div ref={listingRef}>
-        <div
-          ref={sentinelRef}
-          className="mt-8 h-px md:mt-10"
-          aria-hidden="true"
-        />
+        <div ref={sentinelRef} className="h-px" aria-hidden="true" />
         <div
           ref={navRef}
           className={cn(
             stickyUnderHeaderClassName,
+            sectionMarginYClassName,
             "z-99 border-b border-transparent",
-            stuck && "border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+            stuck && "border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
           )}
         >
           <Container size="content" className="px-0">
@@ -300,57 +298,55 @@ export function ProducersDirectory({
               onSelect={scrollToLetter}
               query={query}
               onQueryChange={setQuery}
+              stuck={stuck}
             />
           </Container>
         </div>
 
-        <Container size="content" className="mt-10 md:mt-12">
+        <Container size="content">
           {groups.length === 0 ? (
             <p className="m-0 font-body text-ui leading-relaxed text-neutral-600">
               {producersPage.emptyFilter}
             </p>
           ) : (
-            <div className="flex flex-col gap-10">
-              {groups.map(({ letter, items }) => (
-                <div
-                  key={letter}
-                  className={cn(
-                    "flex flex-col",
-                    letter === producersPage.promoAfterLetter
-                      ? "gap-14 pb-6 md:gap-16 md:pb-10"
-                      : "gap-6",
-                  )}
-                >
-                  <section
-                    id={`letter-${letter}`}
-                    className={letterSectionScrollMtClassName}
-                    aria-labelledby={`letter-heading-${letter}`}
-                  >
-                    <h2
-                      id={`letter-heading-${letter}`}
-                      className="m-0 border-b border-neutral-200 pb-3 font-heading text-h3 font-light tracking-tight text-neutral-900"
-                    >
-                      {letter}
-                    </h2>
-                    <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                      {items.map((brand) => (
-                        <BrandLogoTile key={brand.slug} brand={brand} />
-                      ))}
-                    </div>
-                  </section>
+            <div>
+              {groups.map(({ letter, items }) => {
+                const hasPromo = letter === producersPage.promoAfterLetter;
 
-                  {letter === producersPage.promoAfterLetter ? (
-                    <CategoryPromoBanner
-                      eyebrow={producersPage.promo.eyebrow}
-                      title={producersPage.promo.title}
-                      description={producersPage.promo.description}
-                      href={producersPage.promo.href}
-                      label={producersPage.promo.label}
-                      image={producersPage.promo.image}
-                    />
-                  ) : null}
-                </div>
-              ))}
+                return (
+                  <div key={letter} className={sectionMarginYClassName}>
+                    <section
+                      id={`letter-${letter}`}
+                      className={letterSectionScrollMtClassName}
+                      aria-labelledby={`letter-heading-${letter}`}
+                    >
+                      <h2
+                        id={`letter-heading-${letter}`}
+                        className="m-0 border-b border-neutral-200 pb-3 font-heading text-h3 font-light tracking-tight text-neutral-900"
+                      >
+                        {letter}
+                      </h2>
+                      <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                        {items.map((brand) => (
+                          <BrandLogoTile key={brand.slug} brand={brand} />
+                        ))}
+                      </div>
+                    </section>
+
+                    {hasPromo ? (
+                      <CategoryPromoBanner
+                        eyebrow={producersPage.promo.eyebrow}
+                        title={producersPage.promo.title}
+                        description={producersPage.promo.description}
+                        href={producersPage.promo.href}
+                        label={producersPage.promo.label}
+                        image={producersPage.promo.image}
+                        className={sectionMarginTopClassName}
+                      />
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           )}
         </Container>

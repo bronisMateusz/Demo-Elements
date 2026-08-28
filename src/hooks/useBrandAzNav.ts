@@ -4,6 +4,7 @@ import {
   predictHeaderUtilityConcealed,
   readHeaderOffsetForConcealStatePx,
   readHeaderOffsetPx,
+  SECTION_MARGIN_BLOCK_PX,
 } from "../lib/layoutTokens";
 import { useStickyUnderHeader } from "./useStickyUnderHeader";
 
@@ -61,7 +62,9 @@ function isDocumentScrollKey(key: string) {
 
 /** Sticky A-Z spy: active letter follows the section under the header + nav. */
 export function useBrandAzNav(letters: readonly string[]) {
-  const { stuck, sentinelRef } = useStickyUnderHeader();
+  const { stuck, sentinelRef } = useStickyUnderHeader({
+    stickyMarginTopPx: SECTION_MARGIN_BLOCK_PX,
+  });
   const [activeLetter, setActiveLetter] = useState(letters[0] ?? "");
   const navRef = useRef<HTMLDivElement>(null);
   const pinnedLetterRef = useRef<string | null>(null);

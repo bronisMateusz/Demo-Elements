@@ -17,6 +17,7 @@ import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { useSelectedSalon } from "../hooks/useSelectedSalon";
 import { cn } from "../lib/cn";
+import { pageHeaderClusterClassName } from "../lib/layoutTokens";
 
 function RevealSection({
   children,
@@ -58,29 +59,29 @@ export function SalonsPageB() {
           />
         }
       >
-        <PageSectionStack>
-          <PageIntro
-            title={salonsPageB.title}
-            className="pt-6 md:pt-8 lg:pt-10"
-            actions={
-              <SalonLocationChips
-                className="shrink-0"
-                mobileAs="chips"
-                stretchOnMobile
-                size="lg"
-                ariaLabel={location.groupByAria}
-                chips={[
-                  { id: "voivodeship", label: location.groupByVoiv },
-                  { id: "city", label: location.groupByCity },
-                ]}
-                activeId={groupBy}
-                onSelect={(id) => setGroupBy(id as SalonsGroupBy)}
-              />
-            }
-          />
+        <PageSectionStack flushTop>
+          {/* One stack child: intro + directory share tab-to-card rhythm (no section margin between). */}
+          <div className={pageHeaderClusterClassName}>
+            <PageIntro
+              title={salonsPageB.title}
+              actions={
+                <SalonLocationChips
+                  className="shrink-0"
+                  mobileAs="chips"
+                  stretchOnMobile
+                  size="lg"
+                  ariaLabel={location.groupByAria}
+                  chips={[
+                    { id: "voivodeship", label: location.groupByVoiv },
+                    { id: "city", label: location.groupByCity },
+                  ]}
+                  activeId={groupBy}
+                  onSelect={(id) => setGroupBy(id as SalonsGroupBy)}
+                />
+              }
+            />
 
-          {/* No translate here: transform on an ancestor breaks position:sticky. */}
-          <div>
+            {/* No translate here: transform on an ancestor breaks position:sticky. */}
             <SalonsTabsDirectory
               groupBy={groupBy}
               onBookSalon={(salon) => {

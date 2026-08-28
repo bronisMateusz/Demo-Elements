@@ -20,7 +20,6 @@ import { Section } from "../components/structural/Section";
 import { Container } from "../components/ui/Container";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
-import { sectionBottomPaddingClassName } from "../lib/layoutTokens";
 
 function RevealSection({
   children,
@@ -56,17 +55,13 @@ export function ListingPage() {
           />
         }
       >
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           <PageIntro
             title={listingPage.title}
             description={listingPage.description}
-            className="pt-6 md:pt-8 lg:pt-10"
           />
 
-          <section
-            aria-label="Lista produktów"
-            className={sectionBottomPaddingClassName}
-          >
+          <section aria-label="Lista produktów">
             <Container size="content">
               <ListingCatalog />
             </Container>

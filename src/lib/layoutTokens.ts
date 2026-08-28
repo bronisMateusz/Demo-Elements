@@ -45,7 +45,7 @@ export const mdPySectionClassName = "md:py-[clamp(2.5rem,6vw,4rem)]";
 export const mdPtSectionClassName = "md:pt-[clamp(2.5rem,6vw,4rem)]";
 export const mdPbSectionClassName = "md:pb-[clamp(2.5rem,6vw,4rem)]";
 
-/** Canonical page-section vertical padding (mobile + md). Use this as the only outer rhythm. */
+/** Legacy section padding - prefer pageSectionStackClassName + sectionMarginYClassName. */
 export const sectionPaddingClassName = [
   pySectionSmClassName,
   mdPySectionClassName,
@@ -62,6 +62,53 @@ export const sectionBottomPaddingClassName = [
   pbSectionSmClassName,
   mdPbSectionClassName,
 ].join(" ");
+
+/** Canonical vertical margin block - 48px; keep in sync with @utility page-section-stack. */
+const sectionMarginBlockClasses = ["my-12"] as const;
+
+/** Pixel height of one section margin step (`my-12` / `mt-12` at 16px root). */
+export const SECTION_MARGIN_BLOCK_PX = 48;
+
+/** Top-only margin for one-off blocks outside PageSectionStack. */
+export const sectionMarginTopClassName = "mt-12";
+
+/** Bottom-only margin before the next page block (e.g. hero before optional banner/subnav). */
+export const sectionMarginBottomClassName = "mb-12";
+
+/** Symmetric vertical margin for blocks outside PageSectionStack (e.g. newsletter). */
+export const sectionMarginYClassName = sectionMarginBlockClasses.join(" ");
+
+/** Bottom margin for internal sticky subnav (top spacing comes from page header cluster gap). */
+export const internalSubnavMarginBottomClassName = "mb-12";
+
+/** Symmetric margin for internal sticky subnav after a hero/banner outside a header cluster. */
+export const internalSubnavMarginClassName = sectionMarginYClassName;
+
+/** Shared tab link styling for ProductSubnav, wishlist segments, brand A-Z index, etc. */
+export const internalSubnavLinkClassName = [
+  "relative inline-flex shrink-0 min-h-11 items-center px-3 py-2 font-body text-sm leading-none no-underline transition-colors duration-fast ease-out md:min-h-14.5 md:px-4 md:py-3 md:text-ui",
+  "hover:text-neutral-900",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+].join(" ");
+
+/** Hover preview line for SharedLayoutUnderline (position via insetX inline style). */
+export const internalSubnavHoverLineClassName = "h-0.5 bg-neutral-900/45";
+
+/** Active tab line - same inset as SharedLayoutUnderline hover (insetX={12}). */
+export const internalSubnavActiveLineClassName =
+  "pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-neutral-900";
+
+/** Intro + internal subnav in one PageSectionStack child - tight top, 48px below subnav. */
+export const pageHeaderClusterClassName = "flex flex-col gap-6 md:gap-8";
+
+/** Applied on PageSectionStack root - see @utility page-section-stack in app.css. */
+export const pageSectionStackClassName = "page-section-stack";
+
+/** Drop stack top margin when the page opens with a descriptive hero (pair with pageIntroHeroTopPaddingClassName). */
+export const pageSectionStackFlushTopClassName = "mt-0";
+
+/** Top padding on descriptive hero copy column - below breadcrumbs, replaces stack mt-12. */
+export const pageIntroHeroTopPaddingClassName = "pt-12";
 
 export const maxWContentClassName = "max-w-384";
 export const maxWWideClassName = "max-w-448";

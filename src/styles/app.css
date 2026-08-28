@@ -226,6 +226,11 @@
   @apply sr-only;
 }
 
+/** Vertical rhythm for PageSectionStack - outer my-12, 48px gap between children (transform-safe). */
+@utility page-section-stack {
+  @apply my-12 flex flex-col gap-12;
+}
+
 /* Near-zero duration (not animation:none) so animationend still fires where listeners expect it. */
 html.elements-pause-motion *,
 html.elements-pause-motion *::before,

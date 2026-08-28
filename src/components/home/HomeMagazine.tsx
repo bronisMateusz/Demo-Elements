@@ -37,7 +37,7 @@ export function HomeMagazine({
       ref={targetRef}
       id={id}
       aria-labelledby="home-magazine-title"
-      className="overflow-x-clip"
+      className="relative z-20 overflow-x-clip"
     >
       <motion.div
         className="relative overflow-hidden rounded-xs"
@@ -60,7 +60,7 @@ export function HomeMagazine({
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-8 px-[clamp(0.75rem,2.222vw,2.5rem)] py-10 md:gap-10 md:py-12 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12 lg:py-14 xl:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-14 xl:py-16">
+        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-8 px-[clamp(0.75rem,2.222vw,2.5rem)] py-12 md:gap-10 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-14">
           <div className="min-w-0 lg:max-w-xl">
             <Eyebrow variant="gold" className="mb-3 text-gold-400">
               {eyebrow}

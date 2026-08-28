@@ -12,9 +12,9 @@ import { useStickyUnderHeader } from "../../hooks/useStickyUnderHeader";
 import { isMotionPaused } from "../../lib/a11yPreferences";
 import { cn } from "../../lib/cn";
 import {
+  internalSubnavMarginBottomClassName,
   pxGutterClassName,
   readHeaderOffsetPx,
-  sectionBottomPaddingClassName,
   stickyUnderHeaderClassName,
 } from "../../lib/layoutTokens";
 import { EASE_LUXURY } from "../../lib/motionEase";
@@ -147,17 +147,15 @@ export function SalonsTabsDirectory({
   };
 
   return (
-    <Container
-      size="content"
-      className={cn(sectionBottomPaddingClassName, className)}
-    >
+    <Container size="content" className={className}>
       <div ref={sentinelRef} className="h-px" aria-hidden="true" />
       <div
         className={cn(
           stickyUnderHeaderClassName,
-          "z-99 border-b border-transparent",
+          internalSubnavMarginBottomClassName,
+          "z-99",
           stuck &&
-            "w-screen ms-[calc(50%-50vw)] border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+            "w-screen ms-[calc(50%-50vw)] border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
         )}
       >
         <SalonLocationChips
@@ -174,7 +172,7 @@ export function SalonsTabsDirectory({
         />
       </div>
 
-      <div className="mt-4 rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:mt-6 sm:p-6 md:p-8">
+      <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:p-6 md:p-8">
         <div className="relative bg-neutral-0">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

@@ -1,7 +1,6 @@
 import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
 import { cn } from "../../lib/cn";
-import { sectionPaddingClassName } from "../../lib/layoutTokens";
 
 type BrandAboutProps = {
   paragraphs: readonly string[];
@@ -21,11 +20,7 @@ export function BrandAbout({
   return (
     <section
       aria-label={ariaLabel}
-      className={cn(
-        "relative overflow-visible",
-        sectionPaddingClassName,
-        className,
-      )}
+      className={cn("relative overflow-visible", className)}
     >
       <BrandMotif
         name="circle-beige"

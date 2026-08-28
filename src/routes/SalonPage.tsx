@@ -66,10 +66,10 @@ export function SalonPage() {
           <RevealSection>
             <SalonUsps />
           </RevealSection>
-          <RevealSection>
+          <RevealSection className="relative z-20">
             <HomeMagazine />
           </RevealSection>
-          <RevealSection>
+          <RevealSection className="relative z-10">
             <SalonAbout />
           </RevealSection>
           <RevealSection>

@@ -282,7 +282,7 @@ export function SplitMediaCta({
 
           <div
             className={cn(
-              "relative flex flex-col justify-center bg-gold-100 px-5 py-6 sm:px-6 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-12",
+              "relative flex flex-col justify-center bg-gold-100 px-5 py-12 sm:px-6 md:px-10 lg:px-12",
               mediaAtEnd && "md:order-1",
             )}
           >
