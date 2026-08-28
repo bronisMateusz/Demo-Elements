@@ -110,6 +110,16 @@ export function HomeHero() {
   const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
 
+  const heroBarArrowClassName = iconButtonClassName({
+    variant: "ghost",
+    className:
+      "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 bg-transparent shadow-none md:w-14",
+  });
+
+  const heroStageArrowClassName = iconButtonClassName({
+    variant: "elevated",
+  });
+
   const onProgressEnd = (event: AnimationEvent<HTMLSpanElement>) => {
     if (event.animationName !== "home-hero-progress") return;
     if (reducedMotion || paused || holdFullProgress) return;
@@ -231,6 +241,30 @@ export function HomeHero() {
             <HeroSlideContent slide={activeSlide} />
           </motion.div>
         </AnimatePresence>
+
+        <Container
+          size="content"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden pb-8 md:block md:pb-10"
+        >
+          <div className="flex justify-end gap-1">
+            <button
+              type="button"
+              className={cn(heroStageArrowClassName, "pointer-events-auto")}
+              aria-label="Poprzedni baner"
+              onClick={goPrev}
+            >
+              <i className="ph ph-caret-left" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={cn(heroStageArrowClassName, "pointer-events-auto")}
+              aria-label="Następny baner"
+              onClick={goNext}
+            >
+              <i className="ph ph-caret-right" aria-hidden="true" />
+            </button>
+          </div>
+        </Container>
       </div>
 
       <div className="relative z-20 border-t border-neutral-200 bg-neutral-50 text-neutral-900">
@@ -238,11 +272,7 @@ export function HomeHero() {
           <div className="flex items-stretch">
             <button
               type="button"
-              className={iconButtonClassName({
-                variant: "ghost",
-                className:
-                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 bg-transparent shadow-none md:w-14",
-              })}
+              className={cn(heroBarArrowClassName, "md:hidden")}
               aria-label="Poprzedni baner"
               onClick={goPrev}
             >
@@ -288,7 +318,7 @@ export function HomeHero() {
 
             <LayoutGroup id="home-hero-tabs-active">
               <SharedLayoutUnderline
-                className="hidden min-w-0 flex-1 md:grid md:grid-cols-4"
+                className="hidden min-w-0 flex-1 md:grid md:w-full md:grid-cols-4"
                 lineClassName="h-0.5 bg-gold-500/45"
                 role="tablist"
                 aria-label="Wybór banera"
@@ -359,11 +389,7 @@ export function HomeHero() {
 
             <button
               type="button"
-              className={iconButtonClassName({
-                variant: "ghost",
-                className:
-                  "size-auto min-h-14 w-11 shrink-0 rounded-none border-0 bg-transparent shadow-none md:w-14",
-              })}
+              className={cn(heroBarArrowClassName, "md:hidden")}
               aria-label="Następny baner"
               onClick={goNext}
             >
