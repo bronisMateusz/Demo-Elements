@@ -2,6 +2,7 @@ import {
   iconButtonClassName,
   type IconButtonVariant,
 } from "./iconButtonClassName";
+import { phosphorGlyphClassName } from "../../lib/phosphorIconInFlexClassName";
 
 type IconButtonProps = {
   label: string;
@@ -29,7 +30,7 @@ export function IconButton({
       aria-label={label}
       onClick={onClick}
     >
-      <i className={iconClass} aria-hidden="true" />
+      <i className={phosphorGlyphClassName(iconClass)} aria-hidden="true" />
     </button>
   );
 }
@@ -59,7 +60,7 @@ export function IconLink({
       className={iconButtonClassName({ variant, className })}
       aria-label={label}
     >
-      <i className={iconClass} aria-hidden="true" />
+      <i className={phosphorGlyphClassName(iconClass)} aria-hidden="true" />
       {badge ? (
         <span
           className="pointer-events-none absolute inset-e-1 top-1 z-2 flex min-h-4 min-w-4 items-center justify-center rounded-xs bg-gold-500 px-0.5 font-body text-xs font-medium leading-none text-neutral-0 tabular-nums"

@@ -41,7 +41,6 @@ type LocateCtaActionProps = LocateCtaBaseProps & {
 export type LocateCtaProps = LocateCtaLinkProps | LocateCtaActionProps;
 
 export function LocateCta({
-  slogan,
   title,
   titleId = "locate-cta-title",
   description,
@@ -51,7 +50,6 @@ export function LocateCta({
   embedded = false,
   ...actionOrLink
 }: LocateCtaProps) {
-  const [sloganLead, sloganTail] = slogan;
   const ctaHref = "ctaHref" in actionOrLink ? actionOrLink.ctaHref : undefined;
   const ctaTarget =
     "ctaTarget" in actionOrLink ? actionOrLink.ctaTarget : undefined;
@@ -62,11 +60,11 @@ export function LocateCta({
   const card = (
     <div
       className={cn(
-        "group/locate grid overflow-hidden rounded-xs border border-neutral-800/10 bg-neutral-900",
+        "group/locate grid overflow-hidden rounded-xs bg-neutral-900",
         "lg:grid-cols-[0.82fr_1.18fr]",
       )}
     >
-      <div className="relative flex min-h-44 items-center px-6 py-8 md:min-h-52 md:px-10 md:py-10">
+      <div className="relative min-h-44 md:min-h-52">
         <img
           src={image.src}
           alt=""
@@ -76,15 +74,6 @@ export function LocateCta({
           loading="lazy"
           draggable={false}
         />
-        <div
-          className="absolute inset-0 bg-neutral-950/55"
-          aria-hidden="true"
-        />
-        <p className="relative z-10 m-0 max-w-[18ch] font-body text-sm font-semibold tracking-[0.06em] text-neutral-0 uppercase md:text-base">
-          {sloganLead}
-          <br />
-          {sloganTail}
-        </p>
       </div>
 
       <div className="relative flex flex-col items-start justify-center gap-3 overflow-hidden border-t border-neutral-0/10 px-6 py-8 md:gap-4 md:border-t-0 md:border-s md:px-10 md:py-10">
