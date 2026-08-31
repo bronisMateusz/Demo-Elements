@@ -11,7 +11,7 @@ import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
 import { PageIntro } from "../components/marketing/PageIntro";
 import { SubcategoryBento } from "../components/marketing/SubcategoryBento";
 import { LocateCta } from "../components/marketing/LocateCta";
-import { BlogArticleCarousel } from "../components/marketing/BlogArticleCarousel";
+import { EditorialCarousel } from "../components/marketing/EditorialCarousel";
 import { SeoExpandable } from "../components/marketing/SeoExpandable";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
 import {
@@ -83,7 +83,6 @@ export function SubcategoryPage() {
 
           <RevealSection>
             <LocateCta
-              slogan={subcategoryPage.locate.slogan}
               title={subcategoryPage.locate.title}
               description={subcategoryPage.locate.description}
               ctaLabel={subcategoryPage.locate.ctaLabel}
@@ -102,11 +101,15 @@ export function SubcategoryPage() {
           </RevealSection>
 
           <RevealSection>
-            <BlogArticleCarousel
+            <EditorialCarousel
               title={subcategoryPage.blog.title}
-              articles={[...subcategoryPage.blog.articles]}
-              seeAllLabel={subcategoryPage.blog.seeAllLabel}
-              seeAllHref={subcategoryPage.blog.seeAllHref}
+              items={[...subcategoryPage.blog.articles]}
+              seeAll={{
+                label: subcategoryPage.blog.seeAllLabel,
+                href: subcategoryPage.blog.seeAllHref,
+              }}
+              a11yPrevLabel="Poprzednie artykuły"
+              a11yNextLabel="Następne artykuły"
             />
           </RevealSection>
 

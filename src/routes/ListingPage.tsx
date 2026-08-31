@@ -69,7 +69,6 @@ export function ListingPage() {
 
           <RevealSection>
             <LocateCta
-              slogan={listingPage.locate.slogan}
               title={listingPage.locate.title}
               description={listingPage.locate.description}
               ctaLabel={listingPage.locate.ctaLabel}

@@ -84,7 +84,10 @@ export function SalonContactPanel({
                 <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-3 p-0 @min-[20rem]/phones:grid-cols-2">
                   {group.phones.map((phone) => (
                     <li key={phone.href} className="min-w-0">
-                      <a href={phone.href} className={salonContactLinkClassName}>
+                      <a
+                        href={phone.href}
+                        className={salonContactLinkClassName}
+                      >
                         <i
                           className="ph ph-phone shrink-0 text-base leading-none"
                           aria-hidden="true"

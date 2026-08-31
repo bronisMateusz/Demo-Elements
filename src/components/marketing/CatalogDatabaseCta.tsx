@@ -1,12 +1,13 @@
 import { LocateCta, type LocateCtaImage } from "./LocateCta";
 
 export type CatalogDatabaseCtaContent = {
-  slogan: readonly [string, string];
   title: string;
   description: string;
   ctaLabel: string;
   href: string;
   image: LocateCtaImage;
+  /** @deprecated Unused - kept optional for existing data shapes. */
+  slogan?: readonly [string, string];
 };
 
 type CatalogDatabaseCtaProps = CatalogDatabaseCtaContent & {
@@ -15,7 +16,6 @@ type CatalogDatabaseCtaProps = CatalogDatabaseCtaContent & {
 
 /** Split-media catalog database promo below architect download lists. */
 export function CatalogDatabaseCta({
-  slogan,
   title,
   description,
   ctaLabel,
@@ -26,7 +26,6 @@ export function CatalogDatabaseCta({
   return (
     <LocateCta
       embedded
-      slogan={slogan}
       title={title}
       titleId="architect-catalog-cta-title"
       description={description}

@@ -2,9 +2,9 @@ import { useEffect, useId, useRef, useState } from "react";
 import { LayoutGroup, motion } from "motion/react";
 import { CategoryPromoBanner } from "./CategoryPromoBanner";
 import { BrandLogoTile } from "./BrandLogoTile";
+import { HomeBrands } from "../home/HomeBrands";
 import { SharedLayoutUnderline } from "../motion/SharedLayoutUnderline";
 import { Container } from "../ui/Container";
-import { Eyebrow } from "../ui/Eyebrow";
 import { HorizontalScrollTrack } from "../ui/HorizontalScrollTrack";
 import { inputClassName } from "../ui/inputClassName";
 import { productFixedBarClassName } from "../ui/productFixedBarClassName";
@@ -14,6 +14,7 @@ import {
   internalSubnavHoverLineClassName,
   internalSubnavLinkClassName,
   pageIntroHeroTopPaddingClassName,
+  pageIntroTitleClassName,
   pxGutterClassName,
   sectionMarginTopClassName,
   sectionMarginYClassName,
@@ -174,42 +175,25 @@ function BrandAzIndex({
   );
 }
 
-type FeaturedProducersPanelProps = {
-  featured?: readonly ProducerBrand[];
-  className?: string;
-};
-
-export function FeaturedProducersPanel({
-  featured = featuredProducerBrands,
-  className,
-}: FeaturedProducersPanelProps) {
-  return (
-    <section
-      className={cn(
-        "relative rounded-xs bg-gold-100 p-4 sm:p-6 lg:h-full",
-        className,
-      )}
-      aria-labelledby="featured-producers-title"
-    >
-      <h2 id="featured-producers-title" className="m-0 mb-5 md:mb-6">
-        <Eyebrow variant="gold" className="mb-0 text-neutral-700">
-          {producersPage.featuredLabel}
-        </Eyebrow>
-      </h2>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-x-3 sm:gap-y-5">
-        {featured.map((brand) => (
-          <BrandLogoTile key={brand.slug} brand={brand} showName={false} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
 type ProducersDirectoryProps = {
   brands?: readonly ProducerBrand[];
   featured?: readonly ProducerBrand[];
   className?: string;
 };
+
+function featuredAsHomeBrandItems(featured: readonly ProducerBrand[]) {
+  return featured.flatMap((brand) =>
+    brand.logoSrc
+      ? [
+          {
+            label: brand.name,
+            href: brand.href,
+            logoSrc: brand.logoSrc,
+          },
+        ]
+      : [],
+  );
+}
 
 export function ProducersDirectory({
   brands = producerBrands,
@@ -233,6 +217,7 @@ export function ProducersDirectory({
   const availableLetters = groups.map((group) => group.letter);
   const { activeLetter, stuck, sentinelRef, navRef, scrollToLetter } =
     useBrandAzNav(availableLetters);
+  const featuredItems = featuredAsHomeBrandItems(featured);
 
   useEffect(() => {
     const listing = listingRef.current;
@@ -261,24 +246,34 @@ export function ProducersDirectory({
       )}
     >
       <Container size="content">
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-12">
-          <header className={cn("min-w-0", pageIntroHeroTopPaddingClassName)}>
-            <h1
-              id="page-intro-title"
-              className="m-0 max-w-4xl font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900"
-            >
-              {producersPage.title}
-            </h1>
-            <p className="mt-4 mb-0 font-body text-ui leading-relaxed text-neutral-600 md:text-lg">
-              {producersPage.description[0]}
-              <br />
-              <br />
-              {producersPage.description[1]}
-            </p>
-          </header>
-          <FeaturedProducersPanel featured={featured} />
-        </div>
+        <header
+          className={cn("min-w-0 max-w-3xl", pageIntroHeroTopPaddingClassName)}
+        >
+          <h1
+            id="page-intro-title"
+            className={cn(pageIntroTitleClassName, "max-w-4xl")}
+          >
+            {producersPage.title}
+          </h1>
+          <p className="mt-4 mb-0 font-body text-ui leading-relaxed text-neutral-600 md:text-lg">
+            {producersPage.description[0]}
+            <br />
+            <br />
+            {producersPage.description[1]}
+          </p>
+        </header>
       </Container>
+
+      {featuredItems.length > 0 ? (
+        <HomeBrands
+          id="polecani-producenci"
+          title={producersPage.featuredLabel}
+          items={featuredItems}
+          cycle={false}
+          showSeeAll={false}
+          className={sectionMarginTopClassName}
+        />
+      ) : null}
 
       <div ref={listingRef}>
         <div ref={sentinelRef} className="h-px" aria-hidden="true" />

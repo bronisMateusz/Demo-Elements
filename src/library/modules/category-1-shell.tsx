@@ -1,7 +1,9 @@
 import { Header } from "../../components/layout/Header";
 import { Footer } from "../../components/layout/Footer";
+import { SiteNewsletter } from "../../components/layout/SiteNewsletter";
 import {
   AskDrawerDemo,
+  BookAppointmentDrawerDemo,
   InspirationProductsDrawerDemo,
   MobileDrawerDemo,
   SalonDrawerDemo,
@@ -41,7 +43,7 @@ export const footerModule: LibraryModule = {
   slug: "footer",
   title: "Footer",
   description:
-    "Stopka: obecność salonów (statystyki + miasta), kolumny linków, wordmark ELEMENTS ze spotlightem i sekcja legal. Newsletter jest osobnym SiteNewsletter w PageShell.",
+    "Stopka: obecność salonów (statystyki + miasta), kolumny linków, wordmark ELEMENTS ze spotlightem i sekcja legal. Newsletter = SiteNewsletter.",
   variants: [
     {
       id: "default",
@@ -65,7 +67,7 @@ export const drawersModule: LibraryModule = {
   slug: "drawers",
   title: "Drawers",
   description:
-    "Wspólny DrawerShell (backdrop, slide-in, Escape, scroll-lock): salon, pytanie o produkt, produkty aranżacji i menu mobilne.",
+    "Wspólny DrawerShell (backdrop, slide-in, Escape, scroll-lock): salon, pytanie, umówienie, produkty aranżacji i menu mobilne.",
   variants: [
     {
       id: "salon",
@@ -81,16 +83,42 @@ export const drawersModule: LibraryModule = {
       render: () => <AskDrawerDemo />,
     },
     {
+      id: "book",
+      label: "BookAppointmentDrawer",
+      description: "Formularz umówienia wizyty (flow /salony).",
+      render: () => <BookAppointmentDrawerDemo />,
+    },
+    {
       id: "inspiration-products",
       label: "InspirationProductsDrawer",
-      description: "Produkty z aranżacji - wiersze + schowek + CTA.",
+      description: "Produkty z aranżacji - otwierany z InspirationGallery.",
       render: () => <InspirationProductsDrawerDemo />,
     },
     {
-      id: "mobile-menu",
+      id: "mobile",
       label: "MobileDrawer",
-      description: "Główne menu + strefy/skróty z utility bar.",
+      description: "Menu mobilne z nawigacją i skrótami.",
       render: () => <MobileDrawerDemo />,
+    },
+  ],
+};
+
+export const siteNewsletterModule: LibraryModule = {
+  id: "1.4",
+  slug: "site-newsletter",
+  title: "SiteNewsletter",
+  description:
+    "Pas newslettera w PageShell (nad stopką) oraz na /strefa-architekta.",
+  variants: [
+    {
+      id: "default",
+      label: "Domyślny",
+      description: "Formularz zapisu - jak w shellu.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <SiteNewsletter />
+        </div>
+      ),
     },
   ],
 };
@@ -99,4 +127,5 @@ export const category1Modules: LibraryModule[] = [
   headerModule,
   footerModule,
   drawersModule,
+  siteNewsletterModule,
 ];

@@ -14,7 +14,7 @@ import { ProductArchitectCTA } from "../components/product/ProductArchitectCTA";
 import { ProductDownloads } from "../components/product/ProductDownloads";
 import { ProductEditorial } from "../components/product/ProductEditorial";
 import { ProductHero } from "../components/product/ProductHero";
-import { ProductGalleryBanner } from "../components/product/ProductGalleryBanner";
+import { LocateCta } from "../components/marketing/LocateCta";
 import { ProductInspiration } from "../components/product/ProductInspiration";
 import { ProductPairWith } from "../components/product/ProductPairWith";
 import { ProductRecommendations } from "../components/product/ProductRecommendations";
@@ -67,12 +67,14 @@ export function ProductDetailPage() {
         <ProductHero product={product} onAskOpen={() => setAskOpen(true)} />
 
         {product.galleryBanner ? (
-          <ProductGalleryBanner
+          <LocateCta
+            sectionMargin
             eyebrow={product.galleryBanner.eyebrow}
             title={product.galleryBanner.title}
+            titleId="product-gallery-banner-title"
             description={product.galleryBanner.description}
-            href={product.galleryBanner.href}
-            label={product.galleryBanner.label}
+            ctaHref={product.galleryBanner.href}
+            ctaLabel={product.galleryBanner.label}
             image={product.galleryBanner.image}
           />
         ) : null}

@@ -2,7 +2,6 @@ import { Breadcrumbs } from "../../components/orientation/Breadcrumbs";
 import {
   ButtonAskRowDemo,
   ButtonFullWidthDemo,
-  ButtonGhostStatesDemo,
   ButtonGoldStatesDemo,
   ButtonHierarchyDemo,
   ButtonIconsDemo,
@@ -11,7 +10,6 @@ import {
   ButtonPrimaryStatesDemo,
   ButtonSecondaryStatesDemo,
   ButtonSizesDemo,
-  ButtonTertiaryStatesDemo,
 } from "../demos/ButtonSystemDemo";
 import {
   BadgeSystemDemo,
@@ -96,7 +94,7 @@ export const buttonModule: LibraryModule = {
   slug: "button",
   title: "Przycisk / CTA",
   description:
-    "System przycisków Elements - warianty Primary, Secondary, Gold, Ghost i Tertiary; tone default/onDark; rozmiary; stany; IconButton; ProductAskRow (PDP).",
+    "System przycisków Elements - warianty Primary, Secondary i Gold; tone default/onDark; rozmiary; stany; IconButton; ProductAskRow (PDP).",
   optionalProps: [
     { name: "variant", type: "ButtonVariant", defaultValue: "primary" },
     { name: "size", type: '"sm" | "md" | "lg"', defaultValue: "md" },
@@ -111,7 +109,7 @@ export const buttonModule: LibraryModule = {
       id: "hierarchy",
       label: "Hierarchia wariantów",
       description:
-        "Primary = solid gold, Secondary = białe tło + border w kolorze tekstu, Gold = outline akcent, Ghost = transparent, Tertiary = link. Hover: czarny fill (jasne) / biały fill (tone=onDark, poza Secondary).",
+        "Primary = solid gold, Secondary = białe tło + border, Gold = outline akcent. Hover: czarny fill (jasne) / biały fill (tone=onDark, poza Secondary).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonHierarchyDemo />
@@ -163,31 +161,10 @@ export const buttonModule: LibraryModule = {
       ),
     },
     {
-      id: "ghost-states",
-      label: "Stany · Ghost",
-      description:
-        "Przezroczyste tło - hover z delikatnym wypełnieniem bg-muted.",
-      render: () => (
-        <div className={libPreviewArticleClassName}>
-          <ButtonGhostStatesDemo />
-        </div>
-      ),
-    },
-    {
-      id: "tertiary-states",
-      label: "Stany · Tertiary",
-      description: "Link-style - hover ze złotym podkreśleniem.",
-      render: () => (
-        <div className={libPreviewArticleClassName}>
-          <ButtonTertiaryStatesDemo />
-        </div>
-      ),
-    },
-    {
       id: "icons",
       label: "Z ikonami",
       description:
-        "Ikony w przyciskach tekstowych oraz IconButton (default, bordered, elevated, on-dark).",
+        "Ikony w Button: [&_i]:text-base. IconButton: phosphorIconGlyphClassName (text-h4 / 22px). Warianty IconButton: default, ghost, bordered, elevated, on-dark.",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <ButtonIconsDemo />
@@ -270,7 +247,7 @@ export const iconButtonModule: LibraryModule = {
   slug: "icon-button",
   title: "IconButton",
   description:
-    "Przyciski ikoniczne (Header, FAB, drawery) - default, bordered, elevated, on-dark; IconLink.",
+    "Przyciski ikoniczne (Header, FAB, drawery) - default, ghost, bordered, elevated, on-dark; IconLink.",
   variants: [
     {
       id: "live",
