@@ -3,7 +3,7 @@ import { cn } from "../../lib/cn";
 /** Phone / e-mail contact links in salon panels and architect guardian. */
 export const salonContactLinkClassName = cn(
   "inline-flex items-center gap-2 font-body text-sm font-medium text-neutral-900 no-underline tabular-nums",
-  "transition-colors duration-fast ease-out hover:text-gold-600",
+  "transition-colors duration-fast ease-out hover:text-gold-500 hover:[&_span]:underline hover:[&_span]:underline-offset-2",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
 );
 

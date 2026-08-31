@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { salonCardCopy, type SalonOption } from "../../data/nav";
 import {
-  salonDirectionsHref,
   salonDirectoryImageFor,
   salonTabPhoneGroups,
   salonTelHref,
@@ -33,12 +32,11 @@ export function SalonTabCard({ salon, onBook, className }: SalonTabCardProps) {
       })),
     }));
   const hours = salonCardCopy.defaultHours;
-  const directionsHref = salonDirectionsHref(salon);
 
   return (
     <article
       className={cn(
-        "grid gap-6 border-b border-neutral-200 py-8 first:pt-0 last:border-b-0 last:pb-0 lg:grid-cols-2 lg:items-stretch lg:gap-12",
+        "grid gap-8 border-b border-neutral-200 py-8 first:pt-0 last:border-b-0 last:pb-0 lg:grid-cols-2 lg:items-stretch lg:gap-12",
         className,
       )}
     >
@@ -53,31 +51,13 @@ export function SalonTabCard({ salon, onBook, className }: SalonTabCardProps) {
         </h3>
 
         <SalonContactPanel
-          className="mt-6"
+          className="mt-8"
           aria-label={`Kontakt - ${salon.name}`}
           address={salon.address}
           hours={hours}
           phoneGroups={phoneGroups}
           email={salon.email}
           emailHref={`mailto:${salon.email}`}
-          addressExtra={
-            <a
-              href={directionsHref}
-              target="_blank"
-              rel="noreferrer"
-              className={cn(
-                "mt-2 inline-flex items-center gap-1.5 font-body text-sm font-medium text-gold-600 no-underline",
-                "transition-colors duration-fast ease-out hover:text-gold-500",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-              )}
-            >
-              {card.directionsLabel}
-              <i
-                className="ph ph-arrow-up-right text-sm leading-none"
-                aria-hidden="true"
-              />
-            </a>
-          }
           actions={
             <>
               <Button

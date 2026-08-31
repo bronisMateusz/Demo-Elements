@@ -63,7 +63,6 @@ export function FloatingAdvisorCta({
       >
         <i className={iconClass} aria-hidden="true" />
         <span className="truncate">{label}</span>
-        <i className="ph ph-arrow-right" aria-hidden="true" />
       </Button>
     </aside>
   );
