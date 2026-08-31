@@ -24,8 +24,6 @@ type SalonContactPanelProps = {
   phoneGroups: readonly SalonContactPhoneGroup[];
   email: string;
   emailHref: string;
-  /** Optional link under the address (e.g. directions). */
-  addressExtra?: ReactNode;
   actions?: ReactNode;
   className?: string;
   "aria-label"?: string;
@@ -38,89 +36,77 @@ export function SalonContactPanel({
   phoneGroups,
   email,
   emailHref,
-  addressExtra,
   actions,
   className,
   "aria-label": ariaLabel = "Kontakt z salonem",
 }: SalonContactPanelProps) {
-  const leadPhoneGroups = phoneGroups.slice(0, -1);
-  const sidePhoneGroup = phoneGroups.at(-1);
-
   return (
-    <aside className={cn("relative min-w-0", className)} aria-label={ariaLabel}>
-      <div className="relative flex flex-col gap-5">
-        <div className="grid grid-cols-1 gap-4 text-sm leading-relaxed text-neutral-600 sm:grid-cols-2">
-          <div>
-            <p className="m-0 mb-1.5 font-medium text-neutral-900">
-              {salonCardCopy.addressColumnLabel}
-            </p>
-            <p className="m-0">{address}</p>
-            {addressExtra}
-          </div>
-          <div>
-            <p className="m-0 mb-1.5 font-medium text-neutral-900">
-              {salonCardCopy.hoursColumnLabel}
-            </p>
-            <SalonHoursList hours={hours} />
-          </div>
-        </div>
-
-        {leadPhoneGroups.map((group) => (
-          <div key={group.label}>
-            <p className="m-0 font-body text-xs tracking-[0.08em] text-neutral-500 uppercase">
-              {group.label}
-            </p>
-            <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-2.5 p-0 sm:grid-cols-3">
-              {group.phones.map((phone) => (
-                <li key={phone.href}>
-                  <a href={phone.href} className={salonContactLinkClassName}>
-                    <i
-                      className="ph ph-phone text-base leading-none"
-                      aria-hidden="true"
-                    />
-                    <span>{phone.label}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
-          {sidePhoneGroup ? (
+    <aside
+      className={cn("relative min-w-0 @container/panel", className)}
+      aria-label={ariaLabel}
+    >
+      <div className="relative flex flex-col gap-6">
+        {/*
+          Panel split tracks the aside width.
+          Phone grid tracks the phones column - only 2-col when that column
+          can fit two nowrap numbers (avoids wrapping in a tight half).
+        */}
+        <div className="grid gap-6 text-sm leading-relaxed text-neutral-600 @min-[36rem]/panel:grid-cols-2 @min-[36rem]/panel:items-start @min-[36rem]/panel:gap-x-10">
+          <div className="flex flex-col gap-6">
             <div>
-              <p className="m-0 font-body text-xs tracking-[0.08em] text-neutral-500 uppercase">
-                {sidePhoneGroup.label}
+              <p className={cn(salonContactEyebrowClassName, "mb-2")}>
+                {salonCardCopy.addressColumnLabel}
               </p>
-              <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-2.5 p-0">
-                {sidePhoneGroup.phones.map((phone) => (
-                  <li key={phone.href}>
-                    <a href={phone.href} className={salonContactLinkClassName}>
-                      <i
-                        className="ph ph-phone text-base leading-none"
-                        aria-hidden="true"
-                      />
-                      <span>{phone.label}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <p className="m-0 text-neutral-900">{address}</p>
             </div>
-          ) : null}
-          <div className="sm:self-end">
-            <p className={salonContactEyebrowClassName}>E-mail</p>
-            <a href={emailHref} className={salonContactLinkOffsetClassName}>
-              <i
-                className="ph ph-envelope-simple text-base leading-none"
-                aria-hidden="true"
-              />
-              <span>{email}</span>
-            </a>
+            <div>
+              <p className={cn(salonContactEyebrowClassName, "mb-2")}>
+                {salonCardCopy.hoursColumnLabel}
+              </p>
+              <SalonHoursList hours={hours} className="text-neutral-900" />
+            </div>
+            <div>
+              <p className={salonContactEyebrowClassName}>E-mail</p>
+              <a href={emailHref} className={salonContactLinkOffsetClassName}>
+                <i
+                  className="ph ph-envelope-simple text-base leading-none"
+                  aria-hidden="true"
+                />
+                <span>{email}</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="@container/phones flex min-w-0 flex-col gap-6">
+            {phoneGroups.map((group) => (
+              <div key={group.label}>
+                <p className={salonContactEyebrowClassName}>{group.label}</p>
+                <ul className="mt-3 m-0 grid list-none grid-cols-1 gap-x-6 gap-y-3 p-0 @min-[20rem]/phones:grid-cols-2">
+                  {group.phones.map((phone) => (
+                    <li key={phone.href} className="min-w-0">
+                      <a href={phone.href} className={salonContactLinkClassName}>
+                        <i
+                          className="ph ph-phone shrink-0 text-base leading-none"
+                          aria-hidden="true"
+                        />
+                        <span className="whitespace-nowrap">{phone.label}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
         {actions ? (
-          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          <div
+            className={cn(
+              "flex flex-col gap-3",
+              "@min-[22rem]/panel:flex-row @min-[22rem]/panel:flex-wrap @min-[22rem]/panel:items-center",
+              "@min-[22rem]/panel:[&_a]:w-auto @min-[22rem]/panel:[&_button]:w-auto",
+            )}
+          >
             {actions}
           </div>
         ) : null}

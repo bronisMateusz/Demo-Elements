@@ -111,7 +111,6 @@ export const salonsPageB = {
   },
   card: {
     addressLabel: "Adres",
-    directionsLabel: "Wyznacz trasę",
     offerLabel: "Przygotowanie oferty, doradztwo techniczne",
     architectsLabel: "Wsparcie techniczne dla projektantów i architektów",
     hoursLabel: "Godziny otwarcia",

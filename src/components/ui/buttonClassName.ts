@@ -1,8 +1,5 @@
 import { cn } from "../../lib/cn";
-import {
-  phosphorIconInFlexClassName,
-  phosphorIconGlyphClassName,
-} from "../../lib/phosphorIconInFlexClassName";
+import { phosphorIconInFlexClassName } from "../../lib/phosphorIconInFlexClassName";
 import {
   btnAnimatedBaseClassName,
   btnAnimatedFillLightClassName,
@@ -37,7 +34,7 @@ const animatedVariants = new Set<ButtonVariant>([
 const buttonBase = cn(
   "inline-flex items-center justify-center gap-2 h-11 px-8 rounded-xs border font-body font-normal text-ui leading-none tracking-normal no-underline whitespace-nowrap cursor-pointer active:translate-y-px disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2",
   phosphorIconInFlexClassName,
-  phosphorIconGlyphClassName,
+  "[&_i]:text-base",
   "[&>span]:leading-none",
 );
 
