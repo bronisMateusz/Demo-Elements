@@ -25,6 +25,7 @@ type HomeMagazineProps = {
   content?: HomeMagazineContent;
 };
 
+/** Homepage magazine band - ListingPromoTile rhythm below lg; original desktop scale from lg. */
 export function HomeMagazine({
   content = homeMagazine,
 }: HomeMagazineProps = {}) {
@@ -52,17 +53,17 @@ export function HomeMagazine({
           <div className="absolute inset-0 bg-radial-[at_10%_90%] from-brown-700/50 to-transparent to-45%" />
           <BrandMotif
             name="dots-grid"
-            className="absolute top-8 inset-e-6 h-36 w-9 opacity-40 brightness-0 invert max-md:hidden"
+            className="absolute top-5 inset-e-4 h-24 w-7 opacity-40 brightness-0 invert sm:top-6 sm:inset-e-5 md:top-8 md:inset-e-6 md:h-36 md:w-9"
           />
           <BrandMotif
             name="arc-light"
-            className="absolute -bottom-10 -inset-e-8 size-[min(48vw,20rem)] opacity-35 max-md:hidden"
+            className="absolute -bottom-8 -inset-e-6 size-[min(42vw,14rem)] opacity-35 md:-bottom-10 md:-inset-e-8 md:size-[min(48vw,20rem)]"
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-8 px-[clamp(0.75rem,2.222vw,2.5rem)] py-12 md:gap-10 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] xl:gap-14">
-          <div className="min-w-0 lg:max-w-xl">
-            <Eyebrow variant="gold" className="mb-3 text-gold-400">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-stretch gap-5 px-[clamp(0.75rem,2.222vw,2.5rem)] py-8 sm:flex-row sm:items-center sm:gap-8 sm:py-10 md:gap-10 md:py-12 lg:max-w-6xl lg:gap-12 lg:py-12 xl:gap-14">
+          <div className="flex min-w-0 flex-1 flex-col items-stretch gap-3 sm:items-start lg:max-w-xl">
+            <Eyebrow variant="gold" className="text-gold-400">
               {eyebrow}
             </Eyebrow>
             <TextRevealLead
@@ -75,10 +76,10 @@ export function HomeMagazine({
             >
               {title}
             </TextRevealLead>
-            <p className="mt-4 mb-0 max-w-lg text-sm leading-relaxed text-neutral-200 md:text-ui">
+            <p className="m-0 max-w-lg font-body text-sm leading-relaxed text-neutral-200 md:text-ui">
               {description}
             </p>
-            <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-1 flex w-full flex-col items-stretch gap-3 sm:mt-4 sm:flex-row sm:flex-wrap sm:items-start lg:mt-8">
               <Button
                 href={primaryCta.href}
                 variant="primary"
@@ -102,36 +103,34 @@ export function HomeMagazine({
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-72 sm:max-w-80 lg:mx-0 lg:max-w-none">
-            <a
-              href={primaryCta.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "group relative z-10 block overflow-hidden rounded-xs bg-neutral-0 shadow-2",
-                "outline-offset-4 transition-shadow duration-base ease-luxury",
-                "hover:shadow-[0_12px_40px_rgba(26,24,21,0.12)]",
-                "focus-visible:outline-2 focus-visible:outline-gold-500",
-              )}
-              aria-label={`${image.alt} - otwórz magazyn online`}
-            >
-              <span
-                className="pointer-events-none absolute inset-y-0 inset-s-0 z-10 w-2.5 bg-linear-to-r from-neutral-900/25 via-neutral-900/8 to-transparent"
-                aria-hidden="true"
-              />
-              <span
-                className="pointer-events-none absolute inset-y-0 inset-e-0 z-10 w-px bg-neutral-300"
-                aria-hidden="true"
-              />
-              <img
-                src={image.src}
-                alt=""
-                className="aspect-3/4 w-full object-cover object-top"
-                loading="lazy"
-                draggable={false}
-              />
-            </a>
-          </div>
+          <a
+            href={primaryCta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "relative mx-auto aspect-3/4 w-44 shrink-0 overflow-hidden rounded-xs bg-neutral-0 shadow-2 sm:mx-0 sm:w-48 md:w-52 lg:w-88 xl:w-96",
+              "outline-offset-4 transition-shadow duration-base ease-luxury",
+              "hover:shadow-[0_12px_40px_rgb(26_24_21/0.12)]",
+              "focus-visible:outline-2 focus-visible:outline-gold-500",
+            )}
+            aria-label={`${image.alt} - otwórz magazyn online`}
+          >
+            <span
+              className="pointer-events-none absolute inset-y-0 inset-s-0 z-10 w-2.5 bg-linear-to-r from-neutral-900/25 via-neutral-900/8 to-transparent"
+              aria-hidden="true"
+            />
+            <span
+              className="pointer-events-none absolute inset-y-0 inset-e-0 z-10 w-px bg-neutral-300"
+              aria-hidden="true"
+            />
+            <img
+              src={image.src}
+              alt=""
+              className="size-full object-cover object-top"
+              loading="lazy"
+              draggable={false}
+            />
+          </a>
         </div>
       </motion.div>
     </section>

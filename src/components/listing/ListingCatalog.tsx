@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import {
   createEmptyListingFilterState,
+  listingPage,
   listingProducts,
 } from "../../data/listing";
 import { filterAndSortListingProducts } from "../../lib/listingFilters";
@@ -95,6 +96,7 @@ export function ListingCatalog({
           />
           <ListingProductGrid
             products={pageProducts}
+            promo={listingPage.gridPromo}
             onClearFilters={clearFilters}
           />
           <ListingPagination

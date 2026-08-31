@@ -1,4 +1,4 @@
-import type { RelatedProduct } from "./product";
+import type { ProductImage, RelatedProduct } from "./product";
 
 export type ListingFacetKey =
   "brand" | "collection" | "purpose" | "mount" | "size" | "structure" | "color";
@@ -62,4 +62,16 @@ export type ListingCuratedTile = {
   image: RelatedProduct["image"];
   /** Large bento tile (2×2) - same mosaic as SubcategoryBento. */
   featured?: boolean;
+};
+
+/** In-grid magazine / campaign promo cell on the PLP product grid. */
+export type ListingGridPromo = {
+  /** Prefer a multiple of 6 (LCM of 2- and 3-col grids) so a full-width promo leaves no empty cells. */
+  afterIndex: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  ctaLabel: string;
+  image: ProductImage;
 };

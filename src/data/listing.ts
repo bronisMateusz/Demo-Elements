@@ -1,5 +1,9 @@
 import { assetUrl } from "../app/assets";
-import { homeInspiration } from "./home";
+import {
+  HOME_MAGAZINE_FLIPBOOK_HREF,
+  homeInspiration,
+  homeMagazine,
+} from "./home";
 import type { SeoBlock } from "./seoBlocks";
 import type {
   ListingCuratedTile,
@@ -711,6 +715,19 @@ export const listingPage = {
     description:
       "Spróbuj zmienić kryteria albo wyczyść filtry, aby zobaczyć pełną ofertę.",
     actionLabel: "Wyczyść filtry",
+  },
+  gridPromo: {
+    afterIndex: 6,
+    eyebrow: "Magazyn Elements",
+    title: "Magazyn Elements 2026",
+    description:
+      "Bestsellery, nowości i inspiracje łazienkowe w jednym miejscu. Zgarść trendów i produktów, na których nam zależy.",
+    href: HOME_MAGAZINE_FLIPBOOK_HREF,
+    ctaLabel: "Przeglądaj magazyn",
+    image: {
+      ...homeMagazine.image,
+      alt: "Magazyn Elements 2026 - aranżacja premium",
+    },
   },
   inspiration: {
     title: "Poznaj nasze aranżacje i zainspiruj się",
