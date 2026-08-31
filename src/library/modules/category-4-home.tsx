@@ -3,6 +3,8 @@ import {
   homeAppointment,
   homeInspiration,
 } from "../../data/home";
+import { featuredProducerBrands } from "../../data/producers";
+import { salonPage } from "../../data/salon";
 import { HomeAbout } from "../../components/home/HomeAbout";
 import { HomeAdvisorCta } from "../../components/home/HomeAdvisorCta";
 import { AdvisorCta } from "../../components/marketing/AdvisorCta";
@@ -187,15 +189,76 @@ export const homeBrandsModule: LibraryModule = {
   id: "4.5",
   slug: "home-brands",
   title: "HomeBrands",
-  description: "Marquee / cykl logo marek.",
+  description:
+    "Siatka logo marek z SharedLayoutBg. Home: rotacja slotów + CTA „zobacz wszystkie”. Salon / producenci: static (`cycle={false}`) bez CTA.",
+  optionalProps: [
+    { name: "title", type: "string", defaultValue: "homeBrands.title" },
+    { name: "description", type: "string" },
+    {
+      name: "items",
+      type: "HomeBrandItem[]",
+      description: "Pool logo; domyślnie homeBrands.items.",
+    },
+    {
+      name: "cycle",
+      type: "boolean",
+      defaultValue: "true",
+      description: "false = każde logo raz, bez rotacji.",
+    },
+    {
+      name: "showSeeAll",
+      type: "boolean",
+      defaultValue: "true",
+    },
+  ],
   variants: [
     {
       id: "default",
-      label: "Domyślny",
-      description: "Marquee logo marek z home.",
+      label: "Home (cykl + CTA)",
+      description: "Domyślny pas ze strony głównej.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <HomeBrands />
+        </div>
+      ),
+    },
+    {
+      id: "salon",
+      label: "Salon",
+      description: "Tytuł + lead jak na /salon, bez CTA see-all.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <HomeBrands
+            title={salonPage.brands.title}
+            description={salonPage.brands.description}
+            showSeeAll={false}
+          />
+        </div>
+      ),
+    },
+    {
+      id: "static",
+      label: "Static (producenci)",
+      description:
+        "Jak polecane na /producenci: cycle=false, showSeeAll=false, items z featuredProducerBrands.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <HomeBrands
+            title="Polecani producenci"
+            items={featuredProducerBrands.flatMap((brand) =>
+              brand.logoSrc
+                ? [
+                    {
+                      label: brand.name,
+                      href: brand.href,
+                      logoSrc: brand.logoSrc,
+                    },
+                  ]
+                : [],
+            )}
+            cycle={false}
+            showSeeAll={false}
+          />
         </div>
       ),
     },
@@ -207,7 +270,7 @@ export const homeAppointmentModule: LibraryModule = {
   slug: "home-appointment",
   title: "HomeAppointment",
   description:
-    "Baner „Umów spotkanie” (LocateCta) - zdjęcie ze sloganem | ciemny panel z CTA otwierającym SalonDrawer. Współdzielony z kategorią / podkategorią.",
+    "Baner „Umów spotkanie” (LocateCta) - zdjęcie | ciemny panel z CTA otwierającym SalonDrawer. Współdzielony z kategorią / podkategorią / PDP.",
   optionalProps: [
     {
       name: "data",
@@ -219,7 +282,7 @@ export const homeAppointmentModule: LibraryModule = {
     {
       id: "default",
       label: "Baner 50/50",
-      description: `„${homeAppointment.title}” - ciemna karta z radialnym złotem.`,
+      description: `„${homeAppointment.title}” - ciemny split LocateCta.`,
       render: () => <HomeAppointment />,
     },
   ],
@@ -230,7 +293,14 @@ export const homeMagazineModule: LibraryModule = {
   slug: "home-magazine",
   title: "HomeMagazine",
   description:
-    "Magazyn online - copy + CTA (pełna szerokość na mobile) + mockup.",
+    "Magazyn online - copy + CTA + mockup. Poniżej lg rytm zbliżony do ListingPromoTile; od lg oryginalna skala desktop.",
+  optionalProps: [
+    {
+      name: "content",
+      type: "HomeMagazineContent",
+      description: "Override copy / obrazu (domyślnie homeMagazine).",
+    },
+  ],
   variants: [
     {
       id: "default",

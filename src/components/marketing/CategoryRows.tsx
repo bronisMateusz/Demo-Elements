@@ -8,7 +8,6 @@ import { CategorySubTile } from "./CategorySubTile";
 import { LocateCta } from "./LocateCta";
 
 type LocateConfig = {
-  slogan: readonly [string, string];
   title: string;
   description: string;
   ctaLabel: string;
@@ -18,6 +17,8 @@ type LocateConfig = {
     fit?: "cover" | "contain";
     focalPoint?: { x: number; y: number };
   };
+  /** @deprecated Unused by LocateCta. */
+  slogan?: readonly [string, string];
 };
 
 type CategoryRowsProps = {
@@ -150,7 +151,6 @@ export function CategoryRows({ rows, locate }: CategoryRowsProps) {
 
             {row.locateAfter && locate ? (
               <LocateCta
-                slogan={locate.slogan}
                 title={locate.title}
                 description={locate.description}
                 ctaLabel={locate.ctaLabel}

@@ -49,6 +49,11 @@ export function IconButtonLiveDemo() {
       <div className="flex flex-wrap items-center gap-3">
         <IconButton label="Szukaj" iconClass="ph ph-magnifying-glass" />
         <IconButton
+          label="Ghost (header / drawer)"
+          iconClass="ph ph-magnifying-glass"
+          variant="ghost"
+        />
+        <IconButton
           label="Obramowany"
           iconClass="ph ph-heart"
           variant="bordered"
@@ -67,6 +72,7 @@ export function IconButtonLiveDemo() {
           href="#schowek"
           label="Schowek"
           iconClass="ph ph-bookmark-simple"
+          variant="ghost"
         />
       </div>
       <div className="flex flex-wrap items-center gap-3 rounded-xs bg-neutral-900 p-4">

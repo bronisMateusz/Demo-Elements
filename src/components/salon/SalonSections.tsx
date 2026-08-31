@@ -21,7 +21,7 @@ import { IconButton } from "../ui/IconButton";
 import { Section } from "../structural/Section";
 import { SectionHeader } from "../structural/SectionHeader";
 import { pdpSectionScrollMarginClassName } from "../../constants/pdpSubnav";
-import { NewsCardGrid } from "../marketing/NewsCardGrid";
+import { EditorialCarousel } from "../marketing/EditorialCarousel";
 import { ProductDownloads } from "../product/ProductDownloads";
 import { BrandMotif } from "../brand/BrandMotif";
 import { TextRevealLead } from "../motion/TextRevealLead";
@@ -466,11 +466,13 @@ export function SalonExpo() {
 
 export function SalonNews() {
   return (
-    <NewsCardGrid
+    <EditorialCarousel
       id={salonPage.news.id}
       title={salonPage.news.title}
       items={[...salonPage.news.items]}
       titleId="salon-news-title"
+      a11yPrevLabel="Poprzednie aktualności"
+      a11yNextLabel="Następne aktualności"
     />
   );
 }

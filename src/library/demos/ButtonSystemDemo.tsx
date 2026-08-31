@@ -104,18 +104,6 @@ export function ButtonHierarchyDemo() {
       >
         Strefa architekta
       </button>
-      <button
-        type="button"
-        className={libButtonPreviewClassName({ variant: "ghost" })}
-      >
-        Zapisz na listę
-      </button>
-      <button
-        type="button"
-        className={libButtonPreviewClassName({ variant: "tertiary" })}
-      >
-        Zobacz całą kolekcję
-      </button>
     </div>
   );
 }
@@ -161,14 +149,6 @@ export function ButtonSecondaryStatesDemo() {
 
 export function ButtonGoldStatesDemo() {
   return <VariantStateDemo variant="gold" label="Strefa architekta" />;
-}
-
-export function ButtonGhostStatesDemo() {
-  return <VariantStateDemo variant="ghost" label="Zapisz na listę" />;
-}
-
-export function ButtonTertiaryStatesDemo() {
-  return <VariantStateDemo variant="tertiary" label="Zobacz całą kolekcję" />;
 }
 
 export function ButtonFullWidthDemo() {
@@ -228,16 +208,6 @@ export function ButtonIconsDemo() {
         >
           <i className="ph ph-download-simple" aria-hidden="true" />
           <span>Pobierz katalog</span>
-        </button>
-      </div>
-      <div className={libBtnStateClassName}>
-        <span className={libBtnStateLabelClassName}>Tertiary + chevron</span>
-        <button
-          type="button"
-          className={libButtonPreviewClassName({ variant: "tertiary" })}
-        >
-          <span>Zobacz całą serię</span>
-          <i className="ph ph-arrow-right" aria-hidden="true" />
         </button>
       </div>
 

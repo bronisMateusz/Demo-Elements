@@ -15,7 +15,7 @@ import {
 } from "../components/marketing/AdvisorCta";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { BrandHero } from "../components/marketing/BrandHero";
-import { BlogArticleCarousel } from "../components/marketing/BlogArticleCarousel";
+import { EditorialCarousel } from "../components/marketing/EditorialCarousel";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
 import { ProductSubnav } from "../components/product/ProductSubnav";
@@ -233,11 +233,15 @@ export function ArchitectZonePage() {
 
           <RevealSection className={pdpSectionScrollMarginClassName}>
             <div id={page.blog.id}>
-              <BlogArticleCarousel
+              <EditorialCarousel
                 title={page.blog.title}
-                articles={[...page.blog.articles]}
-                seeAllLabel={page.blog.seeAllLabel}
-                seeAllHref={page.blog.seeAllHref}
+                items={[...page.blog.articles]}
+                seeAll={{
+                  label: page.blog.seeAllLabel,
+                  href: page.blog.seeAllHref,
+                }}
+                a11yPrevLabel="Poprzednie artykuły"
+                a11yNextLabel="Następne artykuły"
               />
             </div>
           </RevealSection>

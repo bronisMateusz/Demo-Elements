@@ -1,11 +1,15 @@
 import { montebianco80 } from "../../data/products/montebianco-80";
+import { buildPdpSubnavItems } from "../../constants/pdpSubnav";
 import { ProductArchitectCTA } from "../../components/product/ProductArchitectCTA";
 import { ProductBuyBox } from "../../components/product/ProductBuyBox";
 import { ProductCard } from "../../components/product/ProductCard";
 import { ProductCarousel } from "../../components/product/ProductCarousel";
+import { ProductDownloads } from "../../components/product/ProductDownloads";
+import { ProductEditorial } from "../../components/product/ProductEditorial";
 import { ProductGallery } from "../../components/product/ProductGallery";
 import { ProductPairWith } from "../../components/product/ProductPairWith";
 import { ProductSpecifications } from "../../components/product/ProductSpecifications";
+import { ProductSubnav } from "../../components/product/ProductSubnav";
 import { ProductVisualizationCTA } from "../../components/product/ProductVisualizationCTA";
 import { Container } from "../../components/ui/Container";
 import { AskFabDemo } from "../demos/AskFabDemo";
@@ -313,6 +317,75 @@ export const productCarouselModule: LibraryModule = {
   ],
 };
 
+export const productSubnavModule: LibraryModule = {
+  id: "3.13",
+  slug: "product-subnav",
+  title: "ProductSubnav",
+  description:
+    "Sticky in-page nav (PDP, salon, strefa architekta) - SharedLayoutUnderline + scrollspy.",
+  variants: [
+    {
+      id: "pdp",
+      label: "PDP items",
+      description:
+        "buildPdpSubnavItems() - klik przewija do sekcji na stronie.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <ProductSubnav items={buildPdpSubnavItems()} />
+          <div className="grid min-h-40 place-items-center border-b border-dashed border-neutral-200 bg-neutral-50 text-sm text-neutral-500">
+            Podgląd sticky - sekcje docelowe są na pełnej stronie /produkt.
+          </div>
+        </div>
+      ),
+    },
+  ],
+};
+
+export const productEditorialModule: LibraryModule = {
+  id: "3.14",
+  slug: "product-editorial",
+  title: "ProductEditorial",
+  description: "Opis produktu - lead, akapity, features (PDP mid-page).",
+  variants: [
+    {
+      id: "montebianco",
+      label: "Montebianco",
+      description: "Dane editorial z montebianco80.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <ProductEditorial
+            eyebrow={montebianco80.editorial.eyebrow}
+            title={montebianco80.editorial.title}
+            lead={montebianco80.editorial.lead}
+            paragraphs={montebianco80.editorial.paragraphs}
+            features={montebianco80.editorial.features}
+          />
+        </div>
+      ),
+    },
+  ],
+};
+
+export const productDownloadsModule: LibraryModule = {
+  id: "3.15",
+  slug: "product-downloads",
+  title: "ProductDownloads",
+  description:
+    "Lista plików do pobrania (PDP + SalonDownloads). Akordeon na mobile.",
+  variants: [
+    {
+      id: "montebianco",
+      label: "Montebianco",
+      description: "Pliki z montebianco80.downloads.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <ProductDownloads downloads={montebianco80.downloads} />
+        </div>
+      ),
+    },
+  ],
+};
+
 export const category3Modules: LibraryModule[] = [
   productGalleryModule,
   productBuyBoxModule,
@@ -324,4 +397,7 @@ export const category3Modules: LibraryModule[] = [
   productArchitectCtaModule,
   productVisualizationCtaModule,
   productCarouselModule,
+  productSubnavModule,
+  productEditorialModule,
+  productDownloadsModule,
 ];

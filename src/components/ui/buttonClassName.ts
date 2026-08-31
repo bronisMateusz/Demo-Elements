@@ -12,8 +12,7 @@ import {
   btnAnimatedSecondaryOnDarkClassName,
 } from "./btnAnimatedClassName";
 
-export type ButtonVariant =
-  "primary" | "secondary" | "ghost" | "gold" | "tertiary";
+export type ButtonVariant = "primary" | "secondary" | "gold";
 export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonTone = "default" | "onDark";
 
@@ -55,11 +54,7 @@ const buttonSizes: Record<ButtonSize, string> = {
 const buttonVariants: Record<ButtonVariant, string> = {
   primary: btnAnimatedPrimaryClassName,
   secondary: btnAnimatedSecondaryClassName,
-  ghost:
-    "border-transparent bg-transparent text-neutral-800 hover:bg-neutral-100 hover:text-neutral-900 active:bg-neutral-200 focus-visible:outline-neutral-800",
   gold: btnAnimatedGoldClassName,
-  tertiary:
-    "border-transparent bg-transparent text-neutral-800 px-0 hover:text-gold-500 underline-offset-4 decoration-gold-500 decoration-1 hover:underline focus-visible:outline-neutral-800",
 };
 
 const buttonVariantsOnDark: Partial<Record<ButtonVariant, string>> = {

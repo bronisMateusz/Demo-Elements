@@ -16,10 +16,61 @@ import { Container } from "../ui/Container";
 import { Section } from "../structural/Section";
 import { Button } from "../ui/Button";
 
-type BrandItem = (typeof homeBrands.items)[number];
+export type HomeBrandItem = {
+  label: string;
+  href: string;
+  logoSrc: string;
+};
+
+type BrandCellChromeProps = {
+  href: string;
+  children?: ReactNode;
+  className?: string;
+  onMouseEnter?: (event: MouseEvent<HTMLAnchorElement>) => void;
+} & Omit<
+  HTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "onMouseEnter" | "className"
+>;
+
+const brandCellClassName = cn(
+  "group relative flex min-h-20 items-center justify-center px-4 py-6 no-underline",
+  "md:min-h-24 md:px-6 md:py-8",
+  "focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
+);
+
+function BrandCellChrome({
+  href,
+  children,
+  className,
+  onMouseEnter,
+  ...rest
+}: BrandCellChromeProps) {
+  const isInternal = href.startsWith("/") && href !== "#";
+
+  const classNames = cn(brandCellClassName, className);
+
+  if (isInternal) {
+    return (
+      <Link
+        {...rest}
+        to={href}
+        onMouseEnter={onMouseEnter}
+        className={classNames}
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a {...rest} href={href} onMouseEnter={onMouseEnter} className={classNames}>
+      {children}
+    </a>
+  );
+}
 
 type BrandCycleCellProps = {
-  pool: readonly BrandItem[];
+  pool: readonly HomeBrandItem[];
   slotIndex: number;
   slotCount: number;
   paused: boolean;
@@ -73,16 +124,11 @@ function BrandCycleCell({
   if (!brand) return null;
 
   return (
-    <Link
+    <BrandCellChrome
       {...rest}
-      to={brand.href}
+      href={brand.href}
       onMouseEnter={onMouseEnter}
-      className={cn(
-        "group relative flex min-h-20 items-center justify-center px-4 py-6 no-underline",
-        "md:min-h-24 md:px-6 md:py-8",
-        "focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
-        className,
-      )}
+      className={className}
     >
       {children}
       <span className="relative z-10 flex h-10 w-full max-w-40 items-center justify-center overflow-hidden px-1 md:h-12">
@@ -110,7 +156,46 @@ function BrandCycleCell({
           </motion.span>
         </AnimatePresence>
       </span>
-    </Link>
+    </BrandCellChrome>
+  );
+}
+
+type BrandStaticCellProps = {
+  brand: HomeBrandItem;
+  children?: ReactNode;
+  className?: string;
+  onMouseEnter?: (event: MouseEvent<HTMLAnchorElement>) => void;
+} & Omit<
+  HTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "onMouseEnter" | "className"
+>;
+
+function BrandStaticCell({
+  brand,
+  children,
+  className,
+  onMouseEnter,
+  ...rest
+}: BrandStaticCellProps) {
+  return (
+    <BrandCellChrome
+      {...rest}
+      href={brand.href}
+      onMouseEnter={onMouseEnter}
+      className={className}
+    >
+      {children}
+      <span className="relative z-10 flex h-10 w-full max-w-40 items-center justify-center px-1 md:h-12">
+        <img
+          src={brand.logoSrc}
+          alt={brand.label}
+          className="max-h-full max-w-full object-contain opacity-70 transition-opacity duration-fast ease-out group-hover:opacity-100"
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+        />
+      </span>
+    </BrandCellChrome>
   );
 }
 
@@ -123,6 +208,13 @@ type HomeBrandsProps = {
   description?: string;
   /** Footer CTA under the brand grid (home only by default). */
   showSeeAll?: boolean;
+  /** Brand pool; defaults to home brands. */
+  items?: readonly HomeBrandItem[];
+  /**
+   * When true (default), rotate through a fixed slot count.
+   * When false, render every item once (no cycle).
+   */
+  cycle?: boolean;
 };
 
 export function HomeBrands({
@@ -131,9 +223,14 @@ export function HomeBrands({
   title = homeBrands.title,
   description,
   showSeeAll = true,
+  items = homeBrands.items,
+  cycle = true,
 }: HomeBrandsProps = {}) {
   const [paused, setPaused] = useState(false);
-  const slotCount = Math.min(homeBrands.slotCount, homeBrands.items.length);
+  const pool = items;
+  const slotCount = cycle
+    ? Math.min(homeBrands.slotCount, pool.length)
+    : pool.length;
   const slots = Array.from({ length: slotCount }, (_, index) => index);
   const titleId = id ? `${id}-title` : "home-brands-title";
 
@@ -162,15 +259,19 @@ export function HomeBrands({
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          {slots.map((slotIndex) => (
-            <BrandCycleCell
-              key={slotIndex}
-              pool={homeBrands.items}
-              slotIndex={slotIndex}
-              slotCount={slotCount}
-              paused={paused}
-            />
-          ))}
+          {cycle
+            ? slots.map((slotIndex) => (
+                <BrandCycleCell
+                  key={slotIndex}
+                  pool={pool}
+                  slotIndex={slotIndex}
+                  slotCount={slotCount}
+                  paused={paused}
+                />
+              ))
+            : pool.map((brand) => (
+                <BrandStaticCell key={brand.label} brand={brand} />
+              ))}
         </SharedLayoutBg>
 
         {showSeeAll ? (

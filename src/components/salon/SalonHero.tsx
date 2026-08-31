@@ -2,7 +2,10 @@ import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { salonOptions } from "../../data/nav";
 import { salonPage } from "../../data/salon";
 import { salonDirectionsHref } from "../../data/salons";
-import { pageIntroHeroTopPaddingClassName } from "../../lib/layoutTokens";
+import {
+  pageIntroHeroTopPaddingClassName,
+  pageIntroTitleClassName,
+} from "../../lib/layoutTokens";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Button } from "../ui/Button";
@@ -19,18 +22,70 @@ export function SalonHero() {
   return (
     <section id="o-salonie-top" aria-labelledby="salon-hero-title">
       <Container size="content">
-        <div className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
-          <h1
-            id="salon-hero-title"
+        <div className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-start lg:gap-12">
+          {/*
+            Mobile: `contents` so title / image / contact stay order 1–3.
+            Desktop: one left column so contact sits under the title (not
+            below the image row height).
+          */}
+          <div
             className={cn(
-              "order-1 m-0 min-w-0 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900 lg:col-start-1 lg:row-start-1",
+              "contents",
+              "lg:flex lg:flex-col lg:gap-8",
               pageIntroHeroTopPaddingClassName,
             )}
           >
-            {hero.titleLead} {hero.titleStrong}
-          </h1>
+            <h1
+              id="salon-hero-title"
+              className={cn(
+                pageIntroTitleClassName,
+                "order-1 min-w-0",
+                pageIntroHeroTopPaddingClassName,
+                "lg:pt-0",
+              )}
+            >
+              {hero.titleLead} {hero.titleStrong}
+            </h1>
 
-          <div className="relative order-2 min-w-0 w-full overflow-hidden rounded-xs bg-neutral-100 aspect-4/3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-auto lg:min-h-full">
+            <SalonContactPanel
+              className="order-3 min-w-0"
+              address={hero.address}
+              hours={hero.hours}
+              phoneGroups={hero.phoneGroups}
+              email={hero.email}
+              emailHref={hero.emailHref}
+              actions={
+                <>
+                  <Button
+                    as="button"
+                    type="button"
+                    variant="primary"
+                    size="md"
+                    full
+                    className="sm:w-auto"
+                    onClick={requestSalonDrawer}
+                  >
+                    {hero.bookLabel}
+                  </Button>
+                  {directionsHref ? (
+                    <Button
+                      href={directionsHref}
+                      variant="secondary"
+                      size="md"
+                      full
+                      className="sm:w-auto"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {hero.directionsLabel}
+                    </Button>
+                  ) : null}
+                </>
+              }
+            />
+          </div>
+
+          <div className="relative order-2 min-w-0 w-full overflow-hidden rounded-xs bg-neutral-100 aspect-4/3">
             <img
               src={hero.image.src}
               alt={hero.image.alt}
@@ -38,43 +93,6 @@ export function SalonHero() {
               style={{ objectPosition: productImageObjectPosition(hero.image) }}
             />
           </div>
-
-          <SalonContactPanel
-            className="order-3 min-w-0 lg:col-start-1 lg:row-start-2"
-            address={hero.address}
-            hours={hero.hours}
-            phoneGroups={hero.phoneGroups}
-            email={hero.email}
-            emailHref={hero.emailHref}
-            actions={
-              <>
-                <Button
-                  as="button"
-                  type="button"
-                  variant="primary"
-                  size="md"
-                  full
-                  className="sm:w-auto"
-                  onClick={requestSalonDrawer}
-                >
-                  {hero.bookLabel}
-                </Button>
-                {directionsHref ? (
-                  <Button
-                    href={directionsHref}
-                    variant="secondary"
-                    size="md"
-                    full
-                    className="sm:w-auto"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {hero.directionsLabel}
-                  </Button>
-                ) : null}
-              </>
-            }
-          />
         </div>
       </Container>
     </section>

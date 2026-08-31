@@ -2,6 +2,7 @@ import { useState } from "react";
 import { InspirationProductsDrawer } from "../../components/inspiration/InspirationProductsDrawer";
 import { MobileDrawer } from "../../components/layout/MobileDrawer";
 import { SalonDrawer } from "../../components/layout/SalonDrawer";
+import { BookAppointmentDrawer } from "../../components/marketing/BookAppointmentDrawer";
 import { AskDrawer } from "../../components/product/AskDrawer";
 import { Button } from "../../components/ui/Button";
 import { homeInspiration } from "../../data/home";
@@ -37,13 +38,12 @@ export function AskDrawerDemo() {
   return (
     <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
       <p className="m-0 max-w-xl text-sm text-neutral-600">
-        Formularz pytania o produkt - karta produktu, pola wymagane i wiadomość
-        z prefillem. Wspólny DrawerShell.
+        Formularz pytania o produkt - karta produktu, pola wymagane i wiadomość.
       </p>
       <Button
         as="button"
         type="button"
-        variant="primary"
+        variant="secondary"
         onClick={() => setOpen(true)}
       >
         Zadaj pytanie
@@ -56,6 +56,28 @@ export function AskDrawerDemo() {
         productSku={montebianco80.sku}
         productImage={image}
       />
+    </div>
+  );
+}
+
+export function BookAppointmentDrawerDemo() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
+      <p className="m-0 max-w-xl text-sm text-neutral-600">
+        Umówienie wizyty w salonie - formularz z /salony (wybór salonu + dane
+        kontaktowe).
+      </p>
+      <Button
+        as="button"
+        type="button"
+        variant="secondary"
+        onClick={() => setOpen(true)}
+      >
+        Umów spotkanie
+      </Button>
+      <BookAppointmentDrawer open={open} onClose={() => setOpen(false)} />
     </div>
   );
 }

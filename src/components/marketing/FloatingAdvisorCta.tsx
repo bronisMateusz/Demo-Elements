@@ -1,5 +1,5 @@
-import { cn } from "../../lib/cn";
 import { useFloatingCtaVisibility } from "../../hooks/useFloatingCtaVisibility";
+import { floatingBottomShellClassName } from "../ui/floatingBottomShellClassName";
 import { Button } from "../ui/Button";
 
 type FloatingAdvisorCtaProps = {
@@ -12,23 +12,6 @@ type FloatingAdvisorCtaProps = {
   showAfterScroll?: number;
   footerSelector?: string;
 };
-
-const floatingAdvisorCtaShellClassName = ({
-  visible,
-  className,
-}: {
-  visible: boolean;
-  className?: string;
-}) =>
-  cn(
-    "fixed inset-x-0 bottom-0 z-90 px-[clamp(0.75rem,2.222vw,2.5rem)] pb-4",
-    "transition-transform duration-base ease-luxury",
-    "sm:inset-x-auto sm:bottom-5 sm:inset-e-[clamp(0.75rem,2.222vw,2.5rem)] sm:w-auto sm:px-0 sm:pb-0",
-    visible
-      ? "translate-y-0"
-      : "pointer-events-none translate-y-[calc(100%+1.25rem)]",
-    className,
-  );
 
 /** Compact sticky advisor / visit CTA for marketing pages (not the PDP AskFab bar). */
 export function FloatingAdvisorCta({
@@ -49,7 +32,11 @@ export function FloatingAdvisorCta({
   return (
     <aside
       id={id}
-      className={floatingAdvisorCtaShellClassName({ visible, className })}
+      className={floatingBottomShellClassName({
+        visible,
+        placement: "end",
+        className,
+      })}
       aria-hidden={!visible}
     >
       <Button

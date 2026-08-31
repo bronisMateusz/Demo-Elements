@@ -110,6 +110,10 @@ export const pageSectionStackFlushTopClassName = "mt-0";
 /** Top padding on descriptive hero copy column - below breadcrumbs, replaces stack mt-12. */
 export const pageIntroHeroTopPaddingClassName = "pt-12";
 
+/** Page-intro h1 - DS text-h1 so it stays clearly larger than section text-h2. */
+export const pageIntroTitleClassName =
+  "m-0 font-heading text-h1 leading-[1.1] font-medium tracking-tight text-neutral-900";
+
 export const maxWContentClassName = "max-w-384";
 export const maxWWideClassName = "max-w-448";
 

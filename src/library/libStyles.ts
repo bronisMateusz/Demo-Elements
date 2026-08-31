@@ -172,14 +172,6 @@ const libButtonStateOverrides: Partial<
       "translate-y-px border-neutral-800 text-neutral-0",
     ),
   },
-  ghost: {
-    hover: "bg-neutral-100 text-neutral-900",
-    active: "translate-y-px bg-neutral-200 text-neutral-900",
-  },
-  tertiary: {
-    hover: "text-gold-500 underline",
-    active: "translate-y-px text-gold-500",
-  },
 };
 
 function libButtonStateClassName(

@@ -1,5 +1,8 @@
 import { cn } from "../../lib/cn";
-import { pageIntroHeroTopPaddingClassName } from "../../lib/layoutTokens";
+import {
+  pageIntroHeroTopPaddingClassName,
+  pageIntroTitleClassName,
+} from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
@@ -61,7 +64,7 @@ export function BrandHero({
             ) : (
               <h1
                 id={titleId}
-                className="m-0 max-w-4xl font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-neutral-900"
+                className={cn(pageIntroTitleClassName, "max-w-4xl")}
               >
                 {title}
               </h1>
