@@ -93,7 +93,7 @@ export function ProductBuyBox({ product, onAskOpen }: ProductBuyBoxProps) {
 
       {resolved?.availabilityNote ? (
         <p
-          className="mb-6 rounded-xs border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-600"
+          className="mb-6 rounded-xs border border-neutral-300 bg-neutral-50 px-4 py-3 text-sm text-neutral-600"
           role="status"
         >
           {resolved.availabilityNote}

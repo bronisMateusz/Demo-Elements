@@ -8,6 +8,7 @@ import {
 } from "../../data/nav";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import { EASE_LUXURY } from "../../lib/motionEase";
 import { DrawerHeader, DrawerShell } from "./DrawerShell";
 
@@ -175,7 +176,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
             </ul>
           </nav>
 
-          <div className="mt-8 border-t border-neutral-200 pt-6">
+          <div className={cn("mt-8 pt-6", contentDividerTopClassName)}>
             <nav aria-label="Strefy i skróty">
               <ul className="m-0 flex list-none flex-col gap-1 p-0">
                 {utilityNavItems
@@ -201,7 +202,12 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                     </li>
                   ))}
               </ul>
-              <ul className="m-0 mt-6 flex list-none flex-col gap-1 border-t border-neutral-200 p-0 pt-6">
+              <ul
+                className={cn(
+                  "m-0 mt-6 flex list-none flex-col gap-1 p-0 pt-6",
+                  contentDividerTopClassName,
+                )}
+              >
                 {utilityNavItems
                   .filter((item) => !("accent" in item && item.accent))
                   .map((item) => (
@@ -287,7 +293,12 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                   aria-hidden="true"
                 />
               </a>
-              <ul className="flex list-none flex-col border-t border-neutral-200">
+              <ul
+                className={cn(
+                  "flex list-none flex-col",
+                  contentDividerTopClassName,
+                )}
+              >
                 {activeGroup.links.map((link) => (
                   <li key={link.href}>
                     <a

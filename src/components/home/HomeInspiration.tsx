@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { homeInspiration } from "../../data/home";
 import { cn } from "../../lib/cn";
+import { sectionMarginTopClassName } from "../../lib/layoutTokens";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import {
   InspirationGallery,
@@ -35,7 +36,10 @@ export function HomeInspiration() {
       />
       <Container
         size="content"
-        className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:mt-10"
+        className={cn(
+          sectionMarginTopClassName,
+          "flex flex-wrap items-center justify-center gap-x-6 gap-y-4",
+        )}
       >
         {showNav ? (
           <div className="flex items-center gap-3">

@@ -82,7 +82,7 @@ export function VoivodeshipSalonsDrawer({
               return (
                 <li
                   key={salon.id}
-                  className="rounded-xs border border-neutral-200 bg-neutral-0 p-4"
+                  className="rounded-xs border border-neutral-300 bg-neutral-0 p-4"
                 >
                   <p className="m-0 font-heading text-lg leading-snug font-medium text-neutral-900">
                     {listLabelFor(salon)}

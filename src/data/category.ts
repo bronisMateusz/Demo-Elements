@@ -1,4 +1,5 @@
 import { assetUrl } from "../app/assets";
+import { ctaContextImages } from "../lib/ctaContextImages";
 
 export type CategorySub = {
   label: string;
@@ -45,11 +46,16 @@ export const categoryPage = {
     description:
       "Nasz doradca będzie czekał na Ciebie w salonie - pozna Twój projekt, pokaże produkty na żywo i pomoże dobrać całe wyposażenie. Bez pośpiechu, w dogodnym terminie.",
     ctaLabel: "Umów spotkanie",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Salon Elements - ekspozycja łazienki",
-      fit: "cover" as const,
-    },
+    image: ctaContextImages.locateCta,
+  },
+  advisorCta: {
+    eyebrow: "Doradztwo",
+    title: "Nie wiesz, od czego zacząć?\nPorozmawiaj z doradcą.",
+    description:
+      "Napisz do nas online albo umów się na spotkanie w salonie - doradca pomoże dobrać całe wyposażenie Twojej łazienki.",
+    image: ctaContextImages.advisorConsultation,
+    primaryCta: { label: "Napisz do doradcy", href: "#kontakt" },
+    secondaryCta: { label: "Umów spotkanie" },
   },
 } as const;
 
@@ -90,7 +96,7 @@ export const categoryRows: CategoryRow[] = [
         label: "Umywalki wiszące",
         href: "/listing",
         image: {
-          src: assetUrl("category/subs/umywalkiwiszace.webp"),
+          src: assetUrl("category/subs/umywalkiwiszace.png"),
           alt: "Umywalki wiszące",
           fit: "cover",
         },
@@ -112,8 +118,8 @@ export const categoryRows: CategoryRow[] = [
       href: "/listing",
       label: "Zobacz ofertę",
       image: {
-        src: assetUrl("category/subs/umywalkinablatowe.webp"),
-        alt: "Umywalka Duravit w aranżacji łazienki",
+        src: assetUrl("category/subs/umywalkiwiszace.png"),
+        alt: "Umywalki wiszące w aranżacji łazienki",
         fit: "cover",
       },
     },

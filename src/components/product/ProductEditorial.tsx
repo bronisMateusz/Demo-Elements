@@ -3,8 +3,10 @@ import { BrandMotif } from "../brand/BrandMotif";
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../structural/SectionHeader";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import type { ProductFeature } from "../../types/product";
+import { pdpAccordionToggleClassName } from "../../constants/pdpSubnav";
 import { usePdpSectionAccordion } from "../../hooks/usePdpSectionAccordion";
 import { AccordionCollapse } from "../motion/AccordionCollapse";
 
@@ -24,7 +26,7 @@ type ProductEditorialProps = {
 function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
   const visual = feature.iconClass ? (
     <div
-      className="flex size-14 shrink-0 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-50 sm:size-16"
+      className="flex size-14 shrink-0 items-center justify-center rounded-xs border border-neutral-300 bg-neutral-50 sm:size-16"
       aria-hidden="true"
     >
       <i
@@ -35,7 +37,7 @@ function ProductFeatureItem({ feature }: { feature: ProductFeature }) {
       />
     </div>
   ) : feature.image ? (
-    <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50 sm:size-16">
+    <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xs border border-neutral-300 bg-neutral-50 sm:size-16">
       <img
         src={feature.image.src}
         alt={feature.image.alt}
@@ -111,7 +113,12 @@ export function ProductEditorial({
   );
 
   const featuresList = (
-    <ul className="flex list-none flex-col gap-6 border-t border-neutral-200 pt-8 lg:border-t-0 lg:border-s lg:pt-0 lg:ps-12">
+    <ul
+      className={cn(
+        "flex list-none flex-col gap-6 pt-8 lg:border-t-0 lg:border-s lg:border-neutral-300 lg:pt-0 lg:ps-12",
+        contentDividerTopClassName,
+      )}
+    >
       {features.map((feature) => (
         <ProductFeatureItem key={feature.title} feature={feature} />
       ))}
@@ -160,10 +167,7 @@ export function ProductEditorial({
           <>
             <button
               type="button"
-              className={cn(
-                "flex w-full items-center justify-between gap-3 py-1 text-start md:hidden",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-              )}
+              className={pdpAccordionToggleClassName}
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => setOpen((value) => !value)}

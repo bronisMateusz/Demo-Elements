@@ -68,6 +68,11 @@ import {
   subcategoryBentoModule,
   wishlistModule,
 } from "./modules/category-5-marketing";
+import {
+  inspirationArticleModule,
+  inspirationGalleryCardModule,
+  inspirationListingCatalogModule,
+} from "./modules/category-6-inspiration";
 import type { LibraryCategory } from "./types";
 
 export const libraryCategories: LibraryCategory[] = [
@@ -136,6 +141,7 @@ export const libraryCategories: LibraryCategory[] = [
       iconTileModule,
       subcategoryBentoModule,
       categoryPromoBannerModule,
+      inspirationGalleryCardModule,
     ],
   },
   {
@@ -182,6 +188,7 @@ export const libraryCategories: LibraryCategory[] = [
       "Katalogi i siatki - PLP, kategorie, marki, producenci, salony i schowek.",
     modules: [
       listingPlpModule,
+      inspirationListingCatalogModule,
       categoryRowsModule,
       homeCategoriesModule,
       homeBrandsModule,
@@ -211,6 +218,7 @@ export const libraryCategories: LibraryCategory[] = [
       architectDownloadsModule,
       homePartnersModule,
       brandPageModule,
+      inspirationArticleModule,
     ],
   },
 ];

@@ -104,7 +104,7 @@ export function ProductSubnav({
             : internalSubnavMarginClassName,
           "pdp-subnav sticky top-(--site-header-bar-height,7.5rem) z-99 border-b border-transparent xl:top-29 header-concealed:xl:top-18",
           stuck &&
-            "is-stuck border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+            "is-stuck border-neutral-300 bg-neutral-0/95 backdrop-blur-sm",
         )}
         aria-label="Sekcje strony produktu"
       >

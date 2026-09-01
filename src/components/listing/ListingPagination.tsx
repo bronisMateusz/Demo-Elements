@@ -1,5 +1,6 @@
 import { buildListingPageItems } from "../../lib/listingPagination";
 import { cn } from "../../lib/cn";
+import { sectionMarginTopClassName } from "../../lib/layoutTokens";
 import { Button } from "../ui/Button";
 
 type ListingPaginationProps = {
@@ -11,6 +12,12 @@ type ListingPaginationProps = {
   /** Advances to the next page (same as pager next). */
   onShowMore: () => void;
   onPageChange: (page: number) => void;
+  /** Progress label noun, e.g. "produktów", "inspiracji", "aranżacji". */
+  itemLabel?: string;
+  /** Accessible label for the progress bar. */
+  progressAriaLabel?: string;
+  /** Accessible label for the pager nav. */
+  navAriaLabel?: string;
   className?: string;
 };
 
@@ -34,6 +41,9 @@ export function ListingPagination({
   pageCount,
   onShowMore,
   onPageChange,
+  itemLabel = "produktów",
+  progressAriaLabel = "Postęp przeglądania produktów",
+  navAriaLabel = "Paginacja listy produktów",
   className,
 }: ListingPaginationProps) {
   if (totalCount <= 0 || pageCount <= 1) return null;
@@ -48,7 +58,8 @@ export function ListingPagination({
   return (
     <div
       className={cn(
-        "mt-8 flex w-full flex-col items-center justify-center gap-6 md:mt-10",
+        sectionMarginTopClassName,
+        "flex w-full flex-col items-center justify-center gap-6",
         className,
       )}
     >
@@ -60,7 +71,7 @@ export function ListingPagination({
           <span className="font-medium text-neutral-900">{shownCount}</span>
           {" z "}
           <span className="font-medium text-neutral-900">{totalCount}</span>
-          {" produktów"}
+          {` ${itemLabel}`}
         </p>
         <div
           className="h-0.5 w-full overflow-hidden rounded-full bg-neutral-200"
@@ -68,7 +79,7 @@ export function ListingPagination({
           aria-valuemin={0}
           aria-valuemax={totalCount}
           aria-valuenow={shownCount}
-          aria-label="Postęp przeglądania produktów"
+          aria-label={progressAriaLabel}
         >
           <div
             className="h-full rounded-full bg-neutral-800 transition-[width] duration-base ease-out"
@@ -89,7 +100,7 @@ export function ListingPagination({
         </Button>
       ) : null}
 
-      <nav aria-label="Paginacja listy produktów">
+      <nav aria-label={navAriaLabel}>
         <ul className="m-0 flex list-none flex-wrap items-center justify-center gap-1 p-0">
           <li>
             <button

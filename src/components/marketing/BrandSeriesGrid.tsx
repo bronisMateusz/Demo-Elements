@@ -38,7 +38,7 @@ export function BrandSeriesGrid({
         <div className={seriesGridClassName}>
           {series.map((item) => (
             <a key={item.id} href={item.href} className={seriesTileClassName}>
-              <div className="relative aspect-4/3 overflow-hidden rounded-xs border border-neutral-200 bg-neutral-100 transition-[border-color] duration-fast ease-out group-hover:border-gold-500">
+              <div className="relative aspect-4/3 overflow-hidden rounded-xs border border-neutral-300 bg-neutral-100 transition-[border-color] duration-fast ease-out group-hover:border-gold-500">
                 <img
                   src={item.image.src}
                   alt={item.image.alt}

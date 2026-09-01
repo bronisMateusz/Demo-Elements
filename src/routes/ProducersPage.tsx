@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { homeAdvisorCta } from "../data/home";
 import { producersPage } from "../data/producers";
 import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
@@ -32,7 +31,7 @@ const advisorContent: AdvisorCtaContent = {
   eyebrow: producersPage.cta.eyebrow,
   title: producersPage.cta.title,
   description: producersPage.cta.description,
-  image: homeAdvisorCta.image,
+  image: producersPage.cta.image,
   askLabel: producersPage.cta.askLabel,
   bookLabel: producersPage.cta.bookLabel,
   askHref: "/salony",

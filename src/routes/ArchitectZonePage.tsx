@@ -119,6 +119,7 @@ export function ArchitectZonePage() {
       </Helmet>
 
       <PageShell
+        showNewsletter={false}
         breadcrumbs={
           <Breadcrumbs
             items={[...page.breadcrumbs]}
@@ -139,7 +140,7 @@ export function ArchitectZonePage() {
 
         <ProductSubnav items={architectZoneSubnavItems} />
 
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           <RevealSection>
             <ArchitectGuardian />
           </RevealSection>
@@ -163,7 +164,6 @@ export function ArchitectZonePage() {
               description={page.inviteSalon.description}
               items={page.inviteSalon.items}
               image={page.inviteSalon.image}
-              video={page.inviteSalon.video}
             />
           </RevealSection>
 
@@ -221,17 +221,6 @@ export function ArchitectZonePage() {
           </RevealSection>
 
           <RevealSection className={pdpSectionScrollMarginClassName}>
-            <SiteNewsletter
-              embedded
-              eyebrow={page.newsletter.eyebrow}
-              title={page.newsletter.title}
-              description={page.newsletter.description}
-              imageSrc={page.newsletter.image.src}
-              imageAlt={page.newsletter.image.alt}
-            />
-          </RevealSection>
-
-          <RevealSection className={pdpSectionScrollMarginClassName}>
             <div id={page.blog.id}>
               <EditorialCarousel
                 title={page.blog.title}
@@ -254,6 +243,17 @@ export function ArchitectZonePage() {
               onAskOpen={() => setAskOpen(true)}
               onBookOpen={requestSalonDrawer}
               className={pdpSectionScrollMarginClassName}
+            />
+          </RevealSection>
+
+          <RevealSection className={pdpSectionScrollMarginClassName}>
+            <SiteNewsletter
+              embedded
+              eyebrow={page.newsletter.eyebrow}
+              title={page.newsletter.title}
+              description={page.newsletter.description}
+              imageSrc={page.newsletter.image.src}
+              imageAlt={page.newsletter.image.alt}
             />
           </RevealSection>
         </PageSectionStack>

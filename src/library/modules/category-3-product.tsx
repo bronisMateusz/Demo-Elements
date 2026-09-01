@@ -332,7 +332,7 @@ export const productSubnavModule: LibraryModule = {
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <ProductSubnav items={buildPdpSubnavItems()} />
-          <div className="grid min-h-40 place-items-center border-b border-dashed border-neutral-200 bg-neutral-50 text-sm text-neutral-500">
+          <div className="grid min-h-40 place-items-center border-b border-dashed border-neutral-300 bg-neutral-50 text-sm text-neutral-500">
             Podgląd sticky - sekcje docelowe są na pełnej stronie /produkt.
           </div>
         </div>

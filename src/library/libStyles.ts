@@ -17,7 +17,7 @@ export const libMainClassName =
   "w-full min-w-0 pb-8 scroll-mt-[calc(var(--lib-header-h,10rem)+var(--spacing-4))]";
 
 export const libCategoryIntroClassName =
-  "mb-12 border-b border-neutral-200 bg-neutral-0 py-8";
+  "mb-12 border-b border-neutral-300 bg-neutral-0 py-8";
 
 export const libCategoryIntroTitleClassName = "mb-4";
 
@@ -25,9 +25,9 @@ export const libCategoryIntroLedeClassName =
   "m-0 max-w-[68ch] text-lg leading-[1.75] text-neutral-600";
 
 export const libHeaderClassName =
-  "sticky top-0 z-200 bg-neutral-0 border-b border-neutral-200 transition-[border-color,background-color] duration-base ease-luxury [--lib-header-h:10rem]";
+  "sticky top-0 z-200 bg-neutral-0 border-b border-neutral-300 transition-[border-color,background-color] duration-base ease-luxury [--lib-header-h:10rem]";
 
-export const libCatNavClassName = "border-b border-neutral-200 bg-neutral-0";
+export const libCatNavClassName = "border-b border-neutral-300 bg-neutral-0";
 
 export const libCatNavInnerClassName = cn(
   "container flex min-h-13 items-center gap-4 py-2",
@@ -44,7 +44,7 @@ export function libCatNavLinkClassName({
   active = false,
 }: { active?: boolean } = {}) {
   return cn(
-    "inline-flex min-h-11 items-center whitespace-nowrap rounded-xs border border-neutral-200 bg-neutral-0 px-4 text-ui font-medium text-neutral-600 no-underline transition-[color,border-color,background-color] duration-fast ease-out",
+    "inline-flex min-h-11 items-center whitespace-nowrap rounded-xs border border-neutral-300 bg-neutral-0 px-4 text-ui font-medium text-neutral-600 no-underline transition-[color,border-color,background-color] duration-fast ease-out",
     "hover:border-neutral-800 hover:text-neutral-900",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
     active && "border-neutral-900 bg-neutral-50 text-neutral-900",
@@ -52,12 +52,12 @@ export function libCatNavLinkClassName({
 }
 
 export const libModuleClassName = cn(
-  "mb-12 last:mb-0 overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0 shadow-subtle",
+  "mb-12 last:mb-0 overflow-hidden rounded-xs border border-neutral-300 bg-neutral-0 shadow-subtle",
   "mx-auto w-full",
 );
 
 export const libModuleHeaderClassName =
-  "container border-b border-neutral-200 py-8 md:py-10";
+  "container border-b border-neutral-300 py-8 md:py-10";
 
 export const libModuleEyebrowClassName = "mb-3";
 
@@ -69,10 +69,10 @@ export const libModuleVariantsClassName =
   "grid min-w-0 gap-8 overflow-x-clip bg-neutral-50 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8";
 
 export const libVariantClassName =
-  "min-w-0 max-w-full overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0 shadow-subtle";
+  "min-w-0 max-w-full overflow-hidden rounded-xs border border-neutral-300 bg-neutral-0 shadow-subtle";
 
 export const libVariantHeaderClassName =
-  "border-b border-neutral-200 border-s-2 border-s-gold-500 px-[clamp(0.75rem,2.222vw,2.5rem)] py-4";
+  "border-b border-neutral-300 border-s-2 border-s-gold-500 px-[clamp(0.75rem,2.222vw,2.5rem)] py-4";
 
 export const libVariantLabelClassName =
   "m-0 mb-1.5 font-heading text-ui text-neutral-900";
@@ -84,16 +84,16 @@ export function libVariantPreviewClassName({
   hasDevPanel = false,
 }: { hasDevPanel?: boolean } = {}) {
   return cn(
-    "w-full bg-neutral-0 border-b border-neutral-200",
+    "w-full bg-neutral-0 border-b border-neutral-300",
     !hasDevPanel && "border-b-0",
   );
 }
 
 export const libDevPanelClassName =
-  "border-t border-dashed border-neutral-200 px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 text-sm leading-normal bg-neutral-100";
+  "border-t border-dashed border-neutral-300 px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 text-sm leading-normal bg-neutral-100";
 
 export const libDevPanelBlockClassName =
-  "not-first:mt-4 not-first:border-t not-first:border-neutral-200 not-first:pt-4";
+  "not-first:mt-4 not-first:border-t not-first:border-neutral-300 not-first:pt-4";
 
 export const libDevPanelHeadingClassName =
   "m-0 mb-2 text-xs uppercase tracking-[0.12em] text-neutral-500";
@@ -108,7 +108,7 @@ export const libPreviewArticleClassName =
   "p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8";
 
 export const libPreviewChromeClassName =
-  "grid min-h-12 place-items-center border-b border-dashed border-neutral-200 bg-neutral-0 px-8 py-3 text-sm text-neutral-600";
+  "grid min-h-12 place-items-center border-b border-dashed border-neutral-300 bg-neutral-0 px-8 py-3 text-sm text-neutral-600";
 
 /* ── Button system demos ───────────────────────────────────── */
 

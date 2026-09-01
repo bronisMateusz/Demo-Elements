@@ -75,3 +75,27 @@ export type ListingGridPromo = {
   ctaLabel: string;
   image: ProductImage;
 };
+
+/** In-grid appointment band - LocateCta embedded in inspiration / listing grids. */
+export type ListingGridLocateCta = {
+  afterIndex: number;
+  title: string;
+  description?: string;
+  ctaLabel: string;
+  image?: ProductImage;
+};
+
+/** In-grid advisor band - SplitMediaCta / AdvisorCta embedded in inspiration grids. */
+export type ListingGridAdvisorCta = {
+  afterIndex: number;
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  description: string;
+  note?: string;
+  image: ProductImage;
+  askLabel: string;
+  bookLabel: string;
+  askHref?: string;
+  bookHref?: string;
+};

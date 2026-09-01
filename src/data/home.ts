@@ -1,4 +1,6 @@
 import { assetUrl } from "../app/assets";
+import { ctaContextImages } from "../lib/ctaContextImages";
+import { inspirationCarouselArrangements } from "./inspirationCarousel";
 import type {
   InspirationArrangement,
   ProductImage,
@@ -506,11 +508,7 @@ export const homeAppointment = {
   description:
     "Nasz doradca będzie czekał na Ciebie w salonie - pozna Twój projekt, pokaże produkty na żywo i pomoże dobrać całe wyposażenie. Bez pośpiechu, w dogodnym terminie.",
   ctaLabel: "Umów spotkanie",
-  image: {
-    src: assetUrl("home/about-salon.jpg"),
-    alt: "Salon Elements - ekspozycja łazienki",
-    fit: "cover" as const,
-  },
+  image: ctaContextImages.locateCta,
 } as const;
 
 export const homeAdvisorCta = {
@@ -518,211 +516,21 @@ export const homeAdvisorCta = {
   title: "Nie wiesz, od czego zacząć?\nPorozmawiaj z doradcą.",
   description:
     "Napisz do nas online albo umów się na spotkanie w salonie - doradca pomoże dobrać całe wyposażenie Twojej łazienki.",
-  image: {
-    src: assetUrl("home/about-salon.jpg"),
-    alt: "Salon Elements - rozmowa z doradcą",
-    focalPoint: { x: 50, y: 40 },
-  },
+  image: ctaContextImages.advisorConsultation,
   primaryCta: { label: "Napisz do doradcy", href: "#kontakt" },
   secondaryCta: { label: "Umów spotkanie" },
 } as const;
-
-const montebiancoPackshot = {
-  src: assetUrl("products/montebianco/01-front.png"),
-  alt: "Szafka podumywalkowa Montebianco",
-} as const;
-
-/** Demo products for arrangement drawers (galeria-aranzacji pattern). */
-const homeArrangementProducts = {
-  oristoPillow: [
-    product(
-      "arr-pillow-vanity",
-      "ORiSTO",
-      "Szafka podumywalkowa Pillow 60 cm, biały połysk",
-      {
-        price: "1 890 zł",
-        image: {
-          ...montebiancoPackshot,
-          alt: "Szafka podumywalkowa Pillow 60 cm, biały połysk",
-        },
-      },
-    ),
-    product("arr-pillow-basin", "ORiSTO", "Umywalka meblowa Pillow 60 cm", {
-      price: "690 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Umywalka meblowa Pillow 60 cm",
-      },
-    }),
-    product("arr-pillow-tall", "ORiSTO", "Szafka wysoka Pillow 40 cm", {
-      price: "1 290 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Szafka wysoka Pillow 40 cm",
-      },
-    }),
-  ],
-  compact: [
-    product(
-      "arr-compact-vanity",
-      "ORiSTO",
-      "Szafka wisząca Montebianco 80 cm biały mat",
-      {
-        price: "1 990 zł",
-        image: {
-          ...montebiancoPackshot,
-          alt: "Szafka wisząca Montebianco 80 cm biały mat",
-        },
-      },
-    ),
-    product(
-      "arr-compact-mirror",
-      "ORiSTO",
-      "Lustro z podświetleniem LED 80 cm",
-      {
-        price: "890 zł",
-        image: {
-          ...montebiancoPackshot,
-          alt: "Lustro z podświetleniem LED 80 cm",
-        },
-      },
-    ),
-    product(
-      "arr-compact-wc",
-      "Omnires",
-      "Ottawa Comfort miska WC wisząca z deską wolnoopadającą",
-      {
-        price: "1 280 zł",
-        image: {
-          src: assetUrl("home/ottawa.png"),
-          alt: "Omnires Ottawa Comfort",
-          fit: "cover",
-        },
-      },
-    ),
-  ],
-  deepGreen: [
-    product(
-      "arr-green-vanity",
-      "ORiSTO",
-      "Szafka podumywalkowa, zielony mat, 80 cm",
-      {
-        price: "2 190 zł",
-        image: {
-          ...montebiancoPackshot,
-          alt: "Szafka podumywalkowa, zielony mat, 80 cm",
-        },
-      },
-    ),
-    product("arr-green-basin", "ORiSTO", "Umywalka nablatowa, zieleń / biały", {
-      price: "780 zł",
-      pricePrevious: "980 zł",
-      image: {
-        ...montebiancoPackshot,
-        alt: "Umywalka nablatowa, zieleń / biały",
-      },
-    }),
-    product("arr-green-tap", "Omnires", "Bateria umywalkowa, czarny mat", {
-      price: "1 120 zł",
-      image: {
-        src: assetUrl("home/ottawa.png"),
-        alt: "Bateria umywalkowa, czarny mat",
-        fit: "cover",
-      },
-    }),
-  ],
-} as const satisfies Record<string, RelatedProduct[]>;
 
 export const homeInspiration = {
   eyebrow: "Inspiracje",
   title: "Poznaj nasze aranżacje i zainspiruj się",
   seeMoreLabel: "Zobacz więcej aranżacji",
-  seeMoreHref: "#inspiracje",
-  arrangements: [
-    {
-      id: "insp-1",
-      title: "Prysznic walk-in w ciepłej palecie",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-walk-in.jpg"),
-        alt: "Prysznic walk-in w ciepłej palecie",
-        fit: "cover" as const,
-      },
-      items: ["Prysznic walk-in", "Czarna armatura", "Teksturowane ściany"],
-    },
-    {
-      id: "insp-2",
-      title: "Meble łazienkowe ORiSTO, nowoczesne podejście do elegancji",
-      showProducts: true,
-      image: {
-        src: assetUrl("home/inspiration-large-tiles.jpg"),
-        alt: "Meble łazienkowe ORiSTO, nowoczesne podejście do elegancji",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 75 },
-      },
-      items: [
-        "Płytki wielkoformatowe",
-        "Minimalistyczna armatura",
-        "Dużo światła",
-      ],
-      products: [...homeArrangementProducts.oristoPillow],
-    },
-    {
-      id: "insp-3",
-      title: "Beton i czarna armatura",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-concrete-black.jpg"),
-        alt: "Beton i czarna armatura",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 100 },
-      },
-      items: ["Imitacja betonu", "Czarny mat", "Kontrastowe detale"],
-    },
-    {
-      id: "insp-4",
-      title: "Sprytny metraż do 4 m²",
-      showProducts: true,
-      image: {
-        src: assetUrl("home/inspiration-compact.jpg"),
-        alt: "Sprytny metraż do 4 m²",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 55 },
-      },
-      items: [
-        "Szafka wisząca",
-        "Lustro z podświetleniem LED",
-        "WC podwieszane",
-      ],
-      products: [...homeArrangementProducts.compact],
-    },
-    {
-      id: "insp-5",
-      title: "Elegancja w ciepłej palecie",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-warm-palette.jpg"),
-        alt: "Elegancja w ciepłej palecie",
-        fit: "cover" as const,
-      },
-      items: ["Beże i złoto", "Meble drewnopodobne", "Miękkie tekstury"],
-    },
-    {
-      id: "insp-6",
-      title: "Głębokie kolory i matowe wykończenia",
-      showProducts: true,
-      image: {
-        src: assetUrl("home/inspiration-deep-green.jpg"),
-        alt: "Głębokie kolory i matowe wykończenia",
-        fit: "cover" as const,
-        // Bias toward the vanity base - show more of the lower half.
-        focalPoint: { x: 50, y: 75 },
-      },
-      items: ["Głęboka zieleń", "Matowa ceramika", "Akcenty metaliczne"],
-      products: [...homeArrangementProducts.deepGreen],
-    },
-  ] satisfies InspirationArrangement[],
-} as const;
+  seeMoreHref: "/inspiracje-listing",
+  arrangements: inspirationCarouselArrangements("insp"),
+} as const satisfies { arrangements: InspirationArrangement[] } & Record<
+  string,
+  unknown
+>;
 
 export const HOME_MAGAZINE_FLIPBOOK_HREF =
   "https://www.elements-show.pl/flipbook/1";
@@ -809,8 +617,9 @@ export const homeAbout = {
     " mamy dla Ciebie wiele modeli w różnych kolorach, jak również o odmiennych fakturach i wzorach, co pozwala tworzyć wnętrza zarówno klasyczne, jak i nowoczesne.",
   ] as const,
   image: {
-    src: assetUrl("home/about-salon.jpg"),
-    alt: "Aranżacja łazienki z ekspozycji Elements",
+    src: assetUrl("home/about-elements-blok-2.jpg"),
+    alt: "Doradczyni Elements omawia projekt łazienki z klientką przy planach i próbkach płytek",
     fit: "cover" as const,
+    focalPoint: { x: 45, y: 42 },
   },
 } as const;

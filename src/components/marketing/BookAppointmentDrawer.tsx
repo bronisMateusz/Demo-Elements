@@ -79,7 +79,7 @@ export function BookAppointmentDrawer({
         )}
       >
         {submitted ? (
-          <div className="rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-6">
+          <div className="rounded-xs border border-neutral-300 bg-neutral-50 px-5 py-6">
             <p className="m-0 font-heading text-xl text-neutral-900">
               {bookAppointmentCopy.successTitle}
             </p>

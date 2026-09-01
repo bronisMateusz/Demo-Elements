@@ -24,7 +24,7 @@ export function SectionHeader({
   return (
     <header
       className={cn(
-        "mb-10 md:mb-12",
+        "mb-6 md:mb-12",
         align === "center" && "mx-auto max-w-2xl text-center",
         className,
       )}

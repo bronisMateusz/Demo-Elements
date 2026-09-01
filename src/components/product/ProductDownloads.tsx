@@ -4,8 +4,10 @@ import { SectionHeader } from "../structural/SectionHeader";
 import { SharedLayoutBg } from "../motion/SharedLayoutBg";
 import { AccordionCollapse } from "../motion/AccordionCollapse";
 import type { ProductDownload } from "../../types/product";
+import { pdpAccordionToggleClassName } from "../../constants/pdpSubnav";
 import { usePdpSectionAccordion } from "../../hooks/usePdpSectionAccordion";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 
 type ProductDownloadsProps = {
   downloads: readonly ProductDownload[];
@@ -29,7 +31,7 @@ export function ProductDownloads({
     usePdpSectionAccordion(expandOnSectionId);
 
   const list = (
-    <div className="border-t border-neutral-200">
+    <div className={contentDividerTopClassName}>
       <SharedLayoutBg
         className="grid w-full lg:grid-cols-2"
         pillClassName="rounded-xs bg-neutral-100"
@@ -38,7 +40,7 @@ export function ProductDownloads({
           <a
             key={file.title}
             href={file.href}
-            className="relative flex items-center justify-between gap-4 border-b border-neutral-200 px-4 py-5 no-underline lg:odd:border-e"
+            className="relative flex items-center justify-between gap-4 border-b border-neutral-300 px-4 py-5 no-underline lg:odd:border-e"
           >
             <div className="relative z-10 flex min-w-0 items-center gap-4">
               <span className="font-body text-xs uppercase tracking-[0.12em] text-neutral-500">
@@ -66,10 +68,7 @@ export function ProductDownloads({
           <>
             <button
               type="button"
-              className={cn(
-                "flex w-full items-center justify-between gap-3 py-1 text-start md:hidden",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-              )}
+              className={pdpAccordionToggleClassName}
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => setOpen((value) => !value)}

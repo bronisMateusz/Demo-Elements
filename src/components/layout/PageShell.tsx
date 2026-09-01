@@ -6,6 +6,8 @@ import { SiteNewsletter } from "./SiteNewsletter";
 
 type PageShellProps = PropsWithChildren<{
   breadcrumbs?: React.ReactNode;
+  /** Global newsletter band above footer (default on). */
+  showNewsletter?: boolean;
 }>;
 
 function shouldLoadAgentation(): boolean {
@@ -34,7 +36,11 @@ function shouldLoadAgentation(): boolean {
   return !import.meta.env.DEV || forceEnabled;
 }
 
-export function PageShell({ children, breadcrumbs }: PageShellProps) {
+export function PageShell({
+  children,
+  breadcrumbs,
+  showNewsletter = true,
+}: PageShellProps) {
   useEffect(() => {
     const key = "agentation";
     const shouldLoad = shouldLoadAgentation();
@@ -68,7 +74,7 @@ export function PageShell({ children, breadcrumbs }: PageShellProps) {
         {breadcrumbs}
         {children}
       </main>
-      <SiteNewsletter />
+      {showNewsletter ? <SiteNewsletter /> : null}
       <Footer />
     </>
   );

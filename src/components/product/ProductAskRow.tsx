@@ -26,16 +26,16 @@ export function ProductAskRow({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4",
+        "flex flex-col gap-3",
         !embedded &&
-          "rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-5",
+          "rounded-xs border border-neutral-300 bg-neutral-50 px-5 py-5",
         className,
       )}
     >
       <p className="m-0 font-heading text-lg leading-[1.35] text-neutral-900">
         {lead}
       </p>
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row">
         {onAskOpen ? (
           <Button
             as="button"

@@ -4,6 +4,7 @@ import type {
   ArchitectDownloadGroup,
 } from "../../data/architectDownloads";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import { AccordionCollapse } from "../motion/AccordionCollapse";
 import { SharedLayoutBg } from "../motion/SharedLayoutBg";
 import { SectionHeader } from "../structural/SectionHeader";
@@ -24,7 +25,7 @@ type ArchitectDownloadsProps = {
 
 function DownloadList({ files }: { files: readonly ArchitectDownloadFile[] }) {
   return (
-    <div className="border-t border-neutral-200">
+    <div className={contentDividerTopClassName}>
       <SharedLayoutBg
         className="grid w-full lg:grid-cols-2"
         pillClassName="rounded-xs bg-neutral-100"
@@ -33,7 +34,7 @@ function DownloadList({ files }: { files: readonly ArchitectDownloadFile[] }) {
           <a
             key={file.href + file.title}
             href={file.href}
-            className="relative flex items-center justify-between gap-4 border-b border-neutral-200 px-4 py-5 no-underline lg:odd:border-e"
+            className="relative flex items-center justify-between gap-4 border-b border-neutral-300 px-4 py-5 no-underline lg:odd:border-e"
           >
             <div className="relative z-10 flex min-w-0 items-center gap-4">
               <span className="font-body text-xs tracking-[0.12em] text-neutral-500 uppercase">
@@ -78,7 +79,7 @@ export function ArchitectDownloads({
           className="mb-8 md:mb-10"
         />
 
-        <div className="border-t border-neutral-200">
+        <div className={contentDividerTopClassName}>
           {groups.map((group) => {
             const open = openId === group.id;
             const panelId = `${baseId}-${group.id}`;
@@ -87,7 +88,7 @@ export function ArchitectDownloads({
             return (
               <div
                 key={group.id}
-                className="border-b border-neutral-200 last:border-b-0"
+                className="border-b border-neutral-300 last:border-b-0"
               >
                 <button
                   type="button"

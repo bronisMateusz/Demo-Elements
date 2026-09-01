@@ -25,7 +25,7 @@ export function HeaderSalonStrip({
   return (
     <div
       className={cn(
-        "border-t border-neutral-200 bg-neutral-0 sm:hidden",
+        "border-t border-neutral-300 bg-neutral-0 sm:hidden",
         className,
       )}
     >

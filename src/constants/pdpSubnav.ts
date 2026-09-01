@@ -28,3 +28,7 @@ export function buildPdpSubnavItems(): PdpSubnavItem[] {
 
 export const pdpSectionScrollMarginClassName =
   "scroll-mt-[calc(var(--site-header-bar-height,7.5rem)+var(--pdp-subnav-height,2.75rem)+0.5rem)] xl:scroll-mt-45.5 header-concealed:xl:scroll-mt-34.5";
+
+/** Shared mobile accordion header row on PDP (opis / spec / pliki). */
+export const pdpAccordionToggleClassName =
+  "flex w-full items-center justify-between gap-3 py-3 text-start md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800";

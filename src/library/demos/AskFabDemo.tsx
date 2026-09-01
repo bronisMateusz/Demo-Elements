@@ -12,7 +12,7 @@ export function AskFabDemo() {
         stronie produktu pojawia się po scrollu i znika przed stopką; tu podgląd
         w miejscu.
       </p>
-      <div className="relative overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50">
+      <div className="relative overflow-hidden rounded-xs border border-neutral-300 bg-neutral-50">
         <AskFab
           sku={montebianco80.id}
           title={montebianco80.title}

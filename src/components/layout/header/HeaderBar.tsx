@@ -204,7 +204,7 @@ export function HeaderBar({
           </ul>
         </nav>
 
-        <div className="ms-auto flex h-full min-w-0 items-center gap-0.5 border-s border-neutral-200 ps-2 xl:ms-0 xl:gap-1 xl:ps-4">
+        <div className="ms-auto flex h-full min-w-0 items-center gap-0.5 border-s border-neutral-300 ps-2 xl:ms-0 xl:gap-1 xl:ps-4">
           <HeaderSalonButton onClick={onSalonToggle} open={salonOpen} />
           <IconButton
             label="Szukaj"

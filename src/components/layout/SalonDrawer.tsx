@@ -224,7 +224,7 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
       <SalonSearchBlock
         {...searchProps}
         className={cn(
-          "hidden border-b border-neutral-200 md:flex",
+          "hidden border-b border-neutral-300 md:flex",
           GUTTER_X,
           "py-8",
         )}
@@ -255,7 +255,7 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
                   key={salon.id}
                   className={cn(
                     "rounded-xs border bg-neutral-50 px-4 py-3.5 md:px-5 md:py-5",
-                    isSelected ? "border-neutral-900" : "border-neutral-200",
+                    isSelected ? "border-neutral-900" : "border-neutral-300",
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -307,7 +307,7 @@ export function SalonDrawer({ open, onClose }: SalonDrawerProps) {
         {...searchProps}
         searchId={`${searchId}-mobile`}
         className={cn(
-          "shrink-0 border-t border-neutral-200 bg-neutral-0 md:hidden",
+          "shrink-0 border-t border-neutral-300 bg-neutral-0 md:hidden",
           GUTTER_X,
           "pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]",
         )}

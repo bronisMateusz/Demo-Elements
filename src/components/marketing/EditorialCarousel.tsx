@@ -4,6 +4,10 @@ import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
+import {
+  sectionHeaderTrackGapClassName,
+  sectionMarginTopClassName,
+} from "../../lib/layoutTokens";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { useContentInsetPx } from "../../hooks/useContentInsetPx";
@@ -118,7 +122,12 @@ export function EditorialCarousel({
           className={productCarouselRootClassName({ layout: "bleed" })}
           aria-labelledby={titleId}
         >
-          <div className="mx-auto mb-8 w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)] md:mb-10">
+          <div
+            className={cn(
+              "mx-auto w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)]",
+              sectionHeaderTrackGapClassName,
+            )}
+          >
             <TextRevealLead
               id={titleId}
               revealUnit="word"
@@ -227,7 +236,12 @@ export function EditorialCarousel({
           </Swiper>
 
           {itemCount > 1 || seeAll ? (
-            <div className="mx-auto mt-8 flex w-full max-w-384 flex-wrap items-center justify-center gap-x-6 gap-y-4 px-[clamp(0.75rem,2.222vw,2.5rem)] md:mt-10">
+            <div
+              className={cn(
+                "mx-auto flex w-full max-w-384 flex-wrap items-center justify-center gap-x-6 gap-y-4 px-[clamp(0.75rem,2.222vw,2.5rem)]",
+                sectionMarginTopClassName,
+              )}
+            >
               {itemCount > 1 ? (
                 <div className="flex items-center gap-3">
                   <button

@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../structural/SectionHeader";
 import type { ProductSpec } from "../../types/product";
+import { pdpAccordionToggleClassName } from "../../constants/pdpSubnav";
 import { usePdpSectionAccordion } from "../../hooks/usePdpSectionAccordion";
 import { AccordionCollapse } from "../motion/AccordionCollapse";
 import { cn } from "../../lib/cn";
@@ -42,11 +43,11 @@ export function ProductSpecifications({
 
   const list = (
     <>
-      <dl className="grid gap-x-16 gap-y-0 overflow-hidden border border-neutral-200 bg-white px-4 sm:grid-cols-2 sm:gap-x-20 sm:px-5 xl:grid-cols-3 xl:gap-x-24">
+      <dl className="grid gap-x-16 gap-y-0 overflow-hidden border border-neutral-300 bg-white px-4 sm:grid-cols-2 sm:gap-x-20 sm:px-5 xl:grid-cols-3 xl:gap-x-24">
         {visibleSpecs.map((spec) => (
           <div
             key={spec.label}
-            className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-200 py-3.5 last:border-b-0"
+            className="grid grid-cols-[1fr_auto] gap-4 border-b border-neutral-300 py-3.5 last:border-b-0"
           >
             <dt className="text-ui font-semibold text-neutral-900">
               {spec.label}
@@ -92,10 +93,7 @@ export function ProductSpecifications({
           <>
             <button
               type="button"
-              className={cn(
-                "flex w-full items-center justify-between gap-3 py-1 text-start md:hidden",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-              )}
+              className={pdpAccordionToggleClassName}
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => setOpen((value) => !value)}

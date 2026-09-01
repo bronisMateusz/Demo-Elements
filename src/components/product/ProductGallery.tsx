@@ -123,7 +123,7 @@ function GalleryCounter({
   return (
     <p
       className={cn(
-        "m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle",
+        "m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-300 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle",
         className,
       )}
       aria-live="polite"

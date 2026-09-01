@@ -8,6 +8,7 @@ import {
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { EASE_LUXURY, SPRING_LAYOUT } from "../../lib/motionEase";
 import { cn } from "../../lib/cn";
+import { sectionMarginTopClassName } from "../../lib/layoutTokens";
 import { Container } from "../ui/Container";
 import { Section } from "../structural/Section";
 import { TextRevealLead } from "../motion/TextRevealLead";
@@ -74,7 +75,7 @@ export function HomeProducts() {
           <HorizontalScrollTrack activeKey={activeTab}>
             <LayoutGroup id="home-product-tabs-active">
               <SharedLayoutUnderline
-                className="w-max min-w-full flex-nowrap gap-2 border-b border-neutral-200"
+                className="w-max min-w-full flex-nowrap gap-2 border-b border-neutral-300"
                 lineClassName="h-0.5 bg-gold-500/45"
                 insetX={12}
                 bottom={0}
@@ -153,7 +154,10 @@ export function HomeProducts() {
 
       <Container
         size="content"
-        className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:mt-10"
+        className={cn(
+          sectionMarginTopClassName,
+          "flex flex-wrap items-center justify-center gap-x-6 gap-y-4",
+        )}
       >
         {tab.products.length > 1 ? (
           <div

@@ -25,7 +25,7 @@ export const inspirationGalleryModule: LibraryModule = {
   slug: "inspiration-gallery",
   title: "InspirationGallery",
   description:
-    "Galeria aranżacji - kafle 16/10, bleed ~2.1 karty. Akcje: link, „Pokaż produkty” (drawer) albo lightbox. ProductInspiration (PDP) i HomeInspiration składają ten sam chrome stopki; home przez navPlacement=none.",
+    "Galeria aranżacji - kafle 16/10, bleed ~2.1 karty. Akcje: link, „Pokaż produkty” (drawer) albo lightbox. Sekcja karuzeli (PDP, home) vs siatka listingu - moduł inspiration-listing.",
   optionalProps: [
     {
       name: "arrangements",
@@ -51,7 +51,7 @@ export const inspirationGalleryModule: LibraryModule = {
     {
       name: "seeMoreHref",
       type: "string",
-      defaultValue: '"#inspiracje"',
+      defaultValue: '"/inspiracje-listing"',
       description: "CTA pod torem (gdy navPlacement=footer).",
     },
     {
@@ -104,6 +104,33 @@ export const inspirationGalleryModule: LibraryModule = {
               eyebrow={homeInspiration.eyebrow}
               title={homeInspiration.title}
               navPlacement="header"
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "link-cards",
+      label: "Karty link",
+      description:
+        "Tor z href do artykułu - wzorzec z /inspiracje-listing (bez endCap).",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <div className="py-8">
+            <InspirationGallery
+              arrangements={homeInspiration.arrangements
+                .slice(0, 4)
+                .map((item) => ({
+                  ...item,
+                  href: "/inspiracja-artykul",
+                  showProducts: undefined,
+                }))}
+              eyebrow={homeInspiration.eyebrow}
+              title="Inspiracje linkujące do artykułu"
+              navPlacement="footer"
+              seeMoreHref="/inspiracje-listing"
+              seeMoreLabel={homeInspiration.seeMoreLabel}
+              endCap={false}
             />
           </div>
         </div>

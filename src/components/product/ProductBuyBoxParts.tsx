@@ -1,6 +1,7 @@
 import { Badge } from "../ui/Badge";
 import { Eyebrow } from "../ui/Eyebrow";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import type { ProductBadge, ProductPrice } from "../../types/product";
 import { ProductAskRow } from "./ProductAskRow";
 
@@ -94,8 +95,8 @@ type ProductPriceBlockProps = {
 export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
   return (
     <div>
-      <div className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50">
-        <div className="space-y-3 px-4 py-4 lg:space-y-4 lg:px-5 lg:py-5">
+      <div className="overflow-hidden rounded-xs border border-neutral-300 bg-neutral-50">
+        <div className="space-y-3 px-4 py-5 lg:space-y-4 lg:px-5 lg:py-5">
           {price.note ? (
             <Eyebrow variant="gold" className="mb-0 text-promo">
               {price.note}
@@ -151,7 +152,12 @@ export function ProductPriceBlock({ price, askCta }: ProductPriceBlockProps) {
         </div>
 
         {askCta ? (
-          <div className="border-t border-neutral-200 bg-neutral-0 px-4 py-4 lg:px-5 lg:py-5">
+          <div
+            className={cn(
+              "bg-neutral-0 px-4 py-5 lg:px-5 lg:py-5",
+              contentDividerTopClassName,
+            )}
+          >
             <ProductAskRow
               embedded
               href={askCta.href}

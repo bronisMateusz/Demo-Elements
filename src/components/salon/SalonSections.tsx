@@ -21,6 +21,7 @@ import { IconButton } from "../ui/IconButton";
 import { Section } from "../structural/Section";
 import { SectionHeader } from "../structural/SectionHeader";
 import { pdpSectionScrollMarginClassName } from "../../constants/pdpSubnav";
+import { sectionBandPaddingClassName } from "../../lib/layoutTokens";
 import { EditorialCarousel } from "../marketing/EditorialCarousel";
 import { ProductDownloads } from "../product/ProductDownloads";
 import { BrandMotif } from "../brand/BrandMotif";
@@ -128,7 +129,10 @@ export function SalonStats() {
       id={stats.id}
       ariaLabelledby="salon-stats-title"
       tone="warm"
-      className={cn(pdpSectionScrollMarginClassName, "py-12")}
+      className={cn(
+        pdpSectionScrollMarginClassName,
+        sectionBandPaddingClassName,
+      )}
     >
       <Container size="content">
         <h2
@@ -407,7 +411,7 @@ export function SalonExpo() {
               </ul>
             ) : hasMultiple ? (
               <p
-                className="pointer-events-auto m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
+                className="pointer-events-auto m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-300 bg-neutral-0 px-3 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
                 aria-live="polite"
               >
                 {formatSlideIndex(active, expo.images.length)}

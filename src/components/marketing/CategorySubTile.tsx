@@ -32,7 +32,7 @@ export function CategorySubTile({
     <>
       <div
         className={cn(
-          "relative aspect-4/3 overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50",
+          "relative aspect-4/3 overflow-hidden rounded-xs border border-neutral-300 bg-neutral-50",
           "transition-[border-color,background-color] duration-base ease-out",
           "group-hover/tile:border-gold-500 group-hover/tile:bg-gold-50",
         )}

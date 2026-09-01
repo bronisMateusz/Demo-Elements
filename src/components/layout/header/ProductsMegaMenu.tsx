@@ -38,7 +38,7 @@ export function ProductsMegaMenu({
       aria-label="Produkty - menu rozwinięte"
       hidden={!open}
       className={cn(
-        "absolute inset-x-0 top-full z-110 border-t border-neutral-200 bg-neutral-0 shadow-2",
+        "absolute inset-x-0 top-full z-110 border-t border-neutral-300 bg-neutral-0 shadow-2",
         !open && "pointer-events-none",
       )}
     >

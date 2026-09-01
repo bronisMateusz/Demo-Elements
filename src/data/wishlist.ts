@@ -1,5 +1,7 @@
 import type { InspirationArrangement } from "../types/product";
+import { arrangementsGalleryItems } from "./arrangementsGallery";
 import { homeInspiration } from "./home";
+import { inspirationsListingItems } from "./inspirationsListing";
 
 export const wishlistPage = {
   title: "Schowek",
@@ -23,7 +25,7 @@ export const wishlistPage = {
     primaryLabel: "Przeglądaj kategorie",
     primaryHref: "/kategoria",
     secondaryLabel: "Zobacz inspiracje",
-    secondaryHref: "/#inspiracje",
+    secondaryHref: "/inspiracje-listing",
   },
   emptyProducts: {
     title: "Brak produktów w schowku",
@@ -37,7 +39,7 @@ export const wishlistPage = {
     description:
       "Zapisuj aranżacje z inspiracji, żeby zestawić je z produktami w jednym kosztorysie.",
     actionLabel: "Zobacz inspiracje",
-    actionHref: "/#inspiracje",
+    actionHref: "/inspiracje-listing",
   },
   summary: {
     title: "Twoja lista",
@@ -72,8 +74,8 @@ export const defaultWishlistProductIds = [
 export const defaultWishlistArrangementIds = ["insp-2", "insp-4"] as const;
 
 /** Demo arrangements catalog for wishlist resolution (by id). */
-export const wishlistArrangementCatalog: InspirationArrangement[] =
-  homeInspiration.arrangements.map((item) => ({
+export const wishlistArrangementCatalog: InspirationArrangement[] = [
+  ...homeInspiration.arrangements.map((item) => ({
     id: item.id,
     title: item.title,
     image: item.image,
@@ -81,4 +83,20 @@ export const wishlistArrangementCatalog: InspirationArrangement[] =
     href: item.href,
     showProducts: item.showProducts,
     products: item.products ? [...item.products] : undefined,
-  }));
+  })),
+  ...arrangementsGalleryItems.map((item) => ({
+    id: item.id,
+    title: item.title,
+    image: item.image,
+    items: [...item.items],
+    showProducts: item.showProducts,
+    products: item.products ? [...item.products] : undefined,
+  })),
+  ...inspirationsListingItems.map((item) => ({
+    id: item.id,
+    title: item.title,
+    image: item.image,
+    items: [...item.items],
+    href: item.href,
+  })),
+];

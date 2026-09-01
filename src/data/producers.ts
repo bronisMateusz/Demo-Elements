@@ -1,11 +1,13 @@
 import { assetUrl } from "../app/assets";
+import { ctaContextImages } from "../lib/ctaContextImages";
 import {
   HOME_MAGAZINE_FLIPBOOK_HREF,
   HOME_MAGAZINE_PDF_HREF,
   homeMagazine,
 } from "./home";
 import { listingProducts } from "./listing";
-import type { InspirationArrangement, RelatedProduct } from "../types/product";
+import { inspirationCarouselArrangements } from "./inspirationCarousel";
+import type { RelatedProduct } from "../types/product";
 
 export type ProducerBrand = {
   name: string;
@@ -240,6 +242,7 @@ export const producersPage = {
       "Doradzimy w salonie - zobaczysz produkty wybranych producentów na żywo i porównasz je w jednym miejscu.",
     askLabel: "Znajdź salon",
     bookLabel: "Umów spotkanie",
+    image: ctaContextImages.salonBydgoszcz,
   },
   promoAfterLetter: "D",
   promo: {
@@ -250,10 +253,9 @@ export const producersPage = {
     href: "/producent",
     label: "Zobacz ofertę",
     image: {
-      src: assetUrl("home/hero-vanity-minimal.png"),
-      alt: "Baner producenta - łazienka z ceramiką Duravit",
+      src: assetUrl("category/subs/umywalkiwiszace.png"),
+      alt: "Umywalki wiszące w aranżacji łazienki",
       fit: "cover" as const,
-      focalPoint: { x: 55, y: 45 },
     },
   },
 } as const;
@@ -462,54 +464,7 @@ export const producerPage = {
     secondaryCta: { label: "Pobierz PDF", href: HOME_MAGAZINE_PDF_HREF },
   },
   arrangementsTitle: "Aranżacje z produktami Vigour",
-  arrangements: [
-    {
-      id: "vigour-derby-red",
-      title: "Czerwona łazienka - Vigour Derby",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-warm-palette.jpg"),
-        alt: "Czerwona łazienka - Vigour Derby",
-        fit: "cover" as const,
-      },
-      items: ["Seria Derby", "Ciepła paleta", "Meble łazienkowe"],
-    },
-    {
-      id: "vigour-individual-shower",
-      title: "Strefa prysznica z odpływem Individual 4.0",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-walk-in.jpg"),
-        alt: "Strefa prysznica z odpływem Individual 4.0",
-        fit: "cover" as const,
-      },
-      items: ["Individual 4.0", "Walk-in", "Odpływ liniowy"],
-    },
-    {
-      id: "vigour-family",
-      title: "Rodzinna łazienka z meblami Derby",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-large-tiles.jpg"),
-        alt: "Rodzinna łazienka z meblami Derby",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 75 },
-      },
-      items: ["Derby", "Przestrzeń rodzinna", "Duże płytki"],
-    },
-    {
-      id: "vigour-one-minimal",
-      title: "Minimalistyczna strefa umywalki z serią One",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-compact.jpg"),
-        alt: "Minimalistyczna strefa umywalki z serią One",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 55 },
-      },
-      items: ["Seria One", "Minimalizm", "Strefa umywalki"],
-    },
-  ] satisfies InspirationArrangement[],
+  arrangements: inspirationCarouselArrangements("producer-insp"),
   cta: {
     eyebrow: "Doradztwo",
     title: "Zobacz Vigour na żywo w salonie",
@@ -518,6 +473,7 @@ export const producerPage = {
     askLabel: "Znajdź salon",
     askHref: "/salony",
     bookLabel: "Umów spotkanie",
+    image: ctaContextImages.salonBydgoszcz,
   },
 } as const;
 

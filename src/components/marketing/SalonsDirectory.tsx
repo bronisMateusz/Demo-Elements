@@ -208,7 +208,7 @@ export function SalonsDirectory() {
   return (
     <div className="flex flex-col gap-0">
       <Container size="content" className="my-12">
-        <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-5 md:p-7">
+        <div className="rounded-xs border border-neutral-300 bg-neutral-0 p-5 md:p-7">
           <h2 className="m-0 font-heading text-h3 leading-[1.15] font-medium tracking-tight text-neutral-900">
             {find.title}
           </h2>
@@ -272,7 +272,7 @@ export function SalonsDirectory() {
               {nearestThree.map(({ salon, distanceKm: km }) => (
                 <li
                   key={salon.id}
-                  className="rounded-xs border border-neutral-200 bg-neutral-0 p-5"
+                  className="rounded-xs border border-neutral-300 bg-neutral-0 p-5"
                 >
                   <p className="m-0 font-heading text-lg font-medium text-neutral-900">
                     {cityLabelFor(salon)}
@@ -344,7 +344,7 @@ export function SalonsDirectory() {
               sectionMarginYClassName,
               "z-99 max-lg:w-screen max-lg:ms-[calc(50%-50vw)]",
               stuck &&
-                "border-b border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
+                "border-b border-neutral-300 bg-neutral-0/95 py-2 backdrop-blur-sm",
             )}
           >
             <SalonLocationChips
@@ -406,7 +406,7 @@ export function SalonsDirectory() {
                     key={group.id}
                     aria-label={titleCaseVoiv(group.name)}
                   >
-                    <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:p-6 md:p-8">
+                    <div className="rounded-xs border border-neutral-300 bg-neutral-0 p-4 sm:p-6 md:p-8">
                       <ul className="m-0 flex list-none flex-col p-0">
                         {group.cities.map((city) => {
                           const salon = salonByHref.get(city.href);
@@ -417,7 +417,7 @@ export function SalonsDirectory() {
                           return (
                             <li
                               key={city.href}
-                              className="grid gap-4 border-b border-neutral-200 py-8 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5"
+                              className="grid gap-4 border-b border-neutral-300 py-8 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5"
                             >
                               <div className="relative aspect-square overflow-hidden rounded-xs bg-neutral-100">
                                 <img

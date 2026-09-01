@@ -1,5 +1,6 @@
 import { assetUrl } from "../app/assets";
-import { homeInspiration } from "./home";
+import { ctaContextImages } from "../lib/ctaContextImages";
+import { inspirationCarouselArrangements } from "./inspirationCarousel";
 import type { SeoBlock } from "./seoBlocks";
 
 export type SubcategoryTypeTile = {
@@ -29,33 +30,11 @@ export const subcategoryPage = {
     description:
       "Nasz doradca będzie czekał na Ciebie w salonie - pozna Twój projekt, pokaże umywalki na żywo i pomoże dobrać całe wyposażenie. Bez pośpiechu, w dogodnym terminie.",
     ctaLabel: "Umów spotkanie",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Salon Elements - ekspozycja łazienki",
-      fit: "cover" as const,
-    },
+    image: ctaContextImages.locateCta,
   },
   inspiration: {
     title: "Poznaj nasze aranżacje i zainspiruj się",
-    arrangements: homeInspiration.arrangements.map((item, index) => {
-      const titles = [
-        "Umywalka nablatowa na drewnianym blacie",
-        "Podwójna umywalka w łazience rodzinnej",
-        "Beton i czarna armatura",
-        "Sprytny metraż do 4 m²",
-        "Elegancja w ciepłej palecie",
-        "Głębokie kolory i matowe wykończenia",
-      ];
-      return {
-        ...item,
-        id: `sub-insp-${index + 1}`,
-        title: titles[index] ?? item.title,
-        image: {
-          ...item.image,
-          alt: titles[index] ?? item.image.alt,
-        },
-      };
-    }),
+    arrangements: inspirationCarouselArrangements("sub-insp"),
   },
   blog: {
     title: "Porady i inspiracje na naszym blogu",
@@ -204,11 +183,7 @@ export const subcategoryAdvisorCta = {
     "Nie wiesz, która umywalka pasuje do Twojej łazienki?\nZobacz je na żywo.",
   description:
     "Nasi doradcy pokażą różne typy, kolory i wykończenia na ekspozycji - dobierzemy rozwiązanie dopasowane do metrażu i stylu Twojej łazienki.",
-  image: {
-    src: assetUrl("home/about-salon.jpg"),
-    alt: "Salon Elements - ekspozycja umywalek",
-    focalPoint: { x: 50, y: 40 },
-  },
+  image: ctaContextImages.bathroomGreen,
   bookLabel: "Umów spotkanie",
   findSalonLabel: "Znajdź salon",
   findSalonHref: "/salony",
