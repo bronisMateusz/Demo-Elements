@@ -3,6 +3,10 @@ import type { Swiper as SwiperInstance } from "swiper";
 import { A11y, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../lib/cn";
+import {
+  sectionHeaderTrackGapClassName,
+  sectionMarginTopClassName,
+} from "../../lib/layoutTokens";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { useBleedRightWidth } from "../../hooks/useBleedRightWidth";
 import { useContentInsetPx } from "../../hooks/useContentInsetPx";
@@ -151,7 +155,8 @@ function ProductCarouselFooterNav({
   return (
     <div
       className={cn(
-        "mt-8 flex items-center justify-center gap-3 md:mt-10",
+        sectionMarginTopClassName,
+        "flex items-center justify-center gap-3",
         isBleed &&
           "mx-auto w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)]",
       )}
@@ -305,7 +310,10 @@ export function ProductCarousel({
           className={cn(
             "flex flex-wrap items-end justify-between gap-6",
             isBleed
-              ? "mx-auto mb-8 w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)] md:mb-10"
+              ? cn(
+                  "mx-auto w-full max-w-384 px-[clamp(0.75rem,2.222vw,2.5rem)]",
+                  sectionHeaderTrackGapClassName,
+                )
               : "mb-4",
           )}
         >

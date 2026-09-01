@@ -62,7 +62,7 @@ export function SalonPage() {
       >
         <SalonHero />
         <ProductSubnav items={salonSubnavItems} />
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           <RevealSection>
             <SalonUsps />
           </RevealSection>

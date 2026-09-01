@@ -15,6 +15,7 @@ import {
 } from "../../data/home";
 import { useMotionReduced } from "../../hooks/useMotionReduced";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { SPRING_LAYOUT } from "../../lib/motionEase";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
@@ -267,7 +268,12 @@ export function HomeHero() {
         </Container>
       </div>
 
-      <div className="relative z-20 border-t border-neutral-200 bg-neutral-50 text-neutral-900">
+      <div
+        className={cn(
+          "relative z-20 bg-neutral-50 text-neutral-900",
+          contentDividerTopClassName,
+        )}
+      >
         <Container size="content">
           <div className="flex items-stretch">
             <button
@@ -339,7 +345,7 @@ export function HomeHero() {
                         selected
                           ? "bg-neutral-0 text-neutral-900"
                           : "text-neutral-500 hover:text-neutral-800",
-                        index > 0 && "border-s border-neutral-200",
+                        index > 0 && "border-s border-neutral-300",
                       )}
                       onClick={() => goTo(index)}
                     >

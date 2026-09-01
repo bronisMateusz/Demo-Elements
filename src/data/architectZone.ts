@@ -1,6 +1,7 @@
 import { assetUrl } from "../app/assets";
+import { ctaContextImages } from "../lib/ctaContextImages";
 import type { PdpSubnavItem } from "../constants/pdpSubnav";
-import { homeInspiration } from "./home";
+import { inspirationCarouselArrangements } from "./inspirationCarousel";
 import { subcategoryPage } from "./subcategory";
 
 export const architectZoneSubnavItems: PdpSubnavItem[] = [
@@ -99,13 +100,7 @@ export const architectZonePage = {
       "Spotkanie w komfortowej, neutralnej przestrzeni wzmacnia Twój profesjonalny wizerunek.",
       "Doradca salonu wspiera Cię merytorycznie i odciąża podczas prezentacji oferty.",
     ],
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Salon Elements - ekspozycja i strefa spotkań",
-      fit: "cover" as const,
-      focalPoint: { x: 50, y: 40 },
-    },
-    video: "video/architect-cta.mp4",
+    image: ctaContextImages.salonBydgoszcz,
   },
   loyalty: {
     eyebrow: "Program partnerski",
@@ -114,12 +109,7 @@ export const architectZonePage = {
       "Oferujemy atrakcyjny system prowizyjny oraz program lojalnościowy „Elements w Podróży”, które pozwalają zwiększyć zyski z realizowanych projektów. Doceniamy długofalowe relacje i nagradzamy zaangażowanie.",
     ctaLabel: "Dołącz do programu „Elements w Podróży”",
     ctaHref: "#wspolpraca",
-    image: {
-      src: assetUrl("home/partners-architects.jpg"),
-      alt: "Program lojalnościowy Elements w Podróży",
-      fit: "cover" as const,
-      focalPoint: { x: 55, y: 30 },
-    },
+    image: ctaContextImages.architectWorkspace,
   },
   inspiration: {
     id: "inspiracje",
@@ -132,10 +122,7 @@ export const architectZonePage = {
       description:
         "Realizacje naszych architektów partnerskich prezentujemy w dziale Inspiracje - to dodatkowa ekspozycja Twojej pracy i źródło nowych klientów.",
     },
-    arrangements: homeInspiration.arrangements.map((item, index) => ({
-      ...item,
-      id: `az-insp-${index + 1}`,
-    })),
+    arrangements: inspirationCarouselArrangements("az-insp"),
   },
   process: {
     id: "proces",
@@ -208,11 +195,6 @@ export const architectZonePage = {
       "Wypełnij formularz - opiekun architekta odezwie się i ustali szczegóły współpracy.",
     askLabel: "Rozpocznij współpracę",
     bookLabel: "Umów spotkanie",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Rozpocznij współpracę z Elements",
-      fit: "cover" as const,
-      focalPoint: { x: 50, y: 40 },
-    },
+    image: ctaContextImages.advisorConsultation,
   },
 } as const;

@@ -8,6 +8,10 @@ import {
   lockLightboxScroll,
 } from "../../hooks/useSiteChrome";
 import { cn } from "../../lib/cn";
+import {
+  sectionHeaderTrackGapClassName,
+  sectionMarginTopClassName,
+} from "../../lib/layoutTokens";
 import { formatSlideIndex } from "../../lib/formatSlideIndex";
 import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
@@ -21,10 +25,7 @@ import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
 import { iconButtonClassName } from "../ui/iconButtonClassName";
-import {
-  InspirationGalleryCard,
-  type InspirationGalleryCardAction,
-} from "./InspirationGalleryCard";
+import { InspirationGalleryCard } from "./InspirationGalleryCard";
 import {
   inspirationGalleryCardTitleClassName,
   inspirationGalleryEndCapClassName,
@@ -34,6 +35,7 @@ import {
   inspirationGallerySwiperClassName,
 } from "./inspirationGalleryClassName";
 import { requestInspirationProductsDrawer } from "../../hooks/useInspirationProductsDrawer";
+import { inspirationCardActionFor } from "./inspirationCardAction";
 import "swiper/css";
 
 export type InspirationGalleryControls = {
@@ -54,13 +56,15 @@ type InspirationGalleryProps = {
   description?: string;
   /** `header` - beside title; `footer` - under the track (default); `none` - parent owns nav. */
   navPlacement?: "header" | "footer" | "none";
-  /** Trailing hint slide - fills the empty peek beside the last card (not a link). */
-  endCap?: {
-    /** Optional footer hint (e.g. “Kliknij poniżej” when a see-more CTA follows). */
-    label?: string;
-    title?: string;
-    description?: string;
-  };
+  /** Trailing hint slide - fills the empty peek beside the last card (not a link). Pass `false` to omit. */
+  endCap?:
+    | {
+        /** Optional footer hint (e.g. “Kliknij poniżej” when a see-more CTA follows). */
+        label?: string;
+        title?: string;
+        description?: string;
+      }
+    | false;
   /** Footer CTA under the track (same pattern as home inspirations). */
   seeMoreHref?: string;
   seeMoreLabel?: string;
@@ -78,14 +82,6 @@ const DEFAULT_END_CAP = {
   description:
     "Zobacz więcej inspiracji i dobierz produkty do swojej łazienki.",
 } as const;
-
-function cardActionFor(
-  arrangement: InspirationArrangement,
-): InspirationGalleryCardAction {
-  if (arrangement.href) return "link";
-  if (arrangement.showProducts) return "products";
-  return "lightbox";
-}
 
 /** Trailing inset so every arrangement can become the leftmost snap. With an
  *  endCap slide we only need the gutter - the CTA fills the empty peek. */
@@ -108,12 +104,14 @@ export function InspirationGallery({
   titleId = "inspiration-gallery-title",
   description,
   navPlacement = "footer",
-  endCap = DEFAULT_END_CAP,
-  seeMoreHref = "#inspiracje",
+  endCap: endCapProp = DEFAULT_END_CAP,
+  seeMoreHref = "/inspiracje-listing",
   seeMoreLabel = "Zobacz więcej aranżacji",
   promo,
   onControlsChange,
 }: InspirationGalleryProps) {
+  const endCap =
+    endCapProp === false ? undefined : (endCapProp ?? DEFAULT_END_CAP);
   const gutterPx = useGutterPx();
   const [offsetAfterPx, setOffsetAfterPx] = useState(gutterPx);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -307,7 +305,8 @@ export function InspirationGallery({
       <Container size="content" className="relative z-10">
         <div
           className={cn(
-            "mb-8 flex flex-col gap-6 text-start md:mb-10",
+            sectionHeaderTrackGapClassName,
+            "flex flex-col gap-6 text-start",
             promo
               ? "xl:flex-row xl:items-end xl:justify-between xl:gap-8"
               : showHeaderNav
@@ -417,7 +416,7 @@ export function InspirationGallery({
           }}
         >
           {arrangements.map((arrangement, index) => {
-            const action = cardActionFor(arrangement);
+            const action = inspirationCardActionFor(arrangement);
 
             return (
               <SwiperSlide
@@ -492,7 +491,10 @@ export function InspirationGallery({
       {showFooter ? (
         <Container
           size="content"
-          className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:mt-10"
+          className={cn(
+            sectionMarginTopClassName,
+            "flex flex-wrap items-center justify-center gap-x-6 gap-y-4",
+          )}
         >
           {showFooterNav ? (
             <div className="flex items-center gap-3">

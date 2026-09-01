@@ -231,9 +231,9 @@ i.ph:not(.ph-fill) {
   @apply sr-only;
 }
 
-/** Vertical rhythm for PageSectionStack - outer my-12, 48px gap between children (transform-safe). */
+/** Vertical rhythm for PageSectionStack - outer my-12; sibling mt-12 via pageSectionStackChildSpacingClassName. */
 @utility page-section-stack {
-  @apply my-12 flex flex-col gap-12;
+  @apply my-12 flex flex-col;
 }
 
 /* Near-zero duration (not animation:none) so animationend still fires where listeners expect it. */

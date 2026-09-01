@@ -12,7 +12,7 @@ See also `code-conventions.mdc` for token hygiene (prefer Tailwind defaults when
 
 ## Tokens over magic values
 
-- Colors from `@theme`: `bg-neutral-0`, `text-neutral-600`, `bg-gold-500`, `border-neutral-200` - not `bg-[#2c2c2c]`, not `text-[rgb(...)]`.
+- Colors from `@theme`: `bg-neutral-0`, `text-neutral-600`, `bg-gold-500`, `border-neutral-300` - not `bg-[#2c2c2c]`, not `text-[rgb(...)]`.
 - Fonts: `font-heading`, `font-body` - not inline `font-family`.
 - When a theme utility exists: `text-ui`, `shadow-1` - not `text-[15px]`, not `shadow-[0_2px_8px_...]`.
 - Typography: prefer `text-xs`, `text-sm`, `text-base`, `text-lg` for standard sizes; keep `text-ui`, `text-h4`, fluid `text-h1`–`text-display-xl` for brand-only sizes.

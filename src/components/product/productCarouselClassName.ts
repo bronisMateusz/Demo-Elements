@@ -1,10 +1,10 @@
 import { cn } from "../../lib/cn";
+import { fullBleedBreakoutClassName } from "../../lib/layoutTokens";
 
 export type ProductCarouselLayoutToken =
   "bleed" | "contained" | "inline" | "inline-bleed";
 
-export const productCarouselBleedWrapperClassName =
-  "box-border w-screen ms-[calc(50%-50vw)]";
+export const productCarouselBleedWrapperClassName = fullBleedBreakoutClassName;
 
 export function productCarouselRootClassName({
   layout,

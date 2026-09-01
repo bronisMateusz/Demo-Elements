@@ -19,6 +19,10 @@ import { SalonPage } from "../routes/SalonPage";
 import { SalonsPage } from "../routes/SalonsPage";
 import { SalonsPageB } from "../routes/SalonsPageB";
 import { ArchitectZonePage } from "../routes/ArchitectZonePage";
+import { ArrangementsGalleryPage } from "../routes/ArrangementsGalleryPage";
+import { InspirationArticlePage } from "../routes/InspirationArticlePage";
+import { InspirationsListingPage } from "../routes/InspirationsListingPage";
+import { CtaShowcasePage } from "../routes/CtaShowcasePage";
 import { SubcategoryPage } from "../routes/SubcategoryPage";
 
 function getRouterBasename() {
@@ -52,6 +56,10 @@ export const router = createBrowserRouter(
         { path: "/kategoria", element: <CategoryPage /> },
         { path: "/podkategoria", element: <SubcategoryPage /> },
         { path: "/listing", element: <ListingPage /> },
+        { path: "/inspiracje-listing", element: <InspirationsListingPage /> },
+        { path: "/galeria-aranzacji", element: <ArrangementsGalleryPage /> },
+        { path: "/inspiracja-artykul", element: <InspirationArticlePage /> },
+        { path: "/banery-cta", element: <CtaShowcasePage /> },
         {
           path: "/biblioteka",
           element: <LibraryLayout />,

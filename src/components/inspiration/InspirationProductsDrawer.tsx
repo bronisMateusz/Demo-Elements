@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
+import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
+import { requestInspirationAskDrawer } from "../../hooks/useInspirationAskDrawer";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { useProductFavorites } from "../../hooks/useProductFavorites";
 import type {
@@ -32,7 +35,7 @@ function ArrangementProductRow({ product }: { product: RelatedProduct }) {
   const { isFavorite, toggle } = useProductFavorites(product.id);
 
   return (
-    <li className="flex items-center gap-3 border-b border-neutral-200 py-5 first:pt-0 last:border-b-0">
+    <li className="flex items-center gap-3 border-b border-neutral-300 py-5 first:pt-0 last:border-b-0">
       <Link
         to={product.href}
         className="group/row flex min-w-0 flex-1 items-center gap-4 text-inherit no-underline"
@@ -98,6 +101,13 @@ export function InspirationProductsDrawer({
     requestSalonDrawer();
   };
 
+  const openAsk = () => {
+    if (arrangement) {
+      onClose();
+      requestInspirationAskDrawer(arrangement);
+    }
+  };
+
   return (
     <DrawerShell
       open={open}
@@ -127,9 +137,20 @@ export function InspirationProductsDrawer({
           )}
         </div>
 
-        <div className="shrink-0 border-t border-neutral-200 px-6 py-5 sm:px-8">
+        <div
+          className={cn(
+            "shrink-0 px-6 py-5 sm:px-8",
+            contentDividerTopClassName,
+          )}
+        >
           <div className="flex flex-col gap-3">
-            <Button href="#kontakt" variant="primary" className="w-full">
+            <Button
+              as="button"
+              type="button"
+              variant="primary"
+              className="w-full"
+              onClick={openAsk}
+            >
               Zapytaj o tę aranżację
             </Button>
             <Button

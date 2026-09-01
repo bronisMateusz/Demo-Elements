@@ -24,7 +24,8 @@ type SiteNewsletterProps = {
 const DEFAULT_TITLE = "Inspiracje prosto na Twój adres e-mail";
 const DEFAULT_DESCRIPTION =
   "Otrzymuj selekcję aranżacji, nowości kolekcji i zaproszenia na wydarzenia Elements.";
-const DEFAULT_IMAGE = assetUrl("products/montebianco/03-room.jpg");
+const DEFAULT_IMAGE = assetUrl("home/about-salon.png");
+const DEFAULT_IMAGE_ALT = "Salon Elements - ekspozycja łazienki";
 
 /**
  * Newsletter band above the footer. Default: symmetric section margin (my).
@@ -35,7 +36,7 @@ export function SiteNewsletter({
   title = DEFAULT_TITLE,
   description = DEFAULT_DESCRIPTION,
   imageSrc = DEFAULT_IMAGE,
-  imageAlt = "",
+  imageAlt = DEFAULT_IMAGE_ALT,
   embedded = false,
   className,
 }: SiteNewsletterProps = {}) {

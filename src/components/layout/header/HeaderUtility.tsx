@@ -37,7 +37,7 @@ const accentItems = utilityNavItems.filter(
 
 export function HeaderUtility() {
   return (
-    <div className="border-b border-neutral-200 bg-neutral-0">
+    <div className="border-b border-neutral-300 bg-neutral-0">
       <div className="container flex h-11 items-stretch justify-between gap-6">
         <p className="m-0 flex shrink-0 items-center text-xs leading-none text-neutral-600 italic">
           {utilityTagline}

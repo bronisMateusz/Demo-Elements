@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { cn } from "../../lib/cn";
 import {
+  pageSectionStackChildSpacingClassName,
   pageSectionStackClassName,
   pageSectionStackFlushTopClassName,
 } from "../../lib/layoutTokens";
@@ -13,8 +14,8 @@ type PageSectionStackProps = {
 };
 
 /**
- * Groups page-level content blocks. Outer my-12 + gap-12 between children
- * (RevealSection transform does not break flex gap like margin collapse).
+ * Groups page-level content blocks. Outer my-12 + mt-12 between children
+ * (margin on flex items; RevealSection transform stays on the child wrapper).
  */
 export function PageSectionStack({
   children,
@@ -25,6 +26,7 @@ export function PageSectionStack({
     <div
       className={cn(
         pageSectionStackClassName,
+        pageSectionStackChildSpacingClassName,
         flushTop && pageSectionStackFlushTopClassName,
         className,
       )}

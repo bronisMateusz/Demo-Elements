@@ -221,7 +221,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
               internalSubnavMarginBottomClassName,
               "z-20 w-full",
               stuck &&
-                "border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+                "border-b border-neutral-300 bg-neutral-0/95 backdrop-blur-sm",
             )}
           >
             <Container size="content">
@@ -350,7 +350,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
                           title={item.title}
                           image={item.image}
                           action="link"
-                          href={item.href ?? "#inspiracje"}
+                          href={item.href ?? "/inspiracja-artykul"}
                           favoriteId={item.id}
                         />
                       ))}
@@ -377,7 +377,7 @@ export function WishlistDirectory({ className }: WishlistDirectoryProps) {
 
           <aside
             className={cn(
-              "rounded-xs border border-neutral-200 bg-neutral-0 p-5",
+              "rounded-xs border border-neutral-300 bg-neutral-0 p-5",
               !isEmpty && asideStickyClassName,
               isEmpty &&
                 "lg:sticky lg:top-33 xl:top-33 header-concealed:xl:top-22",

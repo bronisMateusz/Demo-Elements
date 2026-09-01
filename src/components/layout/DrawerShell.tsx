@@ -125,7 +125,7 @@ export function DrawerHeader({
 }: DrawerHeaderProps) {
   if (compact) {
     return (
-      <div className="flex h-18 shrink-0 items-center gap-2 border-b border-neutral-200 px-[clamp(0.75rem,2.222vw,2.5rem)]">
+      <div className="flex h-18 shrink-0 items-center gap-2 border-b border-neutral-300 px-[clamp(0.75rem,2.222vw,2.5rem)]">
         {onBack ? (
           <IconButton
             label={backLabel}
@@ -164,7 +164,7 @@ export function DrawerHeader({
   return (
     <div
       className={cn(
-        "flex justify-between gap-4 border-b border-neutral-200 px-[clamp(0.75rem,2.222vw,2.5rem)]",
+        "flex justify-between gap-4 border-b border-neutral-300 px-[clamp(0.75rem,2.222vw,2.5rem)]",
         hasDescription ? "items-start py-4 md:py-8" : "items-center py-4",
       )}
     >

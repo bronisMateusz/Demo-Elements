@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet-async";
 import { useMemo, useRef, useState } from "react";
-import { homeAdvisorCta } from "../data/home";
 import { producerPage, producerPageProducts } from "../data/producers";
 import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
@@ -42,7 +41,7 @@ const advisorContent: AdvisorCtaContent = {
   eyebrow: producerPage.cta.eyebrow,
   title: producerPage.cta.title,
   description: producerPage.cta.description,
-  image: homeAdvisorCta.image,
+  image: producerPage.cta.image,
   askLabel: producerPage.cta.askLabel,
   askHref: producerPage.cta.askHref,
   bookLabel: producerPage.cta.bookLabel,
@@ -159,7 +158,7 @@ export function ProducerPage() {
                 title={producerPage.arrangementsTitle}
                 titleId="producer-insp-title"
                 navPlacement="footer"
-                seeMoreHref="#inspiracje"
+                seeMoreHref="/inspiracje-listing"
                 seeMoreLabel="Zobacz więcej aranżacji"
                 endCap={{
                   label: "Kliknij poniżej",

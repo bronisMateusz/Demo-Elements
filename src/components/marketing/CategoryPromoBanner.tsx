@@ -1,3 +1,4 @@
+import { sectionBandPaddingClassName } from "../../lib/layoutTokens";
 import { cn } from "../../lib/cn";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
@@ -49,7 +50,12 @@ export function CategoryPromoBanner({
         />
       </div>
 
-      <div className="relative flex flex-col items-start justify-center gap-3 overflow-hidden px-6 py-8 md:gap-4 md:px-10 md:py-10 lg:px-12">
+      <div
+        className={cn(
+          "relative flex flex-col items-start justify-center gap-3 overflow-hidden px-6 md:gap-4 md:px-10 lg:px-12",
+          sectionBandPaddingClassName,
+        )}
+      >
         <div
           className="pointer-events-none absolute inset-0 bg-radial-[at_100%_0%] from-gold-500/18 to-transparent to-55%"
           aria-hidden="true"

@@ -97,6 +97,15 @@ export function ListingPage() {
           <RevealSection className="relative z-20">
             <HomeAdvisorCta
               titleId="listing-advisor-cta-title"
+              content={{
+                eyebrow: listingPage.advisorCta.eyebrow,
+                title: listingPage.advisorCta.title,
+                description: listingPage.advisorCta.description,
+                image: listingPage.advisorCta.image,
+                askLabel: listingPage.advisorCta.primaryCta.label,
+                bookLabel: listingPage.advisorCta.secondaryCta.label,
+                askHref: listingPage.advisorCta.primaryCta.href,
+              }}
               onPrimaryClick={() => setAskOpen(true)}
             />
           </RevealSection>

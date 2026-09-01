@@ -25,6 +25,7 @@ import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { recordRecentlyViewedProduct } from "../hooks/useRecentlyViewedProducts";
 import { productToRelatedProduct } from "../lib/productToRelatedProduct";
 import { cn } from "../lib/cn";
+import { mdSectionBandPaddingClassName } from "../lib/layoutTokens";
 
 function RevealSection({ children }: { children: React.ReactNode }) {
   const { ref, className } = useRevealOnScroll();
@@ -80,7 +81,7 @@ export function ProductDetailPage() {
         ) : null}
         <ProductSubnav items={subnavItems} followsBlock />
 
-        <PageSectionStack>
+        <PageSectionStack flushTop>
           <RevealSection>
             <Section id="pdp-seria" className={pdpSectionScrollMarginClassName}>
               <ProductPairWith
@@ -108,9 +109,10 @@ export function ProductDetailPage() {
               id="pdp-specyfikacja"
               className={cn(
                 pdpSectionScrollMarginClassName,
-                "bg-neutral-0 py-4 transition-colors duration-base ease-luxury",
+                mdSectionBandPaddingClassName,
+                "bg-neutral-0 transition-colors duration-base ease-luxury",
                 "data-[expanded=true]:bg-neutral-100",
-                "md:bg-neutral-100 md:py-[clamp(2.5rem,6vw,4rem)]",
+                "md:bg-neutral-100",
               )}
             >
               <ProductSpecifications

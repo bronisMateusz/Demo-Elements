@@ -29,7 +29,7 @@ export function HomePartners() {
         <ul className="m-0 grid list-none gap-8 p-0 md:grid-cols-2 md:gap-8 lg:gap-10">
           {homePartners.cards.map((card) => (
             <li key={card.id} className="min-w-0">
-              <article className="flex h-full flex-col overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0">
+              <article className="flex h-full flex-col overflow-hidden rounded-xs border border-neutral-300 bg-neutral-0">
                 <div className="relative aspect-16/10 overflow-hidden bg-neutral-200">
                   <img
                     src={card.image.src}

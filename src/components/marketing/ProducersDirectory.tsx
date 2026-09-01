@@ -283,7 +283,7 @@ export function ProducersDirectory({
             stickyUnderHeaderClassName,
             sectionMarginYClassName,
             "z-99 border-b border-transparent",
-            stuck && "border-neutral-200 bg-neutral-0/95 py-2 backdrop-blur-sm",
+            stuck && "border-neutral-300 bg-neutral-0/95 py-2 backdrop-blur-sm",
           )}
         >
           <Container size="content" className="px-0">
@@ -317,7 +317,7 @@ export function ProducersDirectory({
                     >
                       <h2
                         id={`letter-heading-${letter}`}
-                        className="m-0 border-b border-neutral-200 pb-3 font-heading text-h3 font-light tracking-tight text-neutral-900"
+                        className="m-0 border-b border-neutral-300 pb-3 font-heading text-h3 font-light tracking-tight text-neutral-900"
                       >
                         {letter}
                       </h2>
@@ -356,7 +356,7 @@ export function ProducersDirectory({
         aria-hidden={!listingInView}
         aria-label={producersPage.searchPlaceholder}
       >
-        <div className="flex items-center gap-2 border border-x-0 border-b-0 border-neutral-200/80 bg-neutral-0 px-3 py-2 shadow-2">
+        <div className="flex items-center gap-2 border border-x-0 border-b-0 border-neutral-300/80 bg-neutral-0 px-3 py-2 shadow-2">
           <BrandSearchField
             id={mobileSearchId}
             query={query}

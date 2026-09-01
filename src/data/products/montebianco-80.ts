@@ -1,4 +1,6 @@
 import { assetUrl } from "../../app/assets";
+import { ctaContextImages } from "../../lib/ctaContextImages";
+import { inspirationCarouselArrangements } from "../inspirationCarousel";
 import { homeCatalogProducts } from "../home";
 import type {
   Product,
@@ -273,10 +275,10 @@ export const montebianco80: Product = {
     href: "#kolekcja-montebianco",
     label: "Zobacz kolekcję",
     image: {
-      src: assetUrl("products/montebianco/03-room.jpg"),
-      alt: "Aranżacja łazienki z kolekcją Montebianco",
+      src: assetUrl("home/inspiration-green-marble.jpg"),
+      alt: "Umywalka nablatowa ORiSTO z zieloną szafką Montebianco",
       fit: "cover",
-      focalPoint: { x: 50, y: 55 },
+      focalPoint: { x: 38, y: 32 },
     },
   },
   images: [
@@ -366,106 +368,10 @@ export const montebianco80: Product = {
     href: "/strefa-architekta",
     label: "Przejdź do strefy architekta",
     eyebrow: "Strefa architekta",
-    image: {
-      src: assetUrl("products/montebianco/03-room.jpg"),
-      alt: "Łazienka z kolekcją Montebianco - aranżacja dla architektów",
-      focalPoint: { x: 50, y: 55 },
-    },
+    image: ctaContextImages.washbasin,
     video: "video/architect-cta.mp4",
   },
-  inspirations: [
-    {
-      id: "insp-1",
-      title: "Klasyczna elegancja w jasnej łazience",
-      showProducts: true,
-      image: {
-        src: assetUrl("home/inspiration-oristo-pillow.jpg"),
-        alt: "Klasyczna elegancja w jasnej łazience",
-        fit: "cover",
-        focalPoint: { x: 50, y: 55 },
-      },
-      items: [
-        "Szafka Montebianco 80 cm - ten produkt",
-        "Umywalka meblowa ORiSTO 80 cm",
-        "Bateria umywalkowa, złoto szczotkowane",
-        "Lustro Montebianco 80 cm w ramie",
-      ],
-      products: [
-        related(
-          "pdp-insp1-vanity",
-          "ORiSTO",
-          "Szafka podumywalkowa Montebianco 80 cm biały mat",
-          { price: "1 990 zł", pricePrevious: "2 390 zł" },
-        ),
-        related("pdp-insp1-basin", "ORiSTO", "Umywalka meblowa ORiSTO 80 cm", {
-          price: "890 zł",
-        }),
-        related(
-          "pdp-insp1-tap",
-          "Omnires",
-          "Bateria umywalkowa, złoto szczotkowane",
-          { price: "1 240 zł" },
-        ),
-        related(
-          "pdp-insp1-mirror",
-          "ORiSTO",
-          "Lustro Montebianco 80 cm w ramie",
-          { price: "690 zł" },
-        ),
-      ],
-    },
-    {
-      id: "insp-2",
-      title: "Ciepły minimalizm z akcentami drewna",
-      href: "#inspiracje",
-      image: {
-        src: assetUrl("home/inspiration-warm-minimal.jpg"),
-        alt: "Ciepły minimalizm z akcentami drewna",
-        fit: "cover",
-        focalPoint: { x: 50, y: 55 },
-      },
-      items: [
-        "Wanna wolnostojąca, biały mat",
-        "Bateria wannowa podtynkowa, złoto szczotkowane",
-        "Słuchawka prysznicowa z wężem, złoto szczotkowane",
-        "Półka drewniana na wannę",
-      ],
-    },
-    {
-      id: "insp-3",
-      title: "Głęboka zieleń i marmur",
-      showProducts: true,
-      image: {
-        src: assetUrl("home/inspiration-green-marble.jpg"),
-        alt: "Głęboka zieleń i marmur",
-        fit: "cover",
-        focalPoint: { x: 50, y: 55 },
-      },
-      items: [
-        "Szafka podumywalkowa, zielony mat, fronty ryflowane",
-        "Umywalka nablatowa, zieleń / biały",
-        "Bateria umywalkowa podtynkowa, czarny mat",
-        "Płytki imitujące czarny marmur",
-      ],
-      products: [
-        related(
-          "pdp-insp3-vanity",
-          "ORiSTO",
-          "Szafka podumywalkowa, zielony mat, 80 cm",
-          { price: "2 190 zł" },
-        ),
-        related(
-          "pdp-insp3-basin",
-          "ORiSTO",
-          "Umywalka nablatowa, zieleń / biały",
-          { price: "780 zł", pricePrevious: "980 zł" },
-        ),
-        related("pdp-insp3-tap", "Omnires", "Bateria umywalkowa, czarny mat", {
-          price: "1 120 zł",
-        }),
-      ],
-    },
-  ],
+  inspirations: inspirationCarouselArrangements("pdp-insp"),
   visualizationCta: {
     title: "Chcesz zobaczyć możliwości Twojej nowej łazienki?",
     description: "Przygotujemy dla Ciebie jej wizualizację.",
@@ -473,11 +379,7 @@ export const montebianco80: Product = {
     label: "Poznaj szczegóły",
     note: "Bezpłatna wizualizacja · Bez zobowiązań",
     eyebrow: "Wizualizacja",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Salon Elements - rozmowa z doradcą",
-      focalPoint: { x: 50, y: 40 },
-    },
+    image: ctaContextImages.bathroomGreen,
     secondary: {
       href: "/salony",
       label: "Znajdź salon",

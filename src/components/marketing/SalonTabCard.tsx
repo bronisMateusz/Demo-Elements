@@ -36,7 +36,7 @@ export function SalonTabCard({ salon, onBook, className }: SalonTabCardProps) {
   return (
     <article
       className={cn(
-        "grid gap-8 border-b border-neutral-200 py-8 first:pt-0 last:border-b-0 last:pb-0 lg:grid-cols-2 lg:items-start lg:gap-12",
+        "grid gap-8 border-b border-neutral-300 py-8 first:pt-0 last:border-b-0 last:pb-0 lg:grid-cols-2 lg:items-start lg:gap-12",
         className,
       )}
     >

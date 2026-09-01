@@ -362,7 +362,7 @@ export const floatingAdvisorCtaModule: LibraryModule = {
             Marketing sticky - pojawia się po scrollu i chowa przed stopką. Tu
             podgląd w flow preview (nie fixed nad chrome biblioteki).
           </p>
-          <div className="relative overflow-hidden rounded-xs border border-neutral-200 bg-neutral-50 p-4">
+          <div className="relative overflow-hidden rounded-xs border border-neutral-300 bg-neutral-50 p-4">
             <FloatingAdvisorCta
               label="Napisz do doradcy"
               onClick={() => undefined}
@@ -470,7 +470,7 @@ export const salonTabCardModule: LibraryModule = {
         return (
           <div className={libPreviewFullBleedWrapperClassName}>
             <Container size="content" className="py-8">
-              <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:p-6 md:p-8">
+              <div className="rounded-xs border border-neutral-300 bg-neutral-0 p-4 sm:p-6 md:p-8">
                 <SalonTabCard salon={salon} onBook={() => undefined} />
               </div>
             </Container>

@@ -1,5 +1,6 @@
 import { assetUrl } from "../app/assets";
-import { homeInspiration } from "./home";
+import { ctaContextImages } from "../lib/ctaContextImages";
+import { inspirationCarouselArrangements } from "./inspirationCarousel";
 import type { PdpSubnavItem } from "../constants/pdpSubnav";
 
 export const salonSubnavItems: PdpSubnavItem[] = [
@@ -404,38 +405,7 @@ export const salonPage = {
       description:
         "Obejrzyj inspiracje na żywo i dobierz produkty z doradcą Elements.",
     },
-    arrangements: [
-      {
-        ...homeInspiration.arrangements[0],
-        id: "salon-insp-1",
-        title: "Strefa SPA z wanną wolnostojącą",
-      },
-      {
-        ...homeInspiration.arrangements[1],
-        id: "salon-insp-2",
-        title: "Trendy łazienkowe 2026 - czego szukać",
-      },
-      {
-        ...homeInspiration.arrangements[2],
-        id: "salon-insp-3",
-        title: "Beton i czarna armatura",
-      },
-      {
-        ...homeInspiration.arrangements[3],
-        id: "salon-insp-4",
-        title: "Mała łazienka do 4 m²",
-      },
-      {
-        ...homeInspiration.arrangements[4],
-        id: "salon-insp-5",
-        title: "Elegancja w ciepłej palecie",
-      },
-      {
-        ...homeInspiration.arrangements[5],
-        id: "salon-insp-6",
-        title: "Jak zaplanować oświetlenie łazienki",
-      },
-    ],
+    arrangements: inspirationCarouselArrangements("salon-insp"),
   },
   design: {
     id: "projektowanie",
@@ -445,11 +415,7 @@ export const salonPage = {
       "Od koncepcji i doboru produktów po wizualizację 3D - zobacz efekt, zanim cokolwiek kupisz. Bezpłatna konsultacja na start.",
     ctaLabel: "Dowiedz się więcej",
     ctaHref: "#",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Konsultacja projektowa w salonie Elements",
-      focalPoint: { x: 50, y: 40 },
-    },
+    image: ctaContextImages.salonExpo,
     video: "video/architect-cta.mp4",
   },
   downloads: {
@@ -478,10 +444,6 @@ export const salonPage = {
     note: "Bezpłatna konsultacja · Bez zobowiązań",
     primaryLabel: "Umów spotkanie",
     secondaryLabel: "Napisz do doradcy",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Salon Elements Bydgoszcz - zaproszenie do wizyty",
-      focalPoint: { x: 50, y: 40 },
-    },
+    image: ctaContextImages.salonBydgoszcz,
   },
 } as const;

@@ -1,5 +1,6 @@
 import { useCallback, useId, useState, type FormEvent } from "react";
 import { cn } from "../../lib/cn";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import {
   askDrawerCopy,
   buildAskFooterNote,
@@ -95,7 +96,7 @@ export function AskDrawer({
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 md:py-8">
         {submitted ? (
-          <div className="rounded-xs border border-neutral-200 bg-neutral-50 px-5 py-6">
+          <div className="rounded-xs border border-neutral-300 bg-neutral-50 px-5 py-6">
             <p className="m-0 font-heading text-xl text-neutral-900">
               {askDrawerCopy.successTitle}
             </p>
@@ -115,7 +116,7 @@ export function AskDrawer({
         ) : (
           <>
             <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-              <div className="flex gap-3 rounded-xs border border-neutral-200 bg-neutral-50 p-3">
+              <div className="flex gap-3 rounded-xs border border-neutral-300 bg-neutral-50 p-3">
                 <div className="size-14 shrink-0 overflow-hidden bg-neutral-0">
                   <img
                     src={productImage.src}
@@ -281,7 +282,7 @@ export function AskDrawer({
             </form>
 
             {salon ? (
-              <div className="mt-6 border-t border-neutral-200 pt-6 pb-2">
+              <div className={cn("mt-6 pt-6 pb-2", contentDividerTopClassName)}>
                 <p className="m-0 font-body text-sm font-medium tracking-[0.12em] text-neutral-900 uppercase">
                   {askDrawerCopy.altContactTitle}
                 </p>

@@ -73,6 +73,15 @@ export function CategoryPage() {
           <RevealSection className="relative z-20">
             <HomeAdvisorCta
               titleId="category-advisor-cta-title"
+              content={{
+                eyebrow: categoryPage.advisorCta.eyebrow,
+                title: categoryPage.advisorCta.title,
+                description: categoryPage.advisorCta.description,
+                image: categoryPage.advisorCta.image,
+                askLabel: categoryPage.advisorCta.primaryCta.label,
+                bookLabel: categoryPage.advisorCta.secondaryCta.label,
+                askHref: categoryPage.advisorCta.primaryCta.href,
+              }}
               onPrimaryClick={() => setAskOpen(true)}
             />
           </RevealSection>

@@ -55,7 +55,6 @@ function AskButton({
         onClick={onAskOpen}
       >
         {label}
-        <i className="ph ph-arrow-right" aria-hidden="true" />
       </Button>
     );
   }
@@ -97,9 +96,6 @@ function BookButton({
         onClick={openBook}
       >
         {label}
-        {variant === "primary" ? (
-          <i className="ph ph-arrow-right" aria-hidden="true" />
-        ) : null}
       </Button>
     );
   }

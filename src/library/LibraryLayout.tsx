@@ -51,6 +51,12 @@ function LibrarySiteHeader() {
           Elements
         </Link>
         <div className="flex items-center gap-4">
+          <Link
+            to="/banery-cta"
+            className="hidden text-sm text-neutral-600 no-underline hover:text-neutral-900 hover:underline sm:inline"
+          >
+            Katalog banerów CTA
+          </Link>
           <span className="hidden text-sm text-neutral-500 sm:inline">
             Biblioteka komponentów
           </span>

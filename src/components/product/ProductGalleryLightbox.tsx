@@ -562,7 +562,7 @@ function LightboxControls({
           ) : (
             <div className="absolute inset-x-[clamp(0.75rem,2.222vw,2.5rem)] bottom-[clamp(0.75rem,2.222vw,2.5rem)] flex justify-center">
               <p
-                className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-200 bg-neutral-0 px-4 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
+                className="m-0 inline-flex h-12 min-w-12 items-center justify-center rounded-xs border border-neutral-300 bg-neutral-0 px-4 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-800 shadow-subtle"
                 aria-live="polite"
               >
                 {index + 1}

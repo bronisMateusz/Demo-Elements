@@ -155,7 +155,7 @@ export function SalonsTabsDirectory({
           internalSubnavMarginBottomClassName,
           "z-99",
           stuck &&
-            "w-screen ms-[calc(50%-50vw)] border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm",
+            "w-screen ms-[calc(50%-50vw)] border-b border-neutral-300 bg-neutral-0/95 backdrop-blur-sm",
         )}
       >
         <SalonLocationChips
@@ -172,7 +172,7 @@ export function SalonsTabsDirectory({
         />
       </div>
 
-      <div className="rounded-xs border border-neutral-200 bg-neutral-0 p-4 sm:p-6 md:p-8">
+      <div className="rounded-xs border border-neutral-300 bg-neutral-0 p-4 sm:p-6 md:p-8">
         <div className="relative bg-neutral-0">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

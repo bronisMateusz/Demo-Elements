@@ -8,7 +8,7 @@ type AdvisorAskDrawerProps = {
 };
 
 const advisorImage = {
-  src: assetUrl("home/about-salon.jpg"),
+  src: assetUrl("home/about-salon.png"),
   alt: "Doradztwo Elements",
   fit: "cover" as const,
 };

@@ -122,7 +122,7 @@ export function ListingFilters({
           return (
             <div
               key={group.key}
-              className="border-b border-neutral-200 last:border-b-0"
+              className="border-b border-neutral-300 last:border-b-0"
             >
               <button
                 type="button"

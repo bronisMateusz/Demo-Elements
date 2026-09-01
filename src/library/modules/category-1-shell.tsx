@@ -29,7 +29,7 @@ export const headerModule: LibraryModule = {
           data-lib-full-bleed
         >
           <Header />
-          <div className="grid min-h-32 place-items-center border-b border-dashed border-neutral-200 bg-neutral-50 text-sm text-neutral-500">
+          <div className="grid min-h-32 place-items-center border-b border-dashed border-neutral-300 bg-neutral-50 text-sm text-neutral-500">
             Treść strony
           </div>
         </div>

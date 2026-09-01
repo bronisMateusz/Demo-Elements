@@ -1,4 +1,5 @@
 import { cn } from "../../../lib/cn";
+import { contentDividerTopClassName } from "../../../lib/layoutTokens";
 import { assetUrl } from "../../../app/assets";
 import { Container } from "../../ui/Container";
 import { footerBrand, footerColumns, footerLegal } from "../../../data/nav";
@@ -75,7 +76,8 @@ export function FooterLegal() {
   return (
     <Container
       className={cn(
-        "flex flex-col items-center justify-between gap-4 border-t border-neutral-200 py-8 md:flex-row",
+        "flex flex-col items-center justify-between gap-4 py-8 md:flex-row",
+        contentDividerTopClassName,
       )}
     >
       <p className="m-0 text-center text-sm text-neutral-500 md:text-start">

@@ -29,6 +29,9 @@ export const maxLgPxGutterClassName =
   "max-lg:px-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const pGutterClassName = "p-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const mxNegGutterClassName = "mx-[-clamp(0.75rem,2.222vw,2.5rem)]";
+/** Break out of a content container to full viewport width (carousel, in-grid CTAs). */
+export const fullBleedBreakoutClassName =
+  "box-border w-screen ms-[calc(50%-50vw)]";
 export const insetSGutterClassName = "inset-s-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const insetEGutterClassName = "inset-e-[clamp(0.75rem,2.222vw,2.5rem)]";
 export const insetXGutterClassName = "inset-x-[clamp(0.75rem,2.222vw,2.5rem)]";
@@ -45,7 +48,7 @@ export const mdPySectionClassName = "md:py-[clamp(2.5rem,6vw,4rem)]";
 export const mdPtSectionClassName = "md:pt-[clamp(2.5rem,6vw,4rem)]";
 export const mdPbSectionClassName = "md:pb-[clamp(2.5rem,6vw,4rem)]";
 
-/** Legacy section padding - prefer pageSectionStackClassName + sectionMarginYClassName. */
+/** Legacy section padding - @deprecated unused in components; use PageSectionStack + sectionMargin* instead. */
 export const sectionPaddingClassName = [
   pySectionSmClassName,
   mdPySectionClassName,
@@ -63,26 +66,53 @@ export const sectionBottomPaddingClassName = [
   mdPbSectionClassName,
 ].join(" ");
 
-/** Canonical vertical margin block - 48px; keep in sync with @utility page-section-stack. */
+/** Canonical vertical margin block - 48px; keep in sync with page-section-stack / mt-12 siblings. */
 const sectionMarginBlockClasses = ["my-12"] as const;
 
 /** Pixel height of one section margin step (`my-12` / `mt-12` at 16px root). */
 export const SECTION_MARGIN_BLOCK_PX = 48;
 
-/** Top-only margin for one-off blocks outside PageSectionStack. */
+/**
+ * Top-only margin - use inside a section (heading ↔ track, prose ↔ inline gallery),
+ * or on one-off blocks outside PageSectionStack (e.g. ProductSubnav after hero).
+ * Do not stack on PageSectionStack direct children - spacing comes from pageSectionStackChildSpacingClassName.
+ */
 export const sectionMarginTopClassName = "mt-12";
 
-/** Bottom-only margin before the next page block (e.g. hero before optional banner/subnav). */
+/**
+ * Bottom-only margin before the next page block (e.g. hero before optional banner/subnav).
+ * Pair with pageSectionStackFlushTop on the stack below so you do not double the 48px step.
+ */
 export const sectionMarginBottomClassName = "mb-12";
 
-/** Symmetric vertical margin for blocks outside PageSectionStack (e.g. newsletter). */
+/**
+ * Heading row to track / grid below - 24px mobile, 48px md+ (tighter than page block rhythm).
+ */
+export const sectionHeaderTrackGapClassName = "mb-6 md:mb-12";
+
+/**
+ * Symmetric vertical margin for blocks outside PageSectionStack (e.g. SiteNewsletter in PageShell).
+ * Prefer PageSectionStack for marketing page rhythm; avoid my-12 on stack direct children.
+ */
 export const sectionMarginYClassName = sectionMarginBlockClasses.join(" ");
+
+/**
+ * Vertical padding inside full-width tinted bands (bg-neutral-100, gold split panels) - 48px, all breakpoints.
+ * Not sectionMargin* - that is gap between PageSectionStack blocks, not padding within a band.
+ */
+export const sectionBandPaddingClassName = "py-12";
+
+/** Band padding from md up - use when mobile uses compact accordion rows without a full band. */
+export const mdSectionBandPaddingClassName = "md:py-12";
 
 /** Bottom margin for internal sticky subnav (top spacing comes from page header cluster gap). */
 export const internalSubnavMarginBottomClassName = "mb-12";
 
 /** Symmetric margin for internal sticky subnav after a hero/banner outside a header cluster. */
 export const internalSubnavMarginClassName = sectionMarginYClassName;
+
+/** Horizontal rule between content blocks (article meta, editorial columns, drawer sections). */
+export const contentDividerTopClassName = "border-t border-neutral-300";
 
 /** Shared tab link styling for ProductSubnav, wishlist segments, brand A-Z index, etc. */
 export const internalSubnavLinkClassName = [
@@ -98,13 +128,23 @@ export const internalSubnavHoverLineClassName = "h-0.5 bg-neutral-900/45";
 export const internalSubnavActiveLineClassName =
   "pointer-events-none absolute inset-x-3 bottom-0 z-20 h-0.5 bg-neutral-900";
 
-/** Intro + internal subnav in one PageSectionStack child - tight top, 48px below subnav. */
+/**
+ * Intro + sticky horizontal subnav in one PageSectionStack child (24-32px gap).
+ * Use on inspirations listing, arrangements gallery, favorites, salons B - not on Category/Listing PLP
+ * where intro and full content section are separate stack children (48px mt-12).
+ */
 export const pageHeaderClusterClassName = "flex flex-col gap-6 md:gap-8";
 
 /** Applied on PageSectionStack root - see @utility page-section-stack in app.css. */
 export const pageSectionStackClassName = "page-section-stack";
 
-/** Drop stack top margin when the page opens with a descriptive hero (pair with pageIntroHeroTopPaddingClassName). */
+/**
+ * Default 48px rhythm between PageSectionStack direct children (RevealSection / block wrappers).
+ * Reuse inside a single stack child when it renders multiple siblings (e.g. article chunks + embeds).
+ */
+export const pageSectionStackChildSpacingClassName = "[&>*+*]:mt-12";
+
+/** Drop stack top margin when the first stack child is a descriptive hero/intro (uses pageIntroHeroTopPaddingClassName). Hero outside the stack - omit flushTop so stack mt-12 gives 48px after the hero. */
 export const pageSectionStackFlushTopClassName = "mt-0";
 
 /** Top padding on descriptive hero copy column - below breadcrumbs, replaces stack mt-12. */

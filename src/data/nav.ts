@@ -14,7 +14,11 @@ export const mainNavItems: NavItem[] = [
     hasMenu: true,
     iconClass: "ph ph-squares-four",
   },
-  { label: "Inspiracje", href: "#inspiracje", iconClass: "ph ph-images" },
+  {
+    label: "Inspiracje",
+    href: "/inspiracje-listing",
+    iconClass: "ph ph-images",
+  },
   { label: "Nowości", href: "#nowosci", iconClass: "ph ph-sparkle" },
   { label: "Outlet", href: "#outlet", iconClass: "ph ph-tag" },
   { label: "Bestsellery", href: "#bestsellery", iconClass: "ph ph-fire" },
@@ -453,7 +457,7 @@ export const footerColumns = [
   },
   {
     links: [
-      { label: "Inspiracje", href: "#inspiracje" },
+      { label: "Inspiracje", href: "/inspiracje-listing" },
       { label: "Nowości", href: "#nowosci" },
       { label: "Outlet", href: "#outlet" },
       { label: "Bestsellery", href: "#bestsellery" },

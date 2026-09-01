@@ -224,7 +224,7 @@ export function SplitMediaCta({
     return (
       <section id={id} aria-labelledby={titleId} className={className}>
         <Container size="content">
-          <article className="overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0">
+          <article className="overflow-hidden rounded-xs border border-neutral-300 bg-neutral-0">
             <div className="grid md:grid-cols-2 md:items-stretch">
               <MediaPanel
                 image={image}
@@ -248,7 +248,7 @@ export function SplitMediaCta({
                 </div>
                 {actionsBlock}
                 {note ? (
-                  <p className="m-0 mt-4 font-body text-sm text-neutral-700">
+                  <p className="m-0 mt-4 text-center font-body text-sm text-neutral-700 sm:text-start">
                     {note}
                   </p>
                 ) : null}
@@ -316,7 +316,9 @@ export function SplitMediaCta({
               {actionsBlock}
 
               {note ? (
-                <p className="m-0 font-body text-sm text-neutral-700">{note}</p>
+                <p className="m-0 text-center font-body text-sm text-neutral-700 sm:text-start">
+                  {note}
+                </p>
               ) : null}
             </div>
           </div>

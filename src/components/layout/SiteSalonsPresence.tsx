@@ -7,6 +7,7 @@ import { AccordionCollapse } from "../motion/AccordionCollapse";
 import { PolandSalonsMap } from "./PolandSalonsMap";
 import { VoivodeshipSalonsDrawer } from "./VoivodeshipSalonsDrawer";
 import { cn } from "../../lib/cn";
+import { sectionBandPaddingClassName } from "../../lib/layoutTokens";
 import {
   footerSocialLinks,
   presenceSalonCities,
@@ -129,7 +130,7 @@ export function SiteSalonsPresence() {
     >
       <Container
         size="content"
-        className="relative z-10 pt-[clamp(2rem,5vw,3rem)] pb-8 md:pt-[clamp(2.5rem,6vw,4rem)] md:pb-10"
+        className={cn("relative z-10", sectionBandPaddingClassName)}
       >
         <ul
           className={cn(
@@ -164,10 +165,7 @@ export function SiteSalonsPresence() {
 
       <Container
         size="content"
-        className={cn(
-          "relative z-10",
-          "py-3 md:pt-10 md:pb-[clamp(2.5rem,6vw,4rem)]",
-        )}
+        className={cn("relative z-10", sectionBandPaddingClassName)}
       >
         {/* Mobile: accordion for city list; map stays visible. */}
         <button

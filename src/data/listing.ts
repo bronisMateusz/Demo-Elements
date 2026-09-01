@@ -1,9 +1,7 @@
 import { assetUrl } from "../app/assets";
-import {
-  HOME_MAGAZINE_FLIPBOOK_HREF,
-  homeInspiration,
-  homeMagazine,
-} from "./home";
+import { ctaContextImages } from "../lib/ctaContextImages";
+import { HOME_MAGAZINE_FLIPBOOK_HREF, homeMagazine } from "./home";
+import { inspirationCarouselArrangements } from "./inspirationCarousel";
 import type { SeoBlock } from "./seoBlocks";
 import type {
   ListingCuratedTile,
@@ -700,11 +698,16 @@ export const listingPage = {
     description:
       "Nasz doradca będzie czekał na Ciebie w salonie - pozna Twój projekt, pokaże umywalki na żywo i pomoże dobrać całe wyposażenie. Bez pośpiechu, w dogodnym terminie.",
     ctaLabel: "Umów spotkanie",
-    image: {
-      src: assetUrl("home/about-salon.jpg"),
-      alt: "Salon Elements - ekspozycja łazienki",
-      fit: "cover" as const,
-    },
+    image: ctaContextImages.locateCta,
+  },
+  advisorCta: {
+    eyebrow: "Doradztwo",
+    title: "Nie wiesz, która umywalka pasuje?\nZobacz modele na żywo.",
+    description:
+      "Napisz do doradcy online albo umów spotkanie w salonie - pokażemy umywalki z listy na ekspozycji i pomożemy dobrać rozmiar oraz montaż.",
+    image: ctaContextImages.bathroomGreen,
+    primaryCta: { label: "Napisz do doradcy", href: "#kontakt" },
+    secondaryCta: { label: "Umów spotkanie" },
   },
   curated: {
     title: "Zobacz wyselekcjonowane produkty",
@@ -731,25 +734,7 @@ export const listingPage = {
   },
   inspiration: {
     title: "Poznaj nasze aranżacje i zainspiruj się",
-    arrangements: homeInspiration.arrangements.map((item, index) => {
-      const titles = [
-        "Umywalka wisząca w minimalistycznej łazience",
-        "Podwójna umywalka w łazience rodzinnej",
-        "Beton i czarna armatura",
-        "Sprytny metraż do 4 m²",
-        "Elegancja w ciepłej palecie",
-        "Głębokie kolory i matowe wykończenia",
-      ];
-      return {
-        ...item,
-        id: `listing-insp-${index + 1}`,
-        title: titles[index] ?? item.title,
-        image: {
-          ...item.image,
-          alt: titles[index] ?? item.image.alt,
-        },
-      };
-    }),
+    arrangements: inspirationCarouselArrangements("listing-insp"),
   },
 } as const;
 

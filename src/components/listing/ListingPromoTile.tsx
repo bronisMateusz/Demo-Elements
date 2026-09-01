@@ -9,10 +9,15 @@ import { Eyebrow } from "../ui/Eyebrow";
 type ListingPromoTileProps = {
   promo: ListingGridPromo;
   className?: string;
+  onCtaClick?: () => void;
 };
 
 /** Magazine / campaign cell for the PLP grid - styled after HomeMagazine. */
-export function ListingPromoTile({ promo, className }: ListingPromoTileProps) {
+export function ListingPromoTile({
+  promo,
+  className,
+  onCtaClick,
+}: ListingPromoTileProps) {
   const titleId = useId();
   const isExternal = /^https?:\/\//i.test(promo.href);
   const linkTarget = isExternal ? "_blank" : undefined;
@@ -54,18 +59,32 @@ export function ListingPromoTile({ promo, className }: ListingPromoTileProps) {
           <p className="m-0 max-w-md font-body text-sm leading-relaxed text-neutral-200 md:text-ui">
             {promo.description}
           </p>
-          <Button
-            href={promo.href}
-            variant="primary"
-            tone="onDark"
-            size="lg"
-            className="mt-1 w-full sm:w-auto"
-            target={linkTarget}
-            rel={linkRel}
-          >
-            {promo.ctaLabel}
-            <i className="ph ph-arrow-right" aria-hidden="true" />
-          </Button>
+          {onCtaClick ? (
+            <Button
+              as="button"
+              type="button"
+              variant="primary"
+              tone="onDark"
+              size="lg"
+              className="mt-1 w-full sm:w-auto"
+              onClick={onCtaClick}
+            >
+              {promo.ctaLabel}
+            </Button>
+          ) : (
+            <Button
+              href={promo.href}
+              variant="primary"
+              tone="onDark"
+              size="lg"
+              className="mt-1 w-full sm:w-auto"
+              target={linkTarget}
+              rel={linkRel}
+            >
+              {promo.ctaLabel}
+              <i className="ph ph-arrow-right" aria-hidden="true" />
+            </Button>
+          )}
         </div>
 
         <div

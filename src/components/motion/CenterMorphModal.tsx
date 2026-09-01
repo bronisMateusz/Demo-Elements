@@ -185,7 +185,7 @@ export function CenterMorphModal({
                         : CENTER_UNFOLD_TRANSITION
                     }
                     className={cn(
-                      "relative origin-center overflow-hidden rounded-xs border border-neutral-200 bg-neutral-0 will-change-[clip-path]",
+                      "relative origin-center overflow-hidden rounded-xs border border-neutral-300 bg-neutral-0 will-change-[clip-path]",
                       className,
                     )}
                   >

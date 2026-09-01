@@ -28,7 +28,7 @@ type CategoryRowsProps = {
 
 function categoryRowBlockClassName(followedByMoreInSection: boolean) {
   return cn(
-    "border-b border-neutral-200 pb-12",
+    "border-b border-neutral-300 pb-12",
     followedByMoreInSection && "mb-12",
   );
 }
@@ -150,13 +150,17 @@ export function CategoryRows({ rows, locate }: CategoryRowsProps) {
             ) : null}
 
             {row.locateAfter && locate ? (
-              <LocateCta
-                title={locate.title}
-                description={locate.description}
-                ctaLabel={locate.ctaLabel}
-                image={locate.image}
-                className={categoryRowBlockClassName(hasMoreRows)}
-              />
+              <Container size="content">
+                <div className={categoryRowBlockClassName(hasMoreRows)}>
+                  <LocateCta
+                    embedded
+                    title={locate.title}
+                    description={locate.description}
+                    ctaLabel={locate.ctaLabel}
+                    image={locate.image}
+                  />
+                </div>
+              </Container>
             ) : null}
           </Fragment>
         );

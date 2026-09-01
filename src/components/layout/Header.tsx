@@ -12,9 +12,11 @@ import {
   XL_MIN_WIDTH_PX,
 } from "../../lib/layoutTokens";
 import { useSiteChrome } from "../../hooks/useSiteChrome";
+import { useInspirationAskDrawerRequest } from "../../hooks/useInspirationAskDrawer";
 import { useInspirationProductsDrawerRequest } from "../../hooks/useInspirationProductsDrawer";
 import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
 import type { InspirationArrangement } from "../../types/product";
+import { AdvisorAskDrawer } from "../marketing/AdvisorAskDrawer";
 import { InspirationProductsDrawer } from "../inspiration/InspirationProductsDrawer";
 import { HeaderBar } from "./header/HeaderBar";
 import { HeaderSalonStrip } from "./header/HeaderSalonStrip";
@@ -39,6 +41,8 @@ export function Header() {
   const [inspirationOpen, setInspirationOpen] = useState(false);
   const [inspirationArrangement, setInspirationArrangement] =
     useState<InspirationArrangement | null>(null);
+  const [askOpen, setAskOpen] = useState(false);
+  const [askTopic, setAskTopic] = useState("Elements");
   const [isScrolled, setIsScrolled] = useState(false);
   const [utilityConcealed, setUtilityConcealed] = useState(false);
   const lastScrollY = useRef(0);
@@ -67,8 +71,19 @@ export function Header() {
     setInspirationArrangement(null);
   }, []);
 
+  const openInspirationAsk = useCallback(
+    (arrangement: InspirationArrangement) => {
+      setInspirationOpen(false);
+      setInspirationArrangement(null);
+      setAskTopic(arrangement.title);
+      setAskOpen(true);
+    },
+    [],
+  );
+
   useSalonDrawerRequest(openSalonDrawer);
   useInspirationProductsDrawerRequest(openInspirationProducts);
+  useInspirationAskDrawerRequest(openInspirationAsk);
 
   useLayoutEffect(() => {
     syncSiteHeaderBarHeightVar();
@@ -146,7 +161,7 @@ export function Header() {
       <div
         id="siteHeaderBar"
         className={cn(
-          "site-header-layer sticky top-0 z-101 border-b border-neutral-200 bg-neutral-0/95 backdrop-blur-sm xl:top-11",
+          "site-header-layer sticky top-0 z-101 border-b border-neutral-300 bg-neutral-0/95 backdrop-blur-sm xl:top-11",
           isScrolled && "bg-neutral-0/92",
         )}
       >
@@ -169,6 +184,11 @@ export function Header() {
         open={inspirationOpen}
         arrangement={inspirationArrangement}
         onClose={closeInspirationProducts}
+      />
+      <AdvisorAskDrawer
+        open={askOpen}
+        onClose={() => setAskOpen(false)}
+        topicTitle={askTopic}
       />
     </>
   );

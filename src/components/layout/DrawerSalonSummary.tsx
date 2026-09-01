@@ -20,7 +20,7 @@ export function DrawerSalonSummary({
   changeLabel = salonCardCopy.changeLabel,
 }: DrawerSalonSummaryProps) {
   return (
-    <div className="flex gap-3 rounded-xs border border-neutral-200 bg-neutral-50 p-3">
+    <div className="flex gap-3 rounded-xs border border-neutral-300 bg-neutral-50 p-3">
       <div className="size-14 shrink-0 overflow-hidden bg-neutral-0">
         <img
           src={salonDirectoryImageFor(salon?.id ?? "")}

@@ -31,7 +31,7 @@ export function ProductInspiration({
       titleId="inspiration-title"
       navPlacement={navPlacement}
       onControlsChange={onControlsChange}
-      seeMoreHref="#inspiracje"
+      seeMoreHref="/inspiracje-listing"
       seeMoreLabel="Zobacz więcej aranżacji"
       endCap={{
         label: "Kliknij poniżej",

@@ -1,6 +1,9 @@
 import { cn } from "../../lib/cn";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
-import { sectionMarginYClassName } from "../../lib/layoutTokens";
+import {
+  sectionMarginYClassName,
+  sectionBandPaddingClassName,
+} from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
 import { Button } from "../ui/Button";
@@ -92,7 +95,8 @@ export function LocateCta({
 
       <div
         className={cn(
-          "relative flex flex-col items-start justify-center gap-3 overflow-hidden px-6 py-8 md:gap-4 md:px-10 md:py-10",
+          "relative flex flex-col items-start justify-center gap-3 overflow-hidden px-6 md:gap-4 md:px-10 lg:px-12",
+          sectionBandPaddingClassName,
           image && "border-t border-neutral-0/10 md:border-t-0 md:border-s",
         )}
       >
@@ -140,7 +144,6 @@ export function LocateCta({
             onClick={onCtaClick ?? requestSalonDrawer}
           >
             {ctaLabel}
-            <i className="ph ph-arrow-right" aria-hidden="true" />
           </Button>
         )}
       </div>
