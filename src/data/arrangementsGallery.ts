@@ -7,7 +7,9 @@ import { arrangementProducts } from "./arrangementProducts";
 const ARRANGEMENTS_GALLERY_MAGAZINE_FLIPBOOK_HREF =
   "https://www.elements-show.pl/flipbook/1";
 
-export const ARRANGEMENTS_GALLERY_PAGE_SIZE = 15;
+import { INSPIRATIONS_LISTING_PAGE_SIZE } from "./inspirationsListing";
+
+export const ARRANGEMENTS_GALLERY_PAGE_SIZE = INSPIRATIONS_LISTING_PAGE_SIZE;
 
 /** Card copy and images aligned with elements-show.pl/galeria-aranzacji (Sep 2026). */
 export const arrangementsGalleryPage = {

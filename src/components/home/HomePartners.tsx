@@ -1,6 +1,7 @@
 import { homePartners } from "../../data/home";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { cn } from "../../lib/cn";
+import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { Section } from "../structural/Section";
@@ -42,7 +43,7 @@ export function HomePartners() {
                     draggable={false}
                   />
                 </div>
-                <div className="flex flex-1 flex-col p-6 md:p-8">
+                <div className="flex flex-1 flex-col p-6 md:p-8 lg:p-10">
                   <h3 className="m-0 flex items-center gap-3 font-heading text-h3 leading-heading font-medium text-neutral-900">
                     <i
                       className={cn(
@@ -65,7 +66,7 @@ export function HomePartners() {
                     <Button
                       href={card.href}
                       variant="secondary"
-                      className={cn("w-fit")}
+                      className={splitMediaCtaButtonClassName}
                     >
                       {card.ctaLabel}
                       <i className="ph ph-arrow-right" aria-hidden="true" />

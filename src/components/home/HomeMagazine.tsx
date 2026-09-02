@@ -63,7 +63,7 @@ export function HomeMagazine({
           />
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-stretch gap-5 px-[clamp(0.75rem,2.222vw,2.5rem)] py-12 sm:flex-row sm:items-center sm:gap-8 md:gap-10 lg:max-w-6xl lg:gap-12 xl:gap-14">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-stretch gap-5 p-5 sm:flex-row sm:items-center sm:gap-8 sm:p-6 md:gap-10 md:p-8 lg:max-w-6xl lg:gap-12 lg:p-10 xl:gap-14">
           <div className="flex min-w-0 flex-1 flex-col items-stretch gap-3 sm:items-start lg:max-w-xl">
             <Eyebrow variant="gold" className="text-gold-400">
               {eyebrow}
