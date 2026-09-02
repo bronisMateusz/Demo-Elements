@@ -130,12 +130,12 @@ export function InspirationListingCatalog({
 
       <InspirationListingGrid
         items={pageItems}
-        promo={promo}
+        promo={safePage === 1 ? promo : undefined}
         onPromoCtaClick={onPromoCtaClick}
-        advisorCta={advisorCta}
+        advisorCta={safePage === 1 ? advisorCta : undefined}
         onAdvisorAskOpen={onAdvisorAskOpen}
         onAdvisorBookOpen={onAdvisorBookOpen}
-        locateCta={locateCta}
+        locateCta={safePage === 1 ? locateCta : undefined}
         onLocateCtaClick={onLocateCtaClick}
         cardAction={cardAction}
         showFavorite={showFavorite}

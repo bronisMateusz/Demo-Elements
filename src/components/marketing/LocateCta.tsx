@@ -1,9 +1,6 @@
 import { cn } from "../../lib/cn";
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
-import {
-  sectionMarginYClassName,
-  sectionBandPaddingClassName,
-} from "../../lib/layoutTokens";
+import { sectionMarginYClassName } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
 import { Button } from "../ui/Button";
@@ -95,8 +92,7 @@ export function LocateCta({
 
       <div
         className={cn(
-          "relative flex flex-col items-start justify-center gap-3 overflow-hidden px-6 md:gap-4 md:px-10 lg:px-12",
-          sectionBandPaddingClassName,
+          "relative flex flex-col items-start justify-center gap-3 overflow-hidden px-6 py-6 md:gap-4 md:px-10 md:py-12 lg:px-12",
           image && "border-t border-neutral-0/10 md:border-t-0 md:border-s",
         )}
       >
