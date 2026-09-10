@@ -7,6 +7,7 @@ import { Button } from "../ui/Button";
 import { productFixedBarClassName } from "../ui/productFixedBarClassName";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
 import { AskDrawer } from "./AskDrawer";
+import { ProductCardPrice } from "./ProductCardPrice";
 
 type AskFabProps = {
   /** Favorite storage key (usually product id). */
@@ -16,6 +17,8 @@ type AskFabProps = {
   /** Catalog / display SKU shown in the ask drawer. */
   productSku: string;
   price: string;
+  /** Struck previous price when the product is on promo. */
+  pricePrevious?: string;
   image: ProductImage;
   askLabel?: string;
   className?: string;
@@ -33,6 +36,7 @@ export function AskFab({
   brand,
   productSku,
   price,
+  pricePrevious,
   image,
   askLabel = "Zadaj pytanie",
   className,
@@ -79,51 +83,56 @@ export function AskFab({
             <p className="mt-1 mb-0 truncate font-heading text-lg leading-tight text-neutral-900">
               {title}
             </p>
-            <p className="mt-1 mb-0 font-body text-ui tabular-nums text-neutral-700">
-              {price}
-            </p>
           </div>
 
-          <div className="flex w-full gap-2 lg:w-auto lg:shrink-0">
-            <Button
-              as="button"
-              type="button"
-              variant="secondary"
-              size="lg"
-              className={cn(
-                "shrink-0 max-lg:h-11 max-lg:aspect-square max-lg:px-0 lg:h-11",
-                isFavorite &&
-                  "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
-              )}
-              ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
-              ariaPressed={isFavorite}
-              onClick={toggle}
-            >
-              <i
-                className={
-                  isFavorite
-                    ? "ph-fill ph-bookmark-simple"
-                    : "ph ph-bookmark-simple"
-                }
-                aria-hidden="true"
-              />
-              <span className="hidden truncate lg:inline">
-                {isFavorite ? "W schowku" : "Dodaj do schowka"}
-              </span>
-            </Button>
+          <div className="flex w-full items-center gap-3 lg:w-auto lg:shrink-0 lg:gap-5">
+            <ProductCardPrice
+              price={price}
+              pricePrevious={pricePrevious}
+              className="me-auto shrink-0 lg:me-0"
+            />
 
-            <Button
-              as="button"
-              type="button"
-              variant="primary"
-              size="lg"
-              className="min-w-0 flex-1 max-lg:h-11 max-lg:px-5 lg:h-11 lg:flex-none"
-              ariaLabel={askLabel}
-              onClick={() => setAskOpen(true)}
-            >
-              <i className="ph ph-chat-circle" aria-hidden="true" />
-              <span className="truncate">{askLabel}</span>
-            </Button>
+            <div className="flex min-w-0 gap-2">
+              <Button
+                as="button"
+                type="button"
+                variant="secondary"
+                size="lg"
+                className={cn(
+                  "shrink-0 max-lg:h-11 max-lg:aspect-square max-lg:px-0 lg:h-11",
+                  isFavorite &&
+                    "border-gold-500 text-gold-500 hover:border-gold-500 hover:text-neutral-0",
+                )}
+                ariaLabel={isFavorite ? "Usuń ze schowka" : "Dodaj do schowka"}
+                ariaPressed={isFavorite}
+                onClick={toggle}
+              >
+                <i
+                  className={
+                    isFavorite
+                      ? "ph-fill ph-bookmark-simple"
+                      : "ph ph-bookmark-simple"
+                  }
+                  aria-hidden="true"
+                />
+                <span className="hidden truncate lg:inline">
+                  {isFavorite ? "W schowku" : "Dodaj do schowka"}
+                </span>
+              </Button>
+
+              <Button
+                as="button"
+                type="button"
+                variant="primary"
+                size="lg"
+                className="min-w-0 flex-1 max-lg:h-11 max-lg:px-5 lg:h-11 lg:flex-none"
+                ariaLabel={askLabel}
+                onClick={() => setAskOpen(true)}
+              >
+                <i className="ph ph-chat-circle" aria-hidden="true" />
+                <span className="truncate">{askLabel}</span>
+              </Button>
+            </div>
           </div>
         </div>
       </aside>

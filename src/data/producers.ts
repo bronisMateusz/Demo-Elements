@@ -49,6 +49,11 @@ function brandOf(name: string): ProducerBrand {
   };
 }
 
+/** Resolve directory brand (logo + slug) by display name. */
+export function producerBrandByName(name: string): ProducerBrand {
+  return brandOf(name);
+}
+
 /** Full directory list from the makieta (stable, not randomized). */
 const BRAND_NAMES = [
   "ACO",

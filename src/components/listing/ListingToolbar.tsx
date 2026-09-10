@@ -8,6 +8,7 @@ type ListingToolbarProps = {
   resultCount: number;
   filterState: ListingFilterState;
   onFilterChange: (next: ListingFilterState) => void;
+  /** Opens the mobile filters drawer. */
   onOpenFilters?: () => void;
   className?: string;
 };

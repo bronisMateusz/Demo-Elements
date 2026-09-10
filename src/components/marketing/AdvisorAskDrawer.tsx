@@ -5,6 +5,9 @@ type AdvisorAskDrawerProps = {
   open: boolean;
   onClose: () => void;
   topicTitle?: string;
+  /** Drawer header - defaults to product-ask chrome. */
+  title?: string;
+  description?: string;
 };
 
 const advisorImage = {
@@ -18,6 +21,8 @@ export function AdvisorAskDrawer({
   open,
   onClose,
   topicTitle = "Doradztwo Elements",
+  title,
+  description,
 }: AdvisorAskDrawerProps) {
   return (
     <AskDrawer
@@ -27,6 +32,11 @@ export function AdvisorAskDrawer({
       productBrand="Elements"
       productSku="DORADZTWO"
       productImage={advisorImage}
+      title={title}
+      description={description}
+      showContextSummaries={false}
+      showRoutingFields={false}
+      showArchitectFields
     />
   );
 }

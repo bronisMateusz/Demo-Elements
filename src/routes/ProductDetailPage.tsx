@@ -167,6 +167,7 @@ export function ProductDetailPage() {
         brand={product.brand}
         productSku={product.sku}
         price={product.price.current}
+        pricePrevious={product.price.previous}
         image={product.images[0]}
         askLabel={product.cta.actionLabel}
         askOpen={askOpen}

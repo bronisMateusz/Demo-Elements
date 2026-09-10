@@ -5,33 +5,63 @@ import { inspirationCarouselArrangements } from "./inspirationCarousel";
 import { subcategoryPage } from "./subcategory";
 
 export const architectZoneSubnavItems: PdpSubnavItem[] = [
-  { id: "opiekunowie", label: "Opiekunowie architektów" },
   { id: "korzysci", label: "Korzyści" },
-  { id: "inspiracje", label: "Inspiracje" },
   { id: "proces", label: "Proces współpracy" },
-  { id: "pliki", label: "Pliki do pobrania" },
+  { id: "opiekunowie", label: "Opiekunowie architektów" },
   { id: "aktualnosci", label: "Aktualności" },
 ];
 
 export const architectZonePage = {
   title: "Strefa Architekta",
   metaDescription:
-    "Pełna oferta wiodących marek, materiały do projektu, dedykowany opiekun i 19 salonów z przestrzenią do spotkań z Twoim klientem.",
+    "Showroomy, szeroka oferta marek, dedykowani opiekunowie i wsparcie na każdym etapie projektu.",
   breadcrumbs: [
     { label: "Strona główna", to: "/" },
     { label: "Strefa architekta", current: true },
   ],
   hero: {
-    title: "Strefa Architekta",
-    lead: "Pełna oferta wiodących marek, materiały do projektu, dedykowany opiekun i 19 salonów z przestrzenią do spotkań z Twoim klientem. Wszystko w jednym miejscu.",
-    askLabel: "Rozpocznij współpracę",
-    productsLabel: "Pliki do pobrania",
-    productsHref: "#pliki",
-    image: {
-      src: assetUrl("home/partners-architects.jpg"),
-      alt: "Architekt w salonie Elements - strefa pracy z próbkami",
-      fit: "cover" as const,
-      focalPoint: { x: 55, y: 22 },
+    eyebrow: "Strefa Architekta Elements",
+    title: "Projektujesz wnętrza? Zrealizuj je z ELEMENTS",
+    lead: "Showroomy, szeroka oferta marek, dedykowani opiekunowie i wsparcie na każdym etapie projektu.",
+    askLabel: "Poznaj korzyści współpracy",
+    askHref: "#korzysci",
+    productsLabel: "Pobierz materiały projektowe",
+    productsHref: "/pliki-do-pobrania",
+    gallery: {
+      columnOne: [
+        {
+          src: assetUrl("home/partners-architects.jpg"),
+          alt: "Architekt w salonie Elements",
+          fit: "cover" as const,
+          focalPoint: { x: 55, y: 22 },
+        },
+        {
+          src: assetUrl("home/architect-loyalty.jpg"),
+          alt: "Praca nad projektem łazienki",
+          fit: "cover" as const,
+          focalPoint: { x: 50, y: 45 },
+        },
+      ],
+      columnTwo: [
+        {
+          src: assetUrl("home/about-salon.png"),
+          alt: "Rozmowa z doradcą w salonie",
+          fit: "cover" as const,
+          focalPoint: { x: 50, y: 40 },
+        },
+        {
+          src: assetUrl("home/advisor-consultation.jpg"),
+          alt: "Konsultacja projektu łazienki",
+          fit: "cover" as const,
+          focalPoint: { x: 50, y: 45 },
+        },
+        {
+          src: assetUrl("salon/expo/bydgoszcz-4.png"),
+          alt: "Ekspozycja w salonie Elements",
+          fit: "cover" as const,
+          focalPoint: { x: 50, y: 45 },
+        },
+      ],
     },
   },
   guardian: {
@@ -55,37 +85,154 @@ export const architectZonePage = {
   },
   benefits: {
     id: "korzysci",
-    title: "Co zyskujesz, współpracując z Elements",
+    title: "Co zyskujesz, współpracując z Elements?",
     items: [
       {
-        iconClass: "ph ph-user-circle",
-        title: "Dedykowany opiekun architekta",
-        text: "Jedna osoba prowadzi Twoje projekty od zapytania po realizację.",
+        title: "Możliwość spotykania się z klientami w naszej przestrzeni",
+        text: "19 salonów Elements, w których pokażesz klientowi produkty i materiały na żywo",
+        image: {
+          src: assetUrl("architect/salon-elements-warszawa-02.webp"),
+          alt: "Ekspozycja salonu Elements Warszawa",
+          fit: "cover" as const,
+          focalPoint: { x: 50, y: 45 },
+        },
       },
       {
-        iconClass: "ph ph-buildings",
-        title: "Komplet marek premium",
-        text: "Villeroy & Boch, Geberit, Duravit, Hansgrohe, Grohe, Roca, Laufen, Kaldewei, Marazzi, Tubądzin i inne.",
+        title: "Szeroki wybór produktów i marek premium",
+        text: "Wszystko, czego szukasz w jednym miejscu - bez krążenia między dostawcami",
+        logos: [
+          {
+            label: "Villeroy&Boch",
+            logoSrc: assetUrl("brands/villeroy-boch.svg"),
+          },
+          { label: "Geberit", logoSrc: assetUrl("brands/geberit.svg") },
+          { label: "Duravit", logoSrc: assetUrl("brands/duravit.svg") },
+          { label: "Hansgrohe", logoSrc: assetUrl("brands/hansgrohe.svg") },
+          { label: "Grohe", logoSrc: assetUrl("brands/grohe.svg") },
+          { label: "Roca", logoSrc: assetUrl("brands/roca.svg") },
+          { label: "Marazzi", logoSrc: assetUrl("brands/marazzi.svg") },
+          { label: "Tubądzin", logoSrc: assetUrl("brands/tubadzin.png") },
+          { label: "Oristo", logoSrc: assetUrl("brands/oristo.svg") },
+          { label: "Omnires", logoSrc: assetUrl("brands/omnires.svg") },
+          {
+            label: "Ideal Standard",
+            logoSrc: assetUrl("brands/ideal-standard.svg"),
+          },
+          { label: "Excellent", logoSrc: assetUrl("brands/excellent.svg") },
+        ],
       },
       {
-        iconClass: "ph ph-folder-open",
-        title: "Materiały do projektu",
-        text: "Modele 3D, pliki CAD/DWG, tekstury, karty techniczne i katalogi - pod ręką.",
+        title: "Próbki materiałów i pliki 3D/CAD",
+        text: "Wzorniki, modele i tekstury w preferowanym formacie",
+        arcStack: [
+          {
+            src: assetUrl("architect/samples/trinnity-gres.webp"),
+            alt: "Płytki Trinnity gres",
+            fit: "cover" as const,
+            zoom: 0.95,
+          },
+          {
+            src: assetUrl("architect/samples/trinnity-bateria.webp"),
+            alt: "Bateria zlewozmywakowa Trinnity",
+            fit: "cover" as const,
+            zoom: 0.92,
+          },
+          {
+            src: assetUrl("architect/samples/trinnity-odplyw.jpg"),
+            alt: "Odpływ Trinnity",
+            fit: "cover" as const,
+            zoom: 1.12,
+          },
+          {
+            src: assetUrl("architect/samples/trinnity-plytka.png"),
+            alt: "Płytka Trinnity",
+            fit: "cover" as const,
+            zoom: 1.15,
+          },
+          {
+            src: assetUrl("architect/samples/lorros.jpg"),
+            alt: "Produkt Lorros",
+            fit: "cover" as const,
+            zoom: 1.85,
+          },
+          {
+            src: assetUrl("architect/samples/nobili.png"),
+            alt: "Produkt Nobili",
+            fit: "cover" as const,
+            zoom: 1.75,
+          },
+          {
+            src: assetUrl("architect/samples/manzoni.png"),
+            alt: "Produkt Manzoni",
+            fit: "cover" as const,
+            zoom: 1.3,
+          },
+        ],
       },
       {
-        iconClass: "ph ph-storefront",
-        title: "19 salonów z przestrzenią do spotkań",
-        text: "Zaproś klienta, pokażcie ofertę przy dobrej kawie, dobierzcie rozwiązania na żywo.",
+        title: "Wsparcie na miejscu",
+        text: "Nasi specjaliści pomogą Ci w doborze produktów i rozwiązań pasujących do projektu",
+        image: ctaContextImages.washbasin,
+        video: "video/architect-cta.mp4",
       },
       {
-        iconClass: "ph ph-squares-four",
-        title: "Próbki i wzorniki",
-        text: "Dostęp do próbek płytek, armatury i materiałów - także z dostawą na miejsce inwestycji.",
+        title: "Kontakt z opiekunem architektów",
+        text: "W każdym salonie znajdziesz dedykowanego opiekuna współpracy z architektami",
+        image: ctaContextImages.advisorConsultation,
+      },
+      {
+        title: "Wsparcie przy realizacji",
+        text: "Nie kończymy naszej pomocy na wycenie - możemy pomóc także w dostawie i podczas realizacji",
+        overlapPhotos: {
+          back: {
+            src: assetUrl("architect/o-elements-blok.webp"),
+            alt: "Zespół Elements przy projekcie",
+            fit: "cover" as const,
+            focalPoint: { x: 50, y: 40 },
+          },
+          front: {
+            src: assetUrl("architect/delivery-support.jpg"),
+            alt: "Dostawa i realizacja zamówienia",
+            fit: "cover" as const,
+            focalPoint: { x: 50, y: 45 },
+          },
+        },
+      },
+    ],
+  },
+  extraBenefits: {
+    eyebrow: "Dodatkowe korzyści",
+    title: "A ponadto otrzymasz dostęp do:",
+    items: [
+      {
+        iconClass: "ph ph-hand-coins",
+        title: "Programu prowizyjnego",
+        text: "Wynagrodzenie za projekty zrealizowane z Elements.",
       },
       {
         iconClass: "ph ph-airplane-tilt",
-        title: "Szkolenia i „Elements w Podróży”",
-        text: "Bądź na bieżąco z trendami i markami - wydarzenia, szkolenia i wyjazdy.",
+        title: "Programu „Elements w Podróży”",
+        text: "Wyjazdy i nagrody za długofalową współpracę.",
+      },
+      {
+        iconClass: "ph ph-megaphone",
+        title: "Możliwości promowania projektów",
+        text: "W dziale Inspiracje - dodatkowa ekspozycja i źródło nowych klientów.",
+      },
+      {
+        iconClass: "ph ph-chalkboard-teacher",
+        title: "Szkoleń i wydarzeń specjalnych",
+        text: "Premiery marek, warsztaty produktowe, spotkania branżowe.",
+      },
+      {
+        iconClass: "ph ph-envelope-simple",
+        title: "Newslettera dla architektów",
+        text: "Nowości i zaproszenia na wydarzenia prosto na e-mail.",
+      },
+      {
+        iconClass: "ph ph-books",
+        title: "Dodatkowych materiałów",
+        text: "Katalogi i inne narzędzia pomocne we współpracy z klientami.",
       },
     ],
   },
@@ -126,49 +273,26 @@ export const architectZonePage = {
   },
   process: {
     id: "proces",
-    title: "Jak wygląda współpraca",
+    eyebrow: "Proces współpracy",
+    title: "Jak wygląda współpraca z Elements na co dzień?",
     items: [
       {
-        iconClass: "ph ph-coffee",
-        title: "Spotkanie",
-        text: "Wypełnij formularz kontaktowy i umów się na spotkanie z Doradcą Architekta. Przy filiżance kawy porozmawiamy o potrzebach Twoich projektów i możliwościach współpracy.",
+        title: "Poznajmy Twój projekt",
+        text: "Opowiedz o potrzebach klienta i wybierz opiekuna.",
       },
       {
-        iconClass: "ph ph-pencil-ruler",
-        title: "Projekt",
-        text: "Wykorzystuj zasoby z naszej bazy w swoich projektach - jeśli potrzebujesz dodatkowych materiałów, zorganizujemy je we współpracy z producentami.",
+        title: "Dobierz produkty",
+        text: "Skorzystaj z próbek, ekspozycji, katalogów i wsparcia technicznego.",
       },
       {
-        iconClass: "ph ph-presentation-chart",
-        title: "Ekspozycja",
-        text: "Zaproś do nas swoich klientów, a my przedstawimy im ofertę produktów, po czym wspólnie wybierzemy idealne rozwiązanie.",
+        title: "Pokaż rozwiązania klientowi",
+        text: "Spotkajcie się w salonie i porównajcie materiały na żywo.",
       },
       {
-        iconClass: "ph ph-truck",
-        title: "Realizacja",
-        text: "Realizujemy zamówienie Twoich klientów zawsze zgodnie z Twoimi wytycznymi i dostarczamy je do miejsca inwestycji.",
+        title: "Zrealizuj projekt",
+        text: "Elements zajmie się wyceną, zamówieniem i dostawą na miejsce.",
       },
     ],
-  },
-  downloads: {
-    id: "pliki",
-    title: "Chmura architekta ELEMENTS",
-    description:
-      "Dla wybranych produktów dostępnych tylko w Salonach Elements udostępniamy bazę modeli CAD. Dołącz do grona architektów korzystających z zasobów 3D i przyspiesz swoją pracę dzięki naszym plikom.",
-    catalogCta: {
-      slogan: ["Katalogi i materiały", "do Twojego projektu"] as const,
-      title: "Zobacz pełną bazę katalogów",
-      description:
-        "Foldery producentów, karty techniczne, deklaracje i certyfikaty - w jednym miejscu online. Pobieraj to, czego potrzebujesz do pracy z klientem.",
-      ctaLabel: "Przejdź do bazy",
-      href: "https://www.elements-show.pl/do-pobrania",
-      image: {
-        src: assetUrl("home/architect-catalog-cta.jpg"),
-        alt: "Architekt omawia plan domu z klientem nad rzutami",
-        fit: "cover" as const,
-        focalPoint: { x: 50, y: 55 },
-      },
-    },
   },
   blog: {
     id: "aktualnosci",
@@ -195,6 +319,9 @@ export const architectZonePage = {
       "Wypełnij formularz - opiekun architekta odezwie się i ustali szczegóły współpracy.",
     askLabel: "Rozpocznij współpracę",
     bookLabel: "Umów spotkanie",
+    askDrawerTitle: "Rozpocznij współpracę",
+    askDrawerDescription:
+      "Zostaw kontakt - opiekun architekta odezwie się w 1 dzień roboczy.",
     image: ctaContextImages.advisorConsultation,
   },
 } as const;

@@ -149,7 +149,7 @@ export const arrangementProducts = {
   article: [
     arrangementProduct(
       "art-silia-bidet",
-      "Silia",
+      "Omnires",
       "Bateria bidetowa Silia podtynkowa z rączką Bidetta, stal szczotkowana",
       {
         price: "1 490 zł",
@@ -162,7 +162,7 @@ export const arrangementProducts = {
     ),
     arrangementProduct(
       "art-silia-basin",
-      "Silia",
+      "Omnires",
       "Bateria umywalkowa Silia podtynkowa, stal szczotkowana",
       {
         price: "890 zł",

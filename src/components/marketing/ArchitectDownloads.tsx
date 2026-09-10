@@ -16,7 +16,8 @@ import {
 
 type ArchitectDownloadsProps = {
   groups: readonly ArchitectDownloadGroup[];
-  title: string;
+  /** When set, renders SectionHeader (library demos). Page uses PageIntro instead. */
+  title?: string;
   titleId?: string;
   description?: string;
   catalogCta?: CatalogDatabaseCtaContent;
@@ -57,7 +58,7 @@ function DownloadList({ files }: { files: readonly ArchitectDownloadFile[] }) {
   );
 }
 
-/** Brand-grouped CAD / 3D download accordions for the architect zone. */
+/** Brand-grouped CAD / 3D download accordions (architect downloads page). */
 export function ArchitectDownloads({
   groups,
   title,
@@ -70,14 +71,20 @@ export function ArchitectDownloads({
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section aria-labelledby={titleId} className={className}>
+    <section
+      aria-labelledby={title ? titleId : undefined}
+      aria-label={title ? undefined : "Pliki do pobrania"}
+      className={className}
+    >
       <Container size="content">
-        <SectionHeader
-          title={title}
-          titleId={titleId}
-          lead={description}
-          className="mb-8 md:mb-10"
-        />
+        {title ? (
+          <SectionHeader
+            title={title}
+            titleId={titleId}
+            lead={description}
+            className="mb-8 md:mb-10"
+          />
+        ) : null}
 
         <div className={contentDividerTopClassName}>
           {groups.map((group) => {

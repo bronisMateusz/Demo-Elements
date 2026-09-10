@@ -1,23 +1,29 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { pdpSectionScrollMarginClassName } from "../../constants/pdpSubnav";
 import { architectZonePage } from "../../data/architectZone";
 import { salonOptions } from "../../data/nav";
+import { SalonLocationChips } from "./SalonLocationChips";
 import {
   salonContactEyebrowClassName,
   salonContactLinkOffsetClassName,
 } from "../salon/salonContactLinkClassName";
+import { contentDividerTopClassName } from "../../lib/layoutTokens";
+import { cn } from "../../lib/cn";
 import { Section } from "../structural/Section";
 import { SectionHeader } from "../structural/SectionHeader";
 import { Container } from "../ui/Container";
 import { EmptyState } from "../ui/EmptyState";
 import { EyebrowSygnet } from "../ui/Eyebrow";
-import { ListSelect } from "../ui/ListSelect";
 
 const { guardian } = architectZonePage;
 
+const salonChips = salonOptions.map((salon) => ({
+  id: salon.id,
+  label: salon.name.replace(/^ELEMENTS\s+/i, ""),
+}));
+
 export function ArchitectGuardian() {
-  const selectId = useId();
-  const [salonId, setSalonId] = useState("");
+  const [salonId, setSalonId] = useState<string>(salonChips[0]?.id ?? "");
   const selectedSalon = salonOptions.find((salon) => salon.id === salonId);
   const showContact = Boolean(selectedSalon);
 
@@ -25,44 +31,42 @@ export function ArchitectGuardian() {
     <Section
       id={guardian.id}
       ariaLabelledby="architect-guardian-title"
-      tone="muted"
       className={pdpSectionScrollMarginClassName}
     >
       <Container size="content">
-        <div className="grid gap-8 rounded-xs bg-neutral-0 p-6 shadow-subtle sm:p-8 lg:grid-cols-2 lg:gap-12 lg:p-10">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
           <div className="min-w-0">
             <SectionHeader
               title={guardian.title}
               titleId="architect-guardian-title"
-              className="mb-3"
+              className="mb-0"
             />
-            <p className="m-0 max-w-prose font-body text-ui leading-relaxed text-neutral-600">
+            <p className="mt-4 mb-0 max-w-prose font-body text-ui leading-relaxed text-neutral-600">
               {guardian.lead}
             </p>
 
-            <label
-              htmlFor={selectId}
-              className="mt-8 mb-2 block font-body text-sm font-medium text-neutral-900"
-            >
-              {guardian.selectLabel}
-            </label>
-            <ListSelect
-              id={selectId}
-              value={salonId}
-              onChange={setSalonId}
-              placeholder={guardian.selectPlaceholder}
-              leadingIconClass="ph ph-map-pin-line"
-              aria-label={guardian.selectLabel}
-              options={salonOptions.map((salon) => ({
-                value: salon.id,
-                label: salon.name,
-              }))}
-            />
+            <div className="mt-8">
+              <SalonLocationChips
+                chips={salonChips}
+                activeId={salonId}
+                onSelect={setSalonId}
+                ariaLabel={guardian.selectLabel}
+                role="tablist"
+                mobileAs="chips"
+                chipGapClassName="gap-2"
+              />
+            </div>
           </div>
 
-          <div className="min-w-0">
+          <div
+            className={cn(
+              "min-w-0",
+              contentDividerTopClassName,
+              "pt-8 lg:border-t-0 lg:pt-0",
+            )}
+          >
             {showContact && selectedSalon ? (
-              <div className="flex h-full min-h-65 flex-col justify-center">
+              <div className="flex flex-col lg:h-full lg:min-h-65 lg:justify-center">
                 <p className="m-0 inline-flex items-center gap-2 font-body text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
                   <EyebrowSygnet />
                   {guardian.contact.role}

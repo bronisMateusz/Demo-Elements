@@ -7,7 +7,6 @@ import {
 } from "../data/architectZone";
 import { PageShell } from "../components/layout/PageShell";
 import { Breadcrumbs } from "../components/orientation/Breadcrumbs";
-import { ArchitectDownloads } from "../components/marketing/ArchitectDownloads";
 import { ArchitectGuardian } from "../components/marketing/ArchitectGuardian";
 import {
   AdvisorCta,
@@ -15,21 +14,24 @@ import {
 } from "../components/marketing/AdvisorCta";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
 import { BrandHero } from "../components/marketing/BrandHero";
+import { CatalogDatabaseCta } from "../components/marketing/CatalogDatabaseCta";
 import { EditorialCarousel } from "../components/marketing/EditorialCarousel";
 import { FloatingAdvisorCta } from "../components/marketing/FloatingAdvisorCta";
-import { InspirationGallery } from "../components/inspiration/InspirationGallery";
 import { ProductSubnav } from "../components/product/ProductSubnav";
 import { PageSectionStack } from "../components/structural/PageSectionStack";
-import { PromoSplitCta } from "../components/structural/PromoSplitCta";
 import { Section } from "../components/structural/Section";
 import { TextRevealLead } from "../components/motion/TextRevealLead";
 import { SiteNewsletter } from "../components/layout/SiteNewsletter";
 import { Container } from "../components/ui/Container";
+import { IconBentoGrid } from "../components/marketing/IconBentoGrid";
+import { ProcessSteps } from "../components/marketing/ProcessSteps";
 import { IconTile } from "../components/ui/IconTile";
-import { architectDownloadGroups } from "../data/architectDownloads";
+import { Eyebrow } from "../components/ui/Eyebrow";
+import { architectDownloadsPage } from "../data/architectDownloadsPage";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { cn } from "../lib/cn";
+import { sectionHeaderTrackGapClassName } from "../lib/layoutTokens";
 
 const page = architectZonePage;
 
@@ -61,12 +63,14 @@ function RevealSection({
 function ArchitectIconGrid({
   id,
   titleId,
+  eyebrow,
   title,
   items,
   columnsClassName,
 }: {
-  id: string;
+  id?: string;
   titleId: string;
+  eyebrow?: string;
   title: string;
   items: readonly {
     iconClass: string;
@@ -82,16 +86,27 @@ function ArchitectIconGrid({
       className={pdpSectionScrollMarginClassName}
     >
       <Container size="content">
-        <TextRevealLead
-          id={titleId}
-          revealUnit="word"
-          className="mb-8 max-w-3xl md:mb-10"
-          typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
-          mutedClassName="text-neutral-900/20"
-          fillClassName="text-neutral-900"
+        <div
+          className={cn(
+            "flex max-w-3xl flex-col gap-3",
+            sectionHeaderTrackGapClassName,
+          )}
         >
-          {title}
-        </TextRevealLead>
+          {eyebrow ? (
+            <Eyebrow variant="muted" className="mb-0">
+              {eyebrow}
+            </Eyebrow>
+          ) : null}
+          <TextRevealLead
+            id={titleId}
+            revealUnit="word"
+            typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
+            mutedClassName="text-neutral-900/20"
+            fillClassName="text-neutral-900"
+          >
+            {title}
+          </TextRevealLead>
+        </div>
         <ul className={cn("m-0 grid list-none gap-2 p-0", columnsClassName)}>
           {items.map((item) => (
             <li key={item.title} className="min-h-0">
@@ -130,94 +145,58 @@ export function ArchitectZonePage() {
       >
         <BrandHero
           title={page.hero.title}
+          eyebrow={page.hero.eyebrow}
           lead={page.hero.lead}
           askLabel={page.hero.askLabel}
-          onAsk={() => setAskOpen(true)}
+          askHref={page.hero.askHref}
           productsLabel={page.hero.productsLabel}
           productsHref={page.hero.productsHref}
-          image={page.hero.image}
+          gallery={page.hero.gallery}
         />
 
         <ProductSubnav items={architectZoneSubnavItems} />
 
         <PageSectionStack flushTop>
           <RevealSection>
-            <ArchitectGuardian />
-          </RevealSection>
-
-          <RevealSection>
-            <ArchitectIconGrid
+            <IconBentoGrid
               id={page.benefits.id}
               titleId="architect-benefits-title"
               title={page.benefits.title}
               items={page.benefits.items}
+            />
+          </RevealSection>
+
+          <RevealSection>
+            <ArchitectIconGrid
+              titleId="architect-extra-benefits-title"
+              eyebrow={page.extraBenefits.eyebrow}
+              title={page.extraBenefits.title}
+              items={page.extraBenefits.items}
               columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
             />
           </RevealSection>
 
           <RevealSection>
-            <PromoSplitCta
-              titleId="architect-invite-title"
-              variant="card"
-              eyebrow={page.inviteSalon.eyebrow}
-              title={page.inviteSalon.title}
-              description={page.inviteSalon.description}
-              items={page.inviteSalon.items}
-              image={page.inviteSalon.image}
-            />
-          </RevealSection>
-
-          <RevealSection>
-            <PromoSplitCta
-              titleId="architect-loyalty-title"
-              variant="card"
-              mediaPosition="end"
-              eyebrow={page.loyalty.eyebrow}
-              title={page.loyalty.title}
-              description={page.loyalty.description}
-              image={page.loyalty.image}
-              primary={{
-                href: page.loyalty.ctaHref,
-                label: page.loyalty.ctaLabel,
-              }}
-            />
-          </RevealSection>
-
-          <RevealSection className={pdpSectionScrollMarginClassName}>
-            <Section
-              id={page.inspiration.id}
-              ariaLabelledby="architect-insp-title"
-            >
-              <InspirationGallery
-                arrangements={[...page.inspiration.arrangements]}
-                title={page.inspiration.title}
-                description={page.inspiration.description}
-                promo={page.inspiration.promo}
-                titleId="architect-insp-title"
-              />
-            </Section>
-          </RevealSection>
-
-          <RevealSection>
-            <ArchitectIconGrid
+            <ProcessSteps
               id={page.process.id}
               titleId="architect-process-title"
+              eyebrow={page.process.eyebrow}
               title={page.process.title}
               items={page.process.items}
-              columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
             />
           </RevealSection>
 
-          <RevealSection className={pdpSectionScrollMarginClassName}>
-            <div id={page.downloads.id}>
-              <ArchitectDownloads
-                title={page.downloads.title}
-                titleId="architect-downloads-title"
-                description={page.downloads.description}
-                catalogCta={page.downloads.catalogCta}
-                groups={architectDownloadGroups}
-              />
-            </div>
+          <RevealSection>
+            <ArchitectGuardian />
+          </RevealSection>
+
+          <RevealSection>
+            <CatalogDatabaseCta
+              {...architectDownloadsPage.downloads.catalogCta}
+              embedded={false}
+              titleId="architect-zone-downloads-cta-title"
+              href="/pliki-do-pobrania"
+            />
           </RevealSection>
 
           <RevealSection className={pdpSectionScrollMarginClassName}>
@@ -235,17 +214,6 @@ export function ArchitectZonePage() {
             </div>
           </RevealSection>
 
-          <RevealSection className="relative z-20">
-            <AdvisorCta
-              titleId="architect-advisor-cta-title"
-              content={advisorContent}
-              primaryAction="ask"
-              onAskOpen={() => setAskOpen(true)}
-              onBookOpen={requestSalonDrawer}
-              className={pdpSectionScrollMarginClassName}
-            />
-          </RevealSection>
-
           <RevealSection className={pdpSectionScrollMarginClassName}>
             <SiteNewsletter
               embedded
@@ -254,6 +222,17 @@ export function ArchitectZonePage() {
               description={page.newsletter.description}
               imageSrc={page.newsletter.image.src}
               imageAlt={page.newsletter.image.alt}
+            />
+          </RevealSection>
+
+          <RevealSection className="relative z-20">
+            <AdvisorCta
+              titleId="architect-advisor-cta-title"
+              content={advisorContent}
+              primaryAction="ask"
+              onAskOpen={() => setAskOpen(true)}
+              onBookOpen={requestSalonDrawer}
+              className={pdpSectionScrollMarginClassName}
             />
           </RevealSection>
         </PageSectionStack>
@@ -267,6 +246,8 @@ export function ArchitectZonePage() {
         open={askOpen}
         onClose={() => setAskOpen(false)}
         topicTitle={page.title}
+        title={page.advisor.askDrawerTitle}
+        description={page.advisor.askDrawerDescription}
       />
     </>
   );

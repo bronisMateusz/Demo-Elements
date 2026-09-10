@@ -83,6 +83,13 @@ i.ph:not(.ph-fill) {
   --transition-duration-base: 280ms;
   --transition-duration-slow: 480ms;
 
+  /* Vertical image marquees (BrandHero gallery) - loop on duplicated stacks */
+  --animate-marquee-y: marquee-y 42s linear infinite;
+  --animate-marquee-y-reverse: marquee-y 48s linear infinite reverse;
+  /* Horizontal logo marquees (IconBentoGrid) */
+  --animate-marquee-x: marquee-x 36s linear infinite;
+  --animate-marquee-x-reverse: marquee-x 42s linear infinite reverse;
+
   /* Extra small - between default mobile and `sm` (40rem). */
   --breakpoint-xs: 30rem;
 }
@@ -320,6 +327,145 @@ html.elements-pause-motion .motion-fill-chevron {
   }
 }
 
+@keyframes marquee-y {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* beUI Arc Stack - portrait cards fan through a semicircle */
+@keyframes arc-stack-cycle {
+  0%,
+  100% {
+    opacity: 1;
+    z-index: 50;
+    transform: translate3d(0, -14%, 72px) rotate(0deg) scale(1.06);
+  }
+
+  14.285% {
+    opacity: 0.9;
+    z-index: 40;
+    transform: translate3d(88%, 0, 42px) rotate(9deg) scale(0.91);
+  }
+
+  28.57% {
+    opacity: 0.52;
+    z-index: 30;
+    transform: translate3d(166%, 29%, 16px) rotate(17deg) scale(0.74);
+  }
+
+  42.855% {
+    opacity: 0.12;
+    z-index: 10;
+    transform: translate(220%, 61%) rotate(23deg) scale(0.62);
+  }
+
+  48% {
+    opacity: 0;
+    z-index: 0;
+    transform: translate(250%, 76%) rotate(26deg) scale(0.58);
+  }
+
+  52% {
+    opacity: 0;
+    z-index: 0;
+    transform: translate(-250%, 76%) rotate(-26deg) scale(0.58);
+  }
+
+  57.14% {
+    opacity: 0.12;
+    z-index: 10;
+    transform: translate(-220%, 61%) rotate(-23deg) scale(0.62);
+  }
+
+  71.425% {
+    opacity: 0.52;
+    z-index: 30;
+    transform: translate3d(-166%, 29%, 16px) rotate(-17deg) scale(0.74);
+  }
+
+  85.71% {
+    opacity: 0.9;
+    z-index: 40;
+    transform: translate3d(-88%, 0, 42px) rotate(-9deg) scale(0.91);
+  }
+}
+
+@utility arc-stack-card {
+  backface-visibility: hidden;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+  animation: arc-stack-cycle 9.8s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+@utility arc-stack-card-static {
+  animation: none;
+}
+
+@utility arc-stack-card-static-1 {
+  opacity: 0.12;
+  z-index: 10;
+  transform: translate(-220%, 61%) rotate(-23deg) scale(0.62);
+}
+
+@utility arc-stack-card-static-2 {
+  opacity: 0.52;
+  z-index: 30;
+  transform: translate3d(-166%, 29%, 16px) rotate(-17deg) scale(0.74);
+}
+
+@utility arc-stack-card-static-3 {
+  opacity: 0.9;
+  z-index: 40;
+  transform: translate3d(-88%, 0, 42px) rotate(-9deg) scale(0.91);
+}
+
+@utility arc-stack-card-static-4 {
+  opacity: 1;
+  z-index: 50;
+  transform: translate3d(0, -14%, 72px) rotate(0deg) scale(1.06);
+}
+
+@utility arc-stack-card-static-5 {
+  opacity: 0.9;
+  z-index: 40;
+  transform: translate3d(88%, 0, 42px) rotate(9deg) scale(0.91);
+}
+
+@utility arc-stack-card-static-6 {
+  opacity: 0.52;
+  z-index: 30;
+  transform: translate3d(166%, 29%, 16px) rotate(17deg) scale(0.74);
+}
+
+@utility arc-stack-card-static-7 {
+  opacity: 0.12;
+  z-index: 10;
+  transform: translate(220%, 61%) rotate(23deg) scale(0.62);
+}
+
 html.elements-pause-motion .home-hero-progress {
   @apply animate-none scale-x-100;
+}
+
+html.elements-pause-motion .animate-marquee-y,
+html.elements-pause-motion .animate-marquee-y-reverse,
+html.elements-pause-motion .animate-marquee-x,
+html.elements-pause-motion .animate-marquee-x-reverse,
+html.elements-pause-motion .arc-stack-card {
+  @apply animate-none!;
 }

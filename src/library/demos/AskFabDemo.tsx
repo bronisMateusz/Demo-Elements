@@ -19,6 +19,7 @@ export function AskFabDemo() {
           brand={montebianco80.brand}
           productSku={montebianco80.sku}
           price={montebianco80.price.current}
+          pricePrevious={montebianco80.price.previous}
           image={image}
           showAfterScroll={-1}
           className="static inset-auto translate-y-0 pointer-events-auto lg:inset-auto lg:bottom-auto lg:w-full lg:translate-x-0"

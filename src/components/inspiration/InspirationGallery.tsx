@@ -54,7 +54,7 @@ type InspirationGalleryProps = {
   titleId?: string;
   /** Optional lead under the title. */
   description?: string;
-  /** `header` - beside title; `footer` - under the track (default); `none` - parent owns nav. */
+  /** `header` - beside title on md+ (mobile keeps footer arrows); `footer` - under the track; `none` - parent owns nav. */
   navPlacement?: "header" | "footer" | "none";
   /** Trailing hint slide - fills the empty peek beside the last card (not a link). Pass `false` to omit. */
   endCap?:
@@ -65,7 +65,9 @@ type InspirationGalleryProps = {
         description?: string;
       }
     | false;
-  /** Footer CTA under the track (same pattern as home inspirations). */
+  /** Footer CTAs under the track (preferred over single seeMore*). */
+  footerActions?: readonly { label: string; href: string }[];
+  /** Single footer CTA - used when `footerActions` is omitted. */
   seeMoreHref?: string;
   seeMoreLabel?: string;
   /** Optional callout between the header and project track. */
@@ -105,7 +107,8 @@ export function InspirationGallery({
   description,
   navPlacement = "footer",
   endCap: endCapProp = DEFAULT_END_CAP,
-  seeMoreHref = "/inspiracje-listing",
+  footerActions,
+  seeMoreHref,
   seeMoreLabel = "Zobacz więcej aranżacji",
   promo,
   onControlsChange,
@@ -126,8 +129,16 @@ export function InspirationGallery({
   const imageRefs = useRef<Map<number, HTMLImageElement>>(new Map());
   const frameRefs = useRef<Map<number, HTMLElement>>(new Map());
   const showHeaderNav = navPlacement === "header" && arrangements.length > 1;
-  const showFooterNav = navPlacement === "footer" && arrangements.length > 1;
-  const showFooterCta = navPlacement === "footer" && Boolean(seeMoreHref);
+  const showFooterNav =
+    (navPlacement === "footer" || navPlacement === "header") &&
+    arrangements.length > 1;
+  const footerLinks =
+    footerActions && footerActions.length > 0
+      ? footerActions
+      : seeMoreHref
+        ? [{ label: seeMoreLabel, href: seeMoreHref }]
+        : [];
+  const showFooterCta = footerLinks.length > 0 && navPlacement !== "none";
   const showFooter = showFooterNav || showFooterCta;
   const arrangementCount = arrangements.length;
   const lastArrangementIndex = Math.max(0, arrangementCount - 1);
@@ -339,42 +350,40 @@ export function InspirationGallery({
               className="w-full min-w-0 xl:min-w-80 xl:flex-1"
             />
           ) : showHeaderNav ? (
-            <div className="flex items-center gap-4">
-              <p className="m-0 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
+            <div className="hidden items-center gap-3 md:flex">
+              <button
+                type="button"
+                className={iconButtonClassName({
+                  variant: "elevated",
+                  className: cn(
+                    "shadow-subtle",
+                    atStart && "pointer-events-none opacity-35",
+                  ),
+                })}
+                aria-label="Poprzednia aranżacja"
+                disabled={atStart}
+                onClick={goPrev}
+              >
+                <i className="ph ph-caret-left" aria-hidden="true" />
+              </button>
+              <p className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
                 {formatSlideIndex(activeIndex, arrangements.length)}
               </p>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  className={iconButtonClassName({
-                    variant: "elevated",
-                    className: cn(
-                      "shadow-subtle",
-                      atStart && "pointer-events-none opacity-35",
-                    ),
-                  })}
-                  aria-label="Poprzednia aranżacja"
-                  disabled={atStart}
-                  onClick={goPrev}
-                >
-                  <i className="ph ph-caret-left" aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  className={iconButtonClassName({
-                    variant: "elevated",
-                    className: cn(
-                      "shadow-subtle",
-                      atEnd && "pointer-events-none opacity-35",
-                    ),
-                  })}
-                  aria-label="Następna aranżacja"
-                  disabled={atEnd}
-                  onClick={goNext}
-                >
-                  <i className="ph ph-caret-right" aria-hidden="true" />
-                </button>
-              </div>
+              <button
+                type="button"
+                className={iconButtonClassName({
+                  variant: "elevated",
+                  className: cn(
+                    "shadow-subtle",
+                    atEnd && "pointer-events-none opacity-35",
+                  ),
+                })}
+                aria-label="Następna aranżacja"
+                disabled={atEnd}
+                onClick={goNext}
+              >
+                <i className="ph ph-caret-right" aria-hidden="true" />
+              </button>
             </div>
           ) : null}
         </div>
@@ -497,7 +506,12 @@ export function InspirationGallery({
           )}
         >
           {showFooterNav ? (
-            <div className="flex items-center gap-3">
+            <div
+              className={cn(
+                "flex items-center gap-3",
+                navPlacement === "header" && "md:hidden",
+              )}
+            >
               <button
                 type="button"
                 className={iconButtonClassName({
@@ -537,11 +551,20 @@ export function InspirationGallery({
             </div>
           ) : null}
 
-          {showFooterCta && seeMoreHref ? (
-            <Button href={seeMoreHref} variant="secondary" className="w-fit">
-              {seeMoreLabel}
-              <i className="ph ph-arrow-right" aria-hidden="true" />
-            </Button>
+          {showFooterCta ? (
+            <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:w-auto sm:gap-4">
+              {footerLinks.map((action) => (
+                <Button
+                  key={action.href + action.label}
+                  href={action.href}
+                  variant="secondary"
+                  className="w-fit"
+                >
+                  {action.label}
+                  <i className="ph ph-arrow-right" aria-hidden="true" />
+                </Button>
+              ))}
+            </div>
           ) : null}
         </Container>
       ) : null}

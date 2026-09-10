@@ -159,11 +159,6 @@ export const inspirationArticleModule: LibraryModule = {
             <div className="mt-10">
               <InspirationArticleContent
                 sections={inspirationArticlePage.sections.slice(0, 2)}
-                embeds={inspirationArticlePage.embeds.filter(
-                  (embed) => embed.afterSectionId === "cabinetry",
-                )}
-                appointmentCta={inspirationArticlePage.appointmentCta}
-                magazine={inspirationArticlePage.magazine}
               />
             </div>
           </div>

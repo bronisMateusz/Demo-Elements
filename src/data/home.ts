@@ -524,8 +524,10 @@ export const homeAdvisorCta = {
 export const homeInspiration = {
   eyebrow: "Inspiracje",
   title: "Poznaj nasze aranżacje i zainspiruj się",
-  seeMoreLabel: "Zobacz więcej aranżacji",
-  seeMoreHref: "/inspiracje-listing",
+  footerActions: [
+    { label: "Aranżacje producentów", href: "/producent" },
+    { label: "Galeria inspiracji", href: "/inspiracje-listing" },
+  ],
   arrangements: inspirationCarouselArrangements("insp"),
 } as const satisfies { arrangements: InspirationArrangement[] } & Record<
   string,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { inspirationArticlePage } from "../data/inspirationArticle";
 import { PageShell } from "../components/layout/PageShell";
@@ -12,11 +12,12 @@ import {
   InspirationArticleContent,
   InspirationArticleHero,
 } from "../components/inspiration/InspirationArticleContent";
+import { InspirationArticleProductsBar } from "../components/inspiration/InspirationArticleProductsBar";
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
-import { ProductBleedCarouselSection } from "../components/product/ProductBleedCarouselSection";
 import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { Section } from "../components/structural/Section";
 import { requestSalonDrawer } from "../hooks/useSelectedSalon";
+import type { InspirationArrangement } from "../types/product";
 
 export function InspirationArticlePage() {
   const page = inspirationArticlePage;
@@ -30,6 +31,18 @@ export function InspirationArticlePage() {
     askLabel: page.finalCta.askLabel,
     bookLabel: page.finalCta.bookLabel,
   };
+
+  const productsArrangement = useMemo<InspirationArrangement>(
+    () => ({
+      id: "inspiration-article-products",
+      title: "Produkty z tej aranżacji",
+      image: page.heroImage,
+      items: [],
+      products: [...page.products],
+      showProducts: true,
+    }),
+    [page.heroImage, page.products],
+  );
 
   return (
     <>
@@ -56,18 +69,9 @@ export function InspirationArticlePage() {
         />
 
         <PageSectionStack>
-          <ProductBleedCarouselSection
-            title="Produkty z tej aranżacji"
-            titleId="inspiration-article-products-title"
-            products={[...page.products]}
-          />
-
           <InspirationArticleContent
             sections={[...page.sections]}
-            embeds={[...page.embeds]}
-            appointmentCta={page.appointmentCta}
-            magazine={page.magazine}
-            onAppointmentClick={requestSalonDrawer}
+            products={page.products}
           />
 
           <AdvisorCta
@@ -95,6 +99,11 @@ export function InspirationArticlePage() {
           </Section>
         </PageSectionStack>
       </PageShell>
+
+      <InspirationArticleProductsBar
+        arrangement={productsArrangement}
+        products={page.products}
+      />
 
       <AdvisorAskDrawer
         open={askOpen}

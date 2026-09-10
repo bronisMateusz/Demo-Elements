@@ -4,6 +4,8 @@ export const askDrawerCopy = {
     "Podaj kod pocztowy - przekażemy je do najbliższego salonu. Odpowiemy w 1 dzień roboczy.",
   nameLabel: "Imię",
   namePlaceholder: "Twoje imię",
+  lastNameLabel: "Nazwisko",
+  lastNamePlaceholder: "Twoje nazwisko",
   phoneLabel: "Telefon",
   phonePlaceholder: "np. +48 600 000 000",
   emailLabel: "E-mail",
@@ -33,6 +35,40 @@ export const askDrawerCopy = {
     "Twoja wiadomość została przyjęta. Skontaktujemy się wkrótce.",
   closeLabel: "Zamknij",
   salonEmptyHint: "Wskaż salon, do którego trafi zapytanie.",
+} as const;
+
+/** Extra fields for architect / cooperation ask drawer (makieta #azForm). */
+export const architectAskFormCopy = {
+  salonLabel: "Salon Elements, z którym współpracuję / najbliższy",
+  salonUnknown: "Nie wiem / dobierzcie najbliższy",
+  salonCities: [
+    "Warszawa",
+    "Kraków",
+    "Wrocław",
+    "Poznań",
+    "Gdańsk",
+    "Łódź",
+    "Katowice",
+    "Szczecin",
+  ],
+  roleConfirm:
+    "Jestem architektem, projektantem lub studentem kierunku architektura.",
+  marketingEyebrow: "Zgody marketingowe (opcjonalne - nie blokują wysłania)",
+  marketingIntro:
+    "Chcę otrzymywać informacje o szkoleniach, promocjach i nowościach dotyczących oferty Elements za pośrednictwem i wyrażam zgodę:",
+  marketingEmail:
+    "Wyrażam zgodę na przetwarzanie moich danych osobowych przez Grupę HBH* w celu marketingu bezpośredniego oferty Elements za pośrednictwem poczty elektronicznej (e-mail).",
+  marketingPhone:
+    "Wyrażam zgodę na przetwarzanie moich danych osobowych przez Grupę HBH* w celu marketingu bezpośredniego oferty Elements za pośrednictwem numeru telefonu.",
+  submitLabel: "Wyślij",
+  adminNoteBeforeEmail:
+    "Administratorem danych osobowych jest Grupa HBH*; kontakt: ",
+  adminEmail: "ochrona.danych@grupa-hbh.pl",
+  adminNoteAfterEmail:
+    ", która przetwarza dane osobowe w celu podjęcia działań na Państwa żądanie oraz w celach promocyjno-marketingowych (o ile wyrazili Państwo na to zgodę). Informujemy, że przysługuje Państwu prawo dostępu do swoich danych osobowych, ich sprostowania, ograniczenia przetwarzania, przenoszenia, wycofania zgody oraz złożenia skargi do organu nadzorczego. Szczegółowe informacje dostępne są w naszej ",
+  adminPrivacyLabel: "Polityce prywatności i plików cookies",
+  adminPrivacyHref: "#polityka-prywatnosci",
+  adminNoteEnd: ".",
 } as const;
 
 /** Strip catalog prefix (e.g. `KBN: `) for UI matching the eh prototype. */
