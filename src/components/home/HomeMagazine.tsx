@@ -26,7 +26,7 @@ type HomeMagazineProps = {
   className?: string;
 };
 
-/** Homepage magazine band - ListingPromoTile rhythm below lg; original desktop scale from lg. */
+/** Homepage magazine band - same height rhythm as ListingPromoTile. */
 export function HomeMagazine({
   content = homeMagazine,
   className,
@@ -43,7 +43,7 @@ export function HomeMagazine({
       className={cn("relative z-20 overflow-x-clip", className)}
     >
       <motion.div
-        className="relative overflow-hidden rounded-xs"
+        className="relative flex min-h-72 flex-col overflow-hidden rounded-xs"
         style={{ marginLeft: sideInset, marginRight: sideInset }}
       >
         <div
@@ -55,37 +55,38 @@ export function HomeMagazine({
           <div className="absolute inset-0 bg-radial-[at_10%_90%] from-brown-700/50 to-transparent to-45%" />
           <BrandMotif
             name="dots-grid"
-            className="absolute top-5 inset-e-4 h-24 w-7 opacity-40 brightness-0 invert sm:top-6 sm:inset-e-5 md:top-8 md:inset-e-6 md:h-36 md:w-9"
+            className="absolute top-5 inset-e-4 h-24 w-7 opacity-40 brightness-0 invert sm:top-6 sm:inset-e-5"
           />
           <BrandMotif
             name="arc-light"
-            className="absolute -bottom-8 -inset-e-6 size-[min(42vw,14rem)] opacity-35 md:-bottom-10 md:-inset-e-8 md:size-[min(48vw,20rem)]"
+            className="absolute -bottom-8 -inset-e-6 size-[min(42vw,14rem)] opacity-35"
           />
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-stretch gap-5 p-5 sm:flex-row sm:items-center sm:gap-8 sm:p-6 md:gap-10 md:p-8 lg:max-w-6xl lg:gap-12 lg:p-10 xl:gap-14">
-          <div className="flex min-w-0 flex-1 flex-col items-stretch gap-3 sm:items-start lg:max-w-xl">
+        <div className="relative z-2 flex min-h-72 flex-1 flex-col items-stretch gap-5 p-5 sm:flex-row sm:items-center sm:justify-center sm:gap-8 sm:p-6 md:gap-10 md:p-8 lg:gap-12 lg:p-10">
+          <div className="flex min-w-0 flex-col items-stretch gap-3 sm:max-w-md sm:items-start md:max-w-lg">
             <Eyebrow variant="gold" className="text-gold-400">
               {eyebrow}
             </Eyebrow>
             <TextRevealLead
               id="home-magazine-title"
               revealUnit="word"
-              className="max-w-xl"
-              typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
+              className="max-w-md"
+              typographyClassName="font-heading text-[clamp(1.25rem,2.2vw,1.75rem)] leading-[1.15] tracking-tight font-medium"
               mutedClassName="text-neutral-0/25"
               fillClassName="text-neutral-0"
             >
               {title}
             </TextRevealLead>
-            <p className="m-0 max-w-lg font-body text-sm leading-relaxed text-neutral-200 md:text-ui">
+            <p className="m-0 max-w-md font-body text-sm leading-relaxed text-neutral-200 md:text-ui">
               {description}
             </p>
-            <div className="mt-1 flex w-full flex-col items-stretch gap-3 sm:mt-4 sm:flex-row sm:flex-wrap sm:items-start lg:mt-8">
+            <div className="mt-1 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-start">
               <Button
                 href={primaryCta.href}
                 variant="primary"
                 tone="onDark"
+                size="lg"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto"
@@ -96,6 +97,7 @@ export function HomeMagazine({
                 href={secondaryCta.href}
                 variant="secondary"
                 tone="onDark"
+                size="lg"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto"
@@ -110,7 +112,7 @@ export function HomeMagazine({
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "relative mx-auto aspect-3/4 w-44 shrink-0 overflow-hidden rounded-xs bg-neutral-0 shadow-2 sm:mx-0 sm:w-48 md:w-52 lg:w-88 xl:w-96",
+              "relative mx-auto aspect-3/4 w-44 shrink-0 overflow-hidden rounded-xs bg-neutral-0 shadow-2 sm:mx-0 sm:w-48 md:w-52 lg:w-60",
               "outline-offset-4 transition-shadow duration-base ease-luxury",
               "hover:shadow-[0_12px_40px_rgb(26_24_21/0.12)]",
               "focus-visible:outline-2 focus-visible:outline-gold-500",
