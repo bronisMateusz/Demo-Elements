@@ -28,6 +28,8 @@ type SalonLocationChipsProps = {
   mobileAs?: "select" | "chips" | "scroll";
   /** Stretch chips to fill the row on small screens (equal cells). */
   stretchOnMobile?: boolean;
+  /** Gap between bordered chips (ignored for scroll layout). */
+  chipGapClassName?: string;
   /** Padding on the scrolling row so extremes keep a gutter. */
   scrollInsetClassName?: string;
   /** Larger hit area - use for primary toggles (Województwa / Miasta). */
@@ -45,6 +47,7 @@ function ChipRow({
   scroll,
   scrollInsetClassName,
   size = "md",
+  chipGapClassName = "gap-1",
 }: {
   chips: readonly SalonLocationChip[];
   activeId: string;
@@ -55,6 +58,7 @@ function ChipRow({
   scroll?: boolean;
   scrollInsetClassName?: string;
   size?: "md" | "lg";
+  chipGapClassName?: string;
 }) {
   const isLg = size === "lg";
   const reduce = useMotionReduced();
@@ -65,7 +69,8 @@ function ChipRow({
         <MotionFieldGroup>
           <SharedLayoutBg
             className={cn(
-              "inline-flex flex-wrap gap-1",
+              "inline-flex flex-wrap",
+              chipGapClassName,
               stretchOnMobile && "flex w-full sm:inline-flex sm:w-auto",
             )}
             pillClassName="rounded-xs bg-neutral-300"
@@ -195,6 +200,7 @@ export function SalonLocationChips({
   role = "group",
   mobileAs,
   stretchOnMobile = false,
+  chipGapClassName,
   scrollInsetClassName,
   size = "md",
   className,
@@ -224,6 +230,7 @@ export function SalonLocationChips({
         scroll={scroll}
         scrollInsetClassName={scrollInsetClassName}
         size={size}
+        chipGapClassName={chipGapClassName}
       />
     </div>
   );

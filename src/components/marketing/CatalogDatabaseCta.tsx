@@ -12,9 +12,12 @@ export type CatalogDatabaseCtaContent = {
 
 type CatalogDatabaseCtaProps = CatalogDatabaseCtaContent & {
   className?: string;
+  /** When false, wraps in section + Container (page-level promo). Default: embedded card only. */
+  embedded?: boolean;
+  titleId?: string;
 };
 
-/** Split-media catalog database promo below architect download lists. */
+/** Split-media catalog / downloads promo (architect zone + downloads page). */
 export function CatalogDatabaseCta({
   title,
   description,
@@ -22,17 +25,21 @@ export function CatalogDatabaseCta({
   href,
   image,
   className,
+  embedded = true,
+  titleId = "architect-catalog-cta-title",
 }: CatalogDatabaseCtaProps) {
+  const isExternal = /^https?:\/\//i.test(href);
+
   return (
     <LocateCta
-      embedded
+      embedded={embedded}
       title={title}
-      titleId="architect-catalog-cta-title"
+      titleId={titleId}
       description={description}
       ctaLabel={ctaLabel}
       ctaHref={href}
-      ctaTarget="_blank"
-      ctaRel="noopener noreferrer"
+      ctaTarget={isExternal ? "_blank" : undefined}
+      ctaRel={isExternal ? "noopener noreferrer" : undefined}
       image={image}
       className={className}
     />

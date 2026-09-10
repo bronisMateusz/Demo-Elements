@@ -20,23 +20,18 @@ export function BrandLogoTile({
   const classNames = cn(
     "group flex flex-col items-center no-underline",
     showName && "gap-3",
-    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+    "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold-500",
     className,
   );
 
   const body = (
     <>
-      <div
-        className={cn(
-          "flex h-21 w-full flex-col items-center justify-center gap-1.5 rounded-xs border border-transparent bg-neutral-0 px-3",
-          "transition-[border-color] duration-fast ease-out group-hover:border-gold-500",
-        )}
-      >
+      <div className="flex h-21 w-full flex-col items-center justify-center gap-1.5 bg-transparent px-3 transition-colors duration-fast ease-out group-hover:bg-neutral-100">
         {brand.logoSrc ? (
           <img
             src={brand.logoSrc}
             alt=""
-            className="max-h-10 max-w-full object-contain"
+            className="max-h-10 max-w-full object-contain opacity-70 transition-opacity duration-fast ease-out group-hover:opacity-100"
             loading="lazy"
             decoding="async"
             draggable={false}
@@ -44,7 +39,7 @@ export function BrandLogoTile({
         ) : (
           <>
             <i
-              className="ph ph-buildings text-2xl text-gold-600 opacity-65"
+              className="ph ph-buildings text-2xl text-gold-600 opacity-65 transition-opacity duration-fast ease-out group-hover:opacity-100"
               aria-hidden="true"
             />
             <span className="font-body text-[0.5625rem] font-semibold tracking-[0.12em] text-neutral-500 uppercase">

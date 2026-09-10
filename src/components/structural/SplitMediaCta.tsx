@@ -11,6 +11,7 @@ import { TextRevealLead } from "../motion/TextRevealLead";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
 import { cn } from "../../lib/cn";
+import { sectionBandPaddingClassName } from "../../lib/layoutTokens";
 
 type SplitMediaCtaProps = {
   id?: string;
@@ -282,7 +283,8 @@ export function SplitMediaCta({
 
           <div
             className={cn(
-              "relative flex flex-col justify-center bg-gold-100 px-5 py-5 sm:px-6 sm:py-6 md:px-10 md:py-12 lg:px-12",
+              "relative flex flex-col justify-center bg-gold-100 px-6 md:px-10 lg:px-12",
+              sectionBandPaddingClassName,
               mediaAtEnd && "md:order-1",
             )}
           >

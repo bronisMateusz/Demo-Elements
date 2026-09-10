@@ -49,10 +49,15 @@ export const inspirationGalleryModule: LibraryModule = {
         "Zaślepka na końcu toru - domyślnie włączona. Przy navPlacement=footer dopina „Kliknij poniżej” do CTA.",
     },
     {
+      name: "footerActions",
+      type: "{ label: string; href: string }[]",
+      description:
+        "CTA pod torem (np. home: 2 przyciski). Ma pierwszeństwo przed seeMore*.",
+    },
+    {
       name: "seeMoreHref",
       type: "string",
-      defaultValue: '"/inspiracje-listing"',
-      description: "CTA pod torem (gdy navPlacement=footer).",
+      description: "Pojedyncze CTA pod torem, gdy brak footerActions.",
     },
     {
       name: "seeMoreLabel",
@@ -70,7 +75,7 @@ export const inspirationGalleryModule: LibraryModule = {
       id: "footer-see-more",
       label: "Stopka + CTA",
       description:
-        "Domyślny chrome (PDP / ProductInspiration): strzałki, indeks i „Zobacz więcej” pod torem; endCap na końcu.",
+        "Home: strzałki w nagłówku (md+), na mobile w stopce; dwa CTA pod torem.",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <div className="py-8">
@@ -78,9 +83,8 @@ export const inspirationGalleryModule: LibraryModule = {
               arrangements={homeInspiration.arrangements}
               eyebrow={homeInspiration.eyebrow}
               title={homeInspiration.title}
-              navPlacement="footer"
-              seeMoreHref={homeInspiration.seeMoreHref}
-              seeMoreLabel={homeInspiration.seeMoreLabel}
+              navPlacement="header"
+              footerActions={homeInspiration.footerActions}
               endCap={{
                 label: "Kliknij poniżej",
                 title: "Pełna galeria aranżacji",
@@ -95,7 +99,7 @@ export const inspirationGalleryModule: LibraryModule = {
     {
       id: "header-nav",
       label: "Nav w nagłówku",
-      description: "Strzałki i indeks obok tytułu sekcji.",
+      description: "Strzałki i indeks obok tytułu sekcji (md+).",
       render: () => (
         <div className={libPreviewFullBleedWrapperClassName}>
           <div className="py-8">
@@ -129,7 +133,7 @@ export const inspirationGalleryModule: LibraryModule = {
               title="Inspiracje linkujące do artykułu"
               navPlacement="footer"
               seeMoreHref="/inspiracje-listing"
-              seeMoreLabel={homeInspiration.seeMoreLabel}
+              seeMoreLabel="Galeria inspiracji"
               endCap={false}
             />
           </div>

@@ -467,6 +467,7 @@ export const footerColumns = [
   {
     links: [
       { label: "Strefa architekta", href: "/strefa-architekta" },
+      { label: "Pliki do pobrania", href: "/pliki-do-pobrania" },
       { label: "Strefa instalatora", href: "#strefa-instalatora" },
       { label: "Obsługa inwestycji", href: "#obsluga-inwestycji" },
       { label: "Konfigurator kabin", href: "#konfigurator-kabin" },

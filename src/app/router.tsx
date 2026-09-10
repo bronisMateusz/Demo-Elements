@@ -19,6 +19,7 @@ import { SalonPage } from "../routes/SalonPage";
 import { SalonsPage } from "../routes/SalonsPage";
 import { SalonsPageB } from "../routes/SalonsPageB";
 import { ArchitectZonePage } from "../routes/ArchitectZonePage";
+import { ArchitectDownloadsPage } from "../routes/ArchitectDownloadsPage";
 import { ArrangementsGalleryPage } from "../routes/ArrangementsGalleryPage";
 import { InspirationArticlePage } from "../routes/InspirationArticlePage";
 import { InspirationsListingPage } from "../routes/InspirationsListingPage";
@@ -52,6 +53,7 @@ export const router = createBrowserRouter(
         { path: "/producenci", element: <ProducersPage /> },
         { path: "/producent", element: <ProducerPage /> },
         { path: "/strefa-architekta", element: <ArchitectZonePage /> },
+        { path: "/pliki-do-pobrania", element: <ArchitectDownloadsPage /> },
         { path: "/schowek", element: <FavoritesPage /> },
         { path: "/kategoria", element: <CategoryPage /> },
         { path: "/podkategoria", element: <SubcategoryPage /> },

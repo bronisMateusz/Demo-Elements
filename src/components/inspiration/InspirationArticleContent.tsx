@@ -7,11 +7,8 @@ import {
   useState,
 } from "react";
 import { Link } from "react-router-dom";
-import type {
-  InspirationArticleEmbed,
-  InspirationArticleSection,
-} from "../../types/inspiration";
-import type { ProductImage } from "../../types/product";
+import type { InspirationArticleSection } from "../../types/inspiration";
+import type { ProductImage, RelatedProduct } from "../../types/product";
 import {
   liftHeaderAboveLightbox,
   lockLightboxScroll,
@@ -20,41 +17,22 @@ import { cn } from "../../lib/cn";
 import {
   pageIntroHeroTopPaddingClassName,
   contentDividerTopClassName,
-  pageSectionStackChildSpacingClassName,
   sectionMarginTopClassName,
 } from "../../lib/layoutTokens";
 import { peekImageAspectRatio } from "../../lib/lightboxImageRect";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
-import { HomeMagazine } from "../home/HomeMagazine";
-import { LocateCta, type LocateCtaImage } from "../marketing/LocateCta";
 import { ProductGalleryLightbox } from "../product/ProductGalleryLightbox";
 import type { LightboxOpenOrigin } from "../product/ProductGalleryLightboxFlyer";
 import { Section } from "../structural/Section";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
 import { IconButton } from "../ui/IconButton";
-
-type MagazineContent = {
-  id: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  image: ProductImage;
-  primaryCta: { label: string; href: string };
-  secondaryCta: { label: string; href: string };
-};
+import { InspirationArticleProductsPanel } from "./InspirationArticleProductsPanel";
 
 type InspirationArticleContentProps = {
   sections: InspirationArticleSection[];
-  embeds: InspirationArticleEmbed[];
-  appointmentCta: {
-    title: string;
-    description: string;
-    ctaLabel: string;
-    image: LocateCtaImage;
-  };
-  magazine: MagazineContent;
-  onAppointmentClick?: () => void;
+  /** Desktop sidebar list (mobile uses InspirationArticleProductsBar + drawer). */
+  products?: readonly RelatedProduct[];
 };
 
 function SectionImageTile({
@@ -212,10 +190,7 @@ function ArticleSectionBlock({
 
 export function InspirationArticleContent({
   sections,
-  embeds,
-  appointmentCta,
-  magazine,
-  onAppointmentClick,
+  products,
 }: InspirationArticleContentProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -248,30 +223,6 @@ export function InspirationArticleContent({
     return map;
   }, [sections]);
 
-  /** Runs of chapters between full-bleed embeds - one continuous CKEditor-like body. */
-  const articleChunks = useMemo(() => {
-    const chunks: {
-      sections: InspirationArticleSection[];
-      embedAfterLast: InspirationArticleEmbed | null;
-    }[] = [];
-    let current: InspirationArticleSection[] = [];
-
-    for (const section of sections) {
-      current.push(section);
-      const embed = embeds.find((entry) => entry.afterSectionId === section.id);
-      if (embed) {
-        chunks.push({ sections: current, embedAfterLast: embed });
-        current = [];
-      }
-    }
-
-    if (current.length > 0) {
-      chunks.push({ sections: current, embedAfterLast: null });
-    }
-
-    return chunks;
-  }, [sections, embeds]);
-
   useEffect(() => {
     lockLightboxScroll(lightboxOpen);
     return () => lockLightboxScroll(false);
@@ -302,68 +253,66 @@ export function InspirationArticleContent({
     return imageRefs.current.get(index)?.getBoundingClientRect() ?? null;
   }, []);
 
+  const firstId = sections[0]?.id ?? "article";
+  const hasProducts = Boolean(products && products.length > 0);
+
   return (
     <>
-      <div className={pageSectionStackChildSpacingClassName}>
-        {articleChunks.map((chunk, chunkIndex) => {
-          const firstId = chunk.sections[0]?.id ?? `chunk-${chunkIndex}`;
-          const embed = chunk.embedAfterLast;
+      <Section ariaLabelledby={`article-section-${firstId}`}>
+        <Container size="content">
+          <div
+            className={cn(
+              hasProducts &&
+                "grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] lg:items-start lg:gap-12 xl:gap-16",
+            )}
+          >
+            <article className="min-w-0">
+              {sections.map((section, sectionIndex) => {
+                const galleryStart =
+                  galleryStartIndexBySectionId.get(section.id) ?? 0;
+                const sectionImages = section.images ?? [];
 
-          return (
-            <Fragment key={firstId}>
-              <Section ariaLabelledby={`article-section-${firstId}`}>
-                <Container size="content">
-                  <article>
-                    {chunk.sections.map((section, sectionIndex) => {
-                      const galleryStart =
-                        galleryStartIndexBySectionId.get(section.id) ?? 0;
-                      const sectionImages = section.images ?? [];
+                return (
+                  <Fragment key={section.id}>
+                    <ArticleSectionBlock
+                      section={section}
+                      className={cn(
+                        !hasProducts && "mx-auto max-w-4xl",
+                        sectionIndex > 0 && "mt-10 md:mt-12",
+                      )}
+                    />
+                    {sectionImages.length > 0 ? (
+                      <SectionImagePair
+                        images={sectionImages}
+                        startIndex={galleryStart}
+                        registerImage={registerImage}
+                        onOpen={openLightbox}
+                        className={sectionMarginTopClassName}
+                      />
+                    ) : null}
+                  </Fragment>
+                );
+              })}
+            </article>
 
-                      return (
-                        <Fragment key={section.id}>
-                          <ArticleSectionBlock
-                            section={section}
-                            className={cn(
-                              "mx-auto max-w-4xl",
-                              sectionIndex > 0 && "mt-10 md:mt-12",
-                            )}
-                          />
-                          {sectionImages.length > 0 ? (
-                            <SectionImagePair
-                              images={sectionImages}
-                              startIndex={galleryStart}
-                              registerImage={registerImage}
-                              onOpen={openLightbox}
-                              className={sectionMarginTopClassName}
-                            />
-                          ) : null}
-                        </Fragment>
-                      );
-                    })}
-                  </article>
-                </Container>
-              </Section>
-
-              {embed?.type === "appointment" ? (
-                <LocateCta
-                  key={`${firstId}-appointment`}
-                  title={appointmentCta.title}
-                  description={appointmentCta.description}
-                  ctaLabel={appointmentCta.ctaLabel}
-                  image={appointmentCta.image}
-                  onCtaClick={onAppointmentClick}
-                />
-              ) : null}
-
-              {embed?.type === "magazine" ? (
-                <div key={`${firstId}-magazine`}>
-                  <HomeMagazine content={magazine} />
-                </div>
-              ) : null}
-            </Fragment>
-          );
-        })}
-      </div>
+            {hasProducts && products ? (
+              <aside
+                className={cn(
+                  "hidden min-w-0 lg:flex lg:flex-col lg:self-start",
+                  // Do not reuse stickyListingFiltersShell - it pairs sticky+relative (fades) and breaks pin.
+                  "lg:sticky lg:top-[calc(var(--site-header-bar-height,7.25rem)-1px)]",
+                  "lg:transition-[top] lg:duration-base lg:ease-luxury",
+                  "xl:top-29 header-concealed:lg:top-18",
+                  "lg:max-h-[calc(100svh-var(--site-header-bar-height,7.25rem)+1px)]",
+                  "xl:max-h-[calc(100svh-7.25rem)] header-concealed:lg:max-h-[calc(100svh-4.5rem)]",
+                )}
+              >
+                <InspirationArticleProductsPanel products={products} />
+              </aside>
+            ) : null}
+          </div>
+        </Container>
+      </Section>
 
       {lightboxOpen && lightboxOrigin ? (
         <ProductGalleryLightbox
@@ -403,7 +352,10 @@ export function InspirationArticleHero({
         Desktop matches SalonHero: copy has intro padding, photo starts at the
         grid top and stretches to the copy column height.
       */}
-      <div className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+      <div
+        data-inspiration-article-hero
+        className="grid min-w-0 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12"
+      >
         <div className={cn("min-w-0", pageIntroHeroTopPaddingClassName)}>
           <h1
             id={titleId}

@@ -22,8 +22,8 @@ type GridSlot =
 const FADE_S = 0.26;
 const ENTER_STAGGER_S = 0.028;
 const ENTER_STAGGER_MAX = 5;
-/** Full-width promo must sit on a row boundary for both 2-col and 3-col grids (LCM). */
-const PROMO_ROW_STEP = 6;
+/** Snap insert so a 2-col promo starts on an even cell (clean row edge in 4-col). */
+const PROMO_ROW_STEP = 2;
 
 function resultsKey(products: ListingProduct[], promo?: ListingGridPromo) {
   if (products.length === 0) return "empty";
@@ -122,13 +122,13 @@ export function ListingProductGrid({
               }
             />
           ) : (
-            <ul className="m-0 grid list-none grid-cols-1 gap-y-8 p-0 xs:grid-cols-2 xs:gap-x-3 sm:gap-x-4 md:grid-cols-3 md:gap-y-10">
+            <ul className="m-0 grid list-none grid-cols-1 gap-y-8 p-0 sm:grid-cols-2 sm:gap-x-4 md:gap-y-10 xl:grid-cols-4">
               {slots.map((slot, index) => (
                 <motion.li
                   key={slot.key}
                   className={cn(
                     "min-w-0",
-                    slot.kind === "promo" && "col-span-full",
+                    slot.kind === "promo" && "sm:col-span-2",
                   )}
                   initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}

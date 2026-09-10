@@ -18,6 +18,7 @@ import {
 } from "../components/salon/SalonSections";
 import { PromoSplitCta } from "../components/structural/PromoSplitCta";
 import { arrangementsGalleryPage } from "./arrangementsGallery";
+import { architectDownloadsPage } from "./architectDownloadsPage";
 import { architectZonePage } from "./architectZone";
 import { categoryPage, categoryRows } from "./category";
 import { homeAdvisorCta, homeAppointment, homeMagazine } from "./home";
@@ -311,13 +312,13 @@ export const ctaShowcaseEntries: CtaShowcaseEntry[] = [
   {
     id: "locate-architect-catalog",
     family: "LocateCta",
-    title: "Zobacz pełną bazę katalogów (strefa architekta)",
-    dataSource: "architectZone.ts → downloads.catalogCta",
-    imagePath: imageLabel(architectZonePage.downloads.catalogCta.image),
-    pages: [{ label: "Strefa architekta", href: "/strefa-architekta" }],
+    title: "Materiały i modele do Twojego projektu",
+    dataSource: "architectDownloadsPage.ts → downloads.catalogCta",
+    imagePath: imageLabel(architectDownloadsPage.downloads.catalogCta.image),
+    pages: [{ label: "Pliki do pobrania", href: "/pliki-do-pobrania" }],
     notes: "CatalogDatabaseCta → LocateCta embedded pod listą plików",
     render: () => (
-      <CatalogDatabaseCta {...architectZonePage.downloads.catalogCta} />
+      <CatalogDatabaseCta {...architectDownloadsPage.downloads.catalogCta} />
     ),
   },
   {

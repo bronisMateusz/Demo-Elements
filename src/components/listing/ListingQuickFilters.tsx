@@ -11,6 +11,11 @@ type ListingQuickFiltersProps = {
   className?: string;
   /** Show the “Pokaż tylko:” label (toolbar uses it; drawer may omit). */
   showLabel?: boolean;
+  /**
+   * `toolbar` - compact inline chips.
+   * `drawer` - equal 2×2 cells that fill the drawer width.
+   */
+  layout?: "toolbar" | "drawer";
 };
 
 export function ListingQuickFilters({
@@ -18,11 +23,15 @@ export function ListingQuickFilters({
   onChange,
   className,
   showLabel = true,
+  layout = "toolbar",
 }: ListingQuickFiltersProps) {
+  const isDrawer = layout === "drawer";
+
   return (
     <div
       className={cn(
         "flex max-w-full flex-wrap items-center gap-x-3 gap-y-2",
+        isDrawer && "w-full flex-col items-stretch gap-3",
         className,
       )}
     >
@@ -34,13 +43,18 @@ export function ListingQuickFilters({
       <div
         role="group"
         aria-label="Pokaż tylko"
-        // @container only below lg - inline-size containment collapses width to 0
-        // without an explicit width, which shoved chips off-screen in the toolbar.
-        className="max-lg:@container max-lg:w-full max-lg:min-w-0"
+        className={cn(
+          "min-w-0",
+          // @container needs an explicit width - drawer body gives it.
+          isDrawer && "@container w-full",
+        )}
       >
         <MotionFieldGroup>
           <SharedLayoutBg
-            className="inline-flex flex-wrap gap-1 max-lg:w-full lg:flex-nowrap"
+            className={cn(
+              "inline-flex flex-wrap gap-1",
+              isDrawer && "flex w-full",
+            )}
             pillClassName="rounded-xs bg-neutral-300"
             inset={0}
           >
@@ -52,9 +66,8 @@ export function ListingQuickFilters({
                   key={item.id}
                   className={cn(
                     "group relative shrink-0 rounded-xs bg-neutral-0",
-                    // Equal cells only below lg (drawer). Never on desktop toolbar.
-                    "max-lg:min-w-[calc(50%-0.125rem)] max-lg:flex-1",
-                    "max-lg:@min-[24rem]:min-w-[calc(25%-0.1875rem)]",
+                    isDrawer &&
+                      "min-w-[calc(50%-0.125rem)] flex-1 @min-[24rem]:min-w-[calc(25%-0.1875rem)]",
                     // Border as overlay so SharedLayoutBg pill cannot cover it.
                     "after:pointer-events-none after:absolute after:inset-0 after:z-20 after:rounded-xs after:border after:transition-[border-color] after:duration-base after:ease-out",
                     active
@@ -73,7 +86,7 @@ export function ListingQuickFilters({
                     aria-pressed={active}
                     className={cn(
                       "relative z-10 inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap rounded-xs border-0 bg-transparent px-3 py-2 font-body text-sm font-medium leading-none",
-                      "max-lg:w-full",
+                      isDrawer && "w-full",
                       "transition-[color] duration-base ease-out",
                       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
                       active ? "text-neutral-0" : "text-neutral-900",

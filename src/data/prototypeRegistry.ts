@@ -93,6 +93,11 @@ export const prototypeSections: PrototypeSection[] = [
         iconClass: "ph ph-cube",
       },
       {
+        label: "Pliki do pobrania",
+        to: "/pliki-do-pobrania",
+        iconClass: "ph ph-download-simple",
+      },
+      {
         label: "Schowek",
         to: "/schowek",
         iconClass: "ph ph-bookmark-simple",

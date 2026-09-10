@@ -79,7 +79,11 @@ export function ListingFilters({
       )}
     >
       {showQuickFilters ? (
-        <ListingQuickFilters state={state} onChange={onChange} />
+        <ListingQuickFilters
+          state={state}
+          onChange={onChange}
+          layout="drawer"
+        />
       ) : null}
 
       <div className="flex flex-col gap-1">

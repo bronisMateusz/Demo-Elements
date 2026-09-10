@@ -4,39 +4,75 @@ import {
   pageIntroTitleClassName,
 } from "../../lib/layoutTokens";
 import { productImageObjectPosition } from "../../lib/productImageStyle";
+import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
+import { Eyebrow } from "../ui/Eyebrow";
+import { HeroImageMarquee } from "./HeroImageMarquee";
 
-type BrandHeroProps = {
+type BrandHeroBaseProps = {
   title: string;
   titleId?: string;
+  /** Optional label above the H1 (Architect Zone). */
+  eyebrow?: string;
   lead: string;
   askLabel: string;
-  onAsk: () => void;
+  /** Primary CTA as button. Prefer over `askHref` when both are set. */
+  onAsk?: () => void;
+  /** Primary CTA as in-page / external link when `onAsk` is omitted. */
+  askHref?: string;
   productsLabel: string;
   productsHref: string;
-  image: {
-    src: string;
-    alt: string;
-    fit?: "cover" | "contain";
-    focalPoint?: { x: number; y: number };
-  };
   logoSrc?: string;
   className?: string;
 };
 
+type BrandHeroSingleImageProps = BrandHeroBaseProps & {
+  image: ProductImage;
+  gallery?: never;
+};
+
+type BrandHeroGalleryProps = BrandHeroBaseProps & {
+  image?: ProductImage;
+  gallery: {
+    columnOne: readonly ProductImage[];
+    columnTwo: readonly ProductImage[];
+  };
+};
+
+export type BrandHeroProps = BrandHeroSingleImageProps | BrandHeroGalleryProps;
+
 export function BrandHero({
   title,
   titleId = "brand-hero-title",
+  eyebrow,
   lead,
   askLabel,
   onAsk,
+  askHref,
   productsLabel,
   productsHref,
   image,
+  gallery,
   logoSrc,
   className,
 }: BrandHeroProps) {
+  const primaryCta = onAsk ? (
+    <Button
+      as="button"
+      type="button"
+      variant="primary"
+      size="lg"
+      onClick={onAsk}
+    >
+      {askLabel}
+    </Button>
+  ) : (
+    <Button href={askHref ?? "#"} variant="primary" size="lg">
+      {askLabel}
+    </Button>
+  );
+
   return (
     <section aria-labelledby={titleId} className={className}>
       <Container size="content">
@@ -56,6 +92,9 @@ export function BrandHero({
                 decoding="async"
                 draggable={false}
               />
+            ) : null}
+            {!logoSrc && eyebrow ? (
+              <Eyebrow className="mb-3">{eyebrow}</Eyebrow>
             ) : null}
             {logoSrc ? (
               <h1 id={titleId} className="sr-only">
@@ -78,29 +117,29 @@ export function BrandHero({
               {lead}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                as="button"
-                type="button"
-                variant="primary"
-                size="lg"
-                onClick={onAsk}
-              >
-                {askLabel}
-              </Button>
+              {primaryCta}
               <Button href={productsHref} variant="secondary" size="lg">
                 {productsLabel}
               </Button>
             </div>
           </div>
 
-          <div className="relative order-2 min-w-0 w-full overflow-hidden rounded-xs bg-neutral-100 aspect-4/3">
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="absolute inset-0 size-full max-w-none object-cover"
-              style={{ objectPosition: productImageObjectPosition(image) }}
+          {gallery ? (
+            <HeroImageMarquee
+              className="order-2 min-w-0 w-full"
+              columnOne={gallery.columnOne}
+              columnTwo={gallery.columnTwo}
             />
-          </div>
+          ) : image ? (
+            <div className="relative order-2 min-w-0 w-full overflow-hidden rounded-xs bg-neutral-100 aspect-4/3">
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="absolute inset-0 size-full max-w-none object-cover"
+                style={{ objectPosition: productImageObjectPosition(image) }}
+              />
+            </div>
+          ) : null}
         </div>
       </Container>
     </section>

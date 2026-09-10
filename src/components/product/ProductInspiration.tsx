@@ -20,7 +20,7 @@ export function ProductInspiration({
   arrangements,
   eyebrow = "Produkt w aranżacji",
   title = "Inspiracje producenta",
-  navPlacement = "footer",
+  navPlacement = "header",
   onControlsChange,
 }: ProductInspirationProps) {
   return (
