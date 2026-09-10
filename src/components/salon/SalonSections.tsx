@@ -86,11 +86,11 @@ export function SalonAbout() {
     >
       <BrandMotif
         name="circle-beige"
-        className="pointer-events-none absolute -top-24 -inset-e-20 -z-10 size-[min(70vw,28rem)] opacity-40 max-md:hidden"
+        className="pointer-events-none absolute -top-24 -inset-e-20 size-[min(70vw,28rem)] opacity-40 max-md:hidden"
       />
       <BrandMotif
         name="arc-light"
-        className="pointer-events-none absolute -bottom-8 -inset-s-16 -z-10 size-[min(50vw,18rem)] opacity-50 max-md:hidden"
+        className="pointer-events-none absolute -bottom-8 -inset-s-16 size-[min(50vw,18rem)] opacity-50 max-md:hidden"
       />
 
       <Container size="content" className="relative z-10">
