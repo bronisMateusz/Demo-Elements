@@ -4,11 +4,9 @@ import {
   listingFilterHasActive,
   listingFilterActiveCount,
 } from "../../lib/listingFilters";
-import type { ListingFacetKey, ListingFilterState } from "../../types/listing";
+import type { ListingFilterState } from "../../types/listing";
 import { Button } from "../ui/Button";
 import { ListSelect } from "../ui/ListSelect";
-
-const ALL_VALUE = "";
 
 type ListingFiltersBarProps = {
   state: ListingFilterState;
@@ -17,23 +15,9 @@ type ListingFiltersBarProps = {
   className?: string;
 };
 
-function setFacetSingle(
-  state: ListingFilterState,
-  key: ListingFacetKey,
-  value: string,
-): ListingFilterState {
-  return {
-    ...state,
-    facets: {
-      ...state.facets,
-      [key]: value ? [value] : [],
-    },
-  };
-}
-
 /**
  * Facet selects in a dense grid: 2 / 4 / 8 columns so 7 selects + clear
- * never leave a lonely orphan cell.
+ * never leave a lonely orphan cell. Multi-select like the vertical filter list.
  */
 export function ListingFiltersBar({
   state,
@@ -55,21 +39,23 @@ export function ListingFiltersBar({
       )}
     >
       {listingFacetGroups.map((group) => {
-        const selected = state.facets[group.key][0] ?? ALL_VALUE;
-        const options = [
-          { value: ALL_VALUE, label: "Wszystkie" },
-          ...group.options,
-        ];
+        const selected = state.facets[group.key];
 
         return (
           <ListSelect
             key={group.key}
-            // Idle sentinel so empty facet shows the group label as placeholder.
-            value={selected || "__idle__"}
-            onChange={(value) =>
-              onChange(setFacetSingle(state, group.key, value))
+            multiple
+            value={selected}
+            onChange={(values) =>
+              onChange({
+                ...state,
+                facets: {
+                  ...state.facets,
+                  [group.key]: values,
+                },
+              })
             }
-            options={options}
+            options={group.options}
             placeholder={group.label}
             aria-label={group.label}
             className="min-w-0"

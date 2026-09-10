@@ -17,16 +17,28 @@ export type ListSelectOption = {
   label: string;
 };
 
-type ListSelectProps = {
+type ListSelectBaseProps = {
   id?: string;
-  value: string;
-  onChange: (value: string) => void;
   options: readonly ListSelectOption[];
   placeholder?: string;
   className?: string;
   leadingIconClass?: string;
   "aria-label"?: string;
 };
+
+type ListSelectSingleProps = ListSelectBaseProps & {
+  multiple?: false;
+  value: string;
+  onChange: (value: string) => void;
+};
+
+type ListSelectMultipleProps = ListSelectBaseProps & {
+  multiple: true;
+  value: readonly string[];
+  onChange: (value: string[]) => void;
+};
+
+export type ListSelectProps = ListSelectSingleProps | ListSelectMultipleProps;
 
 type PanelPosition = {
   top: number;
@@ -36,16 +48,22 @@ type PanelPosition = {
 
 const PANEL_OFFSET_PX = 4;
 
-export function ListSelect({
-  id,
-  value,
-  onChange,
-  options,
-  placeholder,
-  className,
-  leadingIconClass,
-  "aria-label": ariaLabel,
-}: ListSelectProps) {
+export function ListSelect(props: ListSelectProps) {
+  const {
+    id,
+    options,
+    placeholder,
+    className,
+    leadingIconClass,
+    "aria-label": ariaLabel,
+  } = props;
+  const multiple = props.multiple === true;
+  const selectedValues = multiple
+    ? props.value
+    : props.value
+      ? [props.value]
+      : [];
+
   const listId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -55,8 +73,20 @@ export function ListSelect({
     null,
   );
 
-  const selected = options.find((option) => option.value === value);
-  const triggerLabel = selected?.label ?? placeholder ?? "";
+  const triggerLabel = (() => {
+    if (selectedValues.length === 0) return placeholder ?? "";
+    if (selectedValues.length === 1) {
+      return (
+        options.find((option) => option.value === selectedValues[0])?.label ??
+        placeholder ??
+        ""
+      );
+    }
+    const base = placeholder ?? "Wybrane";
+    return `${base} (${selectedValues.length})`;
+  })();
+
+  const hasSelection = selectedValues.length > 0;
 
   const updatePanelPosition = useCallback(() => {
     const trigger = triggerRef.current;
@@ -111,7 +141,16 @@ export function ListSelect({
   }, [open]);
 
   const selectOption = (nextValue: string) => {
-    onChange(nextValue);
+    if (multiple) {
+      const current = [...props.value];
+      const next = current.includes(nextValue)
+        ? current.filter((item) => item !== nextValue)
+        : [...current, nextValue];
+      props.onChange(next);
+      return;
+    }
+
+    props.onChange(nextValue);
     setOpen(false);
   };
 
@@ -137,7 +176,7 @@ export function ListSelect({
             style={{
               top: panelPosition.top,
               left: panelPosition.left,
-              width: panelPosition.width,
+              width: Math.max(panelPosition.width, multiple ? 220 : 0),
             }}
             className="fixed z-100 overflow-hidden rounded-xs border border-neutral-900 bg-neutral-0 shadow-subtle"
           >
@@ -146,6 +185,7 @@ export function ListSelect({
                 id={listId}
                 role="listbox"
                 aria-label={ariaLabel}
+                aria-multiselectable={multiple || undefined}
                 className="m-0 list-none p-1"
               >
                 <SharedLayoutBg
@@ -153,7 +193,7 @@ export function ListSelect({
                   pillClassName="rounded-xs bg-neutral-200"
                 >
                   {options.map((option) => {
-                    const isSelected = option.value === value;
+                    const isSelected = selectedValues.includes(option.value);
 
                     return (
                       <li key={option.value} role="none">
@@ -162,14 +202,29 @@ export function ListSelect({
                           role="option"
                           aria-selected={isSelected}
                           className={cn(
-                            "relative z-10 flex w-full cursor-pointer items-center px-3 py-2.5 text-start",
+                            "relative z-10 flex w-full cursor-pointer items-center gap-2.5 px-3 py-2.5 text-start",
                             "font-body text-ui text-neutral-900",
                             "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-neutral-800",
                             isSelected && "font-medium",
                           )}
                           onClick={() => selectOption(option.value)}
                         >
-                          {option.label}
+                          {multiple ? (
+                            <span
+                              className={cn(
+                                "flex size-4 shrink-0 items-center justify-center rounded-xs border",
+                                isSelected
+                                  ? "border-neutral-900 bg-neutral-900 text-neutral-0"
+                                  : "border-neutral-400 bg-neutral-0",
+                              )}
+                              aria-hidden="true"
+                            >
+                              {isSelected ? (
+                                <i className="ph ph-check text-[0.625rem] leading-none" />
+                              ) : null}
+                            </span>
+                          ) : null}
+                          <span className="min-w-0 flex-1">{option.label}</span>
                         </button>
                       </li>
                     );
@@ -196,7 +251,7 @@ export function ListSelect({
           inputClassName,
           "flex cursor-pointer items-center justify-between gap-3 text-start",
           leadingIconClass ? "ps-11 pe-10" : "pe-10",
-          !selected && "text-neutral-400",
+          !hasSelection && "text-neutral-400",
           open && "border-neutral-900 bg-neutral-0 shadow-none",
         )}
         onClick={() => setOpen((current) => !current)}
