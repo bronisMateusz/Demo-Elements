@@ -350,42 +350,40 @@ export function InspirationGallery({
               className="w-full min-w-0 xl:min-w-80 xl:flex-1"
             />
           ) : showHeaderNav ? (
-            <div className="hidden items-center gap-4 md:flex">
-              <p className="m-0 font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
+            <div className="hidden items-center gap-3 md:flex">
+              <button
+                type="button"
+                className={iconButtonClassName({
+                  variant: "elevated",
+                  className: cn(
+                    "shadow-subtle",
+                    atStart && "pointer-events-none opacity-35",
+                  ),
+                })}
+                aria-label="Poprzednia aranżacja"
+                disabled={atStart}
+                onClick={goPrev}
+              >
+                <i className="ph ph-caret-left" aria-hidden="true" />
+              </button>
+              <p className="m-0 min-w-14 text-center font-body text-sm tabular-nums tracking-[0.12em] text-neutral-600">
                 {formatSlideIndex(activeIndex, arrangements.length)}
               </p>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  className={iconButtonClassName({
-                    variant: "elevated",
-                    className: cn(
-                      "shadow-subtle",
-                      atStart && "pointer-events-none opacity-35",
-                    ),
-                  })}
-                  aria-label="Poprzednia aranżacja"
-                  disabled={atStart}
-                  onClick={goPrev}
-                >
-                  <i className="ph ph-caret-left" aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  className={iconButtonClassName({
-                    variant: "elevated",
-                    className: cn(
-                      "shadow-subtle",
-                      atEnd && "pointer-events-none opacity-35",
-                    ),
-                  })}
-                  aria-label="Następna aranżacja"
-                  disabled={atEnd}
-                  onClick={goNext}
-                >
-                  <i className="ph ph-caret-right" aria-hidden="true" />
-                </button>
-              </div>
+              <button
+                type="button"
+                className={iconButtonClassName({
+                  variant: "elevated",
+                  className: cn(
+                    "shadow-subtle",
+                    atEnd && "pointer-events-none opacity-35",
+                  ),
+                })}
+                aria-label="Następna aranżacja"
+                disabled={atEnd}
+                onClick={goNext}
+              >
+                <i className="ph ph-caret-right" aria-hidden="true" />
+              </button>
             </div>
           ) : null}
         </div>
@@ -553,8 +551,9 @@ export function InspirationGallery({
             </div>
           ) : null}
 
-          {showFooterCta
-            ? footerLinks.map((action) => (
+          {showFooterCta ? (
+            <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:w-auto sm:gap-4">
+              {footerLinks.map((action) => (
                 <Button
                   key={action.href + action.label}
                   href={action.href}
@@ -564,8 +563,9 @@ export function InspirationGallery({
                   {action.label}
                   <i className="ph ph-arrow-right" aria-hidden="true" />
                 </Button>
-              ))
-            : null}
+              ))}
+            </div>
+          ) : null}
         </Container>
       ) : null}
 
