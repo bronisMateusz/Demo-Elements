@@ -170,6 +170,13 @@ export const inspirationArticlePage: InspirationArticlePageData = {
     askLabel: "Napisz do doradcy",
     bookLabel: "Umów spotkanie",
     image: ctaContextImages.bathroomGreen,
+    secondary: {
+      eyebrow: "Współpraca",
+      title: "Pokaż swoją realizację w Elements",
+      description:
+        "Projektujesz wyjątkowe wnętrza? Prześlij nam opis i zdjęcia realizacji. Wybrane projekty opublikujemy w Inspiracjach, promując Ciebie i Twoją pracownię.",
+      ctaLabel: "Prześlij realizację",
+    },
   },
   relatedTitle: "Zobacz podobne aranżacje",
   relatedArrangements: inspirationsListingItems.slice(0, 6).map((item) => ({

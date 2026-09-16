@@ -526,7 +526,7 @@ export const listingPlpModule: LibraryModule = {
   slug: "listing-plp",
   title: "Listing PLP",
   description:
-    "Siatka 4-kolumnowa z poziomymi facetami (ListSelect), quick filters i opcjonalnym ListingPromoTile (col-span-2). Pełna strona: /listing.",
+    "Siatka produktów z pionowymi facetami po lewej (lg+), quick filters, drawer na mobile i opcjonalnym ListingPromoTile. Pełna strona: /listing.",
   variants: [
     {
       id: "interactive",

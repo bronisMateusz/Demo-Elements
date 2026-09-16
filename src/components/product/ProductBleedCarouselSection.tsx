@@ -26,8 +26,9 @@ export function ProductBleedCarouselSection({
         <BrandMotif
           name="dots-grid"
           className={cn(
-            "pointer-events-none absolute top-0 hidden h-52 w-12 opacity-30",
-            "inset-s-[max(0px,calc((100%-96rem)/2-3rem))] min-[110rem]:block",
+            "pointer-events-none absolute top-0 hidden h-52 w-12 opacity-30 lg:block",
+            // Right gutter outside max-w-content; falls back to inset-e-0 below 96rem.
+            "inset-e-[max(0px,calc((100%-96rem)/2-3rem))]",
           )}
         />
 

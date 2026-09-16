@@ -720,7 +720,7 @@ export const listingPage = {
     actionLabel: "Wyczyść filtry",
   },
   gridPromo: {
-    afterIndex: 6,
+    afterIndex: 7,
     eyebrow: "Magazyn Elements",
     title: "Magazyn Elements 2026",
     description:

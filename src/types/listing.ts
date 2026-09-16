@@ -66,7 +66,7 @@ export type ListingCuratedTile = {
 
 /** In-grid magazine / campaign promo cell on the PLP product grid. */
 export type ListingGridPromo = {
-  /** Prefer a multiple of 6 (LCM of 2- and 3-col grids) so a full-width promo leaves no empty cells. */
+  /** Preferred product count before promo; snapped per breakpoint (even on 2-col, ≡1 mod 3 on xl). */
   afterIndex: number;
   eyebrow: string;
   title: string;

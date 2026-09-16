@@ -142,9 +142,9 @@ const articleFinalAdvisorContent: AdvisorCtaContent = {
   eyebrow: inspirationArticlePage.finalCta.eyebrow,
   title: inspirationArticlePage.finalCta.title,
   description: inspirationArticlePage.finalCta.description,
-  image: inspirationArticlePage.finalCta.image,
   askLabel: inspirationArticlePage.finalCta.askLabel,
   bookLabel: inspirationArticlePage.finalCta.bookLabel,
+  secondary: inspirationArticlePage.finalCta.secondary,
 };
 
 const umywalkiPromo = categoryRows[0]?.banner;

@@ -7,20 +7,26 @@ import {
 import { filterAndSortListingProducts } from "../../lib/listingFilters";
 import type { ListingFilterState } from "../../types/listing";
 import { cn } from "../../lib/cn";
-import { ListingFiltersBar } from "./ListingFiltersBar";
+import { ListingFilters } from "./ListingFilters";
 import { ListingFiltersDrawer } from "./ListingFiltersDrawer";
+import { ListingFiltersSticky } from "./ListingFiltersSticky";
 import { ListingPagination } from "./ListingPagination";
 import { ListingProductGrid } from "./ListingProductGrid";
 import { ListingToolbar } from "./ListingToolbar";
 
-const LISTING_PAGE_SIZE = 14;
+const LISTING_PAGE_SIZE = 16;
 
 type ListingCatalogProps = {
   className?: string;
+  /** Show desktop sidebar filters (default true). */
+  showSidebar?: boolean;
 };
 
-/** Interactive PLP: facet bar (lg+) / drawer (mobile) + toolbar + product grid. */
-export function ListingCatalog({ className }: ListingCatalogProps) {
+/** Interactive PLP catalog: left facets + toolbar + product grid. */
+export function ListingCatalog({
+  className,
+  showSidebar = true,
+}: ListingCatalogProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [page, setPage] = useState(1);
   const catalogRef = useRef<HTMLDivElement>(null);
@@ -60,33 +66,48 @@ export function ListingCatalog({ className }: ListingCatalogProps) {
 
   return (
     <>
-      <div ref={catalogRef} className={cn("min-w-0", className)}>
-        <ListingFiltersBar
-          state={filterState}
-          onChange={updateFilters}
-          onClear={clearFilters}
-          className="mb-6 hidden md:mb-8 lg:grid"
-        />
-        <ListingToolbar
-          resultCount={totalCount}
-          filterState={filterState}
-          onFilterChange={updateFilters}
-          onOpenFilters={() => setFiltersOpen(true)}
-          className="mb-6 md:mb-8"
-        />
-        <ListingProductGrid
-          products={pageProducts}
-          promo={listingPage.gridPromo}
-          onClearFilters={clearFilters}
-        />
-        <ListingPagination
-          shownCount={shownCount}
-          totalCount={totalCount}
-          page={safePage}
-          pageCount={pageCount}
-          onShowMore={() => goToPage(safePage + 1)}
-          onPageChange={goToPage}
-        />
+      <div
+        ref={catalogRef}
+        className={cn(
+          showSidebar &&
+            "grid items-start gap-8 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
+          className,
+        )}
+      >
+        {showSidebar ? (
+          <aside className="hidden self-stretch lg:block">
+            <ListingFiltersSticky>
+              <ListingFilters
+                state={filterState}
+                onChange={updateFilters}
+                onClear={clearFilters}
+              />
+            </ListingFiltersSticky>
+          </aside>
+        ) : null}
+
+        <div className="min-w-0">
+          <ListingToolbar
+            resultCount={totalCount}
+            filterState={filterState}
+            onFilterChange={updateFilters}
+            onOpenFilters={() => setFiltersOpen(true)}
+            className="mb-6 md:mb-8"
+          />
+          <ListingProductGrid
+            products={pageProducts}
+            promo={listingPage.gridPromo}
+            onClearFilters={clearFilters}
+          />
+          <ListingPagination
+            shownCount={shownCount}
+            totalCount={totalCount}
+            page={safePage}
+            pageCount={pageCount}
+            onShowMore={() => goToPage(safePage + 1)}
+            onPageChange={goToPage}
+          />
+        </div>
       </div>
 
       <ListingFiltersDrawer
