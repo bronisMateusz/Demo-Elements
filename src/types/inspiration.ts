@@ -89,6 +89,13 @@ export type InspirationArticlePageData = {
     image: ProductImage;
     askLabel: string;
     bookLabel: string;
+    /** Optional second column (HomePartners-style duo). Hides media when set. */
+    secondary?: {
+      eyebrow?: string;
+      title: string;
+      description: string;
+      ctaLabel: string;
+    };
   };
   magazine: {
     id: string;

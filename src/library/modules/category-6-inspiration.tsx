@@ -3,6 +3,7 @@ import {
   arrangementsGalleryPage,
 } from "../../data/arrangementsGallery";
 import { inspirationArticlePage } from "../../data/inspirationArticle";
+import { AdvisorCtaDuoDemo } from "../demos/AdvisorCtaDuoDemo";
 import {
   inspirationsListingItems,
   inspirationsListingPage,
@@ -140,7 +141,7 @@ export const inspirationArticleModule: LibraryModule = {
   slug: "inspiration-article",
   title: "InspirationArticleContent",
   description:
-    "Treść artykułu inspiracji - sekcje h2, listy, obrazki z lightboxem, osadzone LocateCta i HomeMagazine. Pełna strona: /inspiracja-artykul.",
+    "Treść artykułu inspiracji - sekcje h2, listy, obrazki z lightboxem, osadzone LocateCta, HomeMagazine i duo AdvisorCta na końcu. Pełna strona: /inspiracja-artykul.",
   variants: [
     {
       id: "full-article",
@@ -202,6 +203,17 @@ export const inspirationArticleModule: LibraryModule = {
               seeMoreLabel="Zobacz wszystkie inspiracje"
             />
           </div>
+        </div>
+      ),
+    },
+    {
+      id: "final-cta-duo",
+      label: "Final CTA duo",
+      description:
+        "Dwa panele gold bez zdjęcia: doradca + RealizationSubmitDrawer. showBook={false}.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <AdvisorCtaDuoDemo titleId="lib-inspiration-final-cta-title" />
         </div>
       ),
     },

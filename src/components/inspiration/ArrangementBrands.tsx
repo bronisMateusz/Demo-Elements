@@ -29,7 +29,9 @@ export function ArrangementBrands({
   if (brands.length === 0) return null;
 
   return (
-    <div className={cn(contentDividerTopClassName, "mt-8 pt-6 pb-8", className)}>
+    <div
+      className={cn(contentDividerTopClassName, "mt-8 pt-6 pb-8", className)}
+    >
       <h3 className="m-0 mb-4 font-heading text-h4 leading-[1.25] font-medium tracking-tight text-neutral-900 md:mb-5">
         Marki w tej aranżacji
       </h3>

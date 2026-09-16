@@ -6,6 +6,7 @@ import {
   BookAppointmentDrawerDemo,
   InspirationProductsDrawerDemo,
   MobileDrawerDemo,
+  RealizationSubmitDrawerDemo,
   SalonDrawerDemo,
 } from "../demos/DrawerSystemDemo";
 import { libPreviewFullBleedWrapperClassName } from "../libStyles";
@@ -67,7 +68,7 @@ export const drawersModule: LibraryModule = {
   slug: "drawers",
   title: "Drawers",
   description:
-    "Wspólny DrawerShell (backdrop, slide-in, Escape, scroll-lock): salon, pytanie, umówienie, produkty aranżacji i menu mobilne.",
+    "Wspólny DrawerShell (backdrop, slide-in, Escape, scroll-lock): salon, pytanie, umówienie, produkty aranżacji, przesłanie realizacji i menu mobilne.",
   variants: [
     {
       id: "salon",
@@ -93,6 +94,13 @@ export const drawersModule: LibraryModule = {
       label: "InspirationProductsDrawer",
       description: "Produkty z aranżacji - otwierany z InspirationGallery.",
       render: () => <InspirationProductsDrawerDemo />,
+    },
+    {
+      id: "realization-submit",
+      label: "RealizationSubmitDrawer",
+      description:
+        "Formularz przesłania realizacji (studio, kontakt, pliki) - duo CTA artykułu inspiracji.",
+      render: () => <RealizationSubmitDrawerDemo />,
     },
     {
       id: "mobile",

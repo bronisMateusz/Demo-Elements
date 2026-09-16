@@ -17,6 +17,7 @@ import { HomeMagazine } from "../../components/home/HomeMagazine";
 import { HomePartners } from "../../components/home/HomePartners";
 import { HomeProducts } from "../../components/home/HomeProducts";
 import { InspirationGallery } from "../../components/inspiration/InspirationGallery";
+import { AdvisorCtaDuoDemo } from "../demos/AdvisorCtaDuoDemo";
 import { libPreviewFullBleedWrapperClassName } from "../libStyles";
 import type { LibraryModule } from "../types";
 
@@ -370,7 +371,26 @@ export const homeAdvisorCtaModule: LibraryModule = {
   slug: "home-advisor-cta",
   title: "AdvisorCta / HomeAdvisorCta",
   description:
-    "Wspólny band doradcy (SplitMediaCta) - home, kategoria, podkategoria (ask primary) oraz salon (book primary via SalonVisitCta).",
+    "Wspólny band doradcy (SplitMediaCta) - home, kategoria, podkategoria (ask primary), salon (book primary via SalonVisitCta) oraz duo bez media (artykuł inspiracji + RealizationSubmitDrawer).",
+  optionalProps: [
+    {
+      name: "content.secondary",
+      type: "AdvisorCtaSecondaryContent",
+      description:
+        "Drugi panel gold (HomePartners-style). Ukrywa kolumnę media.",
+    },
+    {
+      name: "showBook",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Ukrywa CTA umówienia (np. duo z samym ask po lewej).",
+    },
+    {
+      name: "content.image",
+      type: "ProductImage",
+      description: "Opcjonalne - pomijane gdy ustawiono secondary.",
+    },
+  ],
   variants: [
     {
       id: "ask-primary",
@@ -403,6 +423,17 @@ export const homeAdvisorCtaModule: LibraryModule = {
               bookLabel: "Umów spotkanie",
             }}
           />
+        </div>
+      ),
+    },
+    {
+      id: "duo-article-final",
+      label: "Duo bez media (artykuł)",
+      description:
+        "Dwa panele gold: doradca (ask) + prześlij realizację (drawer). Jak /inspiracja-artykul.",
+      render: () => (
+        <div className={libPreviewFullBleedWrapperClassName}>
+          <AdvisorCtaDuoDemo titleId="lib-advisor-duo-article-title" />
         </div>
       ),
     },

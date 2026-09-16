@@ -70,9 +70,7 @@ export function ListingPromoTile({
         <div
           className={cn(
             "flex min-w-0 flex-col items-stretch sm:items-start",
-            isGrid
-              ? "flex-1 gap-3.5 sm:pe-2"
-              : "gap-3 sm:max-w-md md:max-w-lg",
+            isGrid ? "flex-1 gap-3.5 sm:pe-2" : "gap-3 sm:max-w-md md:max-w-lg",
           )}
         >
           <Eyebrow

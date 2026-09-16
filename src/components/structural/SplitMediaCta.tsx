@@ -216,8 +216,7 @@ export function SplitMediaCta({
   ) => (
     <div
       className={cn(
-        iconClass &&
-          "flex min-w-0 items-center gap-3 font-heading font-medium",
+        iconClass && "flex min-w-0 items-center gap-3 font-heading font-medium",
         iconClass &&
           (isCard
             ? "text-h3 leading-[1.15] tracking-tight"
@@ -378,7 +377,9 @@ export function SplitMediaCta({
                 </Eyebrow>
                 <div className="flex min-w-0 flex-col">
                   {primaryTitleBlock}
-                  <div className="mt-3 flex min-w-0 flex-col">{primaryBody}</div>
+                  <div className="mt-3 flex min-w-0 flex-col">
+                    {primaryBody}
+                  </div>
                 </div>
                 {primaryActions}
                 {note ? (

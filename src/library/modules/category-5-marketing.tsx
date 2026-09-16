@@ -544,11 +544,26 @@ export const listingPlpModule: LibraryModule = {
       id: "promo-tile",
       label: "ListingPromoTile",
       description:
-        "Sam kafelek promo (rytm jak HomeMagazine poniżej lg). W Catalogu wstawiany na granicy wierszy.",
+        "Sam kafelek promo (skala biblioteczna / pełna szerokość siatki inspiracji).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <Container size="content" className="py-8">
             <ListingPromoTile promo={listingPage.gridPromo} />
+          </Container>
+        </div>
+      ),
+    },
+    {
+      id: "promo-tile-grid",
+      label: "ListingPromoTile (grid)",
+      description:
+        'density="grid" - ciaśniejszy padding i min-height dla komórki PLP (2-3 kolumny).',
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <Container size="content" className="py-8">
+            <div className="max-w-sm">
+              <ListingPromoTile promo={listingPage.gridPromo} density="grid" />
+            </div>
           </Container>
         </div>
       ),

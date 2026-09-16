@@ -408,19 +408,17 @@ export const ctaShowcaseEntries: CtaShowcaseEntry[] = [
     id: "advisor-article-final",
     family: "AdvisorCta",
     title: "Skonsultuj podobną łazienkę w salonie (artykuł)",
-    dataSource: "inspirationArticle.ts → finalCta",
-    imagePath: imageLabel(
-      inspirationArticlePage.finalCta.image,
-      "bathroomGreen",
-    ),
-    contextImageKey: "bathroomGreen",
+    dataSource: "inspirationArticle.ts → finalCta (+ secondary)",
+    imagePath: "(brak - duo bez media)",
     pages: [{ label: "Artykuł inspiracji", href: "/inspiracja-artykul" }],
+    notes:
+      "Duo SplitMediaCta: showBook={false}, secondary → RealizationSubmitDrawer",
     render: () => (
       <AdvisorCta
         titleId="showcase-article-final-advisor-title"
         content={articleFinalAdvisorContent}
         onAskOpen={noop}
-        onBookOpen={noop}
+        showBook={false}
       />
     ),
   },
@@ -618,8 +616,10 @@ export const ctaShowcaseEntries: CtaShowcaseEntry[] = [
     dataSource: "listing.ts → listingPage.gridPromo",
     imagePath: imageLabel(listingPage.gridPromo.image),
     pages: [{ label: "Listing", href: "/listing" }],
-    notes: "afterIndex: 6 w siatce produktów",
-    render: () => <ListingPromoTile promo={listingPage.gridPromo} />,
+    notes: 'afterIndex: 7 w siatce produktów · density="grid"',
+    render: () => (
+      <ListingPromoTile promo={listingPage.gridPromo} density="grid" />
+    ),
   },
   {
     id: "promo-tile-arrangements",
