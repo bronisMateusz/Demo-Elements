@@ -124,6 +124,8 @@ function BannerCopyPanel({
   actionsBlock,
   note,
   className,
+  /** `gold` - banner panel; `card` - HomePartners surface (white + border). */
+  surface = "gold",
 }: {
   eyebrow?: string;
   titleBlock: ReactNode;
@@ -131,28 +133,38 @@ function BannerCopyPanel({
   actionsBlock: ReactNode;
   note?: string;
   className?: string;
+  surface?: "gold" | "card";
 }) {
+  const isCardSurface = surface === "card";
+
   return (
     <div
       className={cn(
-        "relative flex h-full flex-col justify-center overflow-hidden rounded-xs bg-gold-100 px-6 md:px-10 lg:px-12",
-        sectionBandPaddingClassName,
+        "relative flex h-full flex-col justify-center overflow-hidden rounded-xs",
+        isCardSurface
+          ? "border border-neutral-300 bg-neutral-0 p-6 md:p-8 lg:p-10"
+          : cn(
+              "bg-gold-100 px-6 md:px-10 lg:px-12",
+              sectionBandPaddingClassName,
+            ),
         className,
       )}
     >
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <BrandMotif
-          name="dots-grid"
-          className="absolute top-6 inset-e-4 h-32 w-8 opacity-30 max-md:hidden md:top-8 md:inset-e-6 md:h-40 md:w-9"
-        />
-        <BrandMotif
-          name="arc-dark"
-          className="absolute -inset-e-14 -bottom-20 size-52 opacity-25 max-md:hidden"
-        />
-      </div>
+      {!isCardSurface ? (
+        <div
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <BrandMotif
+            name="dots-grid"
+            className="absolute top-6 inset-e-4 h-32 w-8 opacity-30 max-md:hidden md:top-8 md:inset-e-6 md:h-40 md:w-9"
+          />
+          <BrandMotif
+            name="arc-dark"
+            className="absolute -inset-e-14 -bottom-20 size-52 opacity-25 max-md:hidden"
+          />
+        </div>
+      ) : null}
 
       <div className="relative z-10 flex min-w-0 flex-col gap-4 md:gap-6">
         {eyebrow ? (
@@ -335,6 +347,7 @@ export function SplitMediaCta({
             </li>
             <li className="min-w-0">
               <BannerCopyPanel
+                surface="card"
                 titleBlock={makeTitleBlock(secondary.title, secondary.titleId)}
                 body={makeBody(undefined, secondary.description)}
                 actionsBlock={secondaryActions}

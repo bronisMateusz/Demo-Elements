@@ -18,6 +18,8 @@ type DrawerShellProps = {
   children: ReactNode;
   /** Extra classes on the fixed root (e.g. `lg:hidden`). */
   className?: string;
+  /** Skip enter/exit motion (seamless step switch inside the same flow). */
+  instant?: boolean;
 };
 
 export function DrawerShell({
@@ -27,9 +29,11 @@ export function DrawerShell({
   closeLabel,
   children,
   className,
+  instant = false,
 }: DrawerShellProps) {
   const reduce = useMotionReduced();
   const panelRef = useRef<HTMLDivElement>(null);
+  const noMotion = reduce || instant;
 
   useEffect(() => {
     lockPageScroll(open);
@@ -64,11 +68,11 @@ export function DrawerShell({
             className="absolute inset-0 bg-black/50"
             aria-label={closeLabel}
             onClick={onClose}
-            initial={reduce ? false : { opacity: 0 }}
+            initial={noMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: reduce ? 0 : BACKDROP_DURATION_S,
+              duration: noMotion ? 0 : BACKDROP_DURATION_S,
               ease: EASE_LUXURY,
             }}
           />
@@ -79,11 +83,11 @@ export function DrawerShell({
             aria-label={label}
             tabIndex={-1}
             className="absolute inset-e-0 top-0 flex h-full w-[95vw] max-w-125 flex-col bg-neutral-0 shadow-2 will-change-transform"
-            initial={reduce ? false : { x: "100%" }}
+            initial={noMotion ? false : { x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{
-              duration: reduce ? 0 : PANEL_DURATION_S,
+              duration: noMotion ? 0 : PANEL_DURATION_S,
               ease: EASE_LUXURY,
             }}
           >
@@ -103,9 +107,11 @@ type DrawerHeaderProps = {
   onClose: () => void;
   /** Compact header without description (e.g. mobile menu). */
   compact?: boolean;
-  /** Optional back control (drill-down panels). */
+  /** Optional back control (drill-down panels / multi-step drawers). */
   onBack?: () => void;
   backLabel?: string;
+  /** Small step / context line above the title (e.g. "Krok 2 z 2"). */
+  eyebrow?: string;
   /** Phosphor icon beside the title (drill-down category headers). */
   titleIconClass?: string;
   /** Optional actions before the close control (e.g. “Wyczyść”). */
@@ -120,6 +126,7 @@ export function DrawerHeader({
   compact = false,
   onBack,
   backLabel = "Wróć",
+  eyebrow,
   titleIconClass,
   actions,
 }: DrawerHeaderProps) {
@@ -161,14 +168,68 @@ export function DrawerHeader({
 
   const hasDescription = Boolean(description);
 
+  // Multi-step: back | eyebrow+title | close; description spans full width under all.
+  if (onBack) {
+    return (
+      <div
+        className={cn(
+          "grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-2 border-b border-neutral-300 px-[clamp(0.75rem,2.222vw,2.5rem)]",
+          hasDescription || eyebrow ? "py-4 md:py-8" : "py-4",
+        )}
+      >
+        <IconButton
+          label={backLabel}
+          iconClass="ph ph-caret-left"
+          variant="ghost"
+          className="-ms-2 col-start-1 row-start-1 shrink-0"
+          onClick={onBack}
+        />
+
+        <div className="col-start-2 row-start-1 min-w-0 pe-2">
+          {eyebrow ? (
+            <p className="m-0 mb-1.5 font-body text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
+              {eyebrow}
+            </p>
+          ) : null}
+          <p className="m-0 font-body text-xl leading-none font-medium text-neutral-900">
+            {title}
+          </p>
+        </div>
+
+        <div className="col-start-3 row-start-1 flex shrink-0 items-start gap-2">
+          {actions}
+          <IconButton
+            label={closeLabel}
+            iconClass="ph ph-x"
+            variant="ghost"
+            onClick={onClose}
+          />
+        </div>
+
+        {hasDescription ? (
+          <p className="col-span-full mt-1.5 mb-0 text-sm leading-relaxed text-neutral-500 md:mt-2">
+            {description}
+          </p>
+        ) : null}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
         "flex justify-between gap-4 border-b border-neutral-300 px-[clamp(0.75rem,2.222vw,2.5rem)]",
-        hasDescription ? "items-start py-4 md:py-8" : "items-center py-4",
+        hasDescription || eyebrow
+          ? "items-start py-4 md:py-8"
+          : "items-center py-4",
       )}
     >
       <div className="min-w-0 pe-2">
+        {eyebrow ? (
+          <p className="m-0 mb-1.5 font-body text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
+            {eyebrow}
+          </p>
+        ) : null}
         <p className="m-0 font-body text-xl leading-none font-medium text-neutral-900">
           {title}
         </p>
@@ -178,7 +239,7 @@ export function DrawerHeader({
           </p>
         ) : null}
       </div>
-      <div className="flex shrink-0 items-center gap-2">
+      <div className="flex shrink-0 items-start gap-2">
         {actions}
         <IconButton
           label={closeLabel}

@@ -248,6 +248,7 @@ export function ArchitectZonePage() {
         topicTitle={page.title}
         title={page.advisor.askDrawerTitle}
         description={page.advisor.askDrawerDescription}
+        variant="architect"
       />
     </>
   );

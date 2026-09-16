@@ -16,15 +16,30 @@ export type InspirationListingItem = InspirationArrangement & {
   description?: string;
 };
 
+export type InspirationArticleBodyBlock =
+  | { type: "heading"; text: string }
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[] }
+  | { type: "credit"; text: string };
+
 export type InspirationArticleSection = {
   id: string;
-  heading: string;
-  paragraphs: string[];
+  /**
+   * Single h2 when the section is structured fields.
+   * Omit when `body` already includes headings (CKEditor stream).
+   */
+  heading?: string;
+  paragraphs?: string[];
   /** Extra copy after a bullet list within the same section. */
   paragraphsAfter?: string[];
   bullets?: string[];
   /** Optional closing credit line (e.g. project author). */
   credit?: string;
+  /**
+   * Continuous CKEditor-style body (headings, paragraphs, lists).
+   * When set, takes precedence over heading / paragraphs / bullets.
+   */
+  body?: InspirationArticleBodyBlock[];
   /**
    * Inline gallery under the section copy. Breaks out of the prose column
    * to the content rail; opens ProductGalleryLightbox.

@@ -33,7 +33,7 @@ export function ArrangementBrands({
       className={cn(contentDividerTopClassName, "mt-8 pt-6 pb-8", className)}
     >
       <h3 className="m-0 mb-4 font-heading text-h4 leading-[1.25] font-medium tracking-tight text-neutral-900 md:mb-5">
-        Marki w tej aranżacji
+        Marki w tej aranżacji ({brands.length})
       </h3>
       <div className="grid grid-cols-2 gap-x-5 gap-y-4">
         {brands.map((brand) => (

@@ -26,7 +26,7 @@ export function InspirationArticleProductsPanel({
         id={titleId}
         className="m-0 mb-4 shrink-0 font-heading text-h4 leading-[1.25] font-medium tracking-tight text-neutral-900 md:mb-5"
       >
-        {title}
+        {title} ({products.length})
       </h2>
 
       <div

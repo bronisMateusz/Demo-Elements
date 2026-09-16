@@ -78,7 +78,11 @@ export function BookAppointmentDrawerDemo() {
       >
         Umów spotkanie
       </Button>
-      <BookAppointmentDrawer open={open} onClose={() => setOpen(false)} />
+      <BookAppointmentDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        embedSalonPicker
+      />
     </div>
   );
 }

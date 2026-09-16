@@ -88,26 +88,40 @@ export const inspirationArticlePage: InspirationArticlePageData = {
       ],
     },
     {
-      id: "light",
-      heading: "Światło - naturalne i projektowe",
-      paragraphs: [
-        "Dużą rolę w aranżacji odgrywa naturalne doświetlenie przez okno dachowe. Światło dzienne podkreśla fakturę kamiennych płytek, wydobywa rysunek drewna oraz zmienia odbiór kolorystyki wnętrza w zależności od pory dnia.",
-        "Uzupełnieniem są:",
-      ],
-      bullets: [
-        "minimalistyczne, czarne oprawy szynowe,",
-        "punktowe kinkiety przy lustrach,",
-        "precyzyjnie zaprojektowane oświetlenie strefowe.",
-      ],
-      paragraphsAfter: [
-        "Tak zaplanowane oświetlenie w łazience na poddaszu pozwala połączyć funkcjonalność z nastrojowością, bez dominowania wizualnego nad architekturą wnętrza.",
-      ],
-    },
-    {
-      id: "detail",
-      heading: "Detal i minimalizm",
-      paragraphs: [
-        "Ciemne, wyraziste akcenty - oświetlenie, profile, detale i ramy luster - nadają aranżacji nowoczesny charakter i porządkują przestrzeń, tworząc wyraźny kontrast z ciepłem drewna oraz spokojną tonacją jasnych okładzin. Lustra z zaokrąglonymi narożnikami przełamują geometryczną konsekwencję form, a subtelne akcenty zieleni wprowadzają naturalną świeżość. To minimalistyczne wnętrze oparte na jakości materiałów, świetle i proporcjach - wyrafinowane, ale pełne równowagi.",
+      id: "light-detail",
+      body: [
+        {
+          type: "heading",
+          text: "Światło - naturalne i projektowe",
+        },
+        {
+          type: "paragraph",
+          text: "Dużą rolę w aranżacji odgrywa naturalne doświetlenie przez okno dachowe. Światło dzienne podkreśla fakturę kamiennych płytek, wydobywa rysunek drewna oraz zmienia odbiór kolorystyki wnętrza w zależności od pory dnia.",
+        },
+        {
+          type: "paragraph",
+          text: "Uzupełnieniem są:",
+        },
+        {
+          type: "list",
+          items: [
+            "minimalistyczne, czarne oprawy szynowe,",
+            "punktowe kinkiety przy lustrach,",
+            "precyzyjnie zaprojektowane oświetlenie strefowe.",
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "Tak zaplanowane oświetlenie w łazience na poddaszu pozwala połączyć funkcjonalność z nastrojowością, bez dominowania wizualnego nad architekturą wnętrza.",
+        },
+        {
+          type: "heading",
+          text: "Detal i minimalizm",
+        },
+        {
+          type: "paragraph",
+          text: "Ciemne, wyraziste akcenty - oświetlenie, profile, detale i ramy luster - nadają aranżacji nowoczesny charakter i porządkują przestrzeń, tworząc wyraźny kontrast z ciepłem drewna oraz spokojną tonacją jasnych okładzin. Lustra z zaokrąglonymi narożnikami przełamują geometryczną konsekwencję form, a subtelne akcenty zieleni wprowadzają naturalną świeżość. To minimalistyczne wnętrze oparte na jakości materiałów, świetle i proporcjach - wyrafinowane, ale pełne równowagi.",
+        },
       ],
       images: [
         projectGalleryImage(
@@ -140,7 +154,7 @@ export const inspirationArticlePage: InspirationArticlePageData = {
   ],
   embeds: [
     { type: "appointment", afterSectionId: "cabinetry" },
-    { type: "magazine", afterSectionId: "light" },
+    { type: "magazine", afterSectionId: "light-detail" },
   ],
   appointmentCta: {
     title: "Umów spotkanie w salonie",

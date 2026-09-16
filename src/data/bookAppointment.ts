@@ -4,6 +4,8 @@ export const bookAppointmentCopy = {
   changeSalonLabel: "Zmień",
   noSalonLabel: "Wybierz salon",
   salonFallbackHint: "Wskaż salon, w którym chcesz umówić spotkanie.",
+  /** Lead above the embedded salon list (before the form). */
+  salonPickerLead: "Wybierz salon, w którym chcesz umówić spotkanie.",
   nameLabel: "Imię i nazwisko",
   namePlaceholder: "Jan Kowalski",
   emailLabel: "E-mail",
@@ -12,17 +14,14 @@ export const bookAppointmentCopy = {
   phoneHint: "potwierdzimy termin",
   phonePlaceholder: "np. 600 100 200",
   slotLabel: "Preferowany termin i godzina",
-  slotOptional: "opcjonalnie",
   slotPlaceholder: "np. wtorek po 16:00 albo weekend rano",
   reasonLabel: "Powód spotkania",
-  reasonOptional: "opcjonalnie",
   reasonOptions: [
     { id: "new", label: "Nowa łazienka" },
     { id: "renovation", label: "Remont" },
     { id: "other", label: "Inny" },
   ],
   messageLabel: "Wiadomość",
-  messageOptional: "opcjonalnie",
   messagePlaceholder:
     "Napisz, w czym możemy pomóc podczas spotkania - np. metraż, budżet, styl...",
   consent:

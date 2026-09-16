@@ -1,13 +1,14 @@
 import { useCallback, useId, useState, type FormEvent } from "react";
+import { advisorAskDrawerCopy } from "../../data/ask";
 import { bookAppointmentCopy } from "../../data/bookAppointment";
 import {
   requestSalonDrawer,
   useSelectedSalon,
 } from "../../hooks/useSelectedSalon";
 import { cn } from "../../lib/cn";
-import { pGutterClassName } from "../../lib/layoutTokens";
 import { DrawerHeader, DrawerShell } from "../layout/DrawerShell";
 import { DrawerSalonSummary } from "../layout/DrawerSalonSummary";
+import { SalonPickerStacked } from "../layout/SalonPickerPanel";
 import { Checkbox } from "../motion/Checkbox";
 import { Button } from "../ui/Button";
 import { inputClassName } from "../ui/inputClassName";
@@ -16,10 +17,19 @@ import { SalonLocationChips } from "./SalonLocationChips";
 type BookAppointmentDrawerProps = {
   open: boolean;
   onClose: () => void;
+  /**
+   * Drupal eh-drawer body: salon list first when needed, then the booking form.
+   */
+  embedSalonPicker?: boolean;
+  /** Parent owns DrawerShell - seamless handoff from InspirationProductsDrawer. */
+  embedded?: boolean;
+  /** Salon/form are step 2 after InspirationProductsDrawer. */
+  fromProductsStep?: boolean;
+  onBackToProducts?: () => void;
 };
 
 const labelClassName = "mb-1.5 block text-sm font-medium text-neutral-900";
-const hintClassName = "font-normal text-neutral-500";
+const fieldHintClassName = "mt-1.5 mb-0 text-sm text-neutral-500";
 
 function RequiredMark() {
   return (
@@ -31,11 +41,24 @@ function RequiredMark() {
 }
 
 /** Salon visit booking form - content aligned with the production eh-drawer. */
-export function BookAppointmentDrawer({
+export function BookAppointmentDrawer(props: BookAppointmentDrawerProps) {
+  return (
+    <BookAppointmentDrawerInner
+      key={props.embedded ? "embedded" : props.open ? "open" : "closed"}
+      {...props}
+    />
+  );
+}
+
+function BookAppointmentDrawerInner({
   open,
   onClose,
+  embedSalonPicker = false,
+  embedded = false,
+  fromProductsStep = false,
+  onBackToProducts,
 }: BookAppointmentDrawerProps) {
-  const { salon } = useSelectedSalon();
+  const { salon, select } = useSelectedSalon();
   const nameId = useId();
   const emailId = useId();
   const phoneId = useId();
@@ -46,38 +69,83 @@ export function BookAppointmentDrawer({
   const [reasonId, setReasonId] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [step, setStep] = useState<"salon" | "form">(() =>
+    embedSalonPicker && salon ? "form" : embedSalonPicker ? "salon" : "form",
+  );
+  const [sawSalonStep, setSawSalonStep] = useState(
+    () => !(embedSalonPicker && salon),
+  );
 
   const handleClose = useCallback(() => {
     setSubmitted(false);
     setConsent(false);
     setReasonId(null);
+    setStep(
+      embedSalonPicker && salon ? "form" : embedSalonPicker ? "salon" : "form",
+    );
+    setSawSalonStep(!(embedSalonPicker && salon));
     onClose();
-  }, [onClose]);
+  }, [embedSalonPicker, onClose, salon]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
   };
 
-  return (
-    <DrawerShell
-      open={open}
-      onClose={handleClose}
-      label={bookAppointmentCopy.title}
-      closeLabel={bookAppointmentCopy.closeLabel}
-    >
+  const goToSalonStep = () => {
+    setSawSalonStep(true);
+    setStep("salon");
+  };
+
+  const handleSalonSelect = (id: string) => {
+    select(id);
+    setSawSalonStep(true);
+    setStep("form");
+  };
+
+  const showSalonStep = embedSalonPicker && step === "salon" && !submitted;
+  const showFormStep = !showSalonStep;
+
+  const stepEyebrow = fromProductsStep
+    ? showSalonStep
+      ? advisorAskDrawerCopy.step2SalonEyebrow
+      : advisorAskDrawerCopy.step2Eyebrow
+    : embedSalonPicker && showSalonStep
+      ? advisorAskDrawerCopy.salonStepOf2Eyebrow
+      : undefined;
+
+  const headerOnBack =
+    !submitted && fromProductsStep
+      ? showFormStep
+        ? sawSalonStep
+          ? goToSalonStep
+          : onBackToProducts
+        : showSalonStep
+          ? onBackToProducts
+          : undefined
+      : embedSalonPicker && showFormStep && sawSalonStep && !submitted
+        ? goToSalonStep
+        : undefined;
+
+  const headerBackLabel =
+    showFormStep && sawSalonStep
+      ? advisorAskDrawerCopy.backToSalonLabel
+      : advisorAskDrawerCopy.backToProductsLabel;
+
+  const changeSalon = embedSalonPicker ? goToSalonStep : requestSalonDrawer;
+
+  const body = (
+    <>
       <DrawerHeader
         title={bookAppointmentCopy.title}
         closeLabel={bookAppointmentCopy.closeLabel}
         onClose={handleClose}
+        eyebrow={stepEyebrow}
+        onBack={headerOnBack}
+        backLabel={headerBackLabel}
       />
 
-      <div
-        className={cn(
-          "flex min-h-0 flex-1 flex-col overflow-y-auto",
-          pGutterClassName,
-        )}
-      >
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 md:py-8">
         {submitted ? (
           <div className="rounded-xs border border-neutral-300 bg-neutral-50 px-5 py-6">
             <p className="m-0 font-heading text-xl text-neutral-900">
@@ -96,11 +164,20 @@ export function BookAppointmentDrawer({
               {bookAppointmentCopy.closeSuccessLabel}
             </Button>
           </div>
-        ) : (
+        ) : null}
+
+        {showSalonStep ? (
+          <SalonPickerStacked
+            lead={bookAppointmentCopy.salonPickerLead}
+            onSelect={handleSalonSelect}
+          />
+        ) : null}
+
+        {showFormStep && !submitted ? (
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <DrawerSalonSummary
               salon={salon}
-              onChangeSalon={requestSalonDrawer}
+              onChangeSalon={changeSalon}
               emptyHint={bookAppointmentCopy.salonFallbackHint}
               emptyLabel={bookAppointmentCopy.noSalonLabel}
               changeLabel={bookAppointmentCopy.changeSalonLabel}
@@ -144,10 +221,6 @@ export function BookAppointmentDrawer({
               <label className={labelClassName} htmlFor={phoneId}>
                 {bookAppointmentCopy.phoneLabel}
                 <RequiredMark />
-                <span className={hintClassName}>
-                  {" "}
-                  · {bookAppointmentCopy.phoneHint}
-                </span>
               </label>
               <input
                 id={phoneId}
@@ -159,16 +232,16 @@ export function BookAppointmentDrawer({
                 inputMode="tel"
                 placeholder={bookAppointmentCopy.phonePlaceholder}
                 className={inputClassName}
+                aria-describedby={`${phoneId}-hint`}
               />
+              <p id={`${phoneId}-hint`} className={fieldHintClassName}>
+                {bookAppointmentCopy.phoneHint}
+              </p>
             </div>
 
             <div>
               <label className={labelClassName} htmlFor={slotId}>
                 {bookAppointmentCopy.slotLabel}
-                <span className={hintClassName}>
-                  {" "}
-                  · {bookAppointmentCopy.slotOptional}
-                </span>
               </label>
               <input
                 id={slotId}
@@ -183,10 +256,6 @@ export function BookAppointmentDrawer({
             <fieldset className="m-0 min-w-0 border-0 p-0">
               <legend className={cn(labelClassName, "float-none w-full px-0")}>
                 {bookAppointmentCopy.reasonLabel}
-                <span className={hintClassName}>
-                  {" "}
-                  · {bookAppointmentCopy.reasonOptional}
-                </span>
               </legend>
               <SalonLocationChips
                 chips={bookAppointmentCopy.reasonOptions}
@@ -203,10 +272,6 @@ export function BookAppointmentDrawer({
             <div>
               <label className={labelClassName} htmlFor={messageId}>
                 {bookAppointmentCopy.messageLabel}
-                <span className={hintClassName}>
-                  {" "}
-                  · {bookAppointmentCopy.messageOptional}
-                </span>
               </label>
               <textarea
                 id={messageId}
@@ -247,8 +312,23 @@ export function BookAppointmentDrawer({
               {bookAppointmentCopy.submitLabel}
             </Button>
           </form>
-        )}
+        ) : null}
       </div>
+    </>
+  );
+
+  if (embedded) {
+    return body;
+  }
+
+  return (
+    <DrawerShell
+      open={open}
+      onClose={handleClose}
+      label={bookAppointmentCopy.title}
+      closeLabel={bookAppointmentCopy.closeLabel}
+    >
+      {body}
     </DrawerShell>
   );
 }

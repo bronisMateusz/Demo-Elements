@@ -141,7 +141,7 @@ export const inspirationArticleModule: LibraryModule = {
   slug: "inspiration-article",
   title: "InspirationArticleContent",
   description:
-    "Treść artykułu inspiracji - sekcje h2, listy, obrazki z lightboxem, osadzone LocateCta, HomeMagazine i duo AdvisorCta na końcu. Pełna strona: /inspiracja-artykul.",
+    "Treść artykułu inspiracji - sekcje h2 / body (ciąg CKEditor), listy, obrazki z lightboxem, osadzone LocateCta, HomeMagazine i duo AdvisorCta na końcu. Pełna strona: /inspiracja-artykul.",
   variants: [
     {
       id: "full-article",
