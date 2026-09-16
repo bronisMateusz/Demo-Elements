@@ -8,6 +8,7 @@ import {
   type AdvisorCtaContent,
 } from "../components/marketing/AdvisorCta";
 import { AdvisorAskDrawer } from "../components/marketing/AdvisorAskDrawer";
+import { RealizationSubmitDrawer } from "../components/marketing/RealizationSubmitDrawer";
 import {
   InspirationArticleContent,
   InspirationArticleHero,
@@ -16,20 +17,28 @@ import { InspirationArticleProductsBar } from "../components/inspiration/Inspira
 import { InspirationGallery } from "../components/inspiration/InspirationGallery";
 import { PageSectionStack } from "../components/structural/PageSectionStack";
 import { Section } from "../components/structural/Section";
-import { requestSalonDrawer } from "../hooks/useSelectedSalon";
 import type { InspirationArrangement } from "../types/product";
 
 export function InspirationArticlePage() {
   const page = inspirationArticlePage;
   const [askOpen, setAskOpen] = useState(false);
+  const [realizationOpen, setRealizationOpen] = useState(false);
 
   const finalAdvisorContent: AdvisorCtaContent = {
     eyebrow: page.finalCta.eyebrow,
     title: page.finalCta.title,
     description: page.finalCta.description,
-    image: page.finalCta.image,
     askLabel: page.finalCta.askLabel,
     bookLabel: page.finalCta.bookLabel,
+    secondary: page.finalCta.secondary
+      ? {
+          eyebrow: page.finalCta.secondary.eyebrow,
+          title: page.finalCta.secondary.title,
+          description: page.finalCta.secondary.description,
+          ctaLabel: page.finalCta.secondary.ctaLabel,
+          onCtaClick: () => setRealizationOpen(true),
+        }
+      : undefined,
   };
 
   const productsArrangement = useMemo<InspirationArrangement>(
@@ -78,7 +87,7 @@ export function InspirationArticlePage() {
             titleId="inspiration-article-final-cta-title"
             content={finalAdvisorContent}
             onAskOpen={() => setAskOpen(true)}
-            onBookOpen={requestSalonDrawer}
+            showBook={false}
           />
 
           <Section ariaLabelledby="inspiration-article-related-title">
@@ -109,6 +118,11 @@ export function InspirationArticlePage() {
         open={askOpen}
         onClose={() => setAskOpen(false)}
         topicTitle={page.title}
+      />
+
+      <RealizationSubmitDrawer
+        open={realizationOpen}
+        onClose={() => setRealizationOpen(false)}
       />
     </>
   );

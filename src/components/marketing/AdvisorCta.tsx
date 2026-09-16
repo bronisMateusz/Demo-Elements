@@ -1,10 +1,24 @@
 import { requestSalonDrawer } from "../../hooks/useSelectedSalon";
 import { cn } from "../../lib/cn";
 import type { ProductImage } from "../../types/product";
-import { SplitMediaCta } from "../structural/SplitMediaCta";
+import {
+  SplitMediaCta,
+  type SplitMediaCtaSecondary,
+} from "../structural/SplitMediaCta";
 import { splitMediaCtaButtonClassName } from "../structural/splitMediaCtaButtonClassName";
 import { Button } from "../ui/Button";
 import type { ReactNode } from "react";
+
+export type AdvisorCtaSecondaryContent = {
+  eyebrow?: string;
+  title: string;
+  titleId?: string;
+  description: string;
+  ctaLabel: string;
+  /** Link CTA. Ignored when `onCtaClick` is set. */
+  href?: string;
+  onCtaClick?: () => void;
+};
 
 export type AdvisorCtaContent = {
   id?: string;
@@ -14,13 +28,16 @@ export type AdvisorCtaContent = {
   lead?: string;
   description: string;
   note?: string;
-  image: ProductImage;
+  /** When omitted, the media column is hidden. */
+  image?: ProductImage;
   askLabel: string;
   bookLabel: string;
   /** Used when `onAskOpen` is omitted - primary/secondary ask becomes a link. */
   askHref?: string;
   /** Optional book link. When omitted, book opens the salon drawer. */
   bookHref?: string;
+  /** Second column (HomePartners-style duo). Hides media when set. */
+  secondary?: AdvisorCtaSecondaryContent;
 };
 
 type AdvisorCtaProps = {
@@ -32,6 +49,8 @@ type AdvisorCtaProps = {
   onBookOpen?: () => void;
   /** Which CTA is the primary (filled) button. Home uses ask; salon visit uses book. */
   primaryAction?: "ask" | "book";
+  /** Hide the book CTA (e.g. duo layout with only ask on the left). */
+  showBook?: boolean;
   className?: string;
 };
 
@@ -125,6 +144,7 @@ export function AdvisorCta({
   onAskOpen,
   onBookOpen,
   primaryAction = "ask",
+  showBook = true,
   className,
 }: AdvisorCtaProps) {
   const ask = (
@@ -143,9 +163,13 @@ export function AdvisorCta({
     />
   );
 
+  const includeBook = showBook && !content.secondary;
+
   // When book is primary, ask becomes secondary (button or link styled as secondary).
   let actions: ReactNode;
-  if (primaryAction === "book") {
+  if (!includeBook) {
+    actions = ask;
+  } else if (primaryAction === "book") {
     const askSecondary = onAskOpen ? (
       <Button
         as="button"
@@ -182,6 +206,40 @@ export function AdvisorCta({
     );
   }
 
+  let secondary: SplitMediaCtaSecondary | undefined;
+  if (content.secondary) {
+    const secondaryCta = content.secondary.onCtaClick ? (
+      <Button
+        as="button"
+        type="button"
+        variant="primary"
+        size="lg"
+        className={splitMediaCtaButtonClassName}
+        onClick={content.secondary.onCtaClick}
+      >
+        {content.secondary.ctaLabel}
+      </Button>
+    ) : (
+      <Button
+        href={content.secondary.href ?? "#"}
+        variant="primary"
+        size="lg"
+        className={splitMediaCtaButtonClassName}
+      >
+        {content.secondary.ctaLabel}
+        <i className="ph ph-arrow-right" aria-hidden="true" />
+      </Button>
+    );
+
+    secondary = {
+      eyebrow: content.secondary.eyebrow,
+      title: content.secondary.title,
+      titleId: content.secondary.titleId ?? `${titleId}-secondary`,
+      description: content.secondary.description,
+      actions: secondaryCta,
+    };
+  }
+
   return (
     <SplitMediaCta
       id={content.id}
@@ -191,7 +249,8 @@ export function AdvisorCta({
       lead={content.lead}
       description={content.description}
       note={content.note}
-      image={content.image}
+      image={content.secondary ? undefined : content.image}
+      secondary={secondary}
       className={cn("relative z-10 isolate", className)}
       actions={actions}
     />

@@ -123,7 +123,7 @@ export const libraryCategories: LibraryCategory[] = [
     slug: "drawery",
     title: "Drawery",
     subtitle:
-      "Wysuwane panele - salon, pytanie, umówienie, produkty aranżacji i menu mobilne.",
+      "Wysuwane panele - salon, pytanie, umówienie, produkty aranżacji, przesłanie realizacji i menu mobilne.",
     modules: [drawersModule],
   },
   {

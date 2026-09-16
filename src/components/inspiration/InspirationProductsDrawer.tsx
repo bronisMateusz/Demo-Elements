@@ -1,3 +1,4 @@
+import { advisorAskDrawerCopy } from "../../data/ask";
 import { cn } from "../../lib/cn";
 import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import { requestInspirationAskDrawer } from "../../hooks/useInspirationAskDrawer";
@@ -11,52 +12,57 @@ type InspirationProductsDrawerProps = {
   open: boolean;
   arrangement: InspirationArrangement | null;
   onClose: () => void;
+  /**
+   * Render panel body only (parent owns DrawerShell) - seamless step switch
+   * into the ask flow.
+   */
+  embedded?: boolean;
+  /** When set, used instead of the global ask-drawer event. */
+  onAsk?: (arrangement: InspirationArrangement) => void;
+  /**
+   * When set (Header shared shell), salon booking is step 2 in the same drawer.
+   * Otherwise closes and opens the standalone SalonDrawer.
+   */
+  onBookSalon?: () => void;
 };
-
-/** Polish count label: 1 produkt / 2–4 produkty / 5+ produktów. */
-function formatProductCountLabel(count: number) {
-  if (count === 1) return "1 produkt";
-  const mod10 = count % 10;
-  const mod100 = count % 100;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
-    return `${count} produkty`;
-  }
-  return `${count} produktów`;
-}
 
 export function InspirationProductsDrawer({
   open,
   arrangement,
   onClose,
+  embedded = false,
+  onAsk,
+  onBookSalon,
 }: InspirationProductsDrawerProps) {
   const title = arrangement?.title ?? "Produkty w aranżacji";
   const products = arrangement?.products ?? [];
-  const countLabel = formatProductCountLabel(products.length);
 
   const openSalon = () => {
+    if (onBookSalon) {
+      onBookSalon();
+      return;
+    }
     onClose();
     requestSalonDrawer();
   };
 
   const openAsk = () => {
-    if (arrangement) {
-      onClose();
-      requestInspirationAskDrawer(arrangement);
+    if (!arrangement) return;
+    if (onAsk) {
+      onAsk(arrangement);
+      return;
     }
+    onClose();
+    requestInspirationAskDrawer(arrangement);
   };
 
-  return (
-    <DrawerShell
-      open={open}
-      onClose={onClose}
-      label={title}
-      closeLabel="Zamknij"
-    >
+  const body = (
+    <>
       <DrawerHeader
         title={title}
-        description={products.length > 0 ? countLabel : undefined}
         closeLabel="Zamknij"
         onClose={onClose}
+        eyebrow={advisorAskDrawerCopy.step1Eyebrow}
       />
 
       <div className="flex min-h-0 flex-1 flex-col">
@@ -97,6 +103,21 @@ export function InspirationProductsDrawer({
           </div>
         </div>
       </div>
+    </>
+  );
+
+  if (embedded) {
+    return body;
+  }
+
+  return (
+    <DrawerShell
+      open={open}
+      onClose={onClose}
+      label={title}
+      closeLabel="Zamknij"
+    >
+      {body}
     </DrawerShell>
   );
 }

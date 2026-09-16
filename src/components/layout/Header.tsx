@@ -15,14 +15,17 @@ import { useSiteChrome } from "../../hooks/useSiteChrome";
 import { useInspirationAskDrawerRequest } from "../../hooks/useInspirationAskDrawer";
 import { useInspirationProductsDrawerRequest } from "../../hooks/useInspirationProductsDrawer";
 import { useSalonDrawerRequest } from "../../hooks/useSelectedSalon";
-import type { InspirationArrangement } from "../../types/product";
+import type { InspirationArrangement, ProductImage } from "../../types/product";
 import { AdvisorAskDrawer } from "../marketing/AdvisorAskDrawer";
+import { BookAppointmentDrawer } from "../marketing/BookAppointmentDrawer";
 import { InspirationProductsDrawer } from "../inspiration/InspirationProductsDrawer";
+import { SalonDrawer } from "./SalonDrawer";
+import { DrawerShell } from "./DrawerShell";
 import { HeaderBar } from "./header/HeaderBar";
 import { HeaderSalonStrip } from "./header/HeaderSalonStrip";
 import { HeaderUtility } from "./header/HeaderUtility";
 import { MobileDrawer } from "./MobileDrawer";
-import { SalonDrawer } from "./SalonDrawer";
+import { bookAppointmentCopy } from "../../data/bookAppointment";
 
 function syncSiteHeaderBarHeightVar() {
   const bar = document.getElementById("siteHeaderBar");
@@ -43,6 +46,13 @@ export function Header() {
     useState<InspirationArrangement | null>(null);
   const [askOpen, setAskOpen] = useState(false);
   const [askTopic, setAskTopic] = useState("Elements");
+  const [askTopicImage, setAskTopicImage] = useState<
+    ProductImage | undefined
+  >();
+  const [askFromProducts, setAskFromProducts] = useState(false);
+  const [askArrangement, setAskArrangement] =
+    useState<InspirationArrangement | null>(null);
+  const [inspirationSalonOpen, setInspirationSalonOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [utilityConcealed, setUtilityConcealed] = useState(false);
   const lastScrollY = useRef(0);
@@ -53,6 +63,11 @@ export function Header() {
     setProductsOpen(false);
     setInspirationOpen(false);
     setInspirationArrangement(null);
+    setAskOpen(false);
+    setAskFromProducts(false);
+    setAskArrangement(null);
+    setAskTopicImage(undefined);
+    setInspirationSalonOpen(false);
     setSalonOpen(true);
   }, []);
 
@@ -60,26 +75,65 @@ export function Header() {
     (arrangement: InspirationArrangement) => {
       setProductsOpen(false);
       setSalonOpen(false);
+      setAskOpen(false);
+      setAskFromProducts(false);
+      setAskArrangement(null);
+      setAskTopicImage(undefined);
+      setInspirationSalonOpen(false);
       setInspirationArrangement(arrangement);
       setInspirationOpen(true);
     },
     [],
   );
 
-  const closeInspirationProducts = useCallback(() => {
-    setInspirationOpen(false);
-    setInspirationArrangement(null);
-  }, []);
-
   const openInspirationAsk = useCallback(
     (arrangement: InspirationArrangement) => {
+      // Keep shell mounted - only swap step content (no reopen animation).
       setInspirationOpen(false);
-      setInspirationArrangement(null);
+      setInspirationSalonOpen(false);
       setAskTopic(arrangement.title);
+      setAskTopicImage(arrangement.image);
+      setAskArrangement(arrangement);
+      setAskFromProducts(true);
       setAskOpen(true);
     },
     [],
   );
+
+  const openInspirationSalon = useCallback(() => {
+    setInspirationOpen(false);
+    setAskOpen(false);
+    setAskFromProducts(false);
+    setAskTopicImage(undefined);
+    setInspirationSalonOpen(true);
+  }, []);
+
+  const backAskToProducts = useCallback(() => {
+    if (!askArrangement) return;
+    setAskOpen(false);
+    setAskFromProducts(false);
+    setAskTopicImage(undefined);
+    setInspirationArrangement(askArrangement);
+    setInspirationOpen(true);
+  }, [askArrangement]);
+
+  const backSalonToProducts = useCallback(() => {
+    setInspirationSalonOpen(false);
+    setInspirationOpen(true);
+  }, []);
+
+  const closeInspirationAskFlow = useCallback(() => {
+    setInspirationOpen(false);
+    setInspirationArrangement(null);
+    setAskOpen(false);
+    setAskTopicImage(undefined);
+    setAskFromProducts(false);
+    setAskArrangement(null);
+    setInspirationSalonOpen(false);
+  }, []);
+
+  const inspirationAskFlowOpen =
+    inspirationOpen || (askOpen && askFromProducts) || inspirationSalonOpen;
 
   useSalonDrawerRequest(openSalonDrawer);
   useInspirationProductsDrawerRequest(openInspirationProducts);
@@ -180,16 +234,62 @@ export function Header() {
 
       <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <SalonDrawer open={salonOpen} onClose={() => setSalonOpen(false)} />
-      <InspirationProductsDrawer
-        open={inspirationOpen}
-        arrangement={inspirationArrangement}
-        onClose={closeInspirationProducts}
-      />
-      <AdvisorAskDrawer
-        open={askOpen}
-        onClose={() => setAskOpen(false)}
-        topicTitle={askTopic}
-      />
+      <DrawerShell
+        open={inspirationAskFlowOpen}
+        onClose={closeInspirationAskFlow}
+        label={
+          inspirationOpen
+            ? (inspirationArrangement?.title ?? "Produkty w aranżacji")
+            : inspirationSalonOpen
+              ? bookAppointmentCopy.title
+              : askTopic
+        }
+        closeLabel="Zamknij"
+      >
+        {inspirationOpen ? (
+          <InspirationProductsDrawer
+            embedded
+            open={inspirationOpen}
+            arrangement={inspirationArrangement}
+            onClose={closeInspirationAskFlow}
+            onAsk={openInspirationAsk}
+            onBookSalon={openInspirationSalon}
+          />
+        ) : null}
+        {askOpen && askFromProducts ? (
+          <AdvisorAskDrawer
+            embedded
+            open={askOpen}
+            onClose={closeInspirationAskFlow}
+            topicTitle={askTopic}
+            topicImage={askTopicImage}
+            fromProductsStep
+            onBackToProducts={backAskToProducts}
+          />
+        ) : null}
+        {inspirationSalonOpen ? (
+          <BookAppointmentDrawer
+            embedded
+            open={inspirationSalonOpen}
+            onClose={closeInspirationAskFlow}
+            embedSalonPicker
+            fromProductsStep
+            onBackToProducts={backSalonToProducts}
+          />
+        ) : null}
+      </DrawerShell>
+      {askOpen && !askFromProducts ? (
+        <AdvisorAskDrawer
+          open={askOpen}
+          onClose={() => {
+            setAskOpen(false);
+            setAskTopicImage(undefined);
+            setAskArrangement(null);
+          }}
+          topicTitle={askTopic}
+          topicImage={askTopicImage}
+        />
+      ) : null}
     </>
   );
 }

@@ -122,6 +122,7 @@ export function SalonsPageB() {
       <BookAppointmentDrawer
         open={bookOpen}
         onClose={() => setBookOpen(false)}
+        embedSalonPicker
       />
     </>
   );

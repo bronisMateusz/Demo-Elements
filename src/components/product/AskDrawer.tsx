@@ -2,11 +2,14 @@ import { useCallback, useId, useState, type FormEvent } from "react";
 import { cn } from "../../lib/cn";
 import { contentDividerTopClassName } from "../../lib/layoutTokens";
 import {
+  advisorAskDrawerCopy,
   askDrawerCopy,
   architectAskFormCopy,
+  buildArrangementAskMessage,
   buildAskFooterNote,
   buildAskMessage,
   formatAskSku,
+  type AdvisorAskTopicId,
 } from "../../data/ask";
 import { salonCardCopy } from "../../data/nav";
 import { salonTelHref } from "../../data/salons";
@@ -19,6 +22,8 @@ import type { ProductImage } from "../../types/product";
 import { Button } from "../ui/Button";
 import { DrawerHeader, DrawerShell } from "../layout/DrawerShell";
 import { DrawerSalonSummary } from "../layout/DrawerSalonSummary";
+import { SalonPickerStacked } from "../layout/SalonPickerPanel";
+import { SalonLocationChips } from "../marketing/SalonLocationChips";
 import { Checkbox } from "../motion/Checkbox";
 import { SalonHoursList } from "../salon/SalonHoursList";
 import {
@@ -37,12 +42,28 @@ type AskDrawerProps = {
   /** Override default product-ask chrome (e.g. architect cooperation). */
   title?: string;
   description?: string;
-  /** Product + salon summary cards above the form - on for PDP, off for advisor. */
+  /** Product + salon summary cards above the form - on for PDP. */
   showContextSummaries?: boolean;
-  /** Postal code + message (+ routing footer) - on for PDP, off for advisor. */
+  /** Postal code + message (+ routing footer) - on for PDP. */
   showRoutingFields?: boolean;
   /** Architect salon select, role confirm, marketing consents (makieta #azForm). */
   showArchitectFields?: boolean;
+  /**
+   * Drupal #askDrawer body: context card + salon list first, then form
+   * after the user picks a salon.
+   */
+  embedSalonPicker?: boolean;
+  /**
+   * When true, salon/form are steps 2–3 (step 1 = InspirationProductsDrawer).
+   * Enables back from salon to products via `onBackToProducts`.
+   */
+  fromProductsStep?: boolean;
+  onBackToProducts?: () => void;
+  /**
+   * Render panel body only (parent owns DrawerShell) - seamless step switch
+   * from InspirationProductsDrawer.
+   */
+  embedded?: boolean;
 };
 
 const labelClassName = "mb-1.5 block text-sm font-medium text-neutral-900";
@@ -62,7 +83,56 @@ function RequiredMark() {
   );
 }
 
-export function AskDrawer({
+function ContextProductCard({
+  productTitle,
+  productBrand,
+  displaySku,
+  productImage,
+}: {
+  productTitle: string;
+  productBrand: string;
+  displaySku: string;
+  productImage: ProductImage;
+}) {
+  return (
+    <div className="flex items-start gap-3 rounded-xs border border-neutral-300 bg-neutral-50 p-3">
+      <div className="size-16 shrink-0 overflow-hidden bg-neutral-0">
+        <img
+          src={productImage.src}
+          alt=""
+          className="size-full object-cover"
+          style={{
+            objectPosition: productImageObjectPosition(productImage),
+          }}
+          width={64}
+          height={64}
+          draggable={false}
+        />
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col justify-center self-stretch">
+        <p className="m-0 font-body text-ui font-medium leading-snug text-neutral-900">
+          {productTitle}
+        </p>
+        <p className="mt-1 mb-0 text-sm text-neutral-500">
+          {[productBrand, displaySku].filter(Boolean).join(" · ")}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function AskDrawer(props: AskDrawerProps) {
+  // Remount on open so salon-first step resets without setState-in-effect.
+  // Embedded mode remounts when parent swaps step content in.
+  return (
+    <AskDrawerInner
+      key={props.embedded ? "embedded" : props.open ? "open" : "closed"}
+      {...props}
+    />
+  );
+}
+
+function AskDrawerInner({
   open,
   onClose,
   productTitle,
@@ -74,10 +144,13 @@ export function AskDrawer({
   showContextSummaries = true,
   showRoutingFields = true,
   showArchitectFields = false,
+  embedSalonPicker = false,
+  fromProductsStep = false,
+  onBackToProducts,
+  embedded = false,
 }: AskDrawerProps) {
-  const { salon } = useSelectedSalon();
+  const { salon, select } = useSelectedSalon();
   const nameId = useId();
-  const lastNameId = useId();
   const phoneId = useId();
   const emailId = useId();
   const postalId = useId();
@@ -89,7 +162,9 @@ export function AskDrawer({
   const marketingPhoneId = useId();
   const displaySku = formatAskSku(productSku);
   const [message, setMessage] = useState(() =>
-    buildAskMessage(productTitle, productSku),
+    embedSalonPicker
+      ? buildArrangementAskMessage(productTitle)
+      : buildAskMessage(productTitle, productSku),
   );
   const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
@@ -97,6 +172,14 @@ export function AskDrawer({
   const [roleConfirm, setRoleConfirm] = useState(false);
   const [marketingEmail, setMarketingEmail] = useState(false);
   const [marketingPhone, setMarketingPhone] = useState(false);
+  const [step, setStep] = useState<"salon" | "form">(() =>
+    embedSalonPicker && salon ? "form" : "salon",
+  );
+  const [sawSalonStep, setSawSalonStep] = useState(
+    () => !(embedSalonPicker && salon),
+  );
+  const [topics, setTopics] = useState<AdvisorAskTopicId | null>("arrangement");
+  const topicGroupId = useId();
 
   const handleClose = useCallback(() => {
     setSubmitted(false);
@@ -105,31 +188,76 @@ export function AskDrawer({
     setRoleConfirm(false);
     setMarketingEmail(false);
     setMarketingPhone(false);
-    setMessage(buildAskMessage(productTitle, productSku));
+    setTopics("arrangement");
+    setStep(embedSalonPicker && salon ? "form" : "salon");
+    setSawSalonStep(!(embedSalonPicker && salon));
+    setMessage(
+      embedSalonPicker
+        ? buildArrangementAskMessage(productTitle)
+        : buildAskMessage(productTitle, productSku),
+    );
     onClose();
-  }, [onClose, productTitle, productSku]);
+  }, [embedSalonPicker, onClose, productTitle, productSku, salon]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
   };
 
+  const goToSalonStep = () => {
+    setSawSalonStep(true);
+    setStep("salon");
+  };
+
+  const handleSalonSelect = (id: string) => {
+    select(id);
+    setSawSalonStep(true);
+    setStep("form");
+  };
+
   const submitLabel = showArchitectFields
     ? architectAskFormCopy.submitLabel
-    : askDrawerCopy.submitLabel;
+    : embedSalonPicker
+      ? advisorAskDrawerCopy.submitLabel
+      : askDrawerCopy.submitLabel;
 
-  return (
-    <DrawerShell
-      open={open}
-      onClose={handleClose}
-      label={title}
-      closeLabel="Zamknij formularz pytania"
-    >
+  const showSalonStep = embedSalonPicker && step === "salon" && !submitted;
+  const showFormStep = !showSalonStep;
+
+  const stepEyebrow = embedSalonPicker
+    ? showSalonStep
+      ? fromProductsStep
+        ? advisorAskDrawerCopy.salonStepEyebrow
+        : advisorAskDrawerCopy.salonStepOf2Eyebrow
+      : advisorAskDrawerCopy.step2Eyebrow
+    : undefined;
+
+  const headerOnBack =
+    embedSalonPicker && !submitted
+      ? showFormStep
+        ? sawSalonStep
+          ? goToSalonStep
+          : onBackToProducts
+        : showSalonStep && onBackToProducts
+          ? onBackToProducts
+          : undefined
+      : undefined;
+
+  const headerBackLabel =
+    showFormStep && sawSalonStep
+      ? advisorAskDrawerCopy.backToSalonLabel
+      : advisorAskDrawerCopy.backToProductsLabel;
+
+  const body = (
+    <>
       <DrawerHeader
         title={title}
         description={description}
         closeLabel={askDrawerCopy.closeLabel}
         onClose={handleClose}
+        eyebrow={stepEyebrow}
+        onBack={headerOnBack}
+        backLabel={headerBackLabel}
       />
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-[clamp(0.75rem,2.222vw,2.5rem)] py-4 md:py-8">
@@ -151,40 +279,46 @@ export function AskDrawer({
               {askDrawerCopy.closeLabel}
             </Button>
           </div>
-        ) : (
+        ) : null}
+
+        {showSalonStep ? (
+          <div className="flex flex-col gap-5">
+            <ContextProductCard
+              productTitle={productTitle}
+              productBrand={productBrand}
+              displaySku={displaySku}
+              productImage={productImage}
+            />
+            <SalonPickerStacked
+              lead={advisorAskDrawerCopy.salonPickerLead}
+              onSelect={handleSalonSelect}
+            />
+          </div>
+        ) : null}
+
+        {showFormStep && !submitted ? (
           <>
             <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-              {showContextSummaries ? (
+              {showContextSummaries || embedSalonPicker ? (
                 <>
-                  <div className="flex gap-3 rounded-xs border border-neutral-300 bg-neutral-50 p-3">
-                    <div className="size-14 shrink-0 overflow-hidden bg-neutral-0">
-                      <img
-                        src={productImage.src}
-                        alt=""
-                        className="size-full object-cover"
-                        style={{
-                          objectPosition:
-                            productImageObjectPosition(productImage),
-                        }}
-                        width={56}
-                        height={56}
-                        draggable={false}
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="m-0 font-body text-ui font-medium leading-snug text-neutral-900">
-                        {productTitle}
-                      </p>
-                      <p className="mt-1 mb-0 text-sm text-neutral-500">
-                        {productBrand} · {displaySku}
-                      </p>
-                    </div>
-                  </div>
+                  <ContextProductCard
+                    productTitle={productTitle}
+                    productBrand={productBrand}
+                    displaySku={displaySku}
+                    productImage={productImage}
+                  />
 
                   <DrawerSalonSummary
                     salon={salon}
-                    onChangeSalon={requestSalonDrawer}
+                    onChangeSalon={
+                      embedSalonPicker ? goToSalonStep : requestSalonDrawer
+                    }
                     emptyHint={askDrawerCopy.salonEmptyHint}
+                    changeLabel={
+                      embedSalonPicker
+                        ? advisorAskDrawerCopy.changeSalonLabel
+                        : undefined
+                    }
                   />
                 </>
               ) : null}
@@ -200,25 +334,8 @@ export function AskDrawer({
                   type="text"
                   required
                   aria-required="true"
-                  autoComplete="given-name"
+                  autoComplete="name"
                   placeholder={askDrawerCopy.namePlaceholder}
-                  className={inputClassName}
-                />
-              </div>
-
-              <div>
-                <label className={labelClassName} htmlFor={lastNameId}>
-                  {askDrawerCopy.lastNameLabel}
-                  <RequiredMark />
-                </label>
-                <input
-                  id={lastNameId}
-                  name="lastName"
-                  type="text"
-                  required
-                  aria-required="true"
-                  autoComplete="family-name"
-                  placeholder={askDrawerCopy.lastNamePlaceholder}
                   className={inputClassName}
                 />
               </div>
@@ -253,10 +370,56 @@ export function AskDrawer({
                   required
                   aria-required="true"
                   autoComplete="email"
-                  placeholder={askDrawerCopy.emailPlaceholder}
+                  placeholder={
+                    embedSalonPicker
+                      ? advisorAskDrawerCopy.emailPlaceholder
+                      : askDrawerCopy.emailPlaceholder
+                  }
                   className={inputClassName}
                 />
               </div>
+
+              {embedSalonPicker ? (
+                <>
+                  <fieldset className="m-0 min-w-0 border-0 p-0">
+                    <legend
+                      id={topicGroupId}
+                      className={cn(labelClassName, "float-none w-full px-0")}
+                    >
+                      {advisorAskDrawerCopy.topicLabel}
+                    </legend>
+                    <SalonLocationChips
+                      chips={advisorAskDrawerCopy.topics}
+                      activeId={topics ?? ""}
+                      onSelect={(id) =>
+                        setTopics((current) =>
+                          current === id ? null : (id as AdvisorAskTopicId),
+                        )
+                      }
+                      ariaLabel={advisorAskDrawerCopy.topicLabel}
+                      mobileAs="chips"
+                    />
+                    <input type="hidden" name="topic" value={topics ?? ""} />
+                  </fieldset>
+
+                  <div>
+                    <label className={labelClassName} htmlFor={messageId}>
+                      {advisorAskDrawerCopy.messageLabel}
+                    </label>
+                    <textarea
+                      id={messageId}
+                      name="message"
+                      rows={4}
+                      value={message}
+                      onChange={(event) => setMessage(event.target.value)}
+                      className={cn(
+                        inputClassName,
+                        "h-auto min-h-28 resize-y py-3 leading-relaxed",
+                      )}
+                    />
+                  </div>
+                </>
+              ) : null}
 
               {showRoutingFields ? (
                 <>
@@ -306,27 +469,34 @@ export function AskDrawer({
 
               {showArchitectFields ? (
                 <>
-                  <div>
-                    <label className={labelClassName} htmlFor={partnerSalonId}>
-                      {architectAskFormCopy.salonLabel}
-                    </label>
-                    <select
-                      id={partnerSalonId}
-                      name="partnerSalon"
-                      value={partnerSalon}
-                      onChange={(event) => setPartnerSalon(event.target.value)}
-                      className={selectClassName}
-                    >
-                      <option value="">
-                        {architectAskFormCopy.salonUnknown}
-                      </option>
-                      {architectAskFormCopy.salonCities.map((city) => (
-                        <option key={city} value={city}>
-                          {city}
+                  {!showContextSummaries && !embedSalonPicker ? (
+                    <div>
+                      <label
+                        className={labelClassName}
+                        htmlFor={partnerSalonId}
+                      >
+                        {architectAskFormCopy.salonLabel}
+                      </label>
+                      <select
+                        id={partnerSalonId}
+                        name="partnerSalon"
+                        value={partnerSalon}
+                        onChange={(event) =>
+                          setPartnerSalon(event.target.value)
+                        }
+                        className={selectClassName}
+                      >
+                        <option value="">
+                          {architectAskFormCopy.salonUnknown}
                         </option>
-                      ))}
-                    </select>
-                  </div>
+                        {architectAskFormCopy.salonCities.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : null}
 
                   <Checkbox
                     id={roleConfirmId}
@@ -378,22 +548,36 @@ export function AskDrawer({
                   onCheckedChange={setConsent}
                   className="text-sm leading-relaxed text-neutral-600"
                 >
-                  {askDrawerCopy.consent}{" "}
+                  {embedSalonPicker
+                    ? advisorAskDrawerCopy.consent
+                    : askDrawerCopy.consent}{" "}
                   <a
-                    href={askDrawerCopy.privacyHref}
+                    href={
+                      embedSalonPicker
+                        ? advisorAskDrawerCopy.privacyHref
+                        : askDrawerCopy.privacyHref
+                    }
                     className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
                     onClick={(event) => event.stopPropagation()}
                   >
-                    {askDrawerCopy.privacyLabel}
+                    {embedSalonPicker
+                      ? advisorAskDrawerCopy.privacyLabel
+                      : askDrawerCopy.privacyLabel}
                   </a>
-                  .{" "}
-                  <a
-                    href={askDrawerCopy.marketingHref}
-                    className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
-                    onClick={(event) => event.stopPropagation()}
-                  >
-                    {askDrawerCopy.marketingLabel} ›
-                  </a>
+                  {embedSalonPicker ? (
+                    "."
+                  ) : (
+                    <>
+                      .{" "}
+                      <a
+                        href={askDrawerCopy.marketingHref}
+                        className="text-neutral-800 underline underline-offset-2 hover:text-gold-500"
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        {askDrawerCopy.marketingLabel} ›
+                      </a>
+                    </>
+                  )}
                 </Checkbox>
               )}
 
@@ -434,7 +618,7 @@ export function AskDrawer({
               ) : null}
             </form>
 
-            {salon && !showArchitectFields ? (
+            {salon && !showArchitectFields && !embedSalonPicker ? (
               <div className={cn("mt-6 pt-6 pb-2", contentDividerTopClassName)}>
                 <p className="m-0 font-body text-sm font-medium tracking-[0.12em] text-neutral-900 uppercase">
                   {askDrawerCopy.altContactTitle}
@@ -483,8 +667,23 @@ export function AskDrawer({
               </div>
             ) : null}
           </>
-        )}
+        ) : null}
       </div>
+    </>
+  );
+
+  if (embedded) {
+    return body;
+  }
+
+  return (
+    <DrawerShell
+      open={open}
+      onClose={handleClose}
+      label={title}
+      closeLabel="Zamknij formularz pytania"
+    >
+      {body}
     </DrawerShell>
   );
 }

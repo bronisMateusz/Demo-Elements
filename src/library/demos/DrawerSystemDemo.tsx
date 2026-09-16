@@ -3,6 +3,7 @@ import { InspirationProductsDrawer } from "../../components/inspiration/Inspirat
 import { MobileDrawer } from "../../components/layout/MobileDrawer";
 import { SalonDrawer } from "../../components/layout/SalonDrawer";
 import { BookAppointmentDrawer } from "../../components/marketing/BookAppointmentDrawer";
+import { RealizationSubmitDrawer } from "../../components/marketing/RealizationSubmitDrawer";
 import { AskDrawer } from "../../components/product/AskDrawer";
 import { Button } from "../../components/ui/Button";
 import { homeInspiration } from "../../data/home";
@@ -77,7 +78,11 @@ export function BookAppointmentDrawerDemo() {
       >
         Umów spotkanie
       </Button>
-      <BookAppointmentDrawer open={open} onClose={() => setOpen(false)} />
+      <BookAppointmentDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        embedSalonPicker
+      />
     </div>
   );
 }
@@ -108,6 +113,28 @@ export function InspirationProductsDrawerDemo() {
         arrangement={arrangement}
         onClose={() => setOpen(false)}
       />
+    </div>
+  );
+}
+
+export function RealizationSubmitDrawerDemo() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="flex flex-col items-start gap-4 p-[clamp(0.75rem,2.222vw,2.5rem)] md:p-8">
+      <p className="m-0 max-w-xl text-sm text-neutral-600">
+        Formularz przesłania realizacji - studio, kontakt, opis projektu, upload
+        plików i zgoda. Otwierany z duo CTA na końcu artykułu inspiracji.
+      </p>
+      <Button
+        as="button"
+        type="button"
+        variant="secondary"
+        onClick={() => setOpen(true)}
+      >
+        Prześlij realizację
+      </Button>
+      <RealizationSubmitDrawer open={open} onClose={() => setOpen(false)} />
     </div>
   );
 }

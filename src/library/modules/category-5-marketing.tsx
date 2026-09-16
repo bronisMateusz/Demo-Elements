@@ -526,7 +526,7 @@ export const listingPlpModule: LibraryModule = {
   slug: "listing-plp",
   title: "Listing PLP",
   description:
-    "Siatka 4-kolumnowa z poziomymi facetami (ListSelect), quick filters i opcjonalnym ListingPromoTile (col-span-2). Pełna strona: /listing.",
+    "Siatka produktów z pionowymi facetami po lewej (lg+), quick filters, drawer na mobile i opcjonalnym ListingPromoTile. Pełna strona: /listing.",
   variants: [
     {
       id: "interactive",
@@ -544,11 +544,26 @@ export const listingPlpModule: LibraryModule = {
       id: "promo-tile",
       label: "ListingPromoTile",
       description:
-        "Sam kafelek promo (rytm jak HomeMagazine poniżej lg). W Catalogu wstawiany na granicy wierszy.",
+        "Sam kafelek promo (skala biblioteczna / pełna szerokość siatki inspiracji).",
       render: () => (
         <div className={libPreviewArticleClassName}>
           <Container size="content" className="py-8">
             <ListingPromoTile promo={listingPage.gridPromo} />
+          </Container>
+        </div>
+      ),
+    },
+    {
+      id: "promo-tile-grid",
+      label: "ListingPromoTile (grid)",
+      description:
+        'density="grid" - ciaśniejszy padding i min-height dla komórki PLP (2-3 kolumny).',
+      render: () => (
+        <div className={libPreviewArticleClassName}>
+          <Container size="content" className="py-8">
+            <div className="max-w-sm">
+              <ListingPromoTile promo={listingPage.gridPromo} density="grid" />
+            </div>
           </Container>
         </div>
       ),

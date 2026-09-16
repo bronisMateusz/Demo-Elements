@@ -155,16 +155,83 @@ function ArticleSectionBlock({
   className?: string;
 }) {
   const headingId = `article-section-${section.id}`;
+  const body = section.body;
+
+  if (body && body.length > 0) {
+    return (
+      <div className={className}>
+        {body.map((block, index) => {
+          if (block.type === "heading") {
+            const headingOrdinal = body
+              .slice(0, index + 1)
+              .filter((item) => item.type === "heading").length;
+            const isFirstHeading = headingOrdinal === 1;
+            const id = isFirstHeading
+              ? headingId
+              : `${headingId}-${headingOrdinal}`;
+
+            return (
+              <h2
+                key={`${id}-${block.text.slice(0, 24)}`}
+                id={id}
+                className={cn(
+                  "font-heading text-h2 leading-[1.15] font-medium tracking-tight text-neutral-900",
+                  isFirstHeading ? "mb-5" : "mt-8 mb-5 md:mt-10",
+                )}
+              >
+                {block.text}
+              </h2>
+            );
+          }
+
+          if (block.type === "list") {
+            return (
+              <ul
+                key={`list-${index}`}
+                className="mb-4 list-disc space-y-2 ps-5 font-body text-base leading-relaxed text-neutral-700"
+              >
+                {block.items.map((item) => (
+                  <li key={item.slice(0, 32)}>{item}</li>
+                ))}
+              </ul>
+            );
+          }
+
+          if (block.type === "credit") {
+            return (
+              <p
+                key={`credit-${index}`}
+                className="t-body-lg m-0 font-semibold"
+              >
+                {block.text}
+              </p>
+            );
+          }
+
+          return (
+            <p
+              key={`p-${index}-${block.text.slice(0, 24)}`}
+              className="t-body-lg mb-4 last:mb-0"
+            >
+              {block.text}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className={className}>
-      <h2
-        id={headingId}
-        className="mb-5 font-heading text-h2 leading-[1.15] font-medium tracking-tight text-neutral-900"
-      >
-        {section.heading}
-      </h2>
-      {section.paragraphs.map((paragraph) => (
+      {section.heading ? (
+        <h2
+          id={headingId}
+          className="mb-5 font-heading text-h2 leading-[1.15] font-medium tracking-tight text-neutral-900"
+        >
+          {section.heading}
+        </h2>
+      ) : null}
+      {section.paragraphs?.map((paragraph) => (
         <p key={paragraph.slice(0, 32)} className="t-body-lg mb-4">
           {paragraph}
         </p>
