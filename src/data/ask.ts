@@ -44,13 +44,13 @@ export const advisorAskDrawerCopy = {
   salonPickerLead: "Wybierz salon, do którego trafi Twoje zapytanie.",
   changeSalonLabel: "Zmień salon",
   /** Step 1 = products drawer; step 2 = form (salon picker is skipped when already selected). */
-  step1Eyebrow: "Krok 1 z 2 · Produkty aranżacji",
-  step2Eyebrow: "Krok 2 z 2 · Formularz",
+  step1Eyebrow: "Krok 1 z 2",
+  step2Eyebrow: "Krok 2 z 2",
   /** Step 2 when booking a salon visit from InspirationProductsDrawer. */
-  step2SalonEyebrow: "Krok 2 z 2 · Wybór salonu",
+  step2SalonEyebrow: "Krok 2 z 2",
   /** Shown only when salon must be picked (not counted as a numbered step after products). */
   salonStepEyebrow: "Wybór salonu",
-  salonStepOf2Eyebrow: "Krok 1 z 2 · Wybór salonu",
+  salonStepOf2Eyebrow: "Krok 1 z 2",
   backToSalonLabel: "Wróć do wyboru salonu",
   backToProductsLabel: "Wróć do produktów",
   topicLabel: "Czego dotyczy zapytanie?",
