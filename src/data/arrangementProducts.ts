@@ -35,7 +35,8 @@ export const arrangementProducts = {
       "ORiSTO",
       "Szafka podumywalkowa Pillow 60 cm, biały połysk",
       {
-        price: "1 890 zł",
+        price: "1 590 zł",
+        pricePrevious: "1 890 zł",
         image: {
           ...montebiancoPackshot,
           alt: "Szafka podumywalkowa Pillow 60 cm, biały połysk",
