@@ -44,6 +44,7 @@ export const subcategoryPage = {
       {
         id: "blog-1",
         title: "Jak wybrać miskę WC do łazienki? Praktyczny poradnik",
+        date: "12.03.2026",
         excerpt:
           "Wybór miski WC to coś więcej niż kwestia estetyki. Odpowiedni model powinien być dopasowany do instalacji, metrażu łazienki i codziennych potrzeb użytkowników. Sprawdź, na co zwrócić uwagę przy zakupie miski WC, aby zapewnić sobie wygodę, funkcjonalność i łatwe utrzymanie czystości.",
         href: "https://www.elements-show.pl/blog/jak-wybrac-miske-wc-do-lazienki",
@@ -57,6 +58,7 @@ export const subcategoryPage = {
         id: "blog-2",
         title:
           "Prostokątna łazienka - jak wykorzystać jej układ i urządzić ją funkcjonalnie?",
+        date: "28.02.2026",
         excerpt:
           "Prostokątna łazienka daje wiele możliwości aranżacyjnych, ale wymaga dobrze przemyślanego projektu. Odpowiedni układ wyposażenia, kolory, płytki i oświetlenie pozwalają stworzyć funkcjonalne oraz optycznie lepiej wyważone wnętrze. Sprawdź, jak urządzić prostokątną łazienkę i jakich błędów unikać podczas jej projektowania.",
         href: "https://www.elements-show.pl/blog/prostokatna-lazienka",
@@ -69,6 +71,7 @@ export const subcategoryPage = {
       {
         id: "blog-3",
         title: "Marmurowa łazienka - jak urządzić elegancką przestrzeń?",
+        date: "14.02.2026",
         excerpt:
           "Sprawdź, jak urządzić marmurową łazienkę. Poznaj różnice między naturalnym marmurem a płytkami marmuropodobnymi oraz pomysły na elegancką aranżację.",
         href: "https://www.elements-show.pl/blog/marmurowa-lazienka-jak-urzadzic-elegancka-przestrzen",
@@ -83,6 +86,7 @@ export const subcategoryPage = {
       {
         id: "blog-4",
         title: "Jak urządzić szarą łazienkę? Pomysły i inspiracje",
+        date: "30.01.2026",
         excerpt:
           "Sprawdź, jak urządzić szarą łazienkę, aby była elegancka, przytulna i funkcjonalna. Poznaj pomysły na płytki, meble, armaturę, światło i dodatki.",
         href: "https://www.elements-show.pl/blog/jak-urzadzic-szara-lazienke-pomysly-i-inspiracje",
@@ -97,6 +101,7 @@ export const subcategoryPage = {
       {
         id: "blog-5",
         title: "Bateria z termostatem - jak wybrać i na co zwrócić uwagę?",
+        date: "18.01.2026",
         excerpt:
           "Bateria termostatyczna - jak działa i kiedy warto ją wybrać? Sprawdź zalety, ograniczenia oraz dowiedz się, na co zwrócić uwagę przed zakupem.",
         href: "https://www.elements-show.pl/blog/bateria-z-termostatem-jak-wybrac-i-na-co-zwrocic-uwage",
@@ -111,6 +116,7 @@ export const subcategoryPage = {
       {
         id: "blog-6",
         title: "Jak odświeżyć łazienkę bez remontu?",
+        date: "05.01.2026",
         excerpt:
           "Planujesz odświeżenie łazienki? Sprawdź, jak niewielkim kosztem odmienić wnętrze i poznaj wyposażenie, które znajdziesz w salonach Elements.",
         href: "https://www.elements-show.pl/blog/jak-odswiezyc-lazienke-bez-remontu",
