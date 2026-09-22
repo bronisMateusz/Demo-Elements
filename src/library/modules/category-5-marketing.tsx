@@ -272,7 +272,7 @@ export const editorialCarouselModule: LibraryModule = {
   slug: "editorial-carousel",
   title: "EditorialCarousel",
   description:
-    "Bleed karuzela editorial - aktualności (z datą) lub blog (see-all CTA).",
+    "Porcelanosa-style 4-up: zdjęcie · data · tytuł · Czytaj dalej. Strzałki gdy >4 kart.",
   variants: [
     {
       id: "news",

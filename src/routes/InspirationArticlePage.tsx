@@ -41,6 +41,11 @@ export function InspirationArticlePage() {
       : undefined,
   };
 
+  const photoAdvisorContent: AdvisorCtaContent = {
+    ...finalAdvisorContent,
+    image: page.finalCta.image,
+  };
+
   const productsArrangement = useMemo<InspirationArrangement>(
     () => ({
       id: "inspiration-article-products",
@@ -86,6 +91,13 @@ export function InspirationArticlePage() {
           <AdvisorCta
             titleId="inspiration-article-final-cta-title"
             content={finalAdvisorContent}
+            onAskOpen={() => setAskOpen(true)}
+            showBook={false}
+          />
+
+          <AdvisorCta
+            titleId="inspiration-article-final-cta-duo-title"
+            content={photoAdvisorContent}
             onAskOpen={() => setAskOpen(true)}
             showBook={false}
           />

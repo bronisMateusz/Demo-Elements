@@ -249,7 +249,7 @@ export function AdvisorCta({
       lead={content.lead}
       description={content.description}
       note={content.note}
-      image={content.secondary ? undefined : content.image}
+      image={content.image}
       secondary={secondary}
       className={cn("relative z-10 isolate", className)}
       actions={actions}

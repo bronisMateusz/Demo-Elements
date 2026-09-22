@@ -126,6 +126,8 @@ function BannerCopyPanel({
   className,
   /** `gold` - banner panel; `card` - HomePartners surface (white + border). */
   surface = "gold",
+  /** Full-bleed photo behind copy - motifs are omitted when set. */
+  backgroundImage,
 }: {
   eyebrow?: string;
   titleBlock: ReactNode;
@@ -134,23 +136,48 @@ function BannerCopyPanel({
   note?: string;
   className?: string;
   surface?: "gold" | "card";
+  backgroundImage?: ProductImage;
 }) {
   const isCardSurface = surface === "card";
+  const hasPhotoBg = Boolean(backgroundImage);
 
   return (
     <div
       className={cn(
         "relative flex h-full flex-col justify-center overflow-hidden rounded-xs",
-        isCardSurface
-          ? "border border-neutral-300 bg-neutral-0 p-6 md:p-8 lg:p-10"
-          : cn(
-              "bg-gold-100 px-6 md:px-10 lg:px-12",
+        hasPhotoBg
+          ? cn(
+              "min-h-80 bg-neutral-900 px-6 md:min-h-88 md:px-10 lg:px-12",
               sectionBandPaddingClassName,
-            ),
+            )
+          : isCardSurface
+            ? "border border-neutral-300 bg-neutral-0 p-6 md:p-8 lg:p-10"
+            : cn(
+                "bg-gold-100 px-6 md:px-10 lg:px-12",
+                sectionBandPaddingClassName,
+              ),
         className,
       )}
     >
-      {!isCardSurface ? (
+      {hasPhotoBg && backgroundImage ? (
+        <div
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={backgroundImage.src}
+            alt=""
+            className="absolute inset-0 size-full object-cover"
+            style={{
+              objectPosition: productImageObjectPosition(backgroundImage),
+            }}
+            loading="lazy"
+            draggable={false}
+          />
+          <div className="absolute inset-0 bg-neutral-900/70" />
+          <div className="absolute inset-0 bg-linear-to-e from-neutral-900 via-neutral-900/95 to-neutral-900/55" />
+        </div>
+      ) : (
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"
           aria-hidden="true"
@@ -164,13 +191,16 @@ function BannerCopyPanel({
             className="absolute -inset-e-14 -bottom-20 size-52 opacity-25 max-md:hidden"
           />
         </div>
-      ) : null}
+      )}
 
       <div className="relative z-10 flex min-w-0 flex-col gap-4 md:gap-6">
         {eyebrow ? (
           <Eyebrow
             variant="gold"
-            className="mb-0 text-sm tracking-widest text-neutral-700"
+            className={cn(
+              "mb-0 text-sm tracking-widest",
+              hasPhotoBg ? "text-gold-400" : "text-neutral-700",
+            )}
           >
             {eyebrow}
           </Eyebrow>
@@ -184,7 +214,12 @@ function BannerCopyPanel({
         {actionsBlock}
 
         {note ? (
-          <p className="m-0 text-center font-body text-sm text-neutral-700 sm:text-start">
+          <p
+            className={cn(
+              "m-0 text-center font-body text-sm sm:text-start",
+              hasPhotoBg ? "text-neutral-200" : "text-neutral-700",
+            )}
+          >
             {note}
           </p>
         ) : null}
@@ -225,6 +260,7 @@ export function SplitMediaCta({
     panelTitle: string,
     panelTitleId: string,
     iconClass?: string,
+    onMedia = false,
   ) => (
     <div
       className={cn(
@@ -239,7 +275,8 @@ export function SplitMediaCta({
         <i
           className={cn(
             iconClass,
-            "shrink-0 text-[1.15em] leading-none text-neutral-900",
+            "shrink-0 text-[1.15em] leading-none",
+            onMedia ? "text-neutral-0" : "text-neutral-900",
           )}
           aria-hidden="true"
         />
@@ -256,8 +293,8 @@ export function SplitMediaCta({
             ? "font-heading text-h3 leading-[1.15] tracking-tight font-medium"
             : "font-heading text-h2 leading-[1.1] tracking-tight font-medium"
         }
-        mutedClassName="text-neutral-900/20"
-        fillClassName="text-neutral-900"
+        mutedClassName={onMedia ? "text-neutral-0/25" : "text-neutral-900/20"}
+        fillClassName={onMedia ? "text-neutral-0" : "text-neutral-900"}
       >
         {panelTitle}
       </TextRevealLead>
@@ -268,10 +305,16 @@ export function SplitMediaCta({
     panelLead?: string,
     panelDescription?: string,
     panelItems?: readonly string[],
+    onMedia = false,
   ) => (
     <>
       {panelLead ? (
-        <p className="m-0 max-w-lg font-heading text-h4 leading-snug font-medium text-neutral-900">
+        <p
+          className={cn(
+            "m-0 max-w-lg font-heading text-h4 leading-snug font-medium",
+            onMedia ? "text-neutral-0" : "text-neutral-900",
+          )}
+        >
           {panelLead}
         </p>
       ) : null}
@@ -280,7 +323,10 @@ export function SplitMediaCta({
           className={cn(
             "m-0 max-w-lg",
             isCard || isDuo
-              ? "text-sm leading-relaxed text-neutral-600"
+              ? cn(
+                  "text-sm leading-relaxed",
+                  onMedia ? "text-neutral-100" : "text-neutral-600",
+                )
               : "t-body text-neutral-700",
           )}
         >
@@ -292,7 +338,12 @@ export function SplitMediaCta({
           className={cn(
             "m-0 max-w-lg list-disc ps-5 font-body leading-relaxed",
             isCard || isDuo
-              ? "mt-5 space-y-2.5 text-sm text-neutral-700 marker:text-neutral-500"
+              ? cn(
+                  "mt-5 space-y-2.5 text-sm",
+                  onMedia
+                    ? "text-neutral-100 marker:text-gold-400"
+                    : "text-neutral-700 marker:text-neutral-500",
+                )
               : "space-y-3 text-ui text-neutral-700 marker:text-neutral-800",
           )}
         >
@@ -322,8 +373,14 @@ export function SplitMediaCta({
       </motion.div>
     ) : null;
 
-  const primaryTitleBlock = makeTitleBlock(title, titleId, titleIconClass);
-  const primaryBody = makeBody(lead, description, items);
+  const photoPrimary = isDuo && Boolean(image);
+  const primaryTitleBlock = makeTitleBlock(
+    title,
+    titleId,
+    titleIconClass,
+    photoPrimary,
+  );
+  const primaryBody = makeBody(lead, description, items, photoPrimary);
   const primaryActions = makeActionsBlock(actions, isCard || isDuo);
 
   if (isDuo && secondary) {
@@ -339,15 +396,18 @@ export function SplitMediaCta({
           <ul className="m-0 grid list-none gap-8 p-0 md:grid-cols-2 md:gap-8 lg:gap-10">
             <li className="min-w-0">
               <BannerCopyPanel
+                eyebrow={eyebrow}
                 titleBlock={primaryTitleBlock}
                 body={primaryBody}
                 actionsBlock={primaryActions}
                 note={note}
+                backgroundImage={image}
               />
             </li>
             <li className="min-w-0">
               <BannerCopyPanel
-                surface="card"
+                surface={image ? "card" : "gold"}
+                eyebrow={secondary.eyebrow}
                 titleBlock={makeTitleBlock(secondary.title, secondary.titleId)}
                 body={makeBody(undefined, secondary.description)}
                 actionsBlock={secondaryActions}
