@@ -209,9 +209,9 @@ export function EditorialCarousel({
   return (
     <Section id={id} ariaLabelledby={titleId} className="overflow-x-clip">
       <div className={cn("relative", sectionBandPaddingClassName)}>
-        {/* Full-height gray band; right quarter stays white (Porcelanosa). */}
+        {/* Full-height gray band - desktop: ends at mid of the 3rd of 4 tiles. */}
         <div
-          className="absolute inset-y-0 inset-s-0 inset-e-1/4 z-0 bg-neutral-200"
+          className="absolute inset-y-0 inset-s-0 z-0 w-[calc(clamp(0.75rem,2.222vw,2.5rem)+0.625*(100%-2*clamp(0.75rem,2.222vw,2.5rem)))] bg-neutral-200 max-lg:inset-e-1/4 max-lg:w-auto"
           aria-hidden="true"
         />
 
