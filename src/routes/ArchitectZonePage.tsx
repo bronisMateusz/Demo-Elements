@@ -178,7 +178,7 @@ export function ArchitectZonePage() {
             <ArchitectSupportGrid />
           </RevealSection>
 
-          <RevealSection>
+          <RevealSection className="relative z-30">
             <ArchitectGuardian />
           </RevealSection>
 

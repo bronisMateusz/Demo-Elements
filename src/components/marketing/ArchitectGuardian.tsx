@@ -134,7 +134,7 @@ export function ArchitectGuardian() {
                   id={listId}
                   role="listbox"
                   aria-label={guardian.selectLabel}
-                  className="absolute inset-x-0 z-20 mt-1 max-h-64 overflow-auto rounded-xs border border-neutral-300 bg-neutral-0 py-1 shadow-2"
+                  className="absolute inset-x-0 z-50 mt-1 max-h-64 overflow-auto rounded-xs border border-neutral-300 bg-neutral-0 py-1 shadow-2"
                 >
                   {filtered.length === 0 ? (
                     <li className="px-4 py-3 font-body text-sm text-neutral-500">
