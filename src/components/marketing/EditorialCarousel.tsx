@@ -46,6 +46,8 @@ type EditorialCarouselProps = {
   id?: string;
   title: string;
   titleId?: string;
+  /** Optional lead under the section title. */
+  lead?: string;
   items: EditorialCardItem[];
   seeAll?: { label: string; href: string };
   a11yPrevLabel?: string;
@@ -173,6 +175,7 @@ export function EditorialCarousel({
   id,
   title,
   titleId = "editorial-carousel-title",
+  lead,
   items,
   seeAll,
   a11yPrevLabel = "Poprzednie",
@@ -220,16 +223,23 @@ export function EditorialCarousel({
             className="mb-6 flex items-end justify-between gap-6 md:mb-12"
             aria-labelledby={titleId}
           >
-            <TextRevealLead
-              id={titleId}
-              revealUnit="word"
-              className="min-w-0 max-w-3xl"
-              typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
-              mutedClassName="text-neutral-900/20"
-              fillClassName="text-neutral-900"
-            >
-              {title}
-            </TextRevealLead>
+            <div className="min-w-0 max-w-3xl">
+              <TextRevealLead
+                id={titleId}
+                revealUnit="word"
+                className="min-w-0"
+                typographyClassName="font-heading text-h2 leading-[1.1] tracking-tight font-medium"
+                mutedClassName="text-neutral-900/20"
+                fillClassName="text-neutral-900"
+              >
+                {title}
+              </TextRevealLead>
+              {lead ? (
+                <p className="mt-3 mb-0 max-w-prose font-body text-ui leading-relaxed text-neutral-600">
+                  {lead}
+                </p>
+              ) : null}
+            </div>
 
             {canNavigate ? (
               <NavButtons

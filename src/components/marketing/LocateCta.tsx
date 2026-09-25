@@ -20,8 +20,9 @@ type LocateCtaBaseProps = {
   title: string;
   titleId?: string;
   description?: string;
-  /** Shown only when there is no image (e.g. PDP collection band without media). */
   eyebrow?: string;
+  /** Small caption under the CTA (e.g. access note). */
+  note?: string;
   ctaLabel: string;
   /** Optional media column - when omitted, copy panel is full width. */
   image?: LocateCtaImage;
@@ -30,6 +31,8 @@ type LocateCtaBaseProps = {
   embedded?: boolean;
   /** Adds page section vertical margin (PDP gallery banner). */
   sectionMargin?: boolean;
+  /** Section element id when not embedded (e.g. in-page anchors). */
+  sectionId?: string;
 };
 
 type LocateCtaLinkProps = LocateCtaBaseProps & {
@@ -57,11 +60,13 @@ export function LocateCta({
   titleId = "locate-cta-title",
   description,
   eyebrow,
+  note,
   ctaLabel,
   image,
   className,
   embedded = false,
   sectionMargin = false,
+  sectionId,
   ...actionOrLink
 }: LocateCtaProps) {
   const ctaHref = "ctaHref" in actionOrLink ? actionOrLink.ctaHref : undefined;
@@ -104,7 +109,7 @@ export function LocateCta({
           className="pointer-events-none absolute inset-0 bg-radial-[at_0%_0%] from-gold-500/22 to-transparent to-58%"
           aria-hidden="true"
         />
-        {!image && eyebrow ? (
+        {eyebrow ? (
           <p className="relative m-0 font-body text-sm font-semibold tracking-[0.06em] text-gold-400 uppercase">
             {eyebrow}
           </p>
@@ -146,6 +151,11 @@ export function LocateCta({
             {ctaLabel}
           </Button>
         )}
+        {note ? (
+          <p className="relative m-0 font-body text-xs leading-relaxed text-neutral-500">
+            {note}
+          </p>
+        ) : null}
       </div>
     </div>
   );
@@ -156,6 +166,7 @@ export function LocateCta({
 
   return (
     <section
+      id={sectionId}
       aria-labelledby={titleId}
       className={cn(sectionMargin && sectionMarginYClassName, className)}
     >

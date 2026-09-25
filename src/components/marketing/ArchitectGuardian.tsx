@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { pdpSectionScrollMarginClassName } from "../../constants/pdpSubnav";
 import { architectZonePage } from "../../data/architectZone";
 import { salonOptions } from "../../data/nav";
-import { SalonLocationChips } from "./SalonLocationChips";
 import {
   salonContactEyebrowClassName,
   salonContactLinkOffsetClassName,
@@ -13,19 +12,56 @@ import { Section } from "../structural/Section";
 import { SectionHeader } from "../structural/SectionHeader";
 import { Container } from "../ui/Container";
 import { EmptyState } from "../ui/EmptyState";
-import { EyebrowSygnet } from "../ui/Eyebrow";
+import { inputClassName } from "../ui/inputClassName";
 
 const { guardian } = architectZonePage;
 
-const salonChips = salonOptions.map((salon) => ({
+type SalonOption = {
+  id: string;
+  name: string;
+  cityLabel: string;
+};
+
+const salonList: SalonOption[] = salonOptions.map((salon) => ({
   id: salon.id,
-  label: salon.name.replace(/^ELEMENTS\s+/i, ""),
+  name: salon.name,
+  cityLabel: salon.name.replace(/^ELEMENTS\s+/i, ""),
 }));
 
+/**
+ * Architect guardian module - searchable salon combobox + contact card.
+ * Empty until a salon is chosen (brief: one selection → call / email).
+ */
 export function ArchitectGuardian() {
-  const [salonId, setSalonId] = useState<string>(salonChips[0]?.id ?? "");
-  const selectedSalon = salonOptions.find((salon) => salon.id === salonId);
-  const showContact = Boolean(selectedSalon);
+  const listId = useId();
+  const inputId = useId();
+  const [query, setQuery] = useState("");
+  const [salonId, setSalonId] = useState<string>("");
+  const [listOpen, setListOpen] = useState(false);
+
+  const selectedSalon = salonList.find((salon) => salon.id === salonId);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return salonList;
+    return salonList.filter(
+      (salon) =>
+        salon.name.toLowerCase().includes(q) ||
+        salon.cityLabel.toLowerCase().includes(q),
+    );
+  }, [query]);
+
+  const selectSalon = (salon: SalonOption) => {
+    setSalonId(salon.id);
+    setQuery(salon.cityLabel);
+    setListOpen(false);
+  };
+
+  const clearSelection = () => {
+    setSalonId("");
+    setQuery("");
+    setListOpen(true);
+  };
 
   return (
     <Section
@@ -45,16 +81,88 @@ export function ArchitectGuardian() {
               {guardian.lead}
             </p>
 
-            <div className="mt-8">
-              <SalonLocationChips
-                chips={salonChips}
-                activeId={salonId}
-                onSelect={setSalonId}
-                ariaLabel={guardian.selectLabel}
-                role="tablist"
-                mobileAs="chips"
-                chipGapClassName="gap-2"
-              />
+            <div className="relative mt-8">
+              <label
+                htmlFor={inputId}
+                className="mb-2 block font-body text-sm font-medium text-neutral-800"
+              >
+                {guardian.selectLabel}
+              </label>
+              <div className="relative">
+                <input
+                  id={inputId}
+                  type="text"
+                  role="combobox"
+                  aria-expanded={listOpen}
+                  aria-controls={listId}
+                  aria-autocomplete="list"
+                  autoComplete="off"
+                  placeholder={guardian.selectPlaceholder}
+                  value={query}
+                  className={cn(inputClassName, "pe-11")}
+                  onChange={(event) => {
+                    setQuery(event.target.value);
+                    setSalonId("");
+                    setListOpen(true);
+                  }}
+                  onFocus={() => setListOpen(true)}
+                  onBlur={() => {
+                    // Defer so option click can register.
+                    window.setTimeout(() => setListOpen(false), 120);
+                  }}
+                />
+                {salonId ? (
+                  <button
+                    type="button"
+                    className="absolute inset-e-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-xs text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900"
+                    aria-label="Wyczyść wybór salonu"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={clearSelection}
+                  >
+                    <i className="ph ph-x" aria-hidden="true" />
+                  </button>
+                ) : (
+                  <i
+                    className="ph ph-caret-down pointer-events-none absolute inset-e-3 top-1/2 -translate-y-1/2 text-neutral-500"
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+
+              {listOpen ? (
+                <ul
+                  id={listId}
+                  role="listbox"
+                  aria-label={guardian.selectLabel}
+                  className="absolute inset-x-0 z-20 mt-1 max-h-64 overflow-auto rounded-xs border border-neutral-300 bg-neutral-0 py-1 shadow-2"
+                >
+                  {filtered.length === 0 ? (
+                    <li className="px-4 py-3 font-body text-sm text-neutral-500">
+                      Brak salonu dla tej frazy.
+                    </li>
+                  ) : (
+                    filtered.map((salon) => {
+                      const active = salon.id === salonId;
+                      return (
+                        <li key={salon.id} role="option" aria-selected={active}>
+                          <button
+                            type="button"
+                            className={cn(
+                              "flex w-full cursor-pointer items-center px-4 py-2.5 text-start font-body text-ui text-neutral-900",
+                              "hover:bg-neutral-100",
+                              active && "bg-gold-50 font-medium",
+                            )}
+                            onMouseDown={(event) => event.preventDefault()}
+                            onClick={() => selectSalon(salon)}
+                          >
+                            {salon.name}
+                          </button>
+                        </li>
+                      );
+                    })
+                  )}
+                </ul>
+              ) : null}
             </div>
           </div>
 
@@ -65,14 +173,13 @@ export function ArchitectGuardian() {
               "pt-8 lg:border-t-0 lg:pt-0",
             )}
           >
-            {showContact && selectedSalon ? (
-              <div className="flex flex-col lg:h-full lg:min-h-65 lg:justify-center">
-                <p className="m-0 inline-flex items-center gap-2 font-body text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
-                  <EyebrowSygnet />
-                  {guardian.contact.role}
+            {selectedSalon ? (
+              <div className="flex flex-col rounded-xs border border-neutral-300 bg-neutral-0 p-6 lg:h-full lg:min-h-65 lg:justify-center lg:p-8">
+                <p className="m-0 font-body text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
+                  {guardian.contact.role} | {selectedSalon.name}
                 </p>
                 <h3 className="mt-3 mb-0 font-heading text-h3 font-medium tracking-tight text-neutral-900">
-                  {selectedSalon.name}
+                  {guardian.contact.name}
                 </h3>
 
                 <div
@@ -81,7 +188,9 @@ export function ArchitectGuardian() {
                 >
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
                     <div className="sm:self-end">
-                      <p className={salonContactEyebrowClassName}>Telefon</p>
+                      <p className={salonContactEyebrowClassName}>
+                        {guardian.callLabel}
+                      </p>
                       <a
                         href={guardian.contact.phoneHref}
                         className={salonContactLinkOffsetClassName}
@@ -94,7 +203,9 @@ export function ArchitectGuardian() {
                       </a>
                     </div>
                     <div className="sm:self-end">
-                      <p className={salonContactEyebrowClassName}>E-mail</p>
+                      <p className={salonContactEyebrowClassName}>
+                        {guardian.emailLabel}
+                      </p>
                       <a
                         href={guardian.contact.emailHref}
                         className={salonContactLinkOffsetClassName}
@@ -117,9 +228,8 @@ export function ArchitectGuardian() {
               <EmptyState
                 layout="panel"
                 iconClass="ph ph-map-pin-line"
-                title="Wybierz salon"
-                description={guardian.emptyTitle}
-                className="h-full min-h-65"
+                title={guardian.emptyTitle}
+                description={guardian.emptyDescription}
               />
             )}
           </div>
